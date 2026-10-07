@@ -1,26 +1,140 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-sans);
+	--font-mono: var(--font-geist-mono);
+	--font-heading: var(--font-heading);
+	--font-arabic: var(--font-arabic);
+	--color-brand-navy: #155263;
+	--color-brand-gold: #ffca58;
+	--color-brand-sand: #fff2d5;
+	--color-brand-sky: #a5cad5;
+	--color-brand-siam: #585a51;
+	--color-brand-cream: #f7f5f2;
+	--color-brand-dark: #18414d;
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--radius-2xl: calc(var(--radius) * 1.8);
+	--radius-3xl: calc(var(--radius) * 2.2);
+	--radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+	/* Qunomedical Brand Palette */
+	--background: oklch(0.995 0.003 90); /* Clean warm off-white */
+	--foreground: oklch(0.42 0.015 110); /* Siam warm slate #585a51 */
+	--card: oklch(1 0 0); /* Pure white cards */
+	--card-foreground: oklch(0.42 0.015 110);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.42 0.015 110);
+	--primary: oklch(0.38 0.07 210); /* Deep Petrol Teal #155263 */
+	--primary-foreground: oklch(0.99 0 0); /* Pure white */
+	--secondary: oklch(0.96 0.03 85); /* Warm Sand/Cream #fff2d5 */
+	--secondary-foreground: oklch(0.38 0.07 210); /* Deep Petrol Teal */
+	--muted: oklch(0.96 0.008 220); /* Bluish light grey #eef2f6 */
+	--muted-foreground: oklch(0.55 0.01 110); /* #757575 */
+	--accent: oklch(0.86 0.14 85); /* Honey Gold #ffd16c */
+	--accent-foreground: oklch(0.28 0.06 210); /* Deep navy on gold */
+	--destructive: oklch(0.577 0.245 27.325); /* #dc2626 */
+	--border: oklch(0.92 0.01 220); /* Soft divider #edf2f7 */
+	--input: oklch(0.92 0.01 220);
+	--ring: oklch(0.38 0.07 210); /* Teal focus ring */
+	--chart-1: oklch(0.38 0.07 210); /* Teal */
+	--chart-2: oklch(0.86 0.14 85); /* Gold */
+	--chart-3: oklch(0.82 0.04 215); /* Sky/Sand blue */
+	--chart-4: oklch(0.96 0.03 85); /* Sand */
+	--chart-5: oklch(0.42 0.015 110); /* Siam */
+	--radius: 0.75rem;
+	--sidebar: oklch(0.985 0.005 90);
+	--sidebar-foreground: oklch(0.42 0.015 110);
+	--sidebar-primary: oklch(0.38 0.07 210);
+	--sidebar-primary-foreground: oklch(0.99 0 0);
+	--sidebar-accent: oklch(0.96 0.03 85);
+	--sidebar-accent-foreground: oklch(0.38 0.07 210);
+	--sidebar-border: oklch(0.92 0.01 220);
+	--sidebar-ring: oklch(0.38 0.07 210);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.dark {
+	--background: oklch(0.2 0.04 215); /* Deep medical petrol #0d242c */
+	--foreground: oklch(0.96 0.01 85); /* Warm white */
+	--card: oklch(0.25 0.05 215); /* Dark teal slate */
+	--card-foreground: oklch(0.96 0.01 85);
+	--popover: oklch(0.25 0.05 215);
+	--popover-foreground: oklch(0.96 0.01 85);
+	--primary: oklch(0.86 0.14 85); /* Honey gold in dark mode */
+	--primary-foreground: oklch(0.2 0.04 215);
+	--secondary: oklch(0.32 0.06 210); /* Medium teal */
+	--secondary-foreground: oklch(0.96 0.01 85);
+	--muted: oklch(0.27 0.04 215);
+	--muted-foreground: oklch(0.78 0.03 215);
+	--accent: oklch(0.35 0.06 210);
+	--accent-foreground: oklch(0.96 0.01 85);
+	--destructive: oklch(0.704 0.191 22.216);
+	--border: oklch(1 0 0 / 12%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: oklch(0.86 0.14 85);
+	--chart-1: oklch(0.86 0.14 85);
+	--chart-2: oklch(0.82 0.04 215);
+	--chart-3: oklch(0.65 0.08 210);
+	--chart-4: oklch(0.55 0.06 210);
+	--chart-5: oklch(0.4 0.04 210);
+	--sidebar: oklch(0.22 0.04 215);
+	--sidebar-foreground: oklch(0.96 0.01 85);
+	--sidebar-primary: oklch(0.86 0.14 85);
+	--sidebar-primary-foreground: oklch(0.2 0.04 215);
+	--sidebar-accent: oklch(0.27 0.04 215);
+	--sidebar-accent-foreground: oklch(0.96 0.01 85);
+	--sidebar-border: oklch(1 0 0 / 12%);
+	--sidebar-ring: oklch(0.86 0.14 85);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	button:not(:disabled),
+	[role="button"]:not(:disabled) {
+		cursor: pointer;
+	}
 }
