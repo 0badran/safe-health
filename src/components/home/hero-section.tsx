@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -55,7 +55,7 @@ export function HeroSection() {
 				<div className="h-100 w-200 rounded-full bg-secondary/50 blur-3xl" />
 			</div>
 
-			<div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div className="container max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
 					{/* Left / Start Column: Value proposition & Search */}
 					<div className="flex flex-col space-y-6 lg:col-span-7">
@@ -70,12 +70,15 @@ export function HeroSection() {
 						{/* Main Headline */}
 						<h1 className="font-heading text-3xl font-extrabold tracking-tight text-primary sm:text-5xl lg:text-6xl leading-[1.15]">
 							رعايتك الطبية بأيدي{" "}
-							<span className="text-foreground">أفضل الأطباء والمراكز</span> المعتمدة
+							<span className="text-foreground">أفضل الأطباء والمراكز</span>{" "}
+							المعتمدة
 						</h1>
 
 						{/* Subtitle */}
 						<p className="max-w-2xl text-base text-muted-foreground sm:text-lg leading-relaxed">
-							نساعدك في اختيار الطبيب الجراح الأنسب لحالتك، ومقارنة التكاليف بكل شفافية، وتنسيق خطتك العلاجية مع استشارات مجانية ومتابعة شخصية مستمرة.
+							نساعدك في اختيار الطبيب الجراح الأنسب لحالتك، ومقارنة التكاليف بكل
+							شفافية، وتنسيق خطتك العلاجية مع استشارات مجانية ومتابعة شخصية
+							مستمرة.
 						</p>
 
 						{/* Interactive Treatment Search Card */}
@@ -109,16 +112,9 @@ export function HeroSection() {
 									العلاجات الشائعة:
 								</span>
 								{popularTags.map((tag) => (
-									<Button
-										key={tag.label}
-										variant="ghost"
-										size="xs"
-										asChild
-									>
+									<Button key={tag.label} variant="ghost" size="xs" asChild>
 										<Link href={tag.href}>
-											<Badge variant="outline">
-												{tag.label}
-											</Badge>
+											<Badge variant="outline">{tag.label}</Badge>
 										</Link>
 									</Button>
 								))}
@@ -187,9 +183,7 @@ export function HeroSection() {
 											</span>
 										</div>
 									</div>
-									<Badge variant="secondary">
-										متاح الآن
-									</Badge>
+									<Badge variant="secondary">متاح الآن</Badge>
 								</div>
 							</div>
 

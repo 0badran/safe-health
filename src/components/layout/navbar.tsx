@@ -75,31 +75,29 @@ export function Navbar() {
 
 	return (
 		<header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/80">
-			<div className="container mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+			<div className="container flex h-18 max-w-7xl items-center justify-between">
 				{/* Brand Logo */}
-				<div className="flex items-center gap-3">
-					<Link
-						href="/"
-						className="flex items-center gap-2.5 transition-opacity hover:opacity-90"
-					>
-						<div className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-							<HeartPulseIcon className="size-6" />
-						</div>
-						<div className="flex flex-col">
-							<span className="font-heading text-xl font-bold tracking-tight text-primary">
-								Safe Health
-							</span>
-							<span className="text-[10px] font-medium text-muted-foreground -mt-1">
-								الرعاية الطبية المعتمدة
-							</span>
-						</div>
-					</Link>
-				</div>
+				<Link
+					href="/"
+					className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90 select-none"
+				>
+					<div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
+						<HeartPulseIcon className="size-6" />
+					</div>
+					<div className="flex flex-col shrink-0 text-start leading-tight">
+						<span className="font-heading text-lg sm:text-xl font-bold tracking-tight text-primary whitespace-nowrap">
+							Safe Health
+						</span>
+						<span className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
+							الرعاية الطبية المعتمدة
+						</span>
+					</div>
+				</Link>
 
 				{/* Desktop Navigation Links */}
-				<nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+				<nav className="hidden lg:flex items-center">
 					<Button variant="ghost" size="sm" asChild>
-						<Link href="#how-it-works">كيف نعمل</Link>
+						<Link href="/how-it-works">كيف نعمل</Link>
 					</Button>
 
 					<Button variant="ghost" size="sm" asChild>
@@ -148,11 +146,15 @@ export function Navbar() {
 					</DropdownMenu>
 
 					<Button variant="ghost" size="sm" asChild>
-						<Link href="#doctors">الأطباء المعتمدون</Link>
+						<Link href="/articles">المقالات</Link>
 					</Button>
 
 					<Button variant="ghost" size="sm" asChild>
-						<Link href="#articles">المقالات الطبية</Link>
+						<Link href="/about">من نحن</Link>
+					</Button>
+
+					<Button variant="ghost" size="sm" asChild>
+						<Link href="/contact">اتصل بنا</Link>
 					</Button>
 				</nav>
 
@@ -248,7 +250,7 @@ export function Navbar() {
 
 							<div className="flex flex-col gap-3 py-6">
 								<Link
-									href="#how-it-works"
+									href="/how-it-works"
 									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
 								>
 									<span>كيف نعمل</span>
@@ -272,17 +274,24 @@ export function Navbar() {
 								</Link>
 
 								<Link
-									href="#doctors"
+									href="/articles"
 									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
 								>
-									<span>الأطباء المعتمدون</span>
+									<span>المقالات</span>
 								</Link>
 
 								<Link
-									href="#articles"
+									href="/about"
 									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
 								>
-									<span>المقالات الطبية</span>
+									<span>من نحن</span>
+								</Link>
+
+								<Link
+									href="/contact"
+									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
+								>
+									<span>اتصل بنا</span>
 								</Link>
 							</div>
 

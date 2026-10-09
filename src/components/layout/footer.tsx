@@ -13,28 +13,30 @@ import { Button } from "@/components/ui/button";
 
 export function Footer() {
 	const patientLinks = [
-		{ label: "كيف تعمل المنظومة", href: "#how-it-works" },
-		{ label: "دليل تكلفة العمليات", href: "#cost-guides" },
-		{ label: "تجارب وقصص المرضى", href: "#reviews" },
-		{ label: "الأسئلة الشائعة", href: "#faq" },
-		{ label: "المقالات الطبية الموثقة", href: "#articles" },
+		{ label: "من نحن", href: "/about" },
+		{ label: "كيف نعمل", href: "/how-it-works" },
+		{ label: "المقالات", href: "/articles" },
+		{ label: "اتصل بنا", href: "/contact" },
+		{ label: "تجارب وقصص المرضى", href: "/#reviews" },
+		{ label: "الأسئلة الشائعة", href: "/how-it-works#faq" },
+		{ label: "طلب عرض سعر واستشارة", href: "/contact" },
 	];
 
 	const popularTreatments = [
-		{ label: "زراعة الشعر (FUE & DHI)", href: "#treatments" },
-		{ label: "تجميل وابتسامة الأسنان", href: "#treatments" },
-		{ label: "جراحات تجميل الأنف", href: "#treatments" },
-		{ label: "جراحات السمنة والتكميم", href: "#treatments" },
-		{ label: "أطفال الأنابيب والإخصاب", href: "#treatments" },
-		{ label: "تصحيح النظر والفيمتو ليزك", href: "#treatments" },
+		{ label: "زراعة الشعر (FUE & DHI)", href: "/#treatments" },
+		{ label: "تجميل وابتسامة الأسنان", href: "/#treatments" },
+		{ label: "جراحات تجميل الأنف", href: "/#treatments" },
+		{ label: "جراحات السمنة والتكميم", href: "/#treatments" },
+		{ label: "أطفال الأنابيب والإخصاب", href: "/#treatments" },
+		{ label: "تصحيح النظر والفيمتو ليزك", href: "/#treatments" },
 	];
 
 	const doctorLinks = [
-		{ label: "معايير اختيار الأطباء (SafeScore)", href: "#vetted" },
-		{ label: "انضمام الأطباء والعيادات", href: "#join" },
-		{ label: "بوابة إدارة المرضى B2B", href: "#portal" },
-		{ label: "ضمان الجودة ومطابقة الأسعار", href: "#guarantee" },
-		{ label: "فريق المتابعة الطبية", href: "#team" },
+		{ label: "معايير الأمان (SafeScore™)", href: "/how-it-works" },
+		{ label: "فريق الإدارة والمتابعة الطبية", href: "/about" },
+		{ label: "انضمام الأطباء والعيادات", href: "/contact" },
+		{ label: "ضمان الجودة ومطابقة الأسعار", href: "/how-it-works" },
+		{ label: "حجز موعد استشاري", href: "/contact" },
 	];
 
 	return (
@@ -195,8 +197,8 @@ export function Footer() {
 						</ul>
 
 						<div className="pt-3">
-							<Button variant="outline" size="sm" className="w-full">
-								انضم كطبيب معتمد
+							<Button asChild variant="outline" size="sm" className="w-full">
+								<Link href="/contact">انضم كطبيب معتمد</Link>
 							</Button>
 						</div>
 					</div>
