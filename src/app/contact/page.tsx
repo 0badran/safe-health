@@ -18,7 +18,6 @@ export default function ContactPage() {
 				imageSrc="/images/contact/hero-banner.jpg"
 				imageAlt="استقبال واستشارات Safe Health الطبية"
 				breadcrumbs={[{ label: "اتصل بنا" }]}
-				description="نحن هنا لمساعدتك في كل استفسار وتوجيهك إلى أفضل رعاية طبية متخصصة مع نخبة من الجراحين والاستشاريين المعتمدين."
 			/>
 
 			{/* Main Content: 2-column Grid matching the template layout */}

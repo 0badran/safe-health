@@ -19,7 +19,6 @@ export default function ArticlesPage() {
 				imageSrc="/images/articles/hero-banner.jpg"
 				imageAlt="المقالات والأبحاث الطبية المعتمدة في منصة Safe Health"
 				breadcrumbs={[{ label: "المقالات" }]}
-				description="مكتبة معرفية شاملة تضم أدلة إكلينيكية ومقارنات موضوعية تم إعدادها ومراجعتها بواسطة نخبة من كبار الاستشاريين لمساعدتك في اتخاذ القرار الطبي الصحيح."
 			/>
 
 			{/* Featured Flagship Article */}

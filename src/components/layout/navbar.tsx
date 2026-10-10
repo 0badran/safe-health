@@ -97,6 +97,10 @@ export function Navbar() {
 				{/* Desktop Navigation Links */}
 				<nav className="hidden lg:flex items-center">
 					<Button variant="ghost" size="sm" asChild>
+						<Link href="/">الرئيسية</Link>
+					</Button>
+
+					<Button variant="ghost" size="sm" asChild>
 						<Link href="/how-it-works">كيف نعمل</Link>
 					</Button>
 
@@ -249,6 +253,13 @@ export function Navbar() {
 							</SheetHeader>
 
 							<div className="flex flex-col gap-3 py-6">
+								<Link
+									href="/"
+									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
+								>
+									<span>الرئيسية</span>
+								</Link>
+
 								<Link
 									href="/how-it-works"
 									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"

@@ -20,7 +20,6 @@ export default function HowItWorksPage() {
 				imageSrc="/images/how-it-works/hero-banner.jpg"
 				imageAlt="استشارة وخطة علاجية في منظومة Safe Health"
 				breadcrumbs={[{ label: "كيف نعمل" }]}
-				description="منظومة متكاملة تضمن لك رحلة علاجية واضحة وآمنة، تبدأ من أول استشارة مجانية وحتى التعافي التام بإشراف نخبة من كبار الجراحين المعتمدين."
 			/>
 
 			{/* 4-Step Patient Journey */}

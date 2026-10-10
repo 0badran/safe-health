@@ -11,7 +11,6 @@ export interface BreadcrumbItem {
 
 export interface PageHeroProps {
 	title: string;
-	description?: string;
 	imageSrc?: string;
 	imageAlt?: string;
 	breadcrumbs?: BreadcrumbItem[];
@@ -21,7 +20,6 @@ export interface PageHeroProps {
 
 export function PageHero({
 	title,
-	description,
 	imageSrc = "/images/about/hero-banner.jpg",
 	imageAlt = "Safe Health",
 	breadcrumbs = [],
@@ -46,13 +44,13 @@ export function PageHero({
 					sizes="100vw"
 				/>
 				{/* Refined gradient overlay using semantic background tokens */}
-				<div className="absolute inset-0 bg-linear-to-b from-background/0 via-background/10 to-background/30" />
+				<div className="absolute inset-0 bg-linear-to-b from-primary/30 via-primary/10 to-primary/30" />
 			</div>
 
 			<div className="container relative z-10 max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="flex flex-col items-center justify-center text-center space-y-4">
 					{/* Main Title */}
-					<h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground drop-shadow-sm">
+					<h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-background drop-shadow-sm">
 						{title}
 					</h1>
 
@@ -91,13 +89,6 @@ export function PageHero({
 								);
 							})}
 						</nav>
-					)}
-
-					{/* Supportive Description */}
-					{description && (
-						<p className="max-w-2xl text-sm sm:text-base text-muted-foreground font-medium leading-relaxed pt-2">
-							{description}
-						</p>
 					)}
 
 					{children}

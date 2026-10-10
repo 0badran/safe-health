@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 
 export function Footer() {
 	const patientLinks = [
+		{ label: "الرئيسية", href: "/" },
 		{ label: "من نحن", href: "/about" },
 		{ label: "كيف نعمل", href: "/how-it-works" },
 		{ label: "المقالات", href: "/articles" },
