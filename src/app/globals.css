@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda+One&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -11,6 +12,9 @@
 	--font-mono: var(--font-geist-mono);
 	--font-heading: var(--font-heading);
 	--font-arabic: var(--font-arabic);
+	--font-merienda: var(--font-merienda);
+	--color-brand-purple: #392579;
+	--color-brand-teal: #159BA8;
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
 	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,25 +54,25 @@
 }
 
 :root {
-	/* Qunomedical Brand Palette */
-	--background: oklch(0.995 0.003 90); /* Clean warm off-white */
-	--foreground: oklch(0.42 0.015 110); /* Siam warm slate #585a51 */
-	--card: oklch(1 0 0); /* Pure white cards */
-	--card-foreground: oklch(0.42 0.015 110);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.42 0.015 110);
-	--primary: oklch(0.38 0.07 210); /* Deep Petrol Teal #155263 */
-	--primary-foreground: oklch(0.99 0 0); /* Pure white */
-	--secondary: oklch(0.96 0.03 85); /* Warm Sand/Cream #fff2d5 */
-	--secondary-foreground: oklch(0.38 0.07 210); /* Deep Petrol Teal */
-	--muted: oklch(0.96 0.008 220); /* Bluish light grey #eef2f6 */
-	--muted-foreground: oklch(0.55 0.01 110); /* #757575 */
-	--accent: oklch(0.86 0.14 85); /* Honey Gold #ffd16c */
-	--accent-foreground: oklch(0.28 0.06 210); /* Deep navy on gold */
-	--destructive: oklch(0.577 0.245 27.325); /* #dc2626 */
-	--border: oklch(0.92 0.01 220); /* Soft divider #edf2f7 */
+	--font-merienda: "Merienda One", cursive;
+	--background: #ffffff;
+	--foreground: oklch(0.2 0.02 260);
+	--card: #ffffff;
+	--card-foreground: oklch(0.2 0.02 260);
+	--popover: #ffffff;
+	--popover-foreground: oklch(0.2 0.02 260);
+	--primary: #392579;
+	--primary-foreground: #ffffff;
+	--secondary: #159BA8;
+	--secondary-foreground: #ffffff;
+	--muted: oklch(0.96 0.008 220);
+	--muted-foreground: oklch(0.55 0.01 110);
+	--accent: #159BA8;
+	--accent-foreground: #ffffff;
+	--destructive: oklch(0.577 0.245 27.325);
+	--border: oklch(0.92 0.01 220);
 	--input: oklch(0.92 0.01 220);
-	--ring: oklch(0.38 0.07 210); /* Teal focus ring */
+	--ring: #392579;
 	--chart-1: oklch(0.38 0.07 210); /* Teal */
 	--chart-2: oklch(0.86 0.14 85); /* Gold */
 	--chart-3: oklch(0.82 0.04 215); /* Sky/Sand blue */
@@ -92,10 +96,10 @@
 	--card-foreground: oklch(0.96 0.01 85);
 	--popover: oklch(0.25 0.05 215);
 	--popover-foreground: oklch(0.96 0.01 85);
-	--primary: oklch(0.86 0.14 85); /* Honey gold in dark mode */
-	--primary-foreground: oklch(0.2 0.04 215);
-	--secondary: oklch(0.32 0.06 210); /* Medium teal */
-	--secondary-foreground: oklch(0.96 0.01 85);
+	--primary: #6546b5;
+	--primary-foreground: #ffffff;
+	--secondary: #159BA8;
+	--secondary-foreground: #ffffff;
 	--muted: oklch(0.27 0.04 215);
 	--muted-foreground: oklch(0.78 0.03 215);
 	--accent: oklch(0.35 0.06 210);
@@ -133,5 +137,8 @@
 }
 
 @utility container {
-	@apply mx-auto;
+	@apply mx-auto max-w-380 px-5 lg:px-10 xl:px-16 ;
+}
+@utility text-size-1 {
+	@apply text-xl lg:text-2xl ;
 }

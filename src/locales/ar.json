@@ -1,0 +1,51 @@
+{
+	"navbar": {
+		"brandName": "SafeHealth",
+		"brandExt": ".me",
+		"brandSub": "الرعاية المعتمدة",
+		"home": "الرئيسية",
+		"aboutUs": "من نحن",
+		"treatments": "العلاجات",
+		"ourDoctors": "أطباؤنا",
+		"patientJourney": "رحلة المريض",
+		"beforeAfter": "قبل وبعد",
+		"forPartners": "للشركاء",
+		"contact": "اتصل بنا",
+		"getConsultation": "استشارة مجانية"
+	},
+	"hero": {
+		"tagline": "حيث تلتقي الرعاية التجميلية المتطورة بنهج شخصي استثنائي نحو الجمال، الثقة، وجودة الحياة.",
+		"startPlanning": "ابدأ التخطيط",
+		"viewTreatments": "عرض العلاجات",
+		"heading": {
+			"part1": "رحلتك",
+			"part1Accent": "الصحية،",
+			"part2": "بكل دقة",
+			"part2Accent": "وعناية"
+		},
+		"video": {
+			"title": "نظرة عامة على الرعاية التجميلية والخدمات",
+			"desc": "تعرف على نخبة الأطباء المتخصصين، أرقى المراكز المعتمدة، وخطط العلاج المخصصة لحالتك."
+		}
+	},
+	"consultation": {
+		"title": "طلب استشارة.",
+		"subtitle": "شاركنا بيانات التواصل وسيناقش فريقنا التوافر والمواعيد. الحقول المطلوبة محددة بـ *.",
+		"fullName": "الاسم الكامل",
+		"fullNamePlaceholder": "أليكس مورغان",
+		"email": "البريد الإلكتروني",
+		"emailPlaceholder": "alex@example.com",
+		"phone": "رقم الهاتف",
+		"phonePlaceholder": "+90 532 123 45 67",
+		"country": "الدولة",
+		"countryPlaceholder": "من أي دولة أنت؟",
+		"message": "الرسالة",
+		"messagePlaceholder": "أخبرنا عن الإجراء أو العلاج الذي ترغب في الاستفسار عنه.",
+		"agreement": "أوافق على التواصل معي بشأن هذا الطلب. *",
+		"send": "إرسال الطلب",
+		"sending": "جاري الإرسال...",
+		"successTitle": "تم استلام طلبك بنجاح!",
+		"successMessage": "سيتواصل معك مستشارنا الطبي المعتمد خلال 24 ساعة لتنسيق استشارتك المجانية.",
+		"sendAnother": "إرسال طلب آخر"
+	}
+}

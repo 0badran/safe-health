@@ -1,0 +1,51 @@
+{
+	"navbar": {
+		"brandName": "SafeHealth",
+		"brandExt": ".me",
+		"brandSub": "Soins Médicaux",
+		"home": "Accueil",
+		"aboutUs": "À propos",
+		"treatments": "Traitements",
+		"ourDoctors": "Nos Médecins",
+		"patientJourney": "Parcours Patient",
+		"beforeAfter": "Avant & Après",
+		"forPartners": "Partenaires",
+		"contact": "Contact",
+		"getConsultation": "Consultation Gratuite"
+	},
+	"hero": {
+		"tagline": "Où les soins esthétiques de pointe rencontrent une approche personnalisée de la beauté, de la confiance et du bien-être.",
+		"startPlanning": "commencer à planifier",
+		"viewTreatments": "voir les traitements",
+		"heading": {
+			"part1": "Votre Parcours",
+			"part1Accent": "Santé,",
+			"part2": "Mené avec",
+			"part2Accent": "Soin"
+		},
+		"video": {
+			"title": "Aperçu de l'Excellence Esthétique",
+			"desc": "Découvrez nos spécialistes de renommée internationale et notre approche humaine sur-mesure."
+		}
+	},
+	"consultation": {
+		"title": "Demander Une Consultation.",
+		"subtitle": "Partagez vos coordonnées et notre équipe discutera des disponibilités. Les champs obligatoires sont marqués d'un *.",
+		"fullName": "Nom complet",
+		"fullNamePlaceholder": "Alex Morgan",
+		"email": "Adresse e-mail",
+		"emailPlaceholder": "alex@example.com",
+		"phone": "Numéro de téléphone",
+		"phonePlaceholder": "+90 532 123 45 67",
+		"country": "Pays",
+		"countryPlaceholder": "De quel pays venez-vous ?",
+		"message": "message",
+		"messagePlaceholder": "Décrivez le traitement ou la procédure que vous envisagez.",
+		"agreement": "J'accepte d'être contacté(e) au sujet de cette demande. *",
+		"send": "Envoyer la demande",
+		"sending": "Envoi en cours...",
+		"successTitle": "Demande Bien Reçue !",
+		"successMessage": "Notre conseiller médical vous contactera d'ici 24 heures pour planifier votre consultation.",
+		"sendAnother": "Soumettre une autre demande"
+	}
+}

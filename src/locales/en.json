@@ -1,0 +1,51 @@
+{
+	"navbar": {
+		"brandName": "SafeHealth",
+		"brandExt": ".me",
+		"brandSub": "Medical Care",
+		"home": "Home",
+		"aboutUs": "About Us",
+		"treatments": "Treatments",
+		"ourDoctors": "Our Doctors",
+		"patientJourney": "Patient Journey",
+		"beforeAfter": "Before & After",
+		"forPartners": "For Partners",
+		"contact": "Contact",
+		"getConsultation": "Get a Free Consultation"
+	},
+	"hero": {
+		"tagline": "Where advanced aesthetic care meets a personalized approach to beauty, confidence, and well-being.",
+		"startPlanning": "start planning",
+		"viewTreatments": "view treatments",
+		"heading": {
+			"part1": "Your Health",
+			"part1Accent": "Journey,",
+			"part2": "Handled with",
+			"part2Accent": "Care"
+		},
+		"video": {
+			"title": "Aesthetic Excellence & Care Overview",
+			"desc": "Discover our world-class medical specialists, state-of-the-art facilities, and personalized approach."
+		}
+	},
+	"consultation": {
+		"title": "Request A Consultation.",
+		"subtitle": "Share your contact details and our team will discuss availability. Required fields are marked *.",
+		"fullName": "Full name",
+		"fullNamePlaceholder": "Alex Morgan",
+		"email": "Email address",
+		"emailPlaceholder": "alex@example.com",
+		"phone": "Phone number",
+		"phonePlaceholder": "+90 532 123 45 67",
+		"country": "Country",
+		"countryPlaceholder": "Which country are you from?",
+		"message": "message",
+		"messagePlaceholder": "Tell us about the treatment you are considering.",
+		"agreement": "I agree to be contacted about this request. *",
+		"send": "Send request",
+		"sending": "Sending...",
+		"successTitle": "Request Received!",
+		"successMessage": "Our dedicated medical advisor will reach out to you within 24 hours to schedule your consultation.",
+		"sendAnother": "Submit another request"
+	}
+}

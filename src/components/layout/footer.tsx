@@ -41,7 +41,7 @@ export function Footer() {
 	];
 
 	return (
-		<footer className="border-t bg-card text-card-foreground">
+		<footer className="border-t bg-card text-card-foreground mt-10">
 			{/* Upper Footer: Trust & Certifications Bar */}
 			<div className="border-b bg-muted/40">
 				<div className="container mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">

@@ -31,6 +31,8 @@ export const metadata: Metadata = {
 		"منظومة متكاملة لربط المرضى بأفضل الأطباء المعتمدين وإدارة العيادات الطبية باحترافية.",
 };
 
+import { LanguageProvider } from "@/lib/language-context";
+
 export default function RootLayout({
 	children,
 }: {
@@ -38,8 +40,8 @@ export default function RootLayout({
 }) {
 	return (
 		<html
-			lang="ar"
-			dir="rtl"
+			lang="en"
+			dir="ltr"
 			suppressHydrationWarning
 			className={cn(
 				"h-full antialiased font-sans rtl:font-arabic",
@@ -48,18 +50,18 @@ export default function RootLayout({
 				arabicFont.variable,
 			)}
 		>
-			<body className="min-h-full flex flex-col bg-background text-foreground">
+			<body className="min-h-full flex flex-col bg-white text-foreground">
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
 				>
-					<DirectionProvider dir="rtl" direction="rtl">
+					<LanguageProvider initialLanguage="en">
 						<Navbar />
 						<div className="flex-1">{children}</div>
 						<Footer />
-					</DirectionProvider>
+					</LanguageProvider>
 				</ThemeProvider>
 			</body>
 		</html>

@@ -1,22 +1,7 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import {
-	GlobeIcon,
-	SearchIcon,
-	MenuIcon,
-	ChevronDownIcon,
-	SparklesIcon,
-	StethoscopeIcon,
-	StarIcon,
-	HeartPulseIcon,
-	SmileIcon,
-	ShieldCheckIcon,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -30,288 +15,205 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import { useLanguage, useTranslation } from "@/lib/language-context";
+import {
+	CheckIcon,
+	GlobeIcon,
+	MenuIcon
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export function Navbar() {
-	const [selectedLang, setSelectedLang] = React.useState("العربية");
+	const { language, setLanguage, isRtl, availableLanguages } = useLanguage();
+	const { t } = useTranslation();
 
-	const languages = [
-		{ code: "ar", label: "العربية" },
-		{ code: "en", label: "English" },
-		{ code: "fr", label: "Français" },
-	];
-
-	const popularTreatments = [
-		{
-			title: "زراعة الشعر",
-			subtitle: "تقنيات متقدمة FUE & DHI",
-			icon: SparklesIcon,
-			href: "#treatments",
-		},
-		{
-			title: "طب وتجميل الأسنان",
-			subtitle: "ابتسامة هوليوود وزراعة فورية",
-			icon: SmileIcon,
-			href: "#treatments",
-		},
-		{
-			title: "جراحات التجميل",
-			subtitle: "نحت القوام وتجميل الوجه",
-			icon: StethoscopeIcon,
-			href: "#treatments",
-		},
-		{
-			title: "جراحات السمنة المتقدمة",
-			subtitle: "تكميم وتحويل مسار بالمنظار",
-			icon: HeartPulseIcon,
-			href: "#treatments",
-		},
-		{
-			title: "علاج العقم وأطفال الأنابيب",
-			subtitle: "أعلى نسب نجاح معتمدة",
-			icon: ShieldCheckIcon,
-			href: "#treatments",
-		},
+	const navLinks = [
+		{ href: "/", label: t("navbar.home") },
+		{ href: "/about", label: t("navbar.aboutUs") },
+		{ href: "#treatments", label: t("navbar.treatments") },
+		{ href: "#doctors", label: t("navbar.ourDoctors") },
+		{ href: "/how-it-works", label: t("navbar.patientJourney") },
+		{ href: "#before-after", label: t("navbar.beforeAfter") },
+		{ href: "#partners", label: t("navbar.forPartners") },
+		{ href: "/contact", label: t("navbar.contact") },
 	];
 
 	return (
-		<header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur-md supports-backdrop-filter:bg-background/80">
-			<div className="container flex h-18 max-w-7xl items-center justify-between">
-				{/* Brand Logo */}
+		<header className="fixed top-5 z-50 w-full   container  transition-colors">
+			<div className="flex p-2 bg-primary rounded-full   border-b border-white/10 backdrop-blur-md items-center justify-between ">
+				{/* Brand Logo from user provided asset */}
 				<Link
 					href="/"
-					className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90 select-none"
+					className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-90 select-none"
 				>
-					<div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-						<HeartPulseIcon className="size-6" />
+					<div className="relative flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl overflow-hidden  p-1 ">
+						<Image
+							src="/images/logo.png"
+							alt="Safe Health Me"
+							fill
+							sizes="48px"
+							className="object-contain p-1 size-full"
+							priority
+						/>
 					</div>
-					<div className="flex flex-col shrink-0 text-start leading-tight">
-						<span className="font-heading text-lg sm:text-xl font-bold tracking-tight text-primary whitespace-nowrap">
-							Safe Health
-						</span>
-						<span className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
-							الرعاية الطبية المعتمدة
-						</span>
-					</div>
+					
 				</Link>
 
 				{/* Desktop Navigation Links */}
-				<nav className="hidden lg:flex items-center">
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="/">الرئيسية</Link>
-					</Button>
-
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="/how-it-works">كيف نعمل</Link>
-					</Button>
-
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="#reviews">
-							<span>آراء المرضى</span>
-							<Badge variant="secondary">
-								<StarIcon className="size-3 fill-amber-400 text-amber-400" />
-								4.8
-							</Badge>
+				<nav className="hidden xl:flex items-center gap-1 text-sm font-medium">
+					{navLinks.map((link) => (
+						<Link
+							key={link.href + link.label}
+							href={link.href}
+							className="rounded-full px-3 py-1.5 text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+						>
+							{link.label}
 						</Link>
-					</Button>
-
-					{/* Popular Treatments Dropdown */}
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button variant="ghost" size="sm">
-								<span>التخصصات الطبية</span>
-								<ChevronDownIcon className="size-4 opacity-60" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="start" className="w-68 p-1.5">
-							{popularTreatments.map((treatment) => {
-								const IconComponent = treatment.icon;
-								return (
-									<DropdownMenuItem key={treatment.title} asChild>
-										<Link
-											href={treatment.href}
-											className="flex items-start gap-3 w-full p-2"
-										>
-											<div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-secondary text-secondary-foreground mt-0.5">
-												<IconComponent className="size-4" />
-											</div>
-											<div className="flex flex-col text-start">
-												<span className="text-xs font-semibold">
-													{treatment.title}
-												</span>
-												<span className="text-[11px] text-muted-foreground">
-													{treatment.subtitle}
-												</span>
-											</div>
-										</Link>
-									</DropdownMenuItem>
-								);
-							})}
-						</DropdownMenuContent>
-					</DropdownMenu>
-
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="/articles">المقالات</Link>
-					</Button>
-
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="/about">من نحن</Link>
-					</Button>
-
-					<Button variant="ghost" size="sm" asChild>
-						<Link href="/contact">اتصل بنا</Link>
-					</Button>
+					))}
 				</nav>
 
-				{/* Right Action Controls: Language, Search, CTA */}
-				<div className="hidden lg:flex items-center gap-3">
-					{/* Static Language Switcher */}
+				{/* Right Controls: CTA & Language Switcher & Theme */}
+				<div className="hidden lg:flex items-center gap-2.5">
+					{/* Primary Call to Action Button */}
+					<Button
+						variant="nav-white"
+						size="sm"
+						asChild
+						className="shadow-sm hover:shadow-md transition-all font-semibold"
+					>
+						<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
+					</Button>
+
+					{/* Language Switcher Dropdown */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button variant="outline" size="sm">
-								<GlobeIcon className="size-4 text-muted-foreground" />
-								<span>{selectedLang}</span>
-								<ChevronDownIcon className="size-3.5 opacity-60" />
+							<Button
+								variant="ghost"
+								size="icon"
+								className="text-white hover:bg-white/10 hover:text-white rounded-full size-9 transition-colors"
+								aria-label="Switch Language / تغيير اللغة"
+							>
+								<GlobeIcon className="size-5" />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" className="min-w-32">
-							{languages.map((lang) => (
+						<DropdownMenuContent
+							align={isRtl ? "start" : "end"}
+							className="min-w-36 bg-[#2a1b5c] border-white/15 text-white shadow-xl"
+						>
+							{availableLanguages.map((lang) => (
 								<DropdownMenuItem
 									key={lang.code}
-									onClick={() => setSelectedLang(lang.label)}
-									className="justify-between"
+									onClick={() => setLanguage(lang.code)}
+									className="flex items-center justify-between py-2 text-white hover:bg-white/10 cursor-pointer"
 								>
-									<span>{lang.label}</span>
-									{selectedLang === lang.label && (
-										<Badge variant="secondary">نشط</Badge>
+									<span className="flex items-center gap-2">
+										<span>{lang.flag}</span>
+										<span className="text-xs font-medium">{lang.label}</span>
+									</span>
+									{language === lang.code && (
+										<CheckIcon className="size-3.5 text-[#159BA8]" />
 									)}
 								</DropdownMenuItem>
 							))}
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					{/* Search Trigger Button */}
-					<Button
-						variant="ghost"
-						size="icon"
-						aria-label="البحث عن علاج أو طبيب"
-					>
-						<SearchIcon className="size-5" />
-					</Button>
-
 					{/* Theme Mode Toggle */}
-					<ModeToggle />
-
-					{/* Primary CTA */}
-					<Button variant="default" size="sm">
-						حجز استشارة مجانية
-					</Button>
+					<div className="[&_button]:text-white [&_button]:hover:bg-white/10">
+						<ModeToggle />
+					</div>
 				</div>
 
-				{/* Mobile Navigation Drawer (Sheet) */}
-				<div className="flex lg:hidden items-center gap-2">
-					{/* Mobile Language Switcher */}
+				{/* Mobile Navigation Drawer Trigger */}
+				<div className="flex xl:hidden items-center gap-2">
+					{/* Language Switcher on Mobile Header */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button variant="outline" size="xs">
-								<GlobeIcon className="size-3.5" />
-								<span>{selectedLang}</span>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								className="text-white hover:bg-white/10 rounded-full"
+								aria-label="Language"
+							>
+								<GlobeIcon className="size-4" />
 							</Button>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end" className="min-w-28">
-							{languages.map((lang) => (
+						<DropdownMenuContent
+							align="end"
+							className="min-w-32 bg-[#2a1b5c] border-white/15 text-white"
+						>
+							{availableLanguages.map((lang) => (
 								<DropdownMenuItem
 									key={lang.code}
-									onClick={() => setSelectedLang(lang.label)}
+									onClick={() => setLanguage(lang.code)}
+									className="flex items-center justify-between text-xs py-2 hover:bg-white/10"
 								>
-									{lang.label}
+									<span>
+										{lang.flag} {lang.label}
+									</span>
+									{language === lang.code && (
+										<CheckIcon className="size-3 text-[#159BA8]" />
+									)}
 								</DropdownMenuItem>
 							))}
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					{/* Mobile Theme Toggle */}
-					<ModeToggle />
+					<div className="[&_button]:text-white [&_button]:hover:bg-white/10">
+						<ModeToggle />
+					</div>
 
 					<Sheet>
 						<SheetTrigger asChild>
 							<Button
-								variant="outline"
+								variant="ghost"
 								size="icon"
-								aria-label="القائمة الرئيسية"
+								className="text-white hover:bg-white/10"
+								aria-label="Toggle menu"
 							>
-								<MenuIcon className="size-5" />
+								<MenuIcon className="size-6" />
 							</Button>
 						</SheetTrigger>
-						<SheetContent side="right" className="w-80 p-6">
-							<SheetHeader className="text-start pb-4 border-b">
-								<SheetTitle className="flex items-center gap-2 text-primary font-heading font-bold text-lg">
-									<div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-										<HeartPulseIcon className="size-5" />
+						<SheetContent
+							side={isRtl ? "left" : "right"}
+							className="w-80 bg-[#291a59] text-white border-white/15 p-6"
+						>
+							<SheetHeader className="text-start pb-4 border-b border-white/10">
+								<SheetTitle className="flex items-center gap-2.5 text-white">
+									<div className="relative size-9 overflow-hidden rounded-lg bg-white/10 p-0.5 ring-1 ring-white/20">
+										<Image
+											src="/images/logo.png"
+											alt="Safe Health Me"
+											fill
+											className="object-contain"
+										/>
 									</div>
-									<span>Safe Health</span>
+									<span className="font-heading font-bold text-lg text-white">
+										SafeHealth<span className="text-[#159BA8]">.me</span>
+									</span>
 								</SheetTitle>
 							</SheetHeader>
 
-							<div className="flex flex-col gap-3 py-6">
-								<Link
-									href="/"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>الرئيسية</span>
-								</Link>
-
-								<Link
-									href="/how-it-works"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>كيف نعمل</span>
-								</Link>
-
-								<Link
-									href="#reviews"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>آراء المرضى</span>
-									<Badge variant="secondary" className="text-xs">
-										4.8 ★
-									</Badge>
-								</Link>
-
-								<Link
-									href="#treatments"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>التخصصات الطبية</span>
-								</Link>
-
-								<Link
-									href="/articles"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>المقالات</span>
-								</Link>
-
-								<Link
-									href="/about"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>من نحن</span>
-								</Link>
-
-								<Link
-									href="/contact"
-									className="flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium hover:bg-muted"
-								>
-									<span>اتصل بنا</span>
-								</Link>
+							<div className="flex flex-col gap-2 py-6">
+								{navLinks.map((link) => (
+									<Link
+										key={link.href + link.label}
+										href={link.href}
+										className="rounded-xl px-3 py-2.5 text-sm font-medium text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+									>
+										{link.label}
+									</Link>
+								))}
 							</div>
 
-							<div className="mt-auto pt-6 border-t flex flex-col gap-3">
-								<Button variant="default" className="w-full">
-									حجز استشارة مجانية
-								</Button>
-								<Button variant="outline" className="w-full">
-									دخول الأطباء والعيادات
+							<div className="mt-auto pt-6 border-t border-white/10 flex flex-col gap-3">
+								<Button
+									variant="nav-white"
+									asChild
+									className="w-full text-center"
+								>
+									<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
 								</Button>
 							</div>
 						</SheetContent>
