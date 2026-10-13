@@ -11,5 +11,16 @@
 		"**/app/**/template.tsx": "${dirname(1)}/${dirname} - template.tsx",
 		"**/app/**/default.tsx": "${dirname(1)}/${dirname} - default.tsx",
 		"**/app/**/route.ts": "${dirname(1)}/${dirname} - route.ts"
-	}
+	},
+	"i18n-mage.i18nFeatures.framework": "react-i18next",
+	"i18n-mage.i18nFeatures.interpolationBrackets": "double",
+	"i18n-mage.i18nFeatures.namespaceSeparator": ".",
+	"i18n-mage.i18nFeatures.defaultNamespace": "",
+	"i18n-mage.workspace.languagePath": "src/locales",
+	"i18n-mage.writeRules.keyStyle": "camelCase",
+	"i18n-mage.writeRules.indentType": "tab",
+	"i18n-mage.writeRules.indentSize": 1,
+	"i18n-mage.writeRules.quoteStyleForKey": "double",
+	"i18n-mage.writeRules.quoteStyleForValue": "double",
+	"i18n-mage.writeRules.languageStructure": "nested"
 }
