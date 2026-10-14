@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter, Cairo } from "next/font/google";
+import { Inter, Cairo, Merienda } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,7 +7,7 @@ import { DirectionProvider } from "@/components/ui/direction";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
-const headingFont = Plus_Jakarta_Sans({
+const headingFont = Merienda({
 	subsets: ["latin"],
 	variable: "--font-heading",
 	display: "swap",
@@ -20,7 +20,7 @@ const sansFont = Inter({
 });
 
 const arabicFont = Cairo({
-	subsets: ["arabic", "latin"],
+	subsets: ["arabic"],
 	variable: "--font-arabic",
 	display: "swap",
 });
@@ -50,19 +50,21 @@ export default function RootLayout({
 				arabicFont.variable,
 			)}
 		>
-			<body className="min-h-full flex flex-col bg-white text-foreground">
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-				>
-					<LanguageProvider initialLanguage="en">
-						<Navbar />
-						<div className="flex-1">{children}</div>
-						<Footer />
-					</LanguageProvider>
-				</ThemeProvider>
+			<body className="min-h-full flex flex-col h6">
+				<DirectionProvider dir="ltr" direction="ltr">
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						<LanguageProvider initialLanguage="en">
+							<Navbar />
+							<div className="flex-1">{children}</div>
+							<Footer />
+						</LanguageProvider>
+					</ThemeProvider>
+				</DirectionProvider>
 			</body>
 		</html>
 	);

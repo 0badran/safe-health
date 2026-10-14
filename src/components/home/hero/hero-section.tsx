@@ -1,12 +1,5 @@
 import WatermarkVector from "../WatermarkVector";
 
-const styles = `
-  @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600&display=swap");
-  @import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600&display=swap");
-  html, body { margin: 0; padding: 0; background: #fff; width: 1440px; height: 880px; }
-  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-  input::placeholder, textarea::placeholder { color: inherit; opacity: 1; }
-`;
 
 const responsiveCss =
   "/* Responsive behaviour, below the width this design was drawn at. Above it every box is where Figma put it. */ @media (max-width:1439.98px){.r-grow{height:auto!important}.r-wrap{white-space:pre-wrap!important;overflow-wrap:break-word}.r-wrap span{transform:none!important}}";
@@ -94,7 +87,6 @@ function ArrowIcon({ color }) {
 export default function HeroSection() {
   return (
     <>
-      <style>{styles}</style>
       <style>{responsiveCss}</style>
       <div
         data-figma="Desktop - 1"
