@@ -29,7 +29,7 @@ export function HeroVideoCard({
 					}
 				}}
 				aria-label="Play aesthetic care overview video"
-				className="group relative aspect-[2.1/1] w-full max-w-[460px] overflow-hidden rounded-[26px] bg-purple-950/40 shadow-xl ring-1 ring-white/15 transition-all duration-300 hover:shadow-2xl hover:ring-white/30 cursor-pointer select-none"
+				className="group relative aspect-[2.1/1] w-full max-w-140 overflow-hidden rounded-[26px] bg-purple-950/40 shadow-xl ring-1 ring-white/15 transition-all duration-300 hover:shadow-2xl hover:ring-white/30 cursor-pointer select-none"
 			>
 				{/* Aesthetic Model Image */}
 				<Image

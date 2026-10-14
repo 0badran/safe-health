@@ -28,7 +28,7 @@ const buttonVariants = cva(
 				"purple-pill":
 					"bg-[#392579] text-white hover:bg-[#2f1e63] rounded-full shadow-md active:scale-[0.99]",
 				"nav-white":
-					"bg-white text-[#159BA8] hover:bg-white/95 rounded-full font-semibold shadow-sm active:scale-[0.99]",
+					"bg-white text-secondary hover:bg-white/95 rounded-full font-semibold shadow-sm active:scale-[0.99]",
 			},
 			size: {
 				default:
