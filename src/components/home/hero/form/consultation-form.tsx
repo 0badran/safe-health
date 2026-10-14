@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -12,14 +9,17 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { COUNTRIES, DEFAULT_FORM_VALUES, INPUT_BASE_CLASSES } from "./constants";
+import { ConsultationSuccess } from "./consultation-success";
+import { DecorationWatermark } from "./decoration-watermark";
 import {
 	consultationFormSchema,
 	type ConsultationFormValues,
 } from "./schema";
-import { COUNTRIES, DEFAULT_FORM_VALUES, INPUT_BASE_CLASSES } from "./constants";
-import { ConsultationSubmitButton } from "./consultation-submit-button";
-import { ConsultationSuccess } from "./consultation-success";
-import { DecorationWatermark } from "./decoration-watermark";
 
 export interface ConsultationFormProps {
 	onSubmit?: (data: ConsultationFormValues) => void | Promise<void>;
@@ -65,8 +65,8 @@ export function ConsultationForm({
 	return (
 		<div
 			className={cn(
-				"relative w-full max-w-[550px] mx-auto bg-white rounded-2xl overflow-hidden",
-				"shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-[#392579]/10",
+				"relative w-full max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden",
+				"lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10",
 				className,
 			)}
 		>
@@ -74,10 +74,10 @@ export function ConsultationForm({
 
 			<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
 				<header className="space-y-1.5">
-					<h2 className="m-0 text-[clamp(20px,4.4vw,26px)] leading-tight font-normal text-[#392579] capitalize font-heading">
+					<h2 className="m-0 text-[clamp(20px,4.4vw,26px)] leading-tight font-normal text-primary capitalize font-heading">
 						{title}
 					</h2>
-					<p className="m-0 text-[14px] leading-[22px] text-[#282331]/80 font-sans">
+					<p className="m-0 text-[14px] leading-5.5 text-[#282331]/80 font-sans">
 						{description}
 					</p>
 				</header>
@@ -99,7 +99,7 @@ export function ConsultationForm({
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="text-[14px] leading-5 font-medium text-[#282331] font-sans flex items-center gap-1 select-none">
 											<span>Full name</span>
-											<span className="text-[#392579] font-bold" aria-hidden="true">
+											<span className="text-primary font-bold" aria-hidden="true">
 												*
 											</span>
 										</FormLabel>
@@ -113,9 +113,9 @@ export function ConsultationForm({
 												spellCheck={false}
 												className={cn(
 													INPUT_BASE_CLASSES,
-													"h-[42px]",
+													"h-10.5",
 													fieldState.error &&
-														"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
+													"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
 												)}
 											/>
 										</FormControl>
@@ -133,7 +133,7 @@ export function ConsultationForm({
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="text-[14px] leading-5 font-medium text-[#282331] font-sans flex items-center gap-1 select-none">
 												<span>Email address</span>
-												<span className="text-[#392579] font-bold" aria-hidden="true">
+												<span className="text-primary font-bold" aria-hidden="true">
 													*
 												</span>
 											</FormLabel>
@@ -147,9 +147,9 @@ export function ConsultationForm({
 													spellCheck={false}
 													className={cn(
 														INPUT_BASE_CLASSES,
-														"h-[42px]",
+														"h-10.5",
 														fieldState.error &&
-															"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
+														"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
 													)}
 												/>
 											</FormControl>
@@ -201,7 +201,7 @@ export function ConsultationForm({
 														"h-[42px] appearance-none pr-9 cursor-pointer",
 														!field.value && "text-[#868588]",
 														fieldState.error &&
-															"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
+														"shadow-[inset_0_0_0_1px_#dc2626] focus:shadow-[inset_0_0_0_2px_#dc2626]",
 													)}
 												>
 													<option value="" className="text-[#868588]">
@@ -274,14 +274,14 @@ export function ConsultationForm({
 													checked={field.value}
 													onChange={field.onChange}
 													disabled={isSubmitting}
-													className="peer sr-only"
+													className="peer sr-only border"
 												/>
 											</FormControl>
 											<span
 												className={cn(
 													"flex-none size-5 rounded bg-white flex items-center justify-center transition-all duration-200",
-													"shadow-[inset_0_0_0_1px_#392579] peer-checked:bg-[#392579] peer-checked:shadow-none",
-													"peer-focus-visible:ring-2 peer-focus-visible:ring-[#392579]/40 peer-focus-visible:ring-offset-1",
+													"shadow-[inset_0_0_0_1pxprimary peer-checked:bg-primary peer-checked:shadow-none",
+													"peer-focus-visible:ring-2 peer-focus-visible:ring-primary/40 peer-focus-visible:ring-offset-1",
 													"[&>svg]:opacity-0 peer-checked:[&>svg]:opacity-100",
 													fieldState.error && "shadow-[inset_0_0_0_1.5px_#dc2626]",
 												)}
@@ -303,9 +303,9 @@ export function ConsultationForm({
 													/>
 												</svg>
 											</span>
-											<span className="text-[14px] leading-[1.5] text-[#282331] font-sans">
+											<span className="text-[14px] leading-normal text-[#282331] font-sans">
 												I agree to be contacted about this request.{" "}
-												<span className="text-[#392579] font-bold">*</span>
+												<span className="text-primary font-bold">*</span>
 											</span>
 										</label>
 										<FormMessage className="text-[12px] text-red-600 font-sans ps-8 animate-in fade-in slide-in-from-top-1 duration-150" />
@@ -315,10 +315,12 @@ export function ConsultationForm({
 
 							{/* Submit Button */}
 							<div className="pt-1">
-								<ConsultationSubmitButton
-									isSubmitting={isSubmitting}
-									label="Send Request"
-								/>
+								<Button
+									variant="default"
+									withArrow
+								>
+									Send request
+								</Button>
 							</div>
 						</form>
 					</Form>

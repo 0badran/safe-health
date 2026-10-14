@@ -12,7 +12,7 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 	return (
 		<section
 			className={cn(
-				"relative w-full h-screen  text-white",
+				"relative w-full lg:h-screen  text-white lg:mb-44",
 				className,
 			)}
 		>
@@ -34,13 +34,13 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 			</div>
 
 			{/* Main Content Container */}
-			<div className="relative z-10 container mx-auto  pt-28  pb-0">
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+			<div className="relative z-10 container  pt-28  pb-0">
+				<div className="grid grid-cols-1 lg:grid-cols-12  gap-4 items-start">
 					{/* Left Column: Tagline, Video Preview, CTA Buttons & Bottom Stats Banner */}
-					<div className="lg:col-span-7 flex flex-col justify-between min-h-full">
-						<div className="space-y-6 sm:space-y-7">
+					<div className="lg:col-span-7 flex max-lg:items-center flex-col justify-between min-h-full">
+						<div className="space-y-4">
 							{/* Tagline */}
-							<h1 className="text-white/60 text-lg sm:text-xl lg:text-2xl font-normal leading-relaxed max-w-xl font-sans tracking-wide">
+							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl font-sans tracking-wide">
 								Where advanced aesthetic care meets a personalized approach to beauty, confidence, and well-being.
 							</h1>
 
@@ -56,8 +56,8 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 					</div>
 
 					{/* Right Column: Consultation Form Card */}
-					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative">
-						<div id="consultation" className="w-full absolute inset-s-0">
+					<div className="lg:col-span-5  flex justify-center lg:justify-end pb-8 lg:pb-12 relative">
+						<div id="consultation" className="w-full lg:absolute inset-s-0">
 							<ConsultationForm onSubmit={onSubmit} />
 						</div>
 					</div>
