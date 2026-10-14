@@ -10,9 +10,9 @@ export default function Home() {
 		<main className="flex flex-col flex-1 w-full space-y-12 sm:space-y-16">
 			<HeroSection />
 			<div className="container space-y-12 sm:space-y-16">
-				<HealthcareOptionsSection />
 				<WhyChooseSection />
 				<RhinoplastySection />
+				<HealthcareOptionsSection />
 				<StepsSection />
 				<TeamSection />
 			</div>
