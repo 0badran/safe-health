@@ -140,12 +140,9 @@
 }
 
 @utility container {
-	@apply mx-auto px-4 max-w-360;
+	@apply mx-auto px-4 max-w-340;
 }
 
-@utility text-size-1 {
-	@apply text-xl lg:text-2xl;
-}
 
 @utility h1 {
 	font-size: clamp(20px, 3.3333vw, 48px);

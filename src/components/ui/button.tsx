@@ -20,6 +20,15 @@ const buttonVariants = cva(
 				destructive:
 					"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
 				link: "text-primary underline-offset-4 hover:underline",
+				teal: "bg-[#159BA8] text-white hover:bg-[#128a96] shadow-sm active:scale-[0.99]",
+				"teal-pill":
+					"bg-[#159BA8] text-white hover:bg-[#128a96] rounded-full shadow-md active:scale-[0.99]",
+				"white-pill":
+					"bg-white text-[#159BA8] hover:bg-slate-50 border border-white/80 rounded-full shadow-md active:scale-[0.99]",
+				"purple-pill":
+					"bg-[#392579] text-white hover:bg-[#2f1e63] rounded-full shadow-md active:scale-[0.99]",
+				"nav-white":
+					"bg-white text-secondary hover:bg-white/95 rounded-full font-semibold shadow-sm active:scale-[0.99]",
 			},
 			size: {
 				default:

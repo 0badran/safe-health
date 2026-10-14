@@ -1,6 +1,7 @@
-import HeroSection from "@/components/home/hero-section";
+import HeroSection from "@/components/home/hero";
 import StepsSection from "@/components/home/steps-section";
 import TeamSection from "@/components/home/team-section";
+
 import { WhyChooseSection } from "@/components/home/why-choose-section";
 import { RhinoplastySection } from "@/components/home/rhinoplasty-section";
 import { HealthcareOptionsSection } from "@/components/home/healthcare-options-section";

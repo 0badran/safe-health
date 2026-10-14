@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -40,14 +39,14 @@ export function Navbar() {
 	];
 
 	return (
-		<header className="fixed top-5 z-50 w-full   container  transition-colors">
-			<div className="flex p-2 bg-primary rounded-full   border-b border-white/10 backdrop-blur-md items-center justify-between ">
+		<header className="fixed top-5 inset-x-0 z-50 w-full   container  transition-colors">
+			<div className="flex  bg-primary rounded-full   border border-white/10 backdrop-blur-md items-center justify-between ">
 				{/* Brand Logo from user provided asset */}
 				<Link
 					href="/"
 					className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-90 select-none"
 				>
-					<div className="relative flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl overflow-hidden  p-1 ">
+					<div className="relative flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl overflow-hidden  p-1 mx-2">
 						<Image
 							src="/images/logo.png"
 							alt="Safe Health Me"
@@ -57,7 +56,7 @@ export function Navbar() {
 							priority
 						/>
 					</div>
-					
+
 				</Link>
 
 				{/* Desktop Navigation Links */}
@@ -75,16 +74,6 @@ export function Navbar() {
 
 				{/* Right Controls: CTA & Language Switcher & Theme */}
 				<div className="hidden lg:flex items-center gap-2.5">
-					{/* Primary Call to Action Button */}
-					<Button
-						variant="nav-white"
-						size="sm"
-						asChild
-						className="shadow-sm hover:shadow-md transition-all font-semibold"
-					>
-						<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
-					</Button>
-
 					{/* Language Switcher Dropdown */}
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
@@ -119,10 +108,15 @@ export function Navbar() {
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					{/* Theme Mode Toggle */}
-					<div className="[&_button]:text-white [&_button]:hover:bg-white/10">
-						<ModeToggle />
-					</div>
+					{/* Primary Call to Action Button */}
+					<Button
+						variant="nav-white"
+						asChild
+						className="p-2 m-2"
+					>
+						<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
+					</Button>
+
 				</div>
 
 				{/* Mobile Navigation Drawer Trigger */}
@@ -160,9 +154,6 @@ export function Navbar() {
 						</DropdownMenuContent>
 					</DropdownMenu>
 
-					<div className="[&_button]:text-white [&_button]:hover:bg-white/10">
-						<ModeToggle />
-					</div>
 
 					<Sheet>
 						<SheetTrigger asChild>
