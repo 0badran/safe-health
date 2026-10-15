@@ -12,10 +12,10 @@ const buttonVariants = cva(
 				default:
 					"bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs active:scale-[0.99]",
 				secondary:
-					"bg-background border border-primary text-primary hover:opacity-80 shadow-xs active:scale-[0.99] border border-primary text-base ",
+					"bg-background border border-primary text-primary hover:opacity-80 shadow-xs active:scale-[0.99] border border-primary",
 				outline:
 					"border border-primary text-primary hover:opacity-90 aria-expanded:bg-muted aria-expanded:text-primary",
-			
+
 				ghost:
 					"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
 				destructive:
@@ -27,10 +27,10 @@ const buttonVariants = cva(
 			},
 			size: {
 				default:
-					"h-11 gap-1.5 px-1 ps-4 has-data-[icon=inline-end]:pe-2.5 has-data-[icon=inline-start]:ps-2.5",
-				xs: "h-6 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 [&_svg:not([class*='size-'])]:size-3",
-				sm: "h-8 gap-1 px-3 has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
-				lg: "h-11 gap-2 px-2 text-base has-data-[icon=inline-end]:pe-3 has-data-[icon=inline-start]:ps-3",
+					"h-9 sm:h-11 gap-1.5 px-1 ps-4 has-data-[icon=inline-end]:pe-2.5 has-data-[icon=inline-start]:ps-2.5",
+				xs: "h-6 gap-1 px-1 text-xs has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 [&_svg:not([class*='size-'])]:size-3",
+				sm: "h-8 gap-1 px-1 has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
+				lg: "h-11 gap-2 px-1 has-data-[icon=inline-end]:pe-3 has-data-[icon=inline-start]:ps-3",
 				icon: "size-9",
 				"icon-xs": "size-6",
 				"icon-sm": "size-8",
@@ -80,9 +80,8 @@ function Button({
 			{withArrow && !size?.startsWith("icon") && (
 				<div
 					className={cn(
-						"inline-flex items-center justify-center rounded-full shrink-0",
+						"inline-flex items-center sm:size-9 size-7 justify-center rounded-full shrink-0",
 						arrowBgVariants[variant!] ?? arrowBgVariants.default,
-						size?.endsWith("lg") ? "size-9" : "size-9",
 					)}
 				>
 					<ArrowRight

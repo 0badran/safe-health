@@ -34,13 +34,13 @@ export function RhinoplastySection() {
 
 				{/* Center Column: Arched Profile Photo */}
 				<div className="relative flex justify-center items-center">
-					<div className="relative w-full max-w-85 sm:max-w-100 aspect-4/5 drop-shadow-[0_20px_40px_rgba(57,37,121,0.08)]">
+					<div className="relative w-full max-w-85 sm:max-w-100 aspect-4/5">
 						<Image
 							src="/images/rhinoplasty.png"
 							alt="Refine Your Profile - Rhinoplasty"
 							fill
 							priority
-							className="object-contain size-full"
+							className="object-cover size-full"
 						/>
 					</div>
 				</div>

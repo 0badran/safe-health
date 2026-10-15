@@ -5,6 +5,7 @@ import TeamSection from "@/components/home/team-section";
 import { WhyChooseSection } from "@/components/home/why-choose-section";
 import { RhinoplastySection } from "@/components/home/rhinoplasty-section";
 import { HealthcareOptionsSection } from "@/components/home/healthcare-options-section";
+import { TransformationSection } from "@/components/home/transformation-section";
 
 export default function Home() {
 	return (
@@ -16,6 +17,7 @@ export default function Home() {
 				<HealthcareOptionsSection />
 				<StepsSection />
 				<TeamSection />
+				<TransformationSection />
 			</div>
 		</main>
 	);

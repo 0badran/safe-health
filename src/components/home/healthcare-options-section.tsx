@@ -96,7 +96,7 @@ export function HealthcareOptionsSection() {
 					</p>
 
 					<Link href="/treatments">
-						<Button variant="default" withArrow size="lg">
+						<Button variant="default" withArrow>
 							Find Your Care
 						</Button>
 					</Link>
