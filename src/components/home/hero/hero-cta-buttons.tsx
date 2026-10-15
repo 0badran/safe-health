@@ -29,7 +29,7 @@ export function HeroCtaButtons({ className }: HeroCtaButtonsProps) {
 				<Button
 					variant="outline"
 					withArrow
-					className="text-white"
+					className="text-white border-white"
 				>
 					<span>View treatments</span>
 				</Button>

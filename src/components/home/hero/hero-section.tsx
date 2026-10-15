@@ -1,25 +1,25 @@
 "use client";
 
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { HeroVideoCard } from "./hero-video-card";
-import { HeroCtaButtons } from "./hero-cta-buttons";
-import { HeroStatsBanner } from "./hero-stats-banner";
+import Image from "next/image";
+import InteractiveGridBackground from "../InteractiveGridBackground";
 import { ConsultationForm } from "./form";
+import { HeroCtaButtons } from "./hero-cta-buttons";
+import { HeroVideoCard } from "./hero-video-card";
 import type { HeroSectionProps } from "./types";
 
 export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 	return (
 		<section
 			className={cn(
-				"relative w-full lg:h-screen  text-white lg:mb-44",
+				"relative w-full lg:h-screen text-white lg:mb-44",
 				className,
 			)}
 		>
 			{/* Background Image & Texture Overlay */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute inset-0 inset-y-[70v] z-0 select-none overflow-hidden"
+				className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
 			>
 				{/* Underlying hero background asset */}
 				<Image
@@ -27,15 +27,23 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 					alt=""
 					fill
 					priority
-					className="object-cover object-top  mix-blend-screen"
+					className="object-cover object-top mix-blend-screen"
 					sizes="100vw"
 				/>
-
 			</div>
 
+			{/* Interactive Grid Layer - placed above hero-bg.png and below Main Content, masked to hero-bg.png */}
+			<InteractiveGridBackground
+				squareSize={60}
+				hoverColor="rgba(255, 255, 255, 0.2)"
+				borderColor="rgba(255, 255, 255, 0.08)"
+				maskImage="/images/hero-bg.png"
+				className="pointer-events-auto absolute inset-0 z-1"
+			/>
+
 			{/* Main Content Container */}
-			<div className="relative z-10 container  pt-28  pb-0">
-				<div className="grid grid-cols-1 lg:grid-cols-12  gap-4 items-start">
+			<div className="relative z-10 container pt-28 pb-0 pointer-events-none">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 					{/* Left Column: Tagline, Video Preview, CTA Buttons & Bottom Stats Banner */}
 					<div className="lg:col-span-7 flex max-lg:items-center flex-col justify-between min-h-full">
 						<div className="space-y-4">
@@ -45,18 +53,21 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 							</h1>
 
 							{/* Video Card Preview */}
-							<HeroVideoCard />
+							<div className="pointer-events-auto">
+								<HeroVideoCard />
+							</div>
 
 							{/* CTA Action Buttons */}
-							<HeroCtaButtons />
+							<div className="pointer-events-auto">
+								<HeroCtaButtons />
+							</div>
 						</div>
 
 						{/* White Stats & Journey Banner aligned at bottom */}
-					
 					</div>
 
 					{/* Right Column: Consultation Form Card */}
-					<div className="lg:col-span-5  flex justify-center lg:justify-end pb-8 lg:pb-12 relative">
+					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative pointer-events-auto">
 						<div id="consultation" className="w-full lg:absolute inset-s-0">
 							<ConsultationForm onSubmit={onSubmit} />
 						</div>
@@ -70,8 +81,8 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 export default HeroSection;
 
 // Re-export subcomponents and form module
-export * from "./types";
-export { HeroVideoCard } from "./hero-video-card";
+export * from "./form";
 export { HeroCtaButtons } from "./hero-cta-buttons";
 export { HeroStatsBanner } from "./hero-stats-banner";
-export * from "./form";
+export { HeroVideoCard } from "./hero-video-card";
+export * from "./types";
