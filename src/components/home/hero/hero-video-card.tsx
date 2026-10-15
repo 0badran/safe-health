@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
-import { PlayIcon, XIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { PlayIcon } from "lucide-react";
+import Image from "next/image";
+import * as React from "react";
 
 interface HeroVideoCardProps {
 	modalTitle?: string;
@@ -29,7 +29,7 @@ export function HeroVideoCard({
 					}
 				}}
 				aria-label="Play aesthetic care overview video"
-				className="group relative aspect-[2.1/1] w-full max-w-140 overflow-hidden rounded-[26px] bg-purple-950/40 shadow-xl ring-1 ring-white/15 transition-all duration-300 hover:shadow-2xl hover:ring-white/30 cursor-pointer select-none"
+				className="group relative aspect-[2.1/1] w-full lg:max-w-150 overflow-hidden rounded-[26px] bg-purple-950/40 shadow-xl ring-1 ring-white/15 transition-all duration-300 hover:shadow-2xl hover:ring-white/30 cursor-pointer select-none"
 			>
 				{/* Aesthetic Model Image */}
 				<Image
@@ -42,7 +42,7 @@ export function HeroVideoCard({
 				/>
 
 				{/* Soft cinematic vignette overlay */}
-				<div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 group-hover:from-black/50 transition-colors" />
+				<div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/10 group-hover:from-black/50 transition-colors" />
 
 				{/* Center Play Button with ripple effect */}
 				<div className="absolute inset-0 flex items-center justify-center">

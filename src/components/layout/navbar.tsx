@@ -2,12 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
 	Sheet,
 	SheetContent,
 	SheetHeader,
@@ -16,15 +10,14 @@ import {
 } from "@/components/ui/sheet";
 import { useLanguage, useTranslation } from "@/lib/language-context";
 import {
-	CheckIcon,
-	GlobeIcon,
 	MenuIcon
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { LanguageSwitcher } from "../LanguageSwitcher";
 
 export function Navbar() {
-	const { language, setLanguage, isRtl, availableLanguages } = useLanguage();
+	const { isRtl } = useLanguage();
 	const { t } = useTranslation();
 
 	const navLinks = [
@@ -34,7 +27,6 @@ export function Navbar() {
 		{ href: "#doctors", label: t("navbar.ourDoctors") },
 		{ href: "/how-it-works", label: t("navbar.patientJourney") },
 		{ href: "#before-after", label: t("navbar.beforeAfter") },
-		{ href: "#partners", label: t("navbar.forPartners") },
 		{ href: "/contact", label: t("navbar.contact") },
 	];
 
@@ -73,88 +65,23 @@ export function Navbar() {
 				</nav>
 
 				{/* Right Controls: CTA & Language Switcher & Theme */}
-				<div className="hidden lg:flex items-center gap-2.5">
+				<div className="hidden xl:flex items-center gap-2.5">
 					{/* Language Switcher Dropdown */}
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button
-								variant="ghost"
-								size="icon"
-								className="text-white hover:bg-white/10 hover:text-white rounded-full size-9 transition-colors"
-								aria-label="Switch Language / تغيير اللغة"
-							>
-								<GlobeIcon className="size-5" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent
-							align={isRtl ? "start" : "end"}
-							className="min-w-36 bg-[#2a1b5c] border-white/15 text-white shadow-xl"
-						>
-							{availableLanguages.map((lang) => (
-								<DropdownMenuItem
-									key={lang.code}
-									onClick={() => setLanguage(lang.code)}
-									className="flex items-center justify-between py-2 text-white hover:bg-white/10 cursor-pointer"
-								>
-									<span className="flex items-center gap-2">
-										<span>{lang.flag}</span>
-										<span className="text-xs font-medium">{lang.label}</span>
-									</span>
-									{language === lang.code && (
-										<CheckIcon className="size-3.5 text-[#159BA8]" />
-									)}
-								</DropdownMenuItem>
-							))}
-						</DropdownMenuContent>
-					</DropdownMenu>
-
+					<LanguageSwitcher />
 					{/* Primary Call to Action Button */}
 					<Button
-						variant="nav-white"
+						variant="secondary"
 						asChild
-						className="p-2 m-2"
+						className="m-2"
 					>
 						<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
 					</Button>
-
 				</div>
 
 				{/* Mobile Navigation Drawer Trigger */}
-				<div className="flex xl:hidden items-center gap-2">
+				<div className="flex xl:hidden items-center gap-2 px-2">
 					{/* Language Switcher on Mobile Header */}
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button
-								variant="ghost"
-								size="icon-sm"
-								className="text-white hover:bg-white/10 rounded-full"
-								aria-label="Language"
-							>
-								<GlobeIcon className="size-4" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent
-							align="end"
-							className="min-w-32 bg-[#2a1b5c] border-white/15 text-white"
-						>
-							{availableLanguages.map((lang) => (
-								<DropdownMenuItem
-									key={lang.code}
-									onClick={() => setLanguage(lang.code)}
-									className="flex items-center justify-between text-xs py-2 hover:bg-white/10"
-								>
-									<span>
-										{lang.flag} {lang.label}
-									</span>
-									{language === lang.code && (
-										<CheckIcon className="size-3 text-[#159BA8]" />
-									)}
-								</DropdownMenuItem>
-							))}
-						</DropdownMenuContent>
-					</DropdownMenu>
-
-
+					<LanguageSwitcher />
 					<Sheet>
 						<SheetTrigger asChild>
 							<Button
@@ -168,7 +95,7 @@ export function Navbar() {
 						</SheetTrigger>
 						<SheetContent
 							side={isRtl ? "left" : "right"}
-							className="w-80 bg-[#291a59] text-white border-white/15 p-6"
+							className="w-80 bg-primary text-white border-white/15 p-6"
 						>
 							<SheetHeader className="text-start pb-4 border-b border-white/10">
 								<SheetTitle className="flex items-center gap-2.5 text-white">
