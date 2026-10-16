@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import InteractiveGridBackground from "../InteractiveGridBackground";
+import { InteractiveGridBackground } from "@/components/shared/interactive-grid-background";
 import { ConsultationForm } from "./form";
 import { HeroCtaButtons } from "./hero-cta-buttons";
 import { HeroVideoCard } from "./hero-video-card";
@@ -33,13 +33,7 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 			</div>
 
 			{/* Interactive Grid Layer - placed above hero-bg.png and below Main Content, masked to hero-bg.png */}
-			<InteractiveGridBackground
-				squareSize={60}
-				hoverColor="rgba(255, 255, 255, 0.2)"
-				borderColor="rgba(255, 255, 255, 0.08)"
-				maskImage="/images/hero-bg.png"
-				className="pointer-events-auto absolute inset-0 z-1"
-			/>
+			<InteractiveGridBackground maskImage="/images/hero-bg.png" />
 
 			{/* Main Content Container */}
 			<div className="relative z-10 container pt-28 pb-0 pointer-events-none">
@@ -49,7 +43,8 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 						<div className="space-y-4">
 							{/* Tagline */}
 							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl font-sans tracking-wide">
-								Where advanced aesthetic care meets a personalized approach to beauty, confidence, and well-being.
+								Where advanced aesthetic care meets a personalized approach to
+								beauty, confidence, and well-being.
 							</h1>
 
 							{/* Video Card Preview */}

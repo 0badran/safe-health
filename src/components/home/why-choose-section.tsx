@@ -1,55 +1,91 @@
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { SectionBadge } from "@/components/shared/section-badge";
-import { Button } from "@/components/ui/button";
+import SectionHeader from "../shared/section-header";
+
+export interface CardOverlayProps {
+	title: string;
+	description: string;
+	withHoverEffect?: boolean;
+}
+
+export function CardOverlay({
+	title,
+	description,
+	withHoverEffect = false,
+}: CardOverlayProps) {
+	return (
+		<div
+			className={cn(
+				"absolute inset-x-3 bottom-3 rounded-xl bg-primary/54 backdrop-blur-lg px-4 py-2.5 text-primary-foreground shadow-md border border-primary-foreground/15",
+				withHoverEffect &&
+					"translate-y-[calc(100%+12px)] opacity-0 scale-3d scale-85 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-hover:scale-100 pointer-events-none group-hover:pointer-events-auto",
+			)}
+		>
+			<p className="font-semibold uppercase">{title}</p>
+			<p className="small text-primary-foreground mt-0.5">{description}</p>
+		</div>
+	);
+}
 
 export function WhyChooseSection() {
 	return (
 		<section className="w-full">
-			<div className="flex flex-col items-center text-center mb-8 sm:mb-12">
-				<SectionBadge>TRUSTED CARE, WORLDWIDE</SectionBadge>
-				<h1 className="text-heading mt-3 sm:mt-4">Why Choose SafeHealthMe?</h1>
-			</div>
+			<SectionHeader
+				title="Why Choose SafeHealthMe?"
+				subTitle="TRUSTED CARE, WORLDWIDE"
+				align="center"
+			/>
 
 			<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
 				{/* Left Column: 2 Stacked Cards */}
 				<div className="flex flex-col gap-5 justify-between">
 					{/* Top Card: Aesthetic Care */}
-					<div className="relative h-48 lg:h-52.5 w-full rounded-2xl overflow-hidden shadow-xs bg-muted">
+					<div className="group relative h-48 lg:h-52.5 w-full rounded-2xl overflow-hidden shadow-xs bg-muted">
 						<Image
 							src="/images/why-choose/aesthetic-care.jpg"
 							alt="Aesthetic Skin Care"
 							fill
-							className="object-cover size-full transition-transform duration-500 hover:scale-105"
+							sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+							className="object-cover size-full"
+						/>
+						<CardOverlay
+							title="AESTHETIC CARE"
+							description="Personalized aesthetic care guided by certified specialists."
+							withHoverEffect
 						/>
 					</div>
 
-					{/* Bottom Card: Patient Focus with Quality Care Overlay */}
+					{/* Bottom Card: Patient Focus with Quality Care Overlay (Static, No Hover) */}
 					<div className="relative h-48 lg:h-52.5 w-full rounded-2xl overflow-hidden shadow-xs bg-muted">
 						<Image
 							src="/images/why-choose/patient-focus.png"
 							alt="Patient Focus"
 							fill
+							sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 							className="object-cover size-full"
 						/>
-
-						{/* Quality Care Overlay */}
-						<div className="absolute inset-x-3 bottom-3 rounded-xl bg-primary/54 backdrop-blur-md px-4 py-2.5 text-white shadow-md">
-							<p className="font-semibold uppercase">QUALITY CARE</p>
-							<p className="small text-wallpaper mt-0.5">
-								Connecting you with quality-focused healthcare services.
-							</p>
-						</div>
+						<CardOverlay
+							title="QUALITY CARE"
+							description="Connecting you with quality-focused healthcare services."
+						/>
 					</div>
 				</div>
 
 				{/* Middle Column: Doctor Handshake Tall Card */}
-				<div className="relative min-h-85 lg:min-h-110 h-full w-full rounded-2xl overflow-hidden shadow-xs bg-muted">
+				<div className="group relative min-h-85 lg:min-h-110 h-full w-full rounded-2xl overflow-hidden shadow-xs bg-muted">
 					<Image
 						src="/images/why-choose/doctor-handshake.jpg"
 						alt="Trusted Medical Care"
 						fill
-						className="object-cover size-full transition-transform duration-500 hover:scale-105"
+						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+						className="object-cover size-full"
+					/>
+					<CardOverlay
+						title="TRUSTED EXPERTS"
+						description="Certified doctors committed to your safety and care."
+						withHoverEffect
 					/>
 				</div>
 
@@ -71,12 +107,18 @@ export function WhyChooseSection() {
 					</div>
 
 					{/* Bottom Image: Global Medical Journey */}
-					<div className="relative h-48 lg:h-52.5 w-full rounded-2xl overflow-hidden shadow-xs">
+					<div className="group relative h-48 lg:h-52.5 w-full rounded-2xl overflow-hidden shadow-xs">
 						<Image
 							src="/images/why-choose/global-travel.png"
 							alt="Making your healthcare journey across borders easier"
 							fill
-							className="object-cover size-full transition-transform duration-500 hover:scale-105"
+							sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+							className="object-cover size-full"
+						/>
+						<CardOverlay
+							title="GLOBAL ACCESS"
+							description="Making your healthcare journey across borders seamless."
+							withHoverEffect
 						/>
 					</div>
 				</div>

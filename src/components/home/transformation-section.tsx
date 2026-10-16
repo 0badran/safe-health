@@ -11,6 +11,7 @@ export function TransformationSection() {
 				alt="Ready For Your Transformation"
 				fill
 				priority
+				sizes="100vw"
 				className="object-cover object-[0_38%] pointer-events-none select-none"
 			/>
 

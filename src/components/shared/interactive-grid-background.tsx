@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 export interface InteractiveGridProps {
 	children?: React.ReactNode;
 	className?: string;
-	squareSize?: number; // حجم المربع بالبيكسل
-	hoverColor?: string; // لون المربع عند الهوفر
-	borderColor?: string; // لون خطوط الشبكة
-	maskImage?: string; // مسار صورة الماسك إن وجدت
+	squareSize?: number;
+	hoverColor?: string;
+	borderColor?: string;
+	maskImage?: string;
 	style?: React.CSSProperties;
 }
 
@@ -76,9 +76,9 @@ export const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 				...maskStyles,
 				...style,
 			}}
-			className={cn("relative overflow-hidden", className)}
+			className={cn("overflow-hidden absolute pointer-events-auto inset-0 z-0", className)}
 		>
-			{/* طبقة شبكة المربعات */}
+			{/* Grid Layer */}
 			<div
 				className="absolute inset-0 grid pointer-events-auto"
 				style={{
@@ -95,14 +95,14 @@ export const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 								"--hover-bg": hoverColor,
 							} as React.CSSProperties
 						}
-						className="border-r border-b bg-transparent transition-colors duration-1000 ease-out hover:bg-(--hover-bg) hover:duration-0"
+						className="border-r border-b bg-transparent transition-colors duration-1500 ease-out hover:bg-(--hover-bg) hover:duration-0"
 					/>
 				))}
 			</div>
 
-			{/* المحتوى فوق الخلفية في حال تمرير children */}
+			{/* Content Layer (when children are provided) */}
 			{children && (
-				<div className="relative z-10 pointer-events-none">
+				<div className="relative z-10 pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
 					{children}
 				</div>
 			)}

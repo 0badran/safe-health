@@ -163,6 +163,7 @@ export function HealthcareOptionsSection() {
 										src={card.image}
 										alt={card.title}
 										fill
+										sizes="(max-width: 640px) 265px, (max-width: 1024px) 285px, 295px"
 										className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
 									/>
 
