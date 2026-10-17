@@ -2,6 +2,7 @@
 
 Safe Health is an integrated healthcare platform designed to connect patients with certified medical specialists and accredited clinics, while providing tools for treatment discovery, consultation booking, and transparent medical cost estimations.
 
+
 The application is built on a modern frontend stack emphasizing accessibility, performance, internationalization (RTL/LTR), and theme customizability.
 
 ---
