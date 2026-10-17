@@ -38,7 +38,7 @@ export function Navbar() {
 					href="/"
 					className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-90 select-none"
 				>
-					<div className="relative flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-xl overflow-hidden  p-1 mx-2">
+					<div className="relative flex size-11 sm:size-12 shrink-0 items-center justify-center rounded-xl overflow-hidden p-1 mx-2">
 						<Image
 							src="/images/logo.png"
 							alt="Safe Health Me"
@@ -104,6 +104,7 @@ export function Navbar() {
 											src="/images/logo.png"
 											alt="Safe Health Me"
 											fill
+											sizes="36px"
 											className="object-contain"
 										/>
 									</div>

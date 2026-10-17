@@ -46,8 +46,10 @@ function LanguageContextProvider({
 	React.useEffect(() => {
 		const saved = localStorage.getItem("preferred-language") as LanguageCode;
 		if (saved && (saved === "ar" || saved === "en" || saved === "fr")) {
-			setLanguageState(saved);
-			i18n.changeLanguage(saved);
+			queueMicrotask(() => {
+				setLanguageState(saved);
+				i18n.changeLanguage(saved);
+			});
 		}
 	}, []);
 

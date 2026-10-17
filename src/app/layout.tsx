@@ -50,7 +50,7 @@ export default function RootLayout({
 				arabicFont.variable,
 			)}
 		>
-			<body className="min-h-full flex flex-col h6">
+			<body className="min-h-full flex flex-col h6" suppressHydrationWarning>
 				<DirectionProvider dir="ltr" direction="ltr">
 					<ThemeProvider
 						attribute="class"

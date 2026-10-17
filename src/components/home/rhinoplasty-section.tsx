@@ -40,6 +40,7 @@ export function RhinoplastySection() {
 							alt="Refine Your Profile - Rhinoplasty"
 							fill
 							priority
+							sizes="(max-width: 640px) 100vw, 400px"
 							className="object-cover size-full"
 						/>
 					</div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { InteractiveGridBackground } from "@/components/shared/interactive-grid-background";
 
 export function Footer() {
 	const exploreLinks = [
@@ -26,7 +27,10 @@ export function Footer() {
 
 	return (
 		<footer className="relative bg-primary text-primary-foreground overflow-hidden pt-16 sm:pt-20 lg:pt-24 select-none">
-			<div className="container">
+			{/* Interactive Grid Hover Effect */}
+			<InteractiveGridBackground />
+
+			<div className="container relative z-10 pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
 				{/* Top Grid: Logo & Tagline + 3 Link Columns */}
 				<div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
 					{/* Brand Column */}
@@ -40,6 +44,7 @@ export function Footer() {
 									src="/images/footer-logo.png"
 									alt="safehealthme"
 									fill
+									sizes="(min-width: 640px) 112px, 96px"
 									className="object-contain"
 									priority
 								/>

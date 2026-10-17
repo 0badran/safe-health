@@ -1,10 +1,6 @@
-import { ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
 import Link from "next/link";
+import { Button } from "../ui/button";
 import { SectionBadge } from "./section-badge";
-
-const inter = "'Inter', sans-serif";
-const merienda = "'Merienda One', Georgia, serif";
 
 export default function SectionHeader({
 	subTitle,
@@ -12,60 +8,38 @@ export default function SectionHeader({
 	desc,
 	buttonText,
 	buttonLink,
+	align = "start",
 }: {
 	subTitle: string;
 	title: string;
-	desc: string;
+	desc?: string;
 	buttonText?: string;
 	buttonLink?: string;
+	align?: "start" | "center" | "end";
 }) {
+	
+	const aligmentClassMap: Record<"start" | "center" | "end", string> = {
+		start: "items-start text-start",
+		center: "items-center text-center",
+		end: "items-end text-end",
+	};
+
 	return (
-		<div className="flex items-end max-md:flex-wrap  mb-5 lg:mb-7">
+		<div className="flex items-end max-md:flex-wrap mb-5 lg:mb-7">
 			<div
 				data-figma="Heading"
-				className="relative flex flex-col items-start justify-center w-full"
-				style={{ gap: 12.8, minHeight: 169 }}
+				className={`relative flex flex-col justify-center w-full min-h-30 gap-4 ${aligmentClassMap[align]}`}
 			>
 				<SectionBadge>{subTitle}</SectionBadge>
 
-				<h1
-					style={{
-						margin: 0,
-						fontFamily: merienda,
-						fontWeight: 400,
-						fontSize: "clamp(29.76px, 4.969vw, 48px)",
-						lineHeight: 1.1,
-						letterSpacing: "-2px",
-						color: "#392579",
-					}}
-				>
-					{title}
-				</h1>
+				<h1 className="text-heading">{title}</h1>
 
-				<p
-					style={{
-						margin: 0,
-						maxWidth: 834,
-						fontFamily: inter,
-						fontWeight: 500,
-						fontSize: "clamp(12.4px, 2.0704vw, 20px)",
-						lineHeight: 1.36,
-						color: "#475569",
-					}}
-				>
-					{desc}
-				</p>
+				{desc && <p className="text-paragraph h5 max-w-2xl">{desc}</p>}
 			</div>
-			{buttonText ? (
-				<Link href={buttonLink || ""}>
-					<Button
-						variant={"outline"}
-						className="flex items-center font-semibold text-secondary capitalize justify-between py-5  text-base "
-					>
+			{buttonText && buttonLink ? (
+				<Link href={buttonLink}>
+					<Button variant="outline" withArrow>
 						{buttonText}
-						<div className="bg-secondary text-white p-2 my-1  rounded-full">
-							<ArrowRight />
-						</div>
 					</Button>
 				</Link>
 			) : null}
