@@ -1,151 +1,80 @@
 import Image from "next/image";
-import {
-	ShieldCheckIcon,
-	StethoscopeIcon,
-	UsersIcon,
-	PlayIcon,
-} from "lucide-react";
-import { SectionBadge } from "@/components/shared/section-badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { AboutVideoDialog } from "./about-video-dialog";
+import Link from "next/link";
+import { ArrowDownIcon } from "lucide-react";
 
 export function AboutIntro() {
-	const features = [
+	const stats = [
 		{
-			title: "ضمان أفضل تكلفة وجودة",
-			description:
-				"خطط علاجية واضحة وشفافة بدون أي مصاريف خفية، مع التزام تام بأعلى معايير السلامة والجودة العالمية.",
-			icon: ShieldCheckIcon,
-			colorClass: "bg-primary text-primary-foreground shadow-sm",
+			label: "INTERNATIONAL PATIENTS",
+			value: "50+ Countries",
 		},
 		{
-			title: "استشارات وتحليلات دقيقة",
-			description:
-				"تقييم سريري شامل للحالة المرضية بواسطة أحدث التقنيات لوضع الخطة العلاجية الأكثر ملاءمة ودقة.",
-			icon: StethoscopeIcon,
-			colorClass: "bg-secondary text-secondary-foreground shadow-sm",
+			label: "Continuous Support",
+			value: "24/7",
 		},
 		{
-			title: "فريق طبي معتمد ومحترف",
-			description:
-				"نخبة من كبار الجراحين والاستشاريين ومساعدي الرعاية المؤهلين لمرافقتك في جميع مراحل الاستشفاء.",
-			icon: UsersIcon,
-			colorClass: "bg-primary text-primary-foreground shadow-sm",
+			label: "Treatments",
+			value: "10+",
 		},
 	];
 
 	return (
-		<section className="py-16 md:py-24 bg-background">
-			<div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				{/* Top Section Header */}
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-14">
-					<div className="lg:col-span-5 space-y-3">
-						{/* Tag matching template: • ABOUT US • */}
-						<SectionBadge>نبذة عن Safe Health</SectionBadge>
-
-						{/* Headline with 2-color styling */}
-						<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-foreground leading-tight">
-							<span className="text-primary">مقدمة عن</span> المنظومة الطبية
-							الرائدة!
-						</h2>
-					</div>
-
-					{/* Description Paragraphs side by side on desktop */}
-					<div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm text-muted-foreground leading-relaxed pt-2">
-						<p>
-							تأسست{" "}
-							<strong className="text-foreground font-semibold">
-								Safe Health
-							</strong>{" "}
-							لتكون الجسر الموثوق الذي يربط المرضى بأفضل المنشآت الطبية ونخبة
-							الأطباء المتخصصين. نحن نؤمن بأن الرعاية الصحية حق يستحق أعلى درجات
-							النزاهة والاحترافية.
-						</p>
-						<p>
-							من خلال بنية رقمية حديثة، نعمل على تسهيل حجز المواعيد، التدقيق
-							الطبي للتقارير، والتنسيق العلاجي المستمر، لنمنحك تجربة استشفائية
-							متكاملة ومريحة تضع سلامتك في المقام الأول.
-						</p>
-					</div>
-				</div>
-
-				{/* 3 Feature Cards matching template */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-					{features.map((feature) => {
-						const IconComponent = feature.icon;
-						return (
-							<Card
-								key={feature.title}
-								className="border bg-card/60 backdrop-blur-xs transition-all duration-300 hover:shadow-xl hover:-translate-y-1 py-0"
-							>
-								<CardContent className="p-6 flex items-start gap-4">
-									<div
-										className={`flex size-14 shrink-0 items-center justify-center rounded-2xl shadow-lg ${feature.colorClass}`}
-									>
-										<IconComponent className="size-7" />
-									</div>
-									<div className="space-y-1.5">
-										<h3 className="font-heading text-base font-bold text-foreground">
-											{feature.title}
-										</h3>
-										<p className="text-xs text-muted-foreground leading-relaxed">
-											{feature.description}
-										</p>
-									</div>
-								</CardContent>
-							</Card>
-						);
-					})}
-				</div>
-
-				{/* Overlapping Media Showcase matching template */}
-				<div className="relative mx-auto max-w-5xl">
-					<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-						{/* Primary Big Photo */}
-						<div className="lg:col-span-8 relative aspect-4/3 w-full overflow-hidden rounded-3xl border bg-muted shadow-2xl">
+		<section>
+			<div className="container max-w-7xl">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+					{/* Left: Treatment Photo */}
+					<div className="lg:col-span-6">
+						<div className="relative aspect-4/3 w-full overflow-hidden rounded-3xl shadow-xl border border-border/40">
 							<Image
-								src="/images/about/team-workspace.jpg"
-								alt="اجتماع فريق عمل Safe Health الطبي"
+								src="/images/why-choose/aesthetic-care.jpg"
+								alt="Advanced aesthetic treatment at SafeHealthMe"
 								fill
-								sizes="(max-width: 1024px) 100vw, 65vw"
-								className="object-cover object-center transition-transform duration-700 hover:scale-105"
+								priority
+								sizes="(max-width: 1024px) 100vw, 50vw"
+								className="object-cover object-center transition-transform duration-700 scale-3d scale-x-[-1] hover:scale-102"
 							/>
-							<div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 						</div>
+					</div>
 
-						{/* Secondary Floating Video Thumbnail overlapping */}
-						<div className="lg:col-span-6 lg:absolute lg:inset-e-0 lg:bottom-4 w-full lg:max-w-md">
-							<div className="group relative aspect-4/3 w-full overflow-hidden rounded-2xl border-4 border-background bg-card shadow-2xl transition-all duration-300">
-								<Image
-									src="/images/about/video-preview.jpg"
-									alt="استشارة طبية رقمية مع استشاري Safe Health"
-									fill
-									sizes="(max-width: 1024px) 100vw, 40vw"
-									className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-								/>
-								<div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
+					{/* Right: Content & Stats */}
+					<div className="lg:col-span-6 flex flex-col gap-y-4">
+						{/* Two-line Gradient Heading */}
+						<h2 className="text-heading leading-tight">
+							Enhancing Beauty.
+							<br />
+							Preserving Identity.
+						</h2>
 
-								{/* Center Play Button with Pulse Effect */}
-								<div className="absolute inset-0 flex items-center justify-center">
-									<AboutVideoDialog>
-										<button
-											type="button"
-											className="relative flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl transition-all duration-300 hover:scale-115 active:scale-95 hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-ring/50 cursor-pointer"
-											aria-label="تشغيل الفيديو التعريفي"
-										>
-											<span className="absolute -inset-2 rounded-full bg-primary/30 animate-ping pointer-events-none" />
-											<PlayIcon className="size-7 fill-current translate-x-0.5 rtl:-translate-x-0.5" />
-										</button>
-									</AboutVideoDialog>
-								</div>
+						{/* Description Paragraph */}
+						<p className="text-paragraph h5 font-normal leading-relaxed max-w-xl">
+							At SafeHealthMe, we bring together medical expertise, advanced
+							aesthetic treatments, and personalized care to help every patient
+							feel confident in their choices.
+						</p>
 
-								{/* Micro label */}
-								<div className="absolute bottom-3 inset-x-3 text-center">
-									<span className="inline-block rounded-full bg-black/60 backdrop-blur-md px-3 py-1 text-[11px] font-medium text-white">
-										شاهد جولة تعريفية في دقيقتين
+						{/* 3 Stats Columns */}
+						<div className="grid grid-cols-3 gap-4 sm:gap-6 py-6 border-y">
+							{stats.map((stat) => (
+								<div key={stat.label} className="space-y-1.5">
+									<span className="block text-primary small font-medium tracking-wide uppercase">
+										{stat.label}
+									</span>
+									<span className="block h5 font-bold">
+										{stat.value}
 									</span>
 								</div>
-							</div>
+							))}
+						</div>
+
+						{/* Action Link */}
+						<div className="pt-2">
+							<Link
+								href="#team"
+								className="inline-flex items-center gap-1.5 font-bold hover:text-primary transition-colors group w-fit cursor-pointer"
+							>
+								<span>Learn more</span>
+								<ArrowDownIcon className="size-4 transition-transform group-hover:translate-y-0.5" />
+							</Link>
 						</div>
 					</div>
 				</div>

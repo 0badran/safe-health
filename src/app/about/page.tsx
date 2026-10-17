@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { AboutHero } from "@/components/about/about-hero";
 import { AboutIntro } from "@/components/about/about-intro";
-import { AboutTeam } from "@/components/about/about-team";
+import { AboutPhilosophy } from "@/components/about/about-philosophy";
+import { AboutApproach } from "@/components/about/about-approach";
 
 export const metadata: Metadata = {
 	title: "من نحن | Safe Health للرعاية الطبية والحلول الصحية",
@@ -14,7 +15,8 @@ export default function AboutPage() {
 		<main className="flex flex-col flex-1">
 			<AboutHero />
 			<AboutIntro />
-			<AboutTeam />
+			<AboutPhilosophy />
+			<AboutApproach />
 		</main>
 	);
 }

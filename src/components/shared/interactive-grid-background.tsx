@@ -3,22 +3,24 @@
 import React, { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-export interface InteractiveGridProps {
+interface InteractiveGridProps {
 	children?: React.ReactNode;
 	className?: string;
 	squareSize?: number;
 	hoverColor?: string;
 	borderColor?: string;
+	borderOpacity?: number;
 	maskImage?: string;
 	style?: React.CSSProperties;
 }
 
-export const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
+const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 	children,
 	className,
 	squareSize = 60,
 	hoverColor = "rgba(255, 255, 255, 0.2)",
 	borderColor = "rgba(255, 255, 255, 0.08)",
+	borderOpacity,
 	maskImage,
 	style,
 }) => {
@@ -69,6 +71,11 @@ export const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 			}
 		: {};
 
+	const resolvedBorderColor =
+		borderOpacity !== undefined
+			? `color-mix(in srgb, ${borderColor} ${borderOpacity <= 1 ? borderOpacity * 100 : borderOpacity}%, transparent)`
+			: borderColor;
+
 	return (
 		<div
 			ref={containerRef}
@@ -91,7 +98,7 @@ export const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 						key={index}
 						style={
 							{
-								borderColor: borderColor,
+								borderColor: resolvedBorderColor,
 								"--hover-bg": hoverColor,
 							} as React.CSSProperties
 						}

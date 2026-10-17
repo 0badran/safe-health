@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-import { InteractiveGridBackground } from "@/components/shared/interactive-grid-background";
+import InteractiveGridBackground from "@/components/shared/interactive-grid-background";
 import { ConsultationForm } from "./form";
 import { HeroCtaButtons } from "./hero-cta-buttons";
 import { HeroVideoCard } from "./hero-video-card";

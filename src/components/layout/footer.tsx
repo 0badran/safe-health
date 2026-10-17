@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { InteractiveGridBackground } from "@/components/shared/interactive-grid-background";
+import InteractiveGridBackground from "@/components/shared/interactive-grid-background";
 
 export function Footer() {
 	const exploreLinks = [

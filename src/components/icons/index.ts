@@ -2,3 +2,8 @@ export * from "./badge-ornament";
 export * from "./natural-results-icon";
 export * from "./personalized-care-icon";
 export * from "./dragon-watermark";
+export * from "./heading-divider";
+export * from "./timeline-dot";
+export * from "./approach-guidance-icon";
+export * from "./approach-planning-icon";
+export * from "./approach-coordination-icon";
