@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+
 import { InteractiveGridBackground } from "@/components/shared/interactive-grid-background";
 import { ConsultationForm } from "./form";
 import { HeroCtaButtons } from "./hero-cta-buttons";
@@ -48,7 +49,7 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 							</h1>
 
 							{/* Video Card Preview */}
-							<div className="pointer-events-auto">
+							<div className="pointer-events-axuto ">
 								<HeroVideoCard />
 							</div>
 
