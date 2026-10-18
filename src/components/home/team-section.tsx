@@ -35,7 +35,7 @@ const TeamSection = () => {
 		},
 	];
 	return (
-		<section className="flex flex-col ">
+		<section className="flex flex-col">
 			<SectionHeader
 				subTitle="Trusted Hands, Expert Care"
 				title="Meet Our Doctors & Specialists"

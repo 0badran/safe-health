@@ -113,135 +113,128 @@ export function AboutApproach() {
 	}, []);
 
 	return (
-		<section className="bg-background">
-			<div className="container">
-				{/* Top Section Header */}
-				<div className="flex flex-col items-center justify-center text-center gap-4 mb-16 ">
-					<SectionBadge>CARE DESIGNED AROUND YOU.</SectionBadge>
+		<section className="container">
+			{/* Top Section Header */}
+			<div className="flex flex-col items-center justify-center text-center gap-4 mb-16 ">
+				<SectionBadge>CARE DESIGNED AROUND YOU.</SectionBadge>
 
-					<h2 className="text-heading uppercase">OUR APPROACH TO CARE</h2>
-				</div>
+				<h2 className="text-heading uppercase">OUR APPROACH TO CARE</h2>
+			</div>
 
-				{/* Timeline Container */}
-				<div ref={containerRef} className="relative max-w-5xl mx-auto">
-					{/* Central Vertical Dashed Line (SVG) - Precisely connects first dot to last dot */}
-					{lineGeometry && (
-						<svg
-							className="absolute left-1/2 -translate-x-1/2 w-0.5 pointer-events-none hidden md:block"
-							style={{
-								top: `${lineGeometry.top}px`,
-								height: `${lineGeometry.height}px`,
-							}}
-							aria-hidden="true"
-						>
-							<line
-								x1="1"
-								y1="0"
-								x2="1"
-								y2="100%"
-								stroke="#159BA8"
-								strokeOpacity="0.5"
-								strokeWidth="1.5"
-								strokeDasharray="4 4"
-							/>
-						</svg>
-					)}
+			{/* Timeline Container */}
+			<div ref={containerRef} className="relative max-w-5xl mx-auto">
+				{/* Central Vertical Dashed Line (SVG) - Precisely connects first dot to last dot */}
+				{lineGeometry && (
+					<svg
+						className="absolute left-1/2 -translate-x-1/2 w-0.5 pointer-events-none hidden md:block"
+						style={{
+							top: `${lineGeometry.top}px`,
+							height: `${lineGeometry.height}px`,
+						}}
+						aria-hidden="true"
+					>
+						<line
+							x1="1"
+							y1="0"
+							x2="1"
+							y2="100%"
+							stroke="#159BA8"
+							strokeOpacity="0.5"
+							strokeWidth="1.5"
+							strokeDasharray="4 4"
+						/>
+					</svg>
+				)}
 
-					{/* Desktop Alternating Steps (md+) */}
-					<div className="hidden md:flex flex-col space-y-16 lg:space-y-24">
-						{STEPS.map((step, index) => {
-							const IconComponent = step.icon;
-							const isFirst = index === 0;
-							const isLast = index === STEPS.length - 1;
+				{/* Desktop Alternating Steps (md+) */}
+				<div className="hidden md:flex flex-col space-y-16 lg:space-y-24">
+					{STEPS.map((step, index) => {
+						const IconComponent = step.icon;
+						const isFirst = index === 0;
+						const isLast = index === STEPS.length - 1;
 
-							return (
-								<div
-									key={step.stepNumber}
-									className="grid grid-cols-[1fr_auto_1fr] items-start gap-6 lg:gap-12"
-								>
-									{/* Left Column */}
-									{step.isLeftFirst ? (
-										<div className="flex flex-col items-end text-end space-y-3 max-w-md ml-auto">
-											<StepBadge number={step.stepNumber} />
-											<p className="text-paragraph text-sm sm:text-base leading-relaxed">
-												{step.description}
-											</p>
-										</div>
-									) : (
-										<div className="flex flex-col items-end text-end space-y-2 max-w-md ml-auto">
-											<IconComponent className="size-12 text-secondary" />
-											<h3 className="font-heading text-2xl sm:text-3xl text-primary font-normal">
-												{step.title}
-											</h3>
-										</div>
-									)}
-
-									{/* Center Column: Glowing Pulsing Dot */}
-									<div
-										ref={
-											isFirst ? firstDotRef : isLast ? lastDotRef : undefined
-										}
-										className="relative z-10 flex justify-center"
-									>
-										<TimelineDot />
-									</div>
-
-									{/* Right Column */}
-									{step.isLeftFirst ? (
-										<div className="flex flex-col items-start text-start space-y-2 max-w-md mr-auto">
-											<IconComponent className="size-12 text-secondary" />
-											<h3 className="font-heading text-2xl sm:text-3xl text-primary font-normal">
-												{step.title}
-											</h3>
-										</div>
-									) : (
-										<div className="flex flex-col items-start text-start space-y-3 max-w-md mr-auto">
-											<StepBadge number={step.stepNumber} />
-											<p className="text-paragraph text-sm sm:text-base leading-relaxed">
-												{step.description}
-											</p>
-										</div>
-									)}
-								</div>
-							);
-						})}
-					</div>
-
-					{/* Mobile Sequential Timeline (< md) */}
-					<div className="flex flex-col md:hidden space-y-8">
-						{STEPS.map((step, index) => {
-							const IconComponent = step.icon;
-							const isLast = index === STEPS.length - 1;
-
-							return (
-								<div key={step.stepNumber} className="flex gap-4">
-									{/* Dot + Connecting Line Column */}
-									<div className="flex flex-col items-center">
-										<TimelineDot />
-										{!isLast && (
-											<div className="w-0.5 flex-1 border-r border-dashed border-secondary/40 my-2" />
-										)}
-									</div>
-
-									{/* Content Column */}
-									<div className="space-y-3 pb-4 flex-1">
+						return (
+							<div
+								key={step.stepNumber}
+								className="grid grid-cols-[1fr_auto_1fr] items-start gap-6 lg:gap-12"
+							>
+								{/* Left Column */}
+								{step.isLeftFirst ? (
+									<div className="flex flex-col items-end text-end space-y-3 max-w-md ml-auto">
 										<StepBadge number={step.stepNumber} />
-
-										<div className="flex items-center gap-3">
-											<IconComponent className="size-10 text-secondary shrink-0" />
-											<h3 className="font-heading text-xl text-primary font-normal">
-												{step.title}
-											</h3>
-										</div>
-
-										<p className="text-paragraph text-sm leading-relaxed">
+										<p className="text-paragraph text-sm sm:text-base leading-relaxed">
 											{step.description}
 										</p>
 									</div>
+								) : (
+									<div className="flex flex-col items-end text-end space-y-2 max-w-md ml-auto">
+										<IconComponent className="size-12 text-secondary" />
+										<h3 className="font-heading text-2xl sm:text-3xl text-primary font-normal">
+											{step.title}
+										</h3>
+									</div>
+								)}
+
+								{/* Center Column: Glowing Pulsing Dot */}
+								<div
+									ref={isFirst ? firstDotRef : isLast ? lastDotRef : undefined}
+									className="relative z-10 flex justify-center"
+								>
+									<TimelineDot />
 								</div>
-							);
-						})}
-					</div>
+
+								{/* Right Column */}
+								{step.isLeftFirst ? (
+									<div className="flex flex-col items-start text-start space-y-2 max-w-md mr-auto">
+										<IconComponent className="size-12 text-secondary" />
+										<h3 className="font-heading text-2xl sm:text-3xl text-primary font-normal">
+											{step.title}
+										</h3>
+									</div>
+								) : (
+									<div className="flex flex-col items-start text-start space-y-3 max-w-md mr-auto">
+										<StepBadge number={step.stepNumber} />
+										<p className="text-paragraph text-sm sm:text-base leading-relaxed">
+											{step.description}
+										</p>
+									</div>
+								)}
+							</div>
+						);
+					})}
+				</div>
+
+				{/* Mobile Sequential Timeline (< md) */}
+				<div className="flex flex-col md:hidden space-y-8">
+					{STEPS.map((step) => {
+						const IconComponent = step.icon;
+
+						return (
+							<div key={step.stepNumber} className="flex gap-4">
+								{/* Dot + Connecting Line Column */}
+								<div className="flex flex-col items-center">
+									<TimelineDot />
+									<div className="w-0.5 flex-1 border-r border-dashed border-secondary/40 my-2" />
+								</div>
+
+								{/* Content Column */}
+								<div className="space-y-3 pb-4 flex-1">
+									<StepBadge number={step.stepNumber} />
+
+									<div className="flex items-center gap-3">
+										<IconComponent className="size-10 text-secondary shrink-0" />
+										<h3 className="font-heading text-xl text-primary font-normal">
+											{step.title}
+										</h3>
+									</div>
+
+									<p className="text-paragraph text-sm leading-relaxed">
+										{step.description}
+									</p>
+								</div>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 		</section>

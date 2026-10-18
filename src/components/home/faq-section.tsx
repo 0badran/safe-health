@@ -1,15 +1,13 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
 import SectionHeader from "@/components/shared/section-header";
 import {
 	Accordion,
+	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
-	AccordionContent,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 export interface FaqItem {
 	id: string;
@@ -49,9 +47,9 @@ export interface FaqSectionProps {
 	faqs?: FaqItem[];
 }
 
-export function FaqSection({ className, faqs = DEFAULT_FAQS }: FaqSectionProps) {
+export function FaqSection({ faqs = DEFAULT_FAQS }: FaqSectionProps) {
 	return (
-		<section id="faq" className={cn("w-full py-4 sm:py-6", className)}>
+		<section id="faq">
 			<SectionHeader
 				subTitle="QUESTIONS & ANSWERS"
 				title="Frequently Asked Questions"
@@ -74,10 +72,7 @@ export function FaqSection({ className, faqs = DEFAULT_FAQS }: FaqSectionProps) 
 								variant="card"
 								className="border-none shadow-[0_1px_12px_0] shadow-primary/8"
 							>
-								<AccordionTrigger
-									variant="card"
-									iconVariant="plus"
-								>
+								<AccordionTrigger variant="card" iconVariant="plus">
 									<span className="flex items-center gap-4 sm:gap-6">
 										<span className="font-heading h3 text-primary shrink-0 w-8 sm:w-10">
 											{faq.id}
@@ -88,9 +83,7 @@ export function FaqSection({ className, faqs = DEFAULT_FAQS }: FaqSectionProps) 
 									</span>
 								</AccordionTrigger>
 								<AccordionContent variant="card">
-									<div className="ps-12 sm:ps-16">
-										{faq.answer}
-									</div>
+									<div className="ps-12 sm:ps-16">{faq.answer}</div>
 								</AccordionContent>
 							</AccordionItem>
 						))}

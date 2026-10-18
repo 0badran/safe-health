@@ -123,7 +123,7 @@ export function BlogsSection({ posts = DEFAULT_POSTS }: BlogsSectionProps) {
 	}, [api]);
 
 	return (
-		<section id="blogs" className={cn("w-full py-4 sm:py-6")}>
+		<section id="blogs">
 			<SectionHeader
 				subTitle="BLOGS"
 				title="Informed Choices Begin with Knowledge."

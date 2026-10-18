@@ -21,7 +21,7 @@ export default function Home() {
 					<HeroStatsBanner />
 				</div>
 			</div>
-			<div className="container space-y-6 sm:space-y-5">
+			<div className="container space-y-14 sm:space-y-18 lg:space-y-25">
 				<WhyChooseSection />
 				<RhinoplastySection />
 				<HealthcareOptionsSection />

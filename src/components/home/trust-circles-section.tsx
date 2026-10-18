@@ -1,5 +1,4 @@
 import React from "react";
-import { cn } from "@/lib/utils";
 
 export interface TrustCircleItem {
 	id: string;
@@ -176,37 +175,32 @@ export function TrustCirclesSection({
 	features = TRUST_FEATURES,
 }: TrustCirclesSectionProps) {
 	return (
-		<section className={cn("w-full py-4 sm:py-6")}>
-			{/* Horizontally scrollable container on small screens, centered flex on tablet & desktop */}
-			<div className="w-full overflow-x-auto pb-4 pt-2 scrollbar-none">
-				<div className="flex items-center justify-start lg:justify-center min-w-max lg:min-w-0 mx-auto px-4 sm:px-6 -space-x-5 rtl:space-x-5">
-					{features.map((item) => (
-						<div
-							key={item.id}
-							className="group relative flex aspect-square size-64 lg:size-72 shrink-0 flex-col items-center justify-center rounded-full border border-dashed border-secondary/50 bg-background/50 backdrop-blur-xs p-6 sm:p-7 text-center overflow-hidden opacity-70"
-						>
-							{/* Bottom Teal Gradient Glow matching screenshot */}
-							<div
-								className="pointer-events-none absolute inset-x-0 bottom-0 h-7 rounded-b-full bg-linear-to-t from-secondary/20 via-secondary/10 to-transparent transition-all duration-500 group-hover:h-52 lg:group-hover:h-60"
-								aria-hidden="true"
-							/>
+		<section className="w-full overflow-x-auto scrollbar-none flex items-center justify-start lg:justify-center min-w-max lg:min-w-0 mx-auto px-4 sm:px-6 -space-x-5 rtl:space-x-5">
+			{features.map((item) => (
+				<div
+					key={item.id}
+					className="group relative flex aspect-square size-64 lg:size-72 shrink-0 flex-col items-center justify-center rounded-full border border-dashed border-secondary/50 bg-background/50 backdrop-blur-xs p-6 sm:p-7 text-center overflow-hidden opacity-70"
+				>
+					{/* Bottom Teal Gradient Glow matching screenshot */}
+					<div
+						className="pointer-events-none absolute inset-x-0 bottom-0 h-7 rounded-b-full bg-linear-to-t from-secondary/20 via-secondary/10 to-transparent transition-all duration-500 group-hover:h-52 lg:group-hover:h-60"
+						aria-hidden="true"
+					/>
 
-							{/* Icon */}
-							<div className="relative z-10 mb-3 sm:mb-4">{item.icon}</div>
+					{/* Icon */}
+					<div className="relative z-10 mb-3 sm:mb-4">{item.icon}</div>
 
-							{/* Title in Merienda cursive */}
-							<h3 className="relative z-10 font-heading h4 text-primary leading-tight font-medium">
-								{item.title}
-							</h3>
+					{/* Title in Merienda cursive */}
+					<h3 className="relative z-10 font-heading h4 text-primary leading-tight font-medium">
+						{item.title}
+					</h3>
 
-							{/* Description */}
-							<p className="relative z-10 small text-paragraph leading-relaxed mt-2 max-w-47.5 sm:max-w-52.5">
-								{item.description}
-							</p>
-						</div>
-					))}
+					{/* Description */}
+					<p className="relative z-10 small text-paragraph leading-relaxed mt-2 max-w-47.5 sm:max-w-52.5">
+						{item.description}
+					</p>
 				</div>
-			</div>
+			))}
 		</section>
 	);
 }
