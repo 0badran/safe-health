@@ -113,10 +113,10 @@ export function AboutApproach() {
 	}, []);
 
 	return (
-		<section className="py-20 sm:py-24 lg:py-32 bg-background">
-			<div className="container max-w-7xl">
+		<section className="bg-background">
+			<div className="container">
 				{/* Top Section Header */}
-				<div className="flex flex-col items-center justify-center text-center gap-4 mb-16 sm:mb-20">
+				<div className="flex flex-col items-center justify-center text-center gap-4 mb-16 ">
 					<SectionBadge>CARE DESIGNED AROUND YOU.</SectionBadge>
 
 					<h2 className="text-heading uppercase">OUR APPROACH TO CARE</h2>

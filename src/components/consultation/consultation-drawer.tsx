@@ -19,6 +19,8 @@ import { cn } from "@/lib/utils";
 export interface ConsultationDrawerProps
 	extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSubmit">,
 		VariantProps<typeof buttonVariants> {
+	/** Whether to display arrow icon in trigger button */
+	withArrow?: boolean;
 	/** Custom trigger node to replace the default Button */
 	trigger?: React.ReactNode;
 	/** Brand name displayed in title and agreements */
@@ -42,6 +44,7 @@ export interface ConsultationDrawerProps
 export function ConsultationDrawer({
 	variant = "secondary",
 	size = "default",
+	withArrow,
 	className,
 	children,
 	trigger,
@@ -76,6 +79,7 @@ export function ConsultationDrawer({
 					<Button
 						variant={variant}
 						size={size}
+						withArrow={withArrow}
 						className={cn("m-2  px-3", className)}
 						{...buttonProps}
 					>

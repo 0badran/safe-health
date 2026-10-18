@@ -20,7 +20,7 @@ export function AboutIntro() {
 
 	return (
 		<section>
-			<div className="container max-w-7xl">
+			<div className="container">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
 					{/* Left: Treatment Photo */}
 					<div className="lg:col-span-6">
@@ -31,7 +31,7 @@ export function AboutIntro() {
 								fill
 								priority
 								sizes="(max-width: 1024px) 100vw, 50vw"
-								className="object-cover object-center transition-transform duration-700 scale-3d scale-x-[-1] hover:scale-102"
+								className="object-cover object-center transition-transform duration-700 "
 							/>
 						</div>
 					</div>

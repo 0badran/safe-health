@@ -60,7 +60,7 @@ export default function RootLayout({
 					>
 						<LanguageProvider initialLanguage="en">
 							<Navbar />
-							<div className="flex-1">{children}</div>
+							<div className="flex-1 min-h-screen">{children}</div>
 							<Footer />
 						</LanguageProvider>
 					</ThemeProvider>
