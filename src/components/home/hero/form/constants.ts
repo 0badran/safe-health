@@ -8,7 +8,32 @@ export const COUNTRIES = [
 	"United Kingdom",
 	"Germany",
 	"United States",
+	"Canada",
+	"France",
+	"Kuwait",
+	"Qatar",
 	"Other",
+] as const;
+
+export const TREATMENTS = [
+	"Plastic Surgery",
+	"Hair Transplant",
+	"Dental Treatments",
+	"Rhinoplasty Surgery",
+	"Aesthetic Medicine",
+	"Bariatric Surgery",
+	"Orthopedics & Spine",
+	"Eye Care & LASIK",
+	"Other Treatment",
+] as const;
+
+export const DOCTORS = [
+	"Any Available Specialist",
+	"Dr. Ananya Mehta - Dermatology & Aesthetics",
+	"Dr. Marcus Vance - Plastic Surgery",
+	"Dr. Elena Rostova - Hair Restoration",
+	"Dr. Sarah Jenkins - Aesthetic Dentistry",
+	"Dr. Ahmed Hassan - Rhinoplasty Specialist",
 ] as const;
 
 export const DEFAULT_FORM_VALUES: ConsultationFormValues = {
@@ -16,11 +41,13 @@ export const DEFAULT_FORM_VALUES: ConsultationFormValues = {
 	email: "",
 	phone: "",
 	country: "",
+	treatment: "",
+	doctor: "",
 	message: "",
 	agree: false,
 };
 
 export const INPUT_BASE_CLASSES =
-	"w-full bg-white rounded-xl px-3.5 text-[14px] text-[#282331] outline-none transition-all duration-200 " +
-	"shadow-[inset_0_0_0_1px_rgba(11,60,93,0.12)] placeholder:text-[#868588] " +
-	"focus:shadow-[inset_0_0_0_2px_#392579] font-sans disabled:opacity-50 disabled:cursor-not-allowed";
+	"w-full bg-transparent rounded-xl px-3.5 text-base text-foreground outline-none transition-all duration-200 " +
+	"border border-input placeholder:text-muted-foreground " +
+	"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 font-sans disabled:opacity-50 disabled:cursor-not-allowed";

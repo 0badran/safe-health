@@ -64,7 +64,7 @@ export function HealthcareOptionsSection() {
 	const [activeId, setActiveId] = useState<string>("hair-transplant");
 
 	return (
-		<section className="relative isolate w-full pt-3 sm:pt-4 lg:pt-5 pb-8 sm:pb-12 lg:pb-14">
+		<section className="relative isolate w-full pt-3 sm:pt-4 lg:pt-5 pb-8">
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
