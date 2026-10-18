@@ -31,7 +31,7 @@ export function CardOverlay({
 
 export function WhyChooseSection() {
 	return (
-		<section className="w-full">
+		<section className="w-full ">
 			<SectionHeader
 				title="Why Choose SafeHealthMe?"
 				subTitle="TRUSTED CARE, WORLDWIDE"

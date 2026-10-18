@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 
 export function Navbar() {
@@ -69,13 +70,10 @@ export function Navbar() {
 					{/* Language Switcher Dropdown */}
 					<LanguageSwitcher />
 					{/* Primary Call to Action Button */}
-					<Button
+					<ConsultationDrawer
 						variant="secondary"
-						asChild
 						className="m-2"
-					>
-						<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
-					</Button>
+					/>
 				</div>
 
 				{/* Mobile Navigation Drawer Trigger */}
@@ -127,13 +125,10 @@ export function Navbar() {
 							</div>
 
 							<div className="mt-auto pt-6 border-t border-white/10 flex flex-col gap-3">
-								<Button
+								<ConsultationDrawer
 									variant="nav-white"
-									asChild
 									className="w-full text-center"
-								>
-									<Link href="#consultation-form">{t("navbar.getConsultation")}</Link>
-								</Button>
+								/>
 							</div>
 						</SheetContent>
 					</Sheet>

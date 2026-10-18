@@ -12,24 +12,31 @@ import type { HeroSectionProps } from "./types";
 export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 	return (
 		<section
-			className={cn(
-				"relative w-full lg:h-screen text-white lg:mb-44",
-				className,
-			)}
-		>
+			className={cn("relative w-full lg:h-screen  text-white ", className)}>
 			{/* Background Image & Texture Overlay */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
+				className="pointer-events-none absolute  bg-primary inset-0 z-0 select-none overflow-hidden"
+				style={{
+					maskImage: `url(${"/images/hero-bg.png"})`,
+					WebkitMaskImage: `url(${"/images/hero-bg.png"})`,
+					maskSize: "cover",
+					WebkitMaskSize: "cover",
+					maskPosition: "top center",
+					WebkitMaskPosition: "top center",
+					maskRepeat: "no-repeat",
+					WebkitMaskRepeat: "no-repeat",
+				}}
 			>
-				{/* Underlying hero background asset */}
+				<div className="absolute inset-x-0  top-0 w-full h-30 bg-linear-to-b from-primary via-primary to-transparent"></div>
 				<Image
-					src="/images/hero-bg.png"
+					src="/images/hero.jpg"
 					alt=""
 					fill
 					priority
-					className="object-cover object-top mix-blend-screen"
+					className="object-cover object-top mix-blend-screen opacity-10"
 					sizes="100vw"
+
 				/>
 			</div>
 
@@ -49,7 +56,7 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 							</h1>
 
 							{/* Video Card Preview */}
-							<div className="pointer-events-axuto ">
+							<div className="pointer-events-auto ">
 								<HeroVideoCard />
 							</div>
 
@@ -64,8 +71,8 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 
 					{/* Right Column: Consultation Form Card */}
 					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative pointer-events-auto">
-						<div id="consultation" className="w-full lg:absolute inset-s-0">
-							<ConsultationForm onSubmit={onSubmit} />
+						<div id="consultation" className="w-full lg:absolute  max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden  lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0">
+							<ConsultationForm onSubmit={onSubmit} showExtraFields={false} />
 						</div>
 					</div>
 				</div>

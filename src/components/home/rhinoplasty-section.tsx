@@ -6,7 +6,7 @@ import { NaturalResultsIcon, PersonalizedCareIcon } from "@/components/icons";
 
 export function RhinoplastySection() {
 	return (
-		<section className="w-full py-8 sm:py-12 lg:py-16">
+		<section className="w-full ">
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-8 items-center">
 				{/* Left Column: Heading, Badge & CTA */}
 				<div className="flex flex-col justify-center">
