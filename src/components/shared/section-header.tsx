@@ -28,7 +28,7 @@ export default function SectionHeader({
 		<div className="flex items-end max-md:flex-wrap mb-5 lg:mb-7">
 			<div
 				data-figma="Heading"
-				className={`relative flex flex-col  justify-center w-full min-h-30 gap-4 ${aligmentClassMap[align]}`}
+				className={`relative flex flex-col  justify-center w-full lg:min-h-30 gap-4 ${aligmentClassMap[align]}`}
 			>
 				<SectionBadge>{subTitle}</SectionBadge>
 

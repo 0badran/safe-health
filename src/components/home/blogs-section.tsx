@@ -137,13 +137,13 @@ export function BlogsSection({ posts = DEFAULT_POSTS }: BlogsSectionProps) {
 				}}
 				className="w-full"
 			>
-				<CarouselContent className="-ms-4 sm:-ms-6 p-3">
+				<CarouselContent className="-ms-1">
 					{posts.map((post) => (
 						<CarouselItem
 							key={post.id}
-							className="ps-4 sm:ps-6 basis-full md:basis-1/2 lg:basis-1/3"
+							className=" basis-full md:basis-1/2 lg:basis-1/3"
 						>
-							<article className="group h-full flex flex-col justify-between rounded-3xl bg-card p-4 sm:p-5 transition-all duration-300 shadow-[0_1px_12px_0] shadow-primary/8">
+							<article className="group h-full flex flex-col justify-between rounded-3xl bg-card p-4 sm:p-5 transition-all duration-300 border">
 								{/* Card Top: Author Avatar, Name & Date */}
 								<div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
 									<div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
@@ -190,9 +190,9 @@ export function BlogsSection({ posts = DEFAULT_POSTS }: BlogsSectionProps) {
 										<Link
 											href={post.link || "#"}
 											aria-label={`Read article: ${post.title}`}
-											className="size-9 sm:size-10 rounded-full bg-[#F0EDF6]/77 text-primary flex items-center justify-center shrink-0 transition-all duration-300 backdrop-blur-md border border-border/20"
+											className="size-9 sm:size-10 rounded-full bg-[#F0EDF6]/77 text-primary flex items-center justify-center shrink-0 transition-all duration-300 hover:bg-primary hover:text-white backdrop-blur-md border border-border/20"
 										>
-											<ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+											<ArrowUpRight className="size-4 transition-transform duration-300  " />
 										</Link>
 									</div>
 								</div>

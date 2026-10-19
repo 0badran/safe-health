@@ -319,37 +319,38 @@ export function HeroStatsBanner({
 	}, []);
 
 	return (
-		<div className={cn("relative mx-auto w-fit max-w-full select-none", className)}>
+		<div className={cn("relative flex flex-col justify-center  select-none", className)}>
 			{/* Heading with Anchored Flight Lines */}
 			<div className="relative inline-block text-center w-full sm:w-auto">
-				{/* Left Decorative Line:
+
+
+				{/* Main Headline with fluid typography */}
+				<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
+					{/* Left Decorative Line:
 				    - Tip connects to top peak of 'Y'
 				    - Dot at (23, 99) lands exactly on top-left corner of stats card
 				*/}
-				<div
-					aria-hidden="true"
-					className="absolute right-[calc(100%-8px)] top-2 pointer-events-none hidden sm:block z-10"
-				>
-					<StartLine guideRef={startGuideRef} planeRef={startPlaneRef} />
-				</div>
+					<div
+						aria-hidden="true"
+						className="absolute max-lg:hidden right-[calc(100%-8px)] top-2 pointer-events-none block z-10"
+					>
+						<StartLine guideRef={startGuideRef} planeRef={startPlaneRef} />
+					</div>
 
-				{/* Right Decorative Line:
+					{/* Right Decorative Line:
 				    - Starts to the right of 'Care' / 'Journey,'
 				    - Airplane at (127, 84) lands exactly on top-right corner of stats card
 				*/}
-				<div
-					aria-hidden="true"
-					className="absolute left-[calc(100%-10px)] top-4 pointer-events-none hidden sm:block z-10"
-				>
-					<EndLine guideRef={endGuideRef} planeRef={endPlaneRef} />
-				</div>
-
-				{/* Main Headline with fluid typography */}
-				<h2 className="leading-[1.12] tracking-tight">
-					<span className="block text-heading text-[26px] sm:text-[34px] md:text-[38px] lg:text-[40px]">
+					<div
+						aria-hidden="true"
+						className="absolute max-lg:hidden right-0 lg:left-[calc(100%-10px)] top-4 pointer-events-none block z-10"
+					>
+						<EndLine guideRef={endGuideRef} planeRef={endPlaneRef} />
+					</div>
+					<span className="block text-heading">
 						Your Health Journey,
 					</span>
-					<span className="block text-heading text-[26px] sm:text-[34px] md:text-[38px] lg:text-[40px]">
+					<span className="block text-heading">
 						Handled with Care
 					</span>
 				</h2>
@@ -358,7 +359,7 @@ export function HeroStatsBanner({
 			{/* Stats Card:
 			    - Responsive 2x2 grid on mobile, locks to -ml-[62px] & w-[calc(100%+186px)] row on sm+
 			*/}
-			<div className="relative mt-4 w-full sm:-ml-15.5 sm:w-[calc(100%+186px)] sm:min-w-[500px] sm:max-w-[620px] bg-[#F0EDF680] backdrop-blur-xs rounded-2xl py-3 px-3 sm:px-4 grid grid-cols-2 gap-y-3 sm:flex sm:items-center sm:justify-between border border-primary/5 shadow-xs">
+			<div className="relative mt-4 w-full text-center   bg-[#F0EDF680] backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 shadow-xs">
 				{stats.map((item, index) => (
 					<div key={index} className="flex items-center justify-center sm:flex-1">
 						<div className="flex flex-col items-center text-center px-1">

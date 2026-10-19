@@ -142,26 +142,26 @@ const TRUST_FEATURES: TrustCircleItem[] = [
 		id: "certified-doctors",
 		title: "Certified Doctors",
 		description: "Qualified specialists dedicated to your care and comfort.",
-		icon: <CertifiedDoctorIcon className="size-12 sm:size-14 text-secondary" />,
+		icon: <CertifiedDoctorIcon className="size-8 md:size-14 text-secondary" />,
 	},
 	{
 		id: "modern-equipment",
 		title: "Modern Equipment",
 		description: "Advanced technology for precise treatments.",
-		icon: <ModernEquipmentIcon className="size-12 sm:size-14 text-secondary" />,
+		icon: <ModernEquipmentIcon className="size-8 md:size-14 text-secondary" />,
 	},
 	{
 		id: "patient-privacy",
 		title: "Patient Privacy",
 		description: "Your privacy and confidentiality always matter.",
-		icon: <PatientPrivacyIcon className="size-12 sm:size-14 text-secondary" />,
+		icon: <PatientPrivacyIcon className="size-8 md:size-14 text-secondary" />,
 	},
 	{
 		id: "seamless-experience",
 		title: "Seamless Experience",
 		description: "A comfortable and welcoming environment.",
 		icon: (
-			<SeamlessExperienceIcon className="size-12 sm:size-14 text-secondary" />
+			<SeamlessExperienceIcon className="size-8 md:size-14 text-secondary" />
 		),
 	},
 ];
@@ -175,12 +175,23 @@ export function TrustCirclesSection({
 	features = TRUST_FEATURES,
 }: TrustCirclesSectionProps) {
 	return (
-		<section className="w-full overflow-x-auto scrollbar-none flex items-center justify-start lg:justify-center min-w-max lg:min-w-0 mx-auto px-4 sm:px-6 -space-x-5 rtl:space-x-5">
-			{features.map((item) => (
+		<section className="w-full grid grid-cols-2 xl:w-[80%] max-sm:gap-2 sm:flex justify-items-center items-center  sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-5 sm:rtl:space-x-5">
+			{features.map((item, index) => (
 				<div
 					key={item.id}
-					className="group relative flex aspect-square size-64 lg:size-72 shrink-0 flex-col items-center justify-center rounded-full border border-dashed border-secondary/50 bg-background/50 backdrop-blur-xs p-6 sm:p-7 text-center overflow-hidden opacity-70"
+					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bdorder border-dadshed border-secondary/50 bg-backgrosdund/50 backddrop-blur-xs p-2 text-center overflow-hidden w-full  sm:w-1/4"
 				>
+					<svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none">
+						<defs>
+							<linearGradient id={`g${index}`} x1="0" y1="0" x2="1" y2="1">
+								<stop offset="0%" stop-color={index % 2 === 0 ? "var(--secondary)" : "#fff"} />
+								<stop offset="100%" stop-color={index % 2 === 0 ? "#fff" : "var(--secondary)"} />
+							</linearGradient>
+						</defs>
+						<circle cx="50" cy="50" r="49" stroke={`url(#g${index})`} stroke-width="0.4"
+							stroke-dasharray="2 1.5" />
+					</svg>
+
 					{/* Bottom Teal Gradient Glow matching screenshot */}
 					<div
 						className="pointer-events-none absolute inset-x-0 bottom-0 h-7 rounded-b-full bg-linear-to-t from-secondary/20 via-secondary/10 to-transparent transition-all duration-500 group-hover:h-52 lg:group-hover:h-60"
@@ -191,12 +202,12 @@ export function TrustCirclesSection({
 					<div className="relative z-10 mb-3 sm:mb-4">{item.icon}</div>
 
 					{/* Title in Merienda cursive */}
-					<h3 className="relative z-10 font-heading h4 text-primary leading-tight font-medium">
+					<h3 className="relative z-10 font-heading lg:h4 text-primary leading-tight font-bold">
 						{item.title}
 					</h3>
 
 					{/* Description */}
-					<p className="relative z-10 small text-paragraph leading-relaxed mt-2 max-w-47.5 sm:max-w-52.5">
+					<p className="relative z-10 small text-paragraph leading-relaxed mt-2 px-2">
 						{item.description}
 					</p>
 				</div>

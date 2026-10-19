@@ -52,18 +52,11 @@ export default function RootLayout({
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
 				<DirectionProvider dir="ltr" direction="ltr">
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-					>
-						<LanguageProvider initialLanguage="en">
-							<Navbar />
-							<div className="flex-1 min-h-screen">{children}</div>
-							<Footer />
-						</LanguageProvider>
-					</ThemeProvider>
+					<LanguageProvider initialLanguage="en">
+						<Navbar />
+						<div className="flex-1 min-h-screen">{children}</div>
+						<Footer />
+					</LanguageProvider>
 				</DirectionProvider>
 			</body>
 		</html>

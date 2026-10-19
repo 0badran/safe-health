@@ -44,7 +44,7 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 			<InteractiveGridBackground maskImage="/images/hero-bg.png" />
 
 			{/* Main Content Container */}
-			<div className="relative z-10 container pt-28 pb-0 pointer-events-none">
+			<div className="relative z-10 container pt-20 md:pt-28 pb-0 pointer-events-none">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
 					{/* Left Column: Tagline, Video Preview, CTA Buttons & Bottom Stats Banner */}
 					<div className="lg:col-span-7 flex max-lg:items-center flex-col justify-between min-h-full">
