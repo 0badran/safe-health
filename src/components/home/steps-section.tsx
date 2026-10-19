@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { ReactNode } from "react";
-import { JSX } from "react/jsx-runtime";
+import { ExpertiseBackground } from "../about/expertise-background";
 
-// (or use next/font) if you prefer.
 const FONTS = `
-  @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400&family=Merienda+One&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap");
 `;
 
 const BLOB_A =
@@ -64,15 +63,14 @@ const STEPS = [
 		title: "Initial Consultation",
 		text: "We listen to your concerns, understand your needs, and discuss the best options for you.",
 		Icon: ChatIcon,
-		offset: "lg:mt-[100px]",
+		offset: "lg:mt-12",
 		imgSrc: "/images/steps/img1.png",
-		svg: "",
 	},
 	{
 		title: "Treatment Planning",
 		text: "We create a personalized treatment plan based on your goals and medical needs.",
 		Icon: DocIcon,
-		offset: "lg:mt-[47px]",
+		offset: "lg:mt-24",
 		imgSrc: "/images/steps/img2.png",
 	},
 	{
@@ -86,10 +84,150 @@ const STEPS = [
 		title: "Follow-Up Support",
 		text: "We stay connected to ensure your progress, answer your questions, and support your ongoing care.",
 		Icon: HeartPlusIcon,
-		offset: "lg:mt-[39px]",
+		offset: "lg:mt-14",
 		imgSrc: "/images/steps/img4.png",
 	},
 ];
+
+/* ---------- connecting lines between steps ---------- */
+function StepConnector({ stepIndex }: { stepIndex: number }) {
+	if (stepIndex === 1) {
+		return (
+			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+				{/* Small starting dot */}
+				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				{/* Connecting wave line ending with fade */}
+				<svg
+					viewBox="0 0 100 40"
+					preserveAspectRatio="none"
+					className="h-10 w-full overflow-visible"
+					aria-hidden="true"
+				>
+					<defs>
+						<linearGradient id="step-fade-1" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+						</linearGradient>
+					</defs>
+					<path
+						d="M 0 0 C 35 5, 55 25, 75 32 C 88 36, 95 34, 100 32"
+						fill="none"
+						stroke="url(#step-fade-1)"
+						strokeWidth="2.2"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+					/>
+				</svg>
+			</div>
+		);
+	}
+
+	if (stepIndex === 2) {
+		return (
+			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 hidden h-[120px] w-[calc(100%-125px)] overflow-visible lg:block">
+				{/* Small starting dot */}
+				<span className="absolute -left-1 bottom-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				{/* Connecting wave line surging up to step 3 ending with fade */}
+				<svg
+					viewBox="0 0 100 80"
+					preserveAspectRatio="none"
+					className="size-full overflow-visible"
+					aria-hidden="true"
+				>
+					<defs>
+						<linearGradient id="step-fade-2" x1="0%" y1="100%" x2="100%" y2="0%">
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+						</linearGradient>
+					</defs>
+					<path
+						d="M 0 76 C 25 80, 45 60, 65 30 C 80 12, 92 6, 100 6"
+						fill="none"
+						stroke="url(#step-fade-2)"
+						strokeWidth="2.2"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+					/>
+				</svg>
+			</div>
+		);
+	}
+
+	if (stepIndex === 3) {
+		return (
+			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+				{/* Small starting dot */}
+				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				{/* Connecting wave line ending with fade */}
+				<svg
+					viewBox="0 0 100 45"
+					preserveAspectRatio="none"
+					className="h-11 w-full overflow-visible"
+					aria-hidden="true"
+				>
+					<defs>
+						<linearGradient id="step-fade-3" x1="0%" y1="0%" x2="100%" y2="0%">
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+						</linearGradient>
+					</defs>
+					<path
+						d="M 0 0 C 35 5, 55 25, 75 35 C 88 40, 95 38, 100 35"
+						fill="none"
+						stroke="url(#step-fade-3)"
+						strokeWidth="2.2"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+					/>
+				</svg>
+			</div>
+		);
+	}
+
+	if (stepIndex === 4) {
+		return (
+			<div className="pointer-events-none absolute left-0 top-0 z-20 hidden size-full overflow-visible lg:block">
+				{/* "Health Care Beyond Borders" text annotation */}
+				<div className="absolute left-[130px] -top-14 select-none">
+					<p className="rotate-[-6deg] font-['Caveat'] text-2xl font-bold leading-tight text-[#78A9B8] lg:text-3xl">
+						Health Care
+						<br />
+						<span className="ml-3">Beyond Borders</span>
+					</p>
+				</div>
+				{/* Dashed flight trail with downward dip curving up to the airplane */}
+				<svg
+					width="340"
+					height="180"
+					viewBox="0 0 340 180"
+					className="absolute left-0 top-0 overflow-visible"
+					aria-hidden="true"
+				>
+					<path
+						d="M 200 112 C 220 155, 265 95, 293 22"
+						fill="none"
+						stroke="var(--primary)"
+						strokeWidth="2.2"
+						strokeDasharray="5 4"
+						strokeLinecap="round"
+						className="opacity-85"
+					/>
+					<g transform="translate(280, 2) rotate(10 11 11) scale(1.15)">
+						<path
+							d="M22 16V14L12.5 8V1.5C12.5 0.7 11.8 0 11 0C10.2 0 9.5 0.7 9.5 1.5V8L0 14V16L9.5 13V19.5L7 21.5V23L11 22L15 23V21.5L12.5 19.5V13L22 16Z"
+							fill="var(--primary)"
+						/>
+					</g>
+				</svg>
+			</div>
+		);
+	}
+
+	return null;
+}
 
 function Step({
 	n,
@@ -107,8 +245,8 @@ function Step({
 	imgSrc: string;
 }) {
 	return (
-		<li className={`flex flex-col gap-2 ${offset}`}>
-			<div className="relative h-[203px] w-[209px] shrink-0">
+		<li className={`relative flex flex-col gap-2 ${offset}`}>
+			<div className="relative h-50.75 w-52.25 shrink-0">
 				<svg
 					viewBox="0 0 676.72 656.35"
 					preserveAspectRatio="none"
@@ -127,24 +265,27 @@ function Step({
 				</svg>
 				<Image
 					src={imgSrc}
-					alt=""
+					alt={title}
 					width={200}
 					height={200}
 					className="relative z-10"
 				/>
-				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-[#159BA8]">
+				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary">
 					<Icon />
 				</span>
 			</div>
 
+			{/* Connecting wave line starting with small circle dot and ending with fade */}
+			<StepConnector stepIndex={n} />
+
 			<div className="flex flex-col gap-1">
-				<span className="font-['Merienda_One'] text-3xl leading-9 tracking-tight text-[#159BA8]">
+				<span className="font-heading text-3xl leading-9 tracking-tight text-primary">
 					{String(n).padStart(2, "0")}
 				</span>
-				<h3 className="font-['Merienda_One'] text-xl font-normal leading-7 text-[#0F172A]">
+				<h3 className="font-heading text-xl font-bold leading-7 text-foreground">
 					{title}
 				</h3>
-				<p className="max-w-67.5 py-0.75 font-['Inter'] text-sm leading-[22.75px] text-[#475569]">
+				<p className="max-w-67.5 py-0.75 text-paragraph small leading-[22.75px]">
 					{text}
 				</p>
 			</div>
@@ -152,49 +293,26 @@ function Step({
 	);
 }
 
-function Annotation() {
-	return (
-		<div
-			className="pointer-events-none absolute right-6 top-16 hidden w-62.5 md:block"
-			aria-hidden="true"
-		>
-			<p className="rotate-[-5deg] font-['Caveat'] text-[clamp(22px,2.9vw,36px)] font-bold leading-10 tracking-[0.9px] text-[#78A9B8]">
-				Health Care
-				<br />
-				<span className="ml-3">Beyond Borders</span>
-			</p>
-			<svg
-				viewBox="0 0 22.16 23.33"
-				className="ml-52.5 mt-1 size-9 -rotate-12 fill-[#159BA8]"
-			>
-				<path d="M22.16 16.33V14L12.83 8.16V1.75a1.75 1.75 0 0 0-3.5 0v6.41L0 14v2.33l9.33-2.92v6.42L7 21.58v1.75l4.08-1.17 4.08 1.17v-1.75l-2.33-1.75v-6.42l9.33 2.92Z" />
-			</svg>
-		</div>
-	);
-}
-
 /* ---------- section ---------- */
 export default function StepsSection() {
 	return (
-		<section className="relative w-full overflow-hidden rounded-[47px] bg-[url('/images/steps/back.png')] bg-cover bg-center bg-no-repeat">
+		<section className="relative w-full overflow-hidden bg-cover bg-center bg-no-repeat">
 			<style>{FONTS}</style>
-			<Annotation />
-
-			<div className="">
-				<header className="flex max-w-182 flex-col gap-3">
-					<h2 className="font-['Merienda_One'] text-3xl font-normal leading-[1.1] tracking-[-0.04em] text-[#392579] md:text-5xl">
-						Your Journey,
-						<br />
-						Every Step of the Way.
+			<ExpertiseBackground />
+			<div>
+				<header className="flex gap-3">
+					<h2 className="flex-1">
+						<p className="text-heading inline-block">Your Journey, </p>
+						<p className="text-heading inline"><br /> Every Step of the Way.</p>
 					</h2>
-					<p className="max-w-142 font-['Inter'] text-base leading-7 text-paragraph md:text-lg">
+					<p className="relative z-10 m-4 flex-1 text-base leading-7 text-paragraph md:text-lg">
 						From understanding your needs to supporting your recovery, we re
 						here to help make every step clearer.
 					</p>
 				</header>
 
-				<div className="relative mt-12 lg:mt-0">
-					<ol className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:items-start ">
+				<div className="relative mt-12 p-4 lg:mt-0">
+					<ol className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:items-start">
 						{STEPS.map((s, i) => (
 							<Step key={s.title} n={i + 1} {...s} />
 						))}
@@ -204,3 +322,4 @@ export default function StepsSection() {
 		</section>
 	);
 }
+

@@ -122,14 +122,14 @@ export function ConsultationForm({
 	};
 
 	return (
-		<div className={cn("relative w-full overflow-hidden bg-card text-card-foreground", className)}>
+		<div className={cn("relative z-20 w-full overflow-hidden bg-card text-card-foreground", className)}>
 			<Image src={"/images/form-logo.png"} alt="" width={200} height={200} className="absolute right-0 "/>
 				<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
 				<header className="space-y-1.5">
-					<h2 className="m-0 text-[clamp(20px,4.4vw,26px)] leading-tight font-normal text-primary capitalize font-heading">
+					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
 						{title}
 					</h2>
-					<p className="m-0 small leading-5.5 text-foreground/80 font-sans">
+					<p className="mt-2 small md:leading-5.5 text-foreground/80 font-sans">
 						{description}
 					</p>
 				</header>
@@ -141,7 +141,7 @@ export function ConsultationForm({
 						<form
 							onSubmit={form.handleSubmit(handleSubmit)}
 							noValidate
-							className="flex flex-col gap-4"
+							className="flex flex-col gap-2 md:gap-4"
 						>
 							{/* Full Name */}
 							<FormField
@@ -149,7 +149,7 @@ export function ConsultationForm({
 								name="name"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none ">
 											<span>Full name</span>
 											<span className="text-primary font-bold" aria-hidden="true">
 												*
@@ -162,7 +162,7 @@ export function ConsultationForm({
 												disabled={isSubmitting}
 												placeholder="Alex Morgan"
 												autoComplete="name"
-												className="h-10.5 rounded-xl bg-card border-input"
+												className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 											/>
 										</FormControl>
 										<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
@@ -190,7 +190,7 @@ export function ConsultationForm({
 													disabled={isSubmitting}
 													placeholder="alex@example.com"
 													autoComplete="email"
-													className="h-10.5 rounded-xl bg-card border-input"
+													className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
@@ -213,7 +213,7 @@ export function ConsultationForm({
 													disabled={isSubmitting}
 													placeholder="+90 532 123 45 67"
 													autoComplete="tel"
-													className="h-10.5 rounded-xl bg-card border-input"
+													className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans" />
@@ -237,13 +237,13 @@ export function ConsultationForm({
 											disabled={isSubmitting}
 										>
 											<FormControl>
-												<SelectTrigger className="h-10.5 rounded-xl bg-card border-input">
+												<SelectTrigger className="h-9 md:h-10.5 rounded-xl bg-card border-input small">
 													<SelectValue placeholder="Which country are you from?" />
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
 												{COUNTRIES.map((c) => (
-													<SelectItem key={c} value={c}>
+													<SelectItem className="small" key={c} value={c}>
 														{c}
 													</SelectItem>
 												))}
@@ -271,13 +271,13 @@ export function ConsultationForm({
 													disabled={isSubmitting}
 												>
 													<FormControl>
-														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input">
+														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input small">
 															<SelectValue placeholder="Select a treatment" />
 														</SelectTrigger>
 													</FormControl>
 													<SelectContent>
 														{TREATMENTS.map((t) => (
-															<SelectItem key={t} value={t}>
+															<SelectItem className="small" key={t} value={t}>
 																{t}
 															</SelectItem>
 														))}
@@ -302,13 +302,13 @@ export function ConsultationForm({
 													disabled={isSubmitting}
 												>
 													<FormControl>
-														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input">
+														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input small">
 															<SelectValue placeholder="Select a doctor (optional)" />
 														</SelectTrigger>
 													</FormControl>
 													<SelectContent>
 														{DOCTORS.map((d) => (
-															<SelectItem key={d} value={d}>
+															<SelectItem className="small" key={d} value={d}>
 																{d}
 															</SelectItem>
 														))}
@@ -327,7 +327,7 @@ export function ConsultationForm({
 								name="message"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none	">
 											Message
 										</FormLabel>
 										<FormControl>
@@ -336,7 +336,7 @@ export function ConsultationForm({
 												disabled={isSubmitting}
 												placeholder="Tell us about the treatment you are considering."
 												rows={3}
-												className="min-h-24 rounded-xl bg-card border-input py-3 resize-none"
+												className="min-h-24 rounded-xl bg-card border-input py-3 resize-none small"
 											/>
 										</FormControl>
 										<FormMessage className="small text-destructive font-sans" />

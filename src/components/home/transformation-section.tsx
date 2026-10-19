@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function TransformationSection() {
 	return (
-		<section className="relative w-full h-60 md:h-100 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
+		<section className="relative w-full py-10 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
 			{/* Background Poster Image */}
 			<Image
 				src="/images/transformation-banner.png"
@@ -23,11 +23,11 @@ export function TransformationSection() {
 
 			{/* Content */}
 			<div className="relative z-10 flex flex-col justify-center items-start px-6 flex-1">
-				<h2 className="font-heading italic text-primary h2 leading-tight tracking-tight">
+				<h2 className="font-heading italic text-primary h3 leading-tight tracking-tight">
 					Ready For Your Transformation?
 				</h2>
 
-				<p className="text-paragraph h5 mt-3 leading-tight max-w-lg line-clamp-2 sm:line-clamp-none">
+				<p className="text-paragraph h5 mt-3 leading-9 font-normal max-w-lg line-clamp-2 sm:line-clamp-none">
 					Take the first step toward feeling confident in your own skin. Our
 					specialists are here to guide you every step of the way.
 				</p>
