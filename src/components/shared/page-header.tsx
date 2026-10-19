@@ -24,7 +24,7 @@ export function PageHeader({ badge, title, description }: PageHeaderProps) {
 
 					{/* Badge + Description Row */}
 					<div className="flex flex-col sm:flex-row items-start justify-center gap-4 sm:gap-6 max-w-4xl">
-						<SectionBadge className="shrink-0">{badge}</SectionBadge>
+						<SectionBadge className="shrink-0 max-sm:mx-auto">{badge}</SectionBadge>
 
 						<p className="text-paragraph h5 font-normal leading-relaxed text-center sm:text-start ">{description}</p>
 					</div>

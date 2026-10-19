@@ -190,7 +190,7 @@ export function BlogsSection({ posts = DEFAULT_POSTS }: BlogsSectionProps) {
 										<Link
 											href={post.link || "#"}
 											aria-label={`Read article: ${post.title}`}
-											className="size-9 sm:size-10 rounded-full bg-[#F0EDF6]/77 text-primary flex items-center justify-center shrink-0 transition-all duration-300 hover:bg-primary hover:text-white backdrop-blur-md border border-border/20"
+											className="size-9 sm:size-10 rounded-full bg-purple-tint/77 text-primary flex items-center justify-center shrink-0 transition-all duration-300 hover:bg-primary hover:text-white backdrop-blur-md border border-border/20"
 										>
 											<ArrowUpRight className="size-4 transition-transform duration-300  " />
 										</Link>

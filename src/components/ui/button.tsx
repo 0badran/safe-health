@@ -27,14 +27,8 @@ const buttonVariants = cva(
 			},
 			size: {
 				default:
-					"h-9 sm:h-11 gap-1.5 px-1 ps-4 has-data-[icon=inline-end]:pe-2.5 has-data-[icon=inline-start]:ps-2.5",
-				xs: "h-6 gap-1 px-1 text-xs has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2 [&_svg:not([class*='size-'])]:size-3",
-				sm: "h-8 gap-1 px-1 has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
-				lg: "h-11 gap-2 px-1 has-data-[icon=inline-end]:pe-3 has-data-[icon=inline-start]:ps-3",
-				icon: "size-9",
-				"icon-xs": "size-6",
-				"icon-sm": "size-8",
-				"icon-lg": "size-10",
+					"h-8 md:h-9 xl:h-11 gap-1.5 px-4 text-xs md:text-sm has-data-[icon=inline-end]:pe-2.5 has-data-[icon=inline-start]:ps-2.5",
+				icon: "size-8 md:size-9 xl:size-11",
 			},
 		},
 		defaultVariants: {
@@ -73,23 +67,21 @@ function Button({
 			data-slot="button"
 			data-variant={variant}
 			data-size={size}
-			className={cn(buttonVariants({ variant, size, className }))}
+			className={cn(
+				buttonVariants({ variant, size, className }),
+				withArrow && "pe-1 ps-2.5",
+			)}
 			{...props}
 		>
 			<Slot.Slottable>{children}</Slot.Slottable>
 			{withArrow && !size?.startsWith("icon") && (
 				<div
 					className={cn(
-						"inline-flex items-center sm:size-9 size-7 justify-center rounded-full shrink-0",
+						"inline-flex items-center xl:size-9 size-6 md:size-7 justify-center rounded-full shrink-0",
 						arrowBgVariants[variant!] ?? arrowBgVariants.default,
 					)}
 				>
-					<ArrowRight
-						className={cn(
-							"stroke-1 rtl:rotate-180",
-							size?.endsWith("lg") ? "size-6" : "size-5",
-						)}
-					/>
+					<ArrowRight className="stroke-1 rtl:rotate-180 size-4 md:size-5" />
 				</div>
 			)}
 		</Comp>

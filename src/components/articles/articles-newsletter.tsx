@@ -59,7 +59,6 @@ export function ArticlesNewsletter() {
 								<Button
 									type="submit"
 									variant="default"
-									size="lg"
 									className="w-full sm:w-auto shrink-0 h-11 px-6 font-semibold"
 								>
 									اشترك مجاناً

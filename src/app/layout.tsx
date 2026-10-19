@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 };
 
 import { LanguageProvider } from "@/lib/language-context";
+import { LucideProvider } from "lucide-react";
 
 export default function RootLayout({
 	children,
@@ -52,11 +53,20 @@ export default function RootLayout({
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
 				<DirectionProvider dir="ltr" direction="ltr">
-					<LanguageProvider initialLanguage="en">
-						<Navbar />
-						<div className="flex-1 min-h-screen">{children}</div>
-						<Footer />
-					</LanguageProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						<LucideProvider strokeWidth={1.5}>
+							<LanguageProvider initialLanguage="en">
+								<Navbar />
+								<div className="flex-1 min-h-screen">{children}</div>
+								<Footer />
+							</LanguageProvider>
+						</LucideProvider>
+					</ThemeProvider>
 				</DirectionProvider>
 			</body>
 		</html>

@@ -23,14 +23,14 @@ export function HowItWorksCta() {
 					</p>
 
 					<div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-						<Button asChild size="lg" variant="default" className="shadow-md">
+						<Button asChild variant="default" className="shadow-md">
 							<Link href="/contact" className="gap-2">
 								<span>احجز استشارتك المجانية الآن</span>
 								<ArrowLeftIcon className="size-4 rtl:rotate-0 rotate-180" />
 							</Link>
 						</Button>
 
-						<Button asChild size="lg" variant="outline">
+						<Button asChild variant="outline">
 							<Link href="/about">تعرف على فريقنا الطبي</Link>
 						</Button>
 					</div>

@@ -56,10 +56,10 @@ const STEPS: TimelineStep[] = [
 
 function StepBadge({ number }: { number: string }) {
 	return (
-		<span className="inline-flex items-center gap-1.5 rounded-full bg-wallpaper px-3.5 py-2 font-heading text-primary small tracking-wider select-none uppercase">
+		<SectionBadge withoutIcon className="font-normal text-primary">
 			<span>STEP _ {number}</span>
 			<ArrowDownIcon className="size-3 text-primary/70 shrink-0" />
-		</span>
+		</SectionBadge>
 	);
 }
 

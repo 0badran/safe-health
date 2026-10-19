@@ -29,7 +29,6 @@ export function ConsultationSuccess({
 				<Button
 					type="button"
 					variant="ghost"
-					size="sm"
 					onClick={onReset}
 					className="mt-2 text-secondary hover:text-secondary"
 				>

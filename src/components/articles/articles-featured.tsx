@@ -92,7 +92,7 @@ export function ArticlesFeatured() {
 										</div>
 									</div>
 
-									<Button asChild variant="outline" size="sm">
+									<Button asChild variant="outline">
 										<Link href="/contact" className="gap-1.5">
 											<span>استفسر عن العلاج</span>
 											<ArrowLeftIcon className="size-3.5 rtl:rotate-0 rotate-180" />

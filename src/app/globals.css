@@ -42,6 +42,7 @@
 	--color-popover: var(--popover);
 	--color-card-foreground: var(--card-foreground);
 	--color-card: var(--card);
+	--color-purple-tint: var(--purple-tint);
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
@@ -87,6 +88,7 @@
 	--sidebar-accent-foreground: oklch(0.264 0.027 300.9);
 	--sidebar-border: oklch(0.915 0.006 78.3);
 	--sidebar-ring: oklch(0.343 0.135 288);
+	--purple-tint: oklch(95.101% 0.01248 301.038);
 }
 
 .dark {
@@ -124,6 +126,7 @@
 	--sidebar-accent-foreground: oklch(0.98 0.005 78.3);
 	--sidebar-border: oklch(0.28 0.02 300.9);
 	--sidebar-ring: oklch(0.68 0.16 288);
+	--purple-tint: oklch(0.26 0.02 300.9);
 }
 
 @layer base {
@@ -185,4 +188,8 @@
 	vertical-align: middle;
 	line-height: 110.00000000000001%;
 	font-weight: 500;
+}
+
+@utility global-shadow {
+	box-shadow: 0px 1px 14px 0px #39257914;
 }

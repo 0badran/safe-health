@@ -157,8 +157,8 @@ function StartLine({ className, guideRef, planeRef }: LineProps) {
 					y2="-69.461"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stop-color="var(--primary)" stop-opacity="0.2" />
-					<stop offset="1" stop-color="var(--primary)" />
+					<stop stopColor="var(--primary)" stopOpacity="0.2" />
+					<stop offset="1" stopColor="var(--primary)" />
 				</linearGradient>
 			</defs>
 		</svg>
@@ -359,7 +359,7 @@ export function HeroStatsBanner({
 			{/* Stats Card:
 			    - Responsive 2x2 grid on mobile, locks to -ml-[62px] & w-[calc(100%+186px)] row on sm+
 			*/}
-			<div className="relative mt-4 w-full text-center   bg-[#F0EDF680] backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 shadow-xs">
+			<div className="relative mt-4 w-full text-center bg-purple-tint/50 backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 shadow-xs">
 				{stats.map((item, index) => (
 					<div key={index} className="flex items-center justify-center sm:flex-1">
 						<div className="flex flex-col items-center text-center px-1">

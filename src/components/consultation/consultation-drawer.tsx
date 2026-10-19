@@ -51,7 +51,6 @@ export function ConsultationDrawer({
 	brandName = "GK InterCare",
 	title = "Plan your treatment with GK InterCare",
 	description = "Share your details and our patient coordination team will contact you with clear next steps.",
-	eyebrow = "FREE CONSULTATION",
 	onSubmit,
 	open: controlledOpen,
 	onOpenChange: controlledOnOpenChange,

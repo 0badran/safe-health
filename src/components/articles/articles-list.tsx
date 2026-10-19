@@ -121,7 +121,6 @@ export function ArticlesList() {
 							<Button
 								key={category}
 								variant={activeCategory === category ? "default" : "outline"}
-								size="sm"
 								onClick={() => setActiveCategory(category)}
 								className="text-xs transition-colors"
 							>
@@ -198,7 +197,6 @@ export function ArticlesList() {
 								<Button
 									asChild
 									variant="ghost"
-									size="sm"
 									className="gap-1 px-2"
 								>
 									<Link

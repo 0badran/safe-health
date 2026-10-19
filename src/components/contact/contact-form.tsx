@@ -56,7 +56,6 @@ export function ContactForm() {
 						</div>
 						<Button
 							variant="outline"
-							size="sm"
 							onClick={() => setIsSubmitted(false)}
 							className="mt-2"
 						>
@@ -133,7 +132,6 @@ export function ContactForm() {
 						<Button
 							type="submit"
 							disabled={isLoading}
-							size="lg"
 							className="w-full h-12 text-sm font-bold shadow-md"
 						>
 							{isLoading ? (

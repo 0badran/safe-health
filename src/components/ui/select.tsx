@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 import { Select as SelectPrimitive } from "radix-ui";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
@@ -23,23 +24,37 @@ function SelectValue({
 	return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+const selectTriggerVariants = cva(
+	"flex h-8 md:h-9 xl:h-11 w-full items-center justify-between gap-2 border border-input px-3.5 py-1 text-xs md:text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 [&>span]:line-clamp-1 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+	{
+		variants: {
+			variant: {
+				default: "rounded-xl bg-input/20",
+				filter: "rounded-xl border-input bg-background/50",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+		},
+	},
+);
+
 function SelectTrigger({
 	className,
 	children,
+	variant,
 	...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+}: React.ComponentProps<typeof SelectPrimitive.Trigger> &
+	VariantProps<typeof selectTriggerVariants>) {
 	return (
 		<SelectPrimitive.Trigger
 			data-slot="select-trigger"
-			className={cn(
-				"flex h-10 w-full items-center justify-between gap-2 rounded-xl border border-input bg-input/20 px-3 py-2 text-base transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 md:text-sm [&>span]:line-clamp-1 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
-				className,
-			)}
+			className={cn(selectTriggerVariants({ variant, className }))}
 			{...props}
 		>
 			{children}
 			<SelectPrimitive.Icon asChild>
-				<ChevronDownIcon className="size-4 shrink-0 opacity-60" />
+				<ChevronDownIcon className="size-4 shrink-0 opacity-60 text-secondary" />
 			</SelectPrimitive.Icon>
 		</SelectPrimitive.Trigger>
 	);
@@ -107,7 +122,7 @@ function SelectItem({
 			)}
 			{...props}
 		>
-			<span className="absolute end-2 flex size-3.5 items-center justify-center">
+			<span className="absolute inset-e-2 flex size-3.5 items-center justify-center">
 				<SelectPrimitive.ItemIndicator>
 					<CheckIcon className="size-4" />
 				</SelectPrimitive.ItemIndicator>

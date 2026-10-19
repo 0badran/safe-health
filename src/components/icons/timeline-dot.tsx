@@ -12,11 +12,11 @@ export function TimelineDot({ className, ...props }: TimelineDotProps) {
 			)}
 			{...props}
 		>
-			{/* Pulsing Glowing Aura around the cyan center dot */}
-			<span className="absolute size-3.5 rounded-full bg-secondary/40 animate-ping pointer-events-none" />
-			<span className="absolute size-2.5 rounded-full bg-secondary/70 animate-pulse pointer-events-none" />
+			{/* Subtle outer breathing aura */}
+			<span className="absolute size-9 rounded-full bg-secondary/20 animate-ping pointer-events-none animation-duration-[3s]" />
+			<span className="absolute size-10 rounded-full bg-secondary/15 animate-pulse pointer-events-none animation-duration-[2.5s]" />
 
-			{/* Base SVG provided by user */}
+			{/* Base SVG with white circular shadow container */}
 			<svg
 				width="36"
 				height="36"
@@ -113,6 +113,18 @@ export function TimelineDot({ className, ...props }: TimelineDotProps) {
 					</filter>
 				</defs>
 			</svg>
+
+			{/* Subtle internal rotating dashed ring around the center */}
+			<span
+				className="absolute z-20 size-5 rounded-full border border-dashed border-secondary/45 animate-[spin_10s_linear_infinite] pointer-events-none"
+				aria-hidden="true"
+			/>
+
+			{/* Center pulsing cyan core with subtle radiant glow */}
+			<span
+				className="absolute z-20 size-2 rounded-full bg-secondary shadow-[0_0_8px_var(--color-secondary)] animate-pulse pointer-events-none animation-duration-[2s]"
+				aria-hidden="true"
+			/>
 		</div>
 	);
 }
