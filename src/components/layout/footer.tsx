@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import InteractiveGridBackground from "@/components/shared/interactive-grid-background";
-import { TransformationSection } from "../home/transformation-section";
 
 export function Footer() {
 	const exploreLinks = [
@@ -28,10 +26,6 @@ export function Footer() {
 
 	return (
 		<footer >
-			<div className="container mt-10 lg:mt-16">
-
-				<TransformationSection />
-			</div>
 			<div className="relative bg-primary text-primary-foreground overflow-hidden pt-16  select-none pb-32 ">
 
 
