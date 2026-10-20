@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FooterCta } from "../shared/footer-cta";
 
 export function Footer() {
 	const exploreLinks = [
@@ -26,9 +27,10 @@ export function Footer() {
 
 	return (
 		<footer >
+			<div className="container mt-10 lg:mt-16">
+				<FooterCta />
+			</div>
 			<div className="relative bg-primary text-primary-foreground overflow-hidden pt-16  select-none pb-32 ">
-
-
 				<div className="container relative z-10 pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
 					{/* Top Grid: Logo & Tagline + 3 Link Columns */}
 					<div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
@@ -57,7 +59,7 @@ export function Footer() {
 						</div>
 
 						{/* Navigation Links Columns */}
-						<div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-8 small">
+						<div className="lg:col-span-8  grid grid-cols-2 sm:grid-cols-3 gap-8 small">
 							{/* EXPLORE */}
 							<div className="flex flex-col space-y-3.5">
 								<h3 className="text-border font-semibold uppercase tracking-wider">

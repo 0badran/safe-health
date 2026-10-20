@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export function TransformationSection() {
+export function FooterCta() {
 	return (
-		<section className="relative w-full py-10 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
+		<section className="relative w-full py-5 lg:py-10 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
 			{/* Background Poster Image */}
 			<Image
 				src="/images/transformation-banner.png"
@@ -22,17 +22,17 @@ export function TransformationSection() {
 			/>
 
 			{/* Content */}
-			<div className="relative z-10 flex flex-col justify-center items-start px-6 flex-1">
+			<div className="relative z-10 flex flex-col justify-center items-start px-3 lg:px-6 flex-1">
 				<h2 className="font-heading italic text-primary h3 leading-tight tracking-tight">
 					Ready For Your Transformation?
 				</h2>
 
-				<p className="text-paragraph h5 mt-3 leading-9 font-normal max-w-lg line-clamp-2 sm:line-clamp-none">
+				<p className="text-paragraph h5 lg:mt-3 mt-1 leading-6 lg:leading-9 font-normal max-w-lg line-clamp-3 sm:line-clamp-none">
 					Take the first step toward feeling confident in your own skin. Our
 					specialists are here to guide you every step of the way.
 				</p>
 
-				<div className="mt-6 sm:mt-8">
+				<div className="mt-4 lg:mt-8">
 					<Link href="/contact">
 						<Button variant="default" withArrow>
 							Get A Free Consultation
