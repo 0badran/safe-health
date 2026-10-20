@@ -14,7 +14,7 @@ export function PageHeader({ badge, title, description }: PageHeaderProps) {
 			<InteractiveGridBackground
 				borderColor="var(--border)"
 				hoverColor="color-mix(in srgb, var(--primary) 8%, transparent)"
-				borderOpacity={0.5}
+				borderOpacity={0.2}
 			/>
 
 			<div className="container relative  z-10 pointer-events-none">

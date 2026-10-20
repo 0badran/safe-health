@@ -3,7 +3,6 @@ import { DoctorsFilter } from "@/components/doctors/doctors-filter";
 import { DoctorCard, type DoctorData } from "@/components/doctors/doctor-card";
 import { DoctorsTimelineTrack } from "@/components/doctors/doctors-timeline-track";
 import type { Metadata } from "next";
-import { TransformationSection } from "@/components/home/transformation-section";
 
 export const metadata: Metadata = {
 	title: "الأطباء | Safe Health للرعاية الطبية والحلول الصحية",
@@ -101,9 +100,6 @@ export default function DoctorsPage() {
 					))}
 				</div>
 			</section>
-			<div className="container">
-				<TransformationSection />
-			</div>
 		</main>
 	);
 }

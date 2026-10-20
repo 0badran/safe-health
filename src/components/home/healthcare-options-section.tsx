@@ -1,14 +1,15 @@
 "use client";
 
+import { DragonWatermark } from "@/components/icons/dragon-watermark";
+import { Button } from "@/components/ui/button";
+import { SectionCarousel } from "@/components/shared/section-carousel";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DragonWatermark } from "@/components/icons/dragon-watermark";
-import { cn } from "@/lib/utils";
 
-interface HealthcareOption {
+export interface HealthcareOption {
 	id: string;
 	title: string;
 	description: string;
@@ -16,7 +17,7 @@ interface HealthcareOption {
 	link: string;
 }
 
-const HEALTHCARE_OPTIONS: HealthcareOption[] = [
+export const HEALTHCARE_OPTIONS: HealthcareOption[] = [
 	{
 		id: "plastic-surgery",
 		title: "Plastic Surgery",
@@ -59,12 +60,18 @@ const HEALTHCARE_OPTIONS: HealthcareOption[] = [
 	},
 ];
 
-export function HealthcareOptionsSection() {
+export interface HealthcareOptionsSectionProps {
+	options?: HealthcareOption[];
+}
+
+export function HealthcareOptionsSection({
+	options = HEALTHCARE_OPTIONS,
+}: HealthcareOptionsSectionProps = {}) {
 	// Card with ID 'hair-transplant' is active by default to match the design screenshot
 	const [activeId, setActiveId] = useState<string>("hair-transplant");
 
 	return (
-		<section className="relative isolate w-full">
+		<section className="relative isolate w-full p-4 lg:p-7" id="healthcare-options">
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
@@ -87,9 +94,9 @@ export function HealthcareOptionsSection() {
 			</div>
 
 			{/* 2. Top Header Grid (Positioned in alignment with the SVG curve) */}
-			<div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 px-6 sm:px-10 lg:px-12 mb-6 sm:mb-8 pt-1 sm:pt-2">
+			<div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-8">
 				{/* Left Column: Description & Action Button */}
-				<div className="lg:col-span-7 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
+				<div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
 					<p className="text-paragraph h5 leading-relaxed">
 						Discover specialized treatments and trusted medical destinations
 						tailored to your needs, with care that puts your health first
@@ -103,87 +110,91 @@ export function HealthcareOptionsSection() {
 				</div>
 
 				{/* Right Column: Heading sitting in the cutout area */}
-				<div className="lg:col-span-5 flex flex-col items-start lg:items-end justify-start">
+				<div className="lg:col-span-5 order-1 lg:order-2 flex flex-col items-start lg:items-end justify-start">
 					<h2 className="text-heading">
 						Explore Your
-						<br />
+						<br className="hidden lg:block" />{" "}
 						<span>Healthcare Options</span>
 					</h2>
 				</div>
 			</div>
 
-			{/* 3. Cards Carousel: Dynamically sized cards with hover activation & dragon watermark */}
-			<div className="relative z-10 w-full px-4 sm:px-8 lg:px-10">
-				<div className="flex gap-5 overflow-x-auto pb-4 pt-2 scrollbar-none snap-x snap-mandatory">
-					{HEALTHCARE_OPTIONS.map((card) => {
+			{/* 3. Cards Carousel */}
+			<div className="relative z-10 w-full mt-6 sm:mt-8">
+				<SectionCarousel
+					items={options}
+					keyExtractor={(card) => card.id}
+					contentClassName="-ms-4 py-2"
+					renderItem={(card) => {
 						const isActive = activeId === card.id;
 
 						return (
-							<div
-								key={card.id}
-								onMouseEnter={() => setActiveId(card.id)}
-								className={cn(
-									"group relative shrink-0 w-66.25 sm:w-71.25 lg:w-73.75 rounded-3xl shadow-md p-5 sm:p-6 transition-all duration-300 snap-start flex flex-col justify-between overflow-hidden cursor-pointer",
-									isActive
-										? "bg-primary text-primary-foreground -translate-y-1"
-										: "bg-card text-card-foreground hover:-translate-y-1 border border-border/50",
-								)}
-							>
-								{/* Dragon Watermark (Visible on hover and on the active card) */}
+							<div className="flex justify-center h-full">
 								<div
+									onMouseEnter={() => setActiveId(card.id)}
+									onClick={() => setActiveId(card.id)}
 									className={cn(
-										"absolute -top-3 -inset-e-3 size-40 pointer-events-none transition-all duration-500",
+										"group relative w-full h-full rounded-3xl shadow-md p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer",
 										isActive
-											? "opacity-100 scale-100 text-white"
-											: "opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 text-primary/40",
+											? "bg-primary text-primary-foreground"
+											: "bg-card text-card-foreground border border-border/50",
 									)}
-									aria-hidden="true"
 								>
-									<DragonWatermark className="size-full" opacity={0.16} />
-								</div>
-
-								{/* Top Content: Title & Description */}
-								<div className="relative z-10 flex flex-col gap-2.5">
-									<h3 className="font-heading h3 leading-snug tracking-tight">
-										{card.title}
-									</h3>
-									<p
+									{/* Dragon Watermark (Visible on hover and on the active card) */}
+									<div
 										className={cn(
-											"small leading-relaxed transition-colors",
-											isActive && "text-wallpaper",
+											"absolute -top-3 -inset-e-3 size-40 pointer-events-none transition-all duration-500",
+											isActive
+												? "opacity-100 text-primary-foreground"
+												: "opacity-0 text-primary/40",
 										)}
+										aria-hidden="true"
 									>
-										{card.description}
-									</p>
-								</div>
+										<DragonWatermark className="size-full" opacity={0.16} />
+									</div>
 
-								{/* Bottom Image with Circular Arrow Action */}
-								<div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden mt-6 bg-muted">
-									<Image
-										src={card.image}
-										alt={card.title}
-										fill
-										sizes="(max-width: 640px) 265px, (max-width: 1024px) 285px, 295px"
-										className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
-									/>
+									{/* Top Content: Title & Description */}
+									<div className="relative z-10 flex flex-col gap-2.5">
+										<h3 className="font-heading h3 leading-snug tracking-tight">
+											{card.title}
+										</h3>
+										<p
+											className={cn(
+												"small leading-relaxed transition-colors",
+												isActive ? "text-wallpaper" : "text-paragraph",
+											)}
+										>
+											{card.description}
+										</p>
+									</div>
 
-									{/* Circular Action Arrow Overlay */}
-									<Link
-										href={card.link}
-										className={cn(
-											"absolute bottom-3 inset-e-3 size-9 sm:size-10 rounded-full flex items-center justify-center bg-white/38 backdrop-blur-sm transition-all duration-300 shadow-sm",
-											isActive ? "text-background" : "text-secondary",
-										)}
-										aria-label={card.title}
-									>
-										<ArrowRight className="size-4.5 rtl:rotate-180 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
-									</Link>
+									{/* Bottom Image with Circular Arrow Action */}
+									<div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden mt-6 bg-muted">
+										<Image
+											src={card.image}
+											alt={card.title}
+											fill
+											sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+											className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
+										/>
+
+										{/* Circular Action Arrow Overlay */}
+										<Link
+											href={card.link}
+											className="absolute bottom-3 inset-e-3 size-9 sm:size-10 rounded-full flex items-center justify-center bg-white/38 backdrop-blur-sm transition-all duration-300 shadow-sm text-primary"
+											aria-label={card.title}
+										>
+											<ArrowRight className="size-4.5 -rotate-45 group-hover:rotate-0 rtl:rotate-180 transition-transform" />
+										</Link>
+									</div>
 								</div>
 							</div>
 						);
-					})}
-				</div>
+					}}
+				/>
 			</div>
 		</section>
 	);
 }
+
+export default HealthcareOptionsSection;

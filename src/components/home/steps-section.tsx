@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
+import { cn } from "@/lib/utils";
 
 const FONTS = `
   @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap");
@@ -191,8 +192,8 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 		return (
 			<div className="pointer-events-none absolute left-0 top-0 z-20 hidden size-full overflow-visible lg:block">
 				{/* "Health Care Beyond Borders" text annotation */}
-				<div className="absolute left-[130px] -top-14 select-none">
-					<p className="rotate-[-6deg] font-['Caveat'] text-2xl font-bold leading-tight text-[#78A9B8] lg:text-3xl">
+				<div className="absolute left-10 xl:left-[130px] -top-12 xl:-top-14 select-none">
+					<p className="rotate-[-6deg] font-['Caveat'] text-2xl xl:text-3xl font-bold leading-tight text-secondary">
 						Health Care
 						<br />
 						<span className="ml-3">Beyond Borders</span>
@@ -203,7 +204,7 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 					width="340"
 					height="180"
 					viewBox="0 0 340 180"
-					className="absolute left-0 top-0 overflow-visible"
+					className="absolute left-0 top-0 w-64 xl:w-[340px] h-auto overflow-visible"
 					aria-hidden="true"
 				>
 					<path
@@ -245,23 +246,28 @@ function Step({
 	imgSrc: string;
 }) {
 	return (
-		<li className={`relative flex flex-col gap-2 ${offset}`}>
+		<li
+			className={cn(
+				"relative flex flex-col gap-2 max-sm:max-w-70 max-sm:mx-auto",
+				offset,
+			)}
+		>
 			<div className="relative h-50.75 w-52.25 shrink-0">
 				<svg
 					viewBox="0 0 676.72 656.35"
 					preserveAspectRatio="none"
 					aria-hidden="true"
-					className="absolute inset-0 size-full"
+					className="absolute inset-0 size-full text-secondary/15"
 				>
-					<path d={BLOB_A} fill="#EAF5F4" />
+					<path d={BLOB_A} fill="currentColor" />
 				</svg>
 				<svg
 					viewBox="0 0 248 241"
 					preserveAspectRatio="none"
 					aria-hidden="true"
-					className="absolute left-0.75 -top-1.25 h-48 w-47"
+					className="absolute left-0.75 -top-1.25 h-48 w-47 text-secondary/15"
 				>
-					<path d={BLOB_B} fill="#EAF5F4" />
+					<path d={BLOB_B} fill="currentColor" />
 				</svg>
 				<Image
 					src={imgSrc}
@@ -270,7 +276,7 @@ function Step({
 					height={200}
 					className="relative z-10"
 				/>
-				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary">
+				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-secondary/15 text-secondary shadow-xs">
 					<Icon />
 				</span>
 			</div>
@@ -285,7 +291,7 @@ function Step({
 				<h3 className="font-heading text-xl font-bold leading-7 text-foreground">
 					{title}
 				</h3>
-				<p className="max-w-67.5 py-0.75 text-paragraph small leading-[22.75px]">
+				<p className="max-w-67.5 py-0.75 text-paragraph small leading-relaxed">
 					{text}
 				</p>
 			</div>
@@ -296,23 +302,45 @@ function Step({
 /* ---------- section ---------- */
 export default function StepsSection() {
 	return (
-		<section className="relative w-full overflow-hidden bg-cover bg-center bg-no-repeat">
+		<section
+			className="relative isolate w-full overflow-hidden p-4 sm:p-6 rounded-3xl"
+			id="steps"
+		>
 			<style>{FONTS}</style>
-			<ExpertiseBackground />
-			<div>
-				<header className="flex gap-3">
-					<h2 className="flex-1">
-						<p className="text-heading inline-block">Your Journey, </p>
-						<p className="text-heading inline"><br /> Every Step of the Way.</p>
-					</h2>
-					<p className="relative z-10 m-4 flex-1 text-base leading-7 text-paragraph md:text-lg">
-						From understanding your needs to supporting your recovery, we re
-						here to help make every step clearer.
-					</p>
+
+			{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
+			<div
+				className="hidden lg:block absolute inset-0 size-full pointer-events-none z-0"
+				aria-hidden="true"
+			>
+				<ExpertiseBackground />
+			</div>
+
+			{/* Mobile & Tablet: Fluid rounded background card */}
+			<div
+				className="block lg:hidden absolute inset-0 size-full bg-wallpaper rounded-3xl z-0 pointer-events-none"
+				aria-hidden="true"
+			/>
+
+			<div className="relative z-10 w-full">
+				<header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-end mb-8 sm:mb-10 lg:mb-12">
+					<div className="lg:col-span-7 ">
+						<h2 className="text-heading">
+							Your Journey,
+							<br className="hidden sm:block" />{" "}
+							<span>Every Step of the Way.</span>
+						</h2>
+					</div>
+					<div className="lg:col-span-5 flex lg:justify-end me-4">
+						<p className="text-paragraph h5 leading-relaxed max-w-lg">
+							From understanding your needs to supporting your recovery, we&apos;re
+							here to help make every step clearer.
+						</p>
+					</div>
 				</header>
 
-				<div className="relative mt-12 p-4 lg:mt-0">
-					<ol className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4 lg:items-start">
+				<div className="relative mt-6 sm:mt-8 lg:mt-0   lg:p-8">
+					<ol className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4 lg:items-start">
 						{STEPS.map((s, i) => (
 							<Step key={s.title} n={i + 1} {...s} />
 						))}

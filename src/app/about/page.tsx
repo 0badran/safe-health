@@ -6,7 +6,6 @@ import { AboutExpertise } from "@/components/about/about-expertise";
 import { PageHeader } from "@/components/shared/page-header";
 import AboutPersonalized from "@/components/about/about-personalized";
 import TrustCirclesSection from "@/components/home/trust-circles-section";
-import { TransformationSection } from "@/components/home/transformation-section";
 
 export const metadata: Metadata = {
 	title: "من نحن | Safe Health للرعاية الطبية والحلول الصحية",
@@ -29,7 +28,6 @@ export default function AboutPage() {
 				<AboutExpertise />
 				<AboutPersonalized />
 				<TrustCirclesSection />
-				<TransformationSection />
 			</div>
 		</main>
 	);

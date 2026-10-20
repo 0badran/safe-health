@@ -83,7 +83,7 @@ export function FaqSection({ faqs = DEFAULT_FAQS }: FaqSectionProps) {
 									</span>
 								</AccordionTrigger>
 								<AccordionContent variant="card">
-									<div className="ps-12 sm:ps-16">{faq.answer}</div>
+									<div className="ps-12 sm:ps-16 h6">{faq.answer}</div>
 								</AccordionContent>
 							</AccordionItem>
 						))}
@@ -91,7 +91,7 @@ export function FaqSection({ faqs = DEFAULT_FAQS }: FaqSectionProps) {
 				</div>
 
 				{/* Right Column: FAQ Illustration */}
-				<div className="lg:col-span-5 flex items-center justify-center">
+				<div className="lg:col-span-5 flex items-center justify-center max-lg:hidden">
 					<div className="relative w-full aspect-4/3 max-w-md lg:max-w-none">
 						<Image
 							src="/images/faq-illustration.png"
