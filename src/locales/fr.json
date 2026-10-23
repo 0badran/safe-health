@@ -47,5 +47,55 @@
 		"successTitle": "Demande Bien Reçue !",
 		"successMessage": "Notre conseiller médical vous contactera d'ici 24 heures pour planifier votre consultation.",
 		"sendAnother": "Soumettre une autre demande"
+	},
+	"contact": {
+		"header": {
+			"badge": "CONTACTEZ-NOUS",
+			"title": "Nous Sommes Là Pour Guider Votre Parcours de Santé.",
+			"description": "Contactez nos coordinateurs médicaux pour des consultations, des options de traitement, des tarifs personnalisés et un suivi 24/7."
+		},
+		"cards": {
+			"phone": {
+				"title": "Ligne de Consultation",
+				"subValue": "Disponible 24/7 pour vous"
+			},
+			"whatsapp": {
+				"title": "WhatsApp Soins",
+				"subValue": "Discussion instantanée avec un conseiller"
+			},
+			"email": {
+				"title": "Support E-mail",
+				"subValue": "Réponse sous 2 heures max"
+			},
+			"hq": {
+				"title": "Siège de la Clinique",
+				"value": "King Fahd Road, Riyad",
+				"subValue": "Tour Care, 14ème étage"
+			}
+		},
+		"map": {
+			"title": "Localisation du Centre Médical Safe Health",
+			"badge": "Riyad - King Fahd Road"
+		},
+		"form": {
+			"badge": "Envoyer un message",
+			"titlePart1": "Démarrez Votre",
+			"titlePart2": "Conversation Aujourd'hui",
+			"description": "Notre équipe consultative est prête à répondre à vos questions, expliquer les détails des interventions et organiser une consultation gratuite.",
+			"fullName": "Nom complet",
+			"fullNamePlaceholder": "ex. Alex Morgan",
+			"email": "Adresse e-mail",
+			"emailPlaceholder": "alex@exemple.com",
+			"subject": "Objet de la demande ou spécialité médicale",
+			"subjectPlaceholder": "ex. Consultation rhinoplastie / Demande de tarif",
+			"message": "Détails du message",
+			"messagePlaceholder": "Partagez vos questions ou objectifs afin que nous puissions vous accompagner...",
+			"sendNow": "Envoyer le message maintenant",
+			"sending": "Envoi en cours...",
+			"privacyNote": "Vos données médicales sont 100% confidentielles et sécurisées.",
+			"successTitle": "Message reçu avec succès !",
+			"successDesc": "Merci d'avoir contacté Safe Health. Un conseiller médical dédié vous répondra sous 2 heures.",
+			"sendAnother": "Envoyer un autre message"
+		}
 	}
 }

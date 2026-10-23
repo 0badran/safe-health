@@ -51,7 +51,7 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 	return (
 		<article
 			className={cn(
-				"bg-card rounded-3xl sm:rounded-4xl p-3.5 sm:p-4 global-shadow border border-border/40 flex flex-col gap-4 sm:gap-5 transition-all hover:shadow-lg",
+				"bg-card rounded-3xl sm:rounded-4xl p-3.5 sm:p-4 border border-border/40 flex flex-col gap-4 sm:gap-5",
 				className,
 			)}
 		>
