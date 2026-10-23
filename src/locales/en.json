@@ -47,5 +47,55 @@
 		"successTitle": "Request Received!",
 		"successMessage": "Our dedicated medical advisor will reach out to you within 24 hours to schedule your consultation.",
 		"sendAnother": "Submit another request"
+	},
+	"contact": {
+		"header": {
+			"badge": "GET IN TOUCH",
+			"title": "We're Here to Guide Your Health Journey.",
+			"description": "Connect with our international care specialists for consultations, treatment options, personalized pricing, and seamless medical coordination."
+		},
+		"cards": {
+			"phone": {
+				"title": "Consultation Line",
+				"subValue": "Available 24/7 for you"
+			},
+			"whatsapp": {
+				"title": "Care WhatsApp",
+				"subValue": "Instant chat with an advisor"
+			},
+			"email": {
+				"title": "Email Support",
+				"subValue": "Response within 2 hours max"
+			},
+			"hq": {
+				"title": "Clinic Headquarters",
+				"value": "King Fahd Road, Riyadh",
+				"subValue": "Care Tower, Floor 14"
+			}
+		},
+		"map": {
+			"title": "Safe Health Medical Center Location",
+			"badge": "Riyadh - King Fahd Road"
+		},
+		"form": {
+			"badge": "Send a Message",
+			"titlePart1": "Start Your",
+			"titlePart2": "Conversation Today",
+			"description": "Our advisory team is ready to answer questions, explain procedure details, and coordinate a free consultation with board-certified surgeons.",
+			"fullName": "Full Name",
+			"fullNamePlaceholder": "e.g. Alex Morgan",
+			"email": "Email Address",
+			"emailPlaceholder": "alex@example.com",
+			"subject": "Inquiry Subject or Medical Specialty",
+			"subjectPlaceholder": "e.g. Rhinoplasty consultation / Cost inquiry",
+			"message": "Message Details",
+			"messagePlaceholder": "Share your questions or health goals so we can assist you...",
+			"sendNow": "Send Message Now",
+			"sending": "Sending...",
+			"privacyNote": "Your medical data is 100% confidential and securely protected.",
+			"successTitle": "Message Received Successfully!",
+			"successDesc": "Thank you for reaching out to Safe Health. A dedicated medical advisor will connect with you within 2 hours.",
+			"sendAnother": "Send Another Message"
+		}
 	}
 }

@@ -97,7 +97,7 @@ export default function BeforeAfterPage() {
 				description="Explore documented transformations curated with surgical rigor, biological respect, and bespoke architectural balance."
 			/>
 
-			<div className="my-10 container">
+			<div className="mb-10 container">
 				<BeforeAfterFilter />
 			</div>
 
