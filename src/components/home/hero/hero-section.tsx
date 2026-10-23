@@ -9,10 +9,15 @@ import { HeroCtaButtons } from "./hero-cta-buttons";
 import { HeroVideoCard } from "./hero-video-card";
 import type { HeroSectionProps } from "./types";
 
-export function HeroSection({ onSubmit, className }: HeroSectionProps) {
+export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
+	const description = data?.description;
+	const bgImage = data?.background_image || "/images/hero.jpg";
+	const videoUrl = data?.hero_video || undefined;
+
 	return (
 		<section
-			className={cn("relative w-full lg:h-screen  text-white ", className)}>
+			className={cn("relative w-full lg:h-screen text-background", className)}
+		>
 			{/* Background Image & Texture Overlay */}
 			<div
 				aria-hidden="true"
@@ -30,13 +35,12 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 			>
 				<div className="absolute inset-x-0  top-0 w-full h-30 bg-linear-to-b from-primary via-primary to-transparent"></div>
 				<Image
-					src="/images/hero.jpg"
+					src={bgImage}
 					alt=""
 					fill
 					priority
 					className="object-cover object-top mix-blend-screen opacity-10"
 					sizes="100vw"
-
 				/>
 			</div>
 
@@ -51,13 +55,12 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 						<div className="space-y-4">
 							{/* Tagline */}
 							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl font-sans tracking-wide">
-								Where advanced aesthetic care meets a personalized approach to
-								beauty, confidence, and well-being.
+								{description}
 							</h1>
 
 							{/* Video Card Preview */}
 							<div className="pointer-events-auto ">
-								<HeroVideoCard />
+								<HeroVideoCard videoSrc={videoUrl} />
 							</div>
 
 							{/* CTA Action Buttons */}
@@ -71,8 +74,11 @@ export function HeroSection({ onSubmit, className }: HeroSectionProps) {
 
 					{/* Right Column: Consultation Form Card */}
 					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative pointer-events-auto">
-						<div id="consultation" className="w-full lg:absolute  max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden  lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0">
-							<ConsultationForm onSubmit={onSubmit} showExtraFields={false} />
+						<div
+							id="consultation"
+							className="w-full lg:absolute  max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden  lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
+						>
+							<ConsultationForm onSubmit={onSubmit} />
 						</div>
 					</div>
 				</div>
