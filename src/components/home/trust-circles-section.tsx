@@ -1,10 +1,11 @@
+import Image from "next/image";
 import React from "react";
 
 export interface TrustCircleItem {
-	id: string;
+	id?: string | number;
 	title: string;
 	description: string;
-	icon: React.ReactNode;
+	icon?: React.ReactNode | string | null;
 }
 
 export function CertifiedDoctorIcon({ className }: { className?: string }) {
@@ -137,43 +138,57 @@ export function SeamlessExperienceIcon({ className }: { className?: string }) {
 	);
 }
 
-const TRUST_FEATURES: TrustCircleItem[] = [
-	{
-		id: "certified-doctors",
-		title: "Certified Doctors",
-		description: "Qualified specialists dedicated to your care and comfort.",
-		icon: <CertifiedDoctorIcon className="size-8 md:size-14 text-secondary" />,
-	},
-	{
-		id: "modern-equipment",
-		title: "Modern Equipment",
-		description: "Advanced technology for precise treatments.",
-		icon: <ModernEquipmentIcon className="size-8 md:size-14 text-secondary" />,
-	},
-	{
-		id: "patient-privacy",
-		title: "Patient Privacy",
-		description: "Your privacy and confidentiality always matter.",
-		icon: <PatientPrivacyIcon className="size-8 md:size-14 text-secondary" />,
-	},
-	{
-		id: "seamless-experience",
-		title: "Seamless Experience",
-		description: "A comfortable and welcoming environment.",
-		icon: (
-			<SeamlessExperienceIcon className="size-8 md:size-14 text-secondary" />
-		),
-	},
+const DEFAULT_ICONS = [
+	<CertifiedDoctorIcon
+		key="doc"
+		className="size-8 md:size-14 text-secondary"
+	/>,
+	<ModernEquipmentIcon key="eq" className="size-8 md:size-14 text-secondary" />,
+	<PatientPrivacyIcon
+		key="priv"
+		className="size-8 md:size-14 text-secondary"
+	/>,
+	<SeamlessExperienceIcon
+		key="exp"
+		className="size-8 md:size-14 text-secondary"
+	/>,
 ];
 
+function renderFeatureIcon(
+	icon: React.ReactNode | string | null | undefined,
+	index: number,
+	title: string,
+) {
+	if (typeof icon === "string" && icon.trim().length > 0) {
+		return (
+			<div className="relative size-8 md:size-14 shrink-0">
+				<Image
+					src={icon}
+					alt={title}
+					fill
+					sizes="56px"
+					className="object-contain"
+				/>
+			</div>
+		);
+	}
+	if (React.isValidElement(icon)) {
+		return icon;
+	}
+	return DEFAULT_ICONS[index % DEFAULT_ICONS.length];
+}
+
 export interface TrustCirclesSectionProps {
-	className?: string;
 	features?: TrustCircleItem[];
 }
 
 export function TrustCirclesSection({
-	features = TRUST_FEATURES,
-}: TrustCirclesSectionProps) {
+	features,
+}: TrustCirclesSectionProps = {}) {
+	if (!features || features.length === 0) {
+		return null;
+	}
+
 	return (
 		<section className="w-full grid grid-cols-2 xl:w-[80%] max-sm:gap-2 sm:flex justify-items-center items-center  sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-5 sm:rtl:space-x-5">
 			{features.map((item, index) => (
@@ -181,25 +196,43 @@ export function TrustCirclesSection({
 					key={item.id}
 					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bdorder border-dadshed border-secondary/50 bg-backgrosdund/50 backddrop-blur-xs p-2 text-center overflow-hidden w-full  sm:w-1/4"
 				>
-					<svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none">
+					<svg
+						className="absolute inset-0 w-full h-full"
+						viewBox="0 0 100 100"
+						fill="none"
+					>
 						<defs>
 							<linearGradient id={`g${index}`} x1="0" y1="0" x2="1" y2="1">
-								<stop offset="0%" stop-color={index % 2 === 0 ? "var(--secondary)" : "#fff"} />
-								<stop offset="100%" stop-color={index % 2 === 0 ? "#fff" : "var(--secondary)"} />
+								<stop
+									offset="0%"
+									stop-color={index % 2 === 0 ? "var(--secondary)" : "#fff"}
+								/>
+								<stop
+									offset="100%"
+									stop-color={index % 2 === 0 ? "#fff" : "var(--secondary)"}
+								/>
 							</linearGradient>
 						</defs>
-						<circle cx="50" cy="50" r="49" stroke={`url(#g${index})`} stroke-width="0.4"
-							stroke-dasharray="2 1.5" />
+						<circle
+							cx="50"
+							cy="50"
+							r="49"
+							stroke={`url(#g${index})`}
+							stroke-width="0.4"
+							stroke-dasharray="2 1.5"
+						/>
 					</svg>
 
-					{/* Bottom Teal Gradient Glow matching screenshot */}
+					{/* Bottom Teal Gradient Glow */}
 					<div
 						className="pointer-events-none absolute inset-x-0 bottom-0 h-7 rounded-b-full bg-linear-to-t from-secondary/20 via-secondary/10 to-transparent transition-all duration-500 group-hover:h-52 lg:group-hover:h-60"
 						aria-hidden="true"
 					/>
 
 					{/* Icon */}
-					<div className="relative z-10 mb-3 sm:mb-4">{item.icon}</div>
+					<div className="relative z-10 mb-3 sm:mb-4">
+						{renderFeatureIcon(item.icon, index, item.title)}
+					</div>
 
 					{/* Title in Merienda cursive */}
 					<h3 className="relative z-10 font-heading lg:h4 text-primary leading-tight font-bold">

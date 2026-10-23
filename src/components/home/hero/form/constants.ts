@@ -15,34 +15,11 @@ export const COUNTRIES = [
 	"Other",
 ] as const;
 
-export const TREATMENTS = [
-	"Plastic Surgery",
-	"Hair Transplant",
-	"Dental Treatments",
-	"Rhinoplasty Surgery",
-	"Aesthetic Medicine",
-	"Bariatric Surgery",
-	"Orthopedics & Spine",
-	"Eye Care & LASIK",
-	"Other Treatment",
-] as const;
-
-export const DOCTORS = [
-	"Any Available Specialist",
-	"Dr. Ananya Mehta - Dermatology & Aesthetics",
-	"Dr. Marcus Vance - Plastic Surgery",
-	"Dr. Elena Rostova - Hair Restoration",
-	"Dr. Sarah Jenkins - Aesthetic Dentistry",
-	"Dr. Ahmed Hassan - Rhinoplasty Specialist",
-] as const;
-
 export const DEFAULT_FORM_VALUES: ConsultationFormValues = {
 	name: "",
 	email: "",
 	phone: "",
 	country: "",
-	treatment: "",
-	doctor: "",
 	message: "",
 	agree: false,
 };

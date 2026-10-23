@@ -1,11 +1,8 @@
-import type { Metadata } from "next";
-import { Inter, Cairo, Merienda } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
-import { DirectionProvider } from "@/components/ui/direction";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import type { Metadata } from "next";
+import { Cairo, Inter, Merienda } from "next/font/google";
+import "./globals.css";
+import Providers from "./providers";
 
 const headingFont = Merienda({
 	subsets: ["latin"],
@@ -31,8 +28,7 @@ export const metadata: Metadata = {
 		"منظومة متكاملة لربط المرضى بأفضل الأطباء المعتمدين وإدارة العيادات الطبية باحترافية.",
 };
 
-import { LanguageProvider } from "@/lib/language-context";
-import { LucideProvider } from "lucide-react";
+// Create a client
 
 export default function RootLayout({
 	children,
@@ -52,22 +48,7 @@ export default function RootLayout({
 			)}
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
-				<DirectionProvider dir="ltr" direction="ltr">
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-					>
-						<LucideProvider strokeWidth={1.5}>
-							<LanguageProvider initialLanguage="en">
-								<Navbar />
-								<div className="flex-1 min-h-screen">{children}</div>
-								<Footer />
-							</LanguageProvider>
-						</LucideProvider>
-					</ThemeProvider>
-				</DirectionProvider>
+				<Providers>{children}</Providers>
 			</body>
 		</html>
 	);

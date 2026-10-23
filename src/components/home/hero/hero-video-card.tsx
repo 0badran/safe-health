@@ -1,22 +1,22 @@
 "use client";
 
-import * as React from "react";
-import { useState, useRef, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import {
-	Play,
-	Pause,
-	Volume2,
-	VolumeX,
 	Maximize,
 	Minimize,
+	Pause,
+	Play,
 	RotateCcw,
 	RotateCw,
-	X,
 	Sparkles,
+	Volume2,
+	VolumeX,
+	X,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import * as React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export interface HeroVideoCardProps {
 	modalTitle?: string;
@@ -34,11 +34,11 @@ export function HeroVideoCard({
 }: HeroVideoCardProps) {
 	// Modal state
 	const [isOpen, setIsOpen] = useState(false);
-	const [mounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	const mounted = React.useSyncExternalStore(
+		() => () => {},
+		() => true,
+		() => false,
+	);
 
 	// Lock body scroll when modal is open
 	useEffect(() => {
@@ -125,7 +125,7 @@ export function HeroVideoCard({
 	};
 
 	// Toggle mute
-	const toggleMute = () => {
+	const toggleMute = useCallback(() => {
 		if (!videoRef.current) return;
 		const nextMuted = !videoRef.current.muted;
 		videoRef.current.muted = nextMuted;
@@ -133,7 +133,7 @@ export function HeroVideoCard({
 		if (!nextMuted) {
 			setShowUnmutePrompt(false);
 		}
-	};
+	}, []);
 
 	// Volume slider change
 	const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,22 +158,22 @@ export function HeroVideoCard({
 	};
 
 	// Skip +/- 10 seconds
-	const skipTime = (amount: number) => {
+	const skipTime = useCallback((amount: number) => {
 		if (!videoRef.current) return;
-		const target = Math.max(0, Math.min(duration, videoRef.current.currentTime + amount));
+		const target = Math.max(0, Math.min(videoRef.current.duration || 0, videoRef.current.currentTime + amount));
 		videoRef.current.currentTime = target;
 		setCurrentTime(target);
-	};
+	}, []);
 
 	// Toggle Fullscreen
-	const toggleFullscreen = () => {
+	const toggleFullscreen = useCallback(() => {
 		if (!playerContainerRef.current) return;
 		if (!document.fullscreenElement) {
 			playerContainerRef.current.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => {});
 		} else {
 			document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
 		}
-	};
+	}, []);
 
 	// Auto-hide controls after inactivity
 	const handlePlayerMouseMove = () => {
@@ -205,44 +205,48 @@ export function HeroVideoCard({
 		}
 	};
 
+	// Close handler
+	const handleClose = useCallback(() => {
+		setIsOpen(false);
+		if (videoRef.current) {
+			videoRef.current.pause();
+		}
+		setIsPlaying(false);
+		setShowUnmutePrompt(false);
+	}, []);
+
 	// Autoplay with sound on modal open, fallback to muted autoplay if browser blocks
 	useEffect(() => {
-		if (isOpen) {
+		if (!isOpen) return;
+
+		const timer = setTimeout(() => {
 			setShowControls(true);
 			setShowUnmutePrompt(false);
-			const timer = setTimeout(() => {
-				if (videoRef.current) {
-					videoRef.current.currentTime = 0;
-					videoRef.current.muted = false;
-					const playPromise = videoRef.current.play();
-
-					if (playPromise !== undefined) {
-						playPromise
-							.then(() => {
-								setIsPlaying(true);
-								setIsMuted(false);
-							})
-							.catch(() => {
-								// Browser blocked sound autoplay - fallback to muted autoplay
-								if (videoRef.current) {
-									videoRef.current.muted = true;
-									setIsMuted(true);
-									setShowUnmutePrompt(true);
-									videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-								}
-							});
-					}
-				}
-			}, 150);
-
-			return () => clearTimeout(timer);
-		} else {
 			if (videoRef.current) {
-				videoRef.current.pause();
+				videoRef.current.currentTime = 0;
+				videoRef.current.muted = false;
+				const playPromise = videoRef.current.play();
+
+				if (playPromise !== undefined) {
+					playPromise
+						.then(() => {
+							setIsPlaying(true);
+							setIsMuted(false);
+						})
+						.catch(() => {
+							// Browser blocked sound autoplay - fallback to muted autoplay
+							if (videoRef.current) {
+								videoRef.current.muted = true;
+								setIsMuted(true);
+								setShowUnmutePrompt(true);
+								videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+							}
+						});
+				}
 			}
-			setIsPlaying(false);
-			setShowUnmutePrompt(false);
-		}
+		}, 150);
+
+		return () => clearTimeout(timer);
 	}, [isOpen]);
 
 	// Global Keyboard Shortcuts (ESC, Space, M, F)
@@ -252,7 +256,7 @@ export function HeroVideoCard({
 
 			if (e.key === "Escape") {
 				e.preventDefault();
-				setIsOpen(false);
+				handleClose();
 			} else if (e.key === " " && e.target === document.body) {
 				e.preventDefault();
 				togglePlay();
@@ -269,12 +273,7 @@ export function HeroVideoCard({
 
 		window.addEventListener("keydown", handleKeyDown);
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [isOpen, togglePlay]);
-
-	// Close handler
-	const handleClose = () => {
-		setIsOpen(false);
-	};
+	}, [isOpen, togglePlay, toggleMute, toggleFullscreen, skipTime, handleClose]);
 
 	return (
 		<>
@@ -322,7 +321,7 @@ export function HeroVideoCard({
 				<div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-colors duration-300" />
 
 				{/* Interactive Illuminated Border Highlight (Follows cursor position) */}
-			
+
 
 				{/* Center Play Button with Continuous Glowing Pulse Animation */}
 				<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -343,7 +342,7 @@ export function HeroVideoCard({
 					</div>
 				</div>
 
-		
+
 			</div>
 
 			{/* Luxury Interactive Video Player Modal */}

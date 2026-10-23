@@ -1,9 +1,8 @@
-// Requires Tailwind CSS. Move the font import below into your global CSS
-
-import Image from "next/image";
-import { ReactNode } from "react";
-import { ExpertiseBackground } from "../about/expertise-background";
 import { cn } from "@/lib/utils";
+import type { HomePatientJourneySection } from "@/types/home";
+import Image from "next/image";
+import React, { type ReactNode } from "react";
+import { ExpertiseBackground } from "../about/expertise-background";
 
 const FONTS = `
   @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap");
@@ -58,37 +57,49 @@ const HeartPlusIcon = icon(
 	</>,
 );
 
-/* ---------- data ---------- */
-const STEPS = [
+/* ---------- step visual configuration ---------- */
+const STEP_CONFIG = [
 	{
-		title: "Initial Consultation",
-		text: "We listen to your concerns, understand your needs, and discuss the best options for you.",
 		Icon: ChatIcon,
 		offset: "lg:mt-12",
-		imgSrc: "/images/steps/img1.png",
+		defaultImg: "/images/steps/img1.png",
 	},
 	{
-		title: "Treatment Planning",
-		text: "We create a personalized treatment plan based on your goals and medical needs.",
 		Icon: DocIcon,
 		offset: "lg:mt-24",
-		imgSrc: "/images/steps/img2.png",
+		defaultImg: "/images/steps/img2.png",
 	},
 	{
-		title: "Care Coordination",
-		text: "We handle the details — appointments, logistics, and communication with your care team.",
 		Icon: CalendarIcon,
 		offset: "lg:mt-0",
-		imgSrc: "/images/steps/img3.png",
+		defaultImg: "/images/steps/img3.png",
 	},
 	{
-		title: "Follow-Up Support",
-		text: "We stay connected to ensure your progress, answer your questions, and support your ongoing care.",
 		Icon: HeartPlusIcon,
 		offset: "lg:mt-14",
-		imgSrc: "/images/steps/img4.png",
+		defaultImg: "/images/steps/img4.png",
 	},
 ];
+
+function renderStepIcon(
+	icon: string | null | undefined,
+	FallbackIcon: React.ComponentType,
+) {
+	if (typeof icon === "string" && icon.trim().length > 0) {
+		return (
+			<div className="relative size-7 shrink-0">
+				<Image
+					src={icon}
+					alt=""
+					fill
+					sizes="28px"
+					className="object-contain"
+				/>
+			</div>
+		);
+	}
+	return <FallbackIcon />;
+}
 
 /* ---------- connecting lines between steps ---------- */
 function StepConnector({ stepIndex }: { stepIndex: number }) {
@@ -107,7 +118,11 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 					<defs>
 						<linearGradient id="step-fade-1" x1="0%" y1="0%" x2="100%" y2="0%">
 							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
-							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop
+								offset="65%"
+								stopColor="var(--primary)"
+								stopOpacity="0.35"
+							/>
 							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
 						</linearGradient>
 					</defs>
@@ -137,14 +152,24 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 					aria-hidden="true"
 				>
 					<defs>
-						<linearGradient id="step-fade-2" x1="0%" y1="100%" x2="100%" y2="0%">
+						<linearGradient
+							id="step-fade-2"
+							x1="0%"
+							y1="100%"
+							x2="100%"
+							y2="0%"
+						>
 							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
-							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop
+								offset="65%"
+								stopColor="var(--primary)"
+								stopOpacity="0.35"
+							/>
 							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
 						</linearGradient>
 					</defs>
 					<path
-						d="M 0 76 C 25 80, 45 60, 65 30 C 80 12, 92 6, 100 6"
+						d="M 0 70 C 25 72, 45 40, 70 18 C 82 7, 92 2, 100 0"
 						fill="none"
 						stroke="url(#step-fade-2)"
 						strokeWidth="2.2"
@@ -158,10 +183,10 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 3) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-41.25 top-18.75 z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
 				{/* Small starting dot */}
 				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
-				{/* Connecting wave line ending with fade */}
+				{/* Connecting wave line diving gently to step 4 */}
 				<svg
 					viewBox="0 0 100 45"
 					preserveAspectRatio="none"
@@ -171,12 +196,16 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 					<defs>
 						<linearGradient id="step-fade-3" x1="0%" y1="0%" x2="100%" y2="0%">
 							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
-							<stop offset="65%" stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop
+								offset="65%"
+								stopColor="var(--primary)"
+								stopOpacity="0.35"
+							/>
 							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
 						</linearGradient>
 					</defs>
 					<path
-						d="M 0 0 C 35 5, 55 25, 75 35 C 88 40, 95 38, 100 35"
+						d="M 0 0 C 30 8, 55 30, 80 38 C 90 42, 96 40, 100 38"
 						fill="none"
 						stroke="url(#step-fade-3)"
 						strokeWidth="2.2"
@@ -190,33 +219,17 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 4) {
 		return (
-			<div className="pointer-events-none absolute left-0 top-0 z-20 hidden size-full overflow-visible lg:block">
-				{/* "Health Care Beyond Borders" text annotation */}
-				<div className="absolute left-10 xl:left-[130px] -top-12 xl:-top-14 select-none">
-					<p className="rotate-[-6deg] font-['Caveat'] text-2xl xl:text-3xl font-bold leading-tight text-secondary">
-						Health Care
-						<br />
-						<span className="ml-3">Beyond Borders</span>
-					</p>
-				</div>
-				{/* Dashed flight trail with downward dip curving up to the airplane */}
+			<div className="pointer-events-none absolute -right-2 top-[163px] z-20 hidden overflow-visible lg:block">
+				{/* Small landing airplane at the finish */}
 				<svg
-					width="340"
-					height="180"
-					viewBox="0 0 340 180"
-					className="absolute left-0 top-0 w-64 xl:w-[340px] h-auto overflow-visible"
+					width="22"
+					height="23"
+					viewBox="0 0 22 23"
+					fill="none"
+					className="rotate-45"
 					aria-hidden="true"
 				>
-					<path
-						d="M 200 112 C 220 155, 265 95, 293 22"
-						fill="none"
-						stroke="var(--primary)"
-						strokeWidth="2.2"
-						strokeDasharray="5 4"
-						strokeLinecap="round"
-						className="opacity-85"
-					/>
-					<g transform="translate(280, 2) rotate(10 11 11) scale(1.15)">
+					<g opacity="0.85">
 						<path
 							d="M22 16V14L12.5 8V1.5C12.5 0.7 11.8 0 11 0C10.2 0 9.5 0.7 9.5 1.5V8L0 14V16L9.5 13V19.5L7 21.5V23L11 22L15 23V21.5L12.5 19.5V13L22 16Z"
 							fill="var(--primary)"
@@ -231,19 +244,23 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 }
 
 function Step({
-	n,
+	stepNumber,
 	title,
 	text,
+	icon,
 	Icon,
 	offset,
 	imgSrc,
+	n,
 }: {
-	n: number;
+	stepNumber: string;
 	title: string;
 	text: string;
+	icon?: string | null;
 	Icon: React.ComponentType;
 	offset: string;
 	imgSrc: string;
+	n: number;
 }) {
 	return (
 		<li
@@ -277,7 +294,7 @@ function Step({
 					className="relative z-10"
 				/>
 				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-secondary/15 text-secondary shadow-xs">
-					<Icon />
+					{renderStepIcon(icon, Icon)}
 				</span>
 			</div>
 
@@ -286,7 +303,7 @@ function Step({
 
 			<div className="flex flex-col gap-1">
 				<span className="font-heading text-3xl leading-9 tracking-tight text-primary">
-					{String(n).padStart(2, "0")}
+					{stepNumber}
 				</span>
 				<h3 className="font-heading text-xl font-bold leading-7 text-foreground">
 					{title}
@@ -300,7 +317,34 @@ function Step({
 }
 
 /* ---------- section ---------- */
-export default function StepsSection() {
+export interface StepsSectionProps {
+	data?: HomePatientJourneySection;
+}
+
+export default function StepsSection({ data }: StepsSectionProps = {}) {
+	const stepCards = data?.step_card;
+
+	if (!data || !data.headline || !stepCards || stepCards.length === 0) {
+		return null;
+	}
+
+	const headline = data.headline;
+	const description = data.description;
+
+	const activeSteps = stepCards.map((card, i) => {
+		const config = STEP_CONFIG[i % STEP_CONFIG.length];
+		return {
+			stepNumber: card.step_number || String(i + 1).padStart(2, "0"),
+			title: card.title,
+			text: card.description,
+			icon: card.icon,
+			Icon: config.Icon,
+			offset: config.offset,
+			imgSrc: card.image || config.defaultImg,
+			n: i + 1,
+		};
+	});
+
 	return (
 		<section
 			className="relative isolate w-full overflow-hidden p-4 sm:p-6 rounded-3xl"
@@ -325,24 +369,21 @@ export default function StepsSection() {
 			<div className="relative z-10 w-full">
 				<header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-end mb-8 sm:mb-10 lg:mb-12">
 					<div className="lg:col-span-7 ">
-						<h2 className="text-heading">
-							Your Journey,
-							<br className="hidden sm:block" />{" "}
-							<span>Every Step of the Way.</span>
-						</h2>
+						<h2 className="text-heading">{headline}</h2>
 					</div>
-					<div className="lg:col-span-5 flex lg:justify-end me-4">
-						<p className="text-paragraph h5 leading-relaxed max-w-lg">
-							From understanding your needs to supporting your recovery, we&apos;re
-							here to help make every step clearer.
-						</p>
-					</div>
+					{description && (
+						<div className="lg:col-span-5 flex lg:justify-end me-4">
+							<p className="text-paragraph h5 leading-relaxed max-w-lg">
+								{description}
+							</p>
+						</div>
+					)}
 				</header>
 
-				<div className="relative mt-6 sm:mt-8 lg:mt-0   lg:p-8">
+				<div className="relative mt-6 sm:mt-8 lg:mt-0 lg:p-8">
 					<ol className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4 lg:items-start">
-						{STEPS.map((s, i) => (
-							<Step key={s.title} n={i + 1} {...s} />
+						{activeSteps.map((s) => (
+							<Step key={`${s.title}-${s.stepNumber}`} {...s} />
 						))}
 					</ol>
 				</div>
@@ -350,4 +391,3 @@ export default function StepsSection() {
 		</section>
 	);
 }
-

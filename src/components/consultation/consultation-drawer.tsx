@@ -104,7 +104,6 @@ export function ConsultationDrawer({
 						brandName={brandName}
 						title={title}
 						description={description}
-						showExtraFields={true}
 						onSubmit={onSubmit}
 						onSuccess={handleSuccess}
 					/>

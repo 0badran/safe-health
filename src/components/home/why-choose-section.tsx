@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../shared/section-header";
+import type { HomeWhyChooseSection } from "@/types/home";
 
 export interface CardOverlayProps {
 	title: string;
@@ -25,12 +26,29 @@ export function CardOverlay({
 	);
 }
 
-export function WhyChooseSection() {
+export interface WhyChooseSectionProps {
+	data?: HomeWhyChooseSection;
+}
+
+export function WhyChooseSection({ data }: WhyChooseSectionProps = {}) {
+	if (!data || !data.headline) return null;
+
+	const title = data.headline;
+	const subTitle = data.tag_text;
+	const description = data.description;
+	const cards = data.feature_card;
+
+	if (!cards || cards.length < 4) {
+		return null;
+	}
+
+	const [card1, card2, card3, card4] = cards;
+
 	return (
 		<section className="w-full">
 			<SectionHeader
-				title="Why Choose SafeHealthMe?"
-				subTitle="TRUSTED CARE, WORLDWIDE"
+				title={title}
+				subTitle={subTitle}
 				align="center"
 			/>
 
@@ -38,9 +56,7 @@ export function WhyChooseSection() {
 				{/* 1. Description & Action Button: On mobile appears first below title, on desktop in Column 3 Row 1 */}
 				<div className="col-span-2 order-1 flex flex-col justify-center gap-4 pb-1 sm:pb-2 md:order-0 md:col-span-1 md:col-start-3 md:row-start-1 md:pb-0">
 					<p className="text-paragraph h5 leading-relaxed">
-						We connect your healthcare needs with personalized care and
-						trusted medical experiences, making your journey smoother and more
-						reassuring.
+						{description}
 					</p>
 
 					<Link href="/about" className="w-fit">
@@ -53,60 +69,60 @@ export function WhyChooseSection() {
 				{/* 2. Aesthetic Care Card: On mobile appears 2nd (full width), on desktop Column 1 Row 1 */}
 				<div className="group relative col-span-2 order-2 h-52 sm:h-64 w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs bg-muted md:order-0 md:col-span-1 md:col-start-1 md:row-start-1 md:h-52.5">
 					<Image
-						src="/images/why-choose/aesthetic-care.jpg"
-						alt="Aesthetic Skin Care"
+						src={card1.image || "/images/why-choose/aesthetic-care.jpg"}
+						alt={card1.title}
 						fill
 						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 33vw"
 						className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
 					/>
 					<CardOverlay
-						title="AESTHETIC CARE"
-						description="Personalized aesthetic care guided by certified specialists."
+						title={card1.title}
+						description={card1.description}
 					/>
 				</div>
 
 				{/* 3. Patient Focus Card: On mobile appears 3rd (full width), on desktop Column 1 Row 2 */}
 				<div className="group relative col-span-2 order-3 h-52 sm:h-64 w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs bg-muted md:order-0 md:col-span-1 md:col-start-1 md:row-start-2 md:h-52.5">
 					<Image
-						src="/images/why-choose/patient-focus.png"
-						alt="Patient Focus"
+						src={card2.image || "/images/why-choose/patient-focus.png"}
+						alt={card2.title}
 						fill
 						sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 33vw"
 						className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
 					/>
 					<CardOverlay
-						title="QUALITY CARE"
-						description="Connecting you with quality-focused healthcare services."
+						title={card2.title}
+						description={card2.description}
 					/>
 				</div>
 
 				{/* 4. Global Travel Card: On mobile appears 4th (left side of bottom 2-column row), on desktop Column 3 Row 2 */}
 				<div className="group relative col-span-1 order-4 aspect-3/4 sm:aspect-4/5 w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs bg-muted md:order-0 md:col-span-1 md:col-start-3 md:row-start-2 md:aspect-auto md:h-52.5">
 					<Image
-						src="/images/why-choose/global-travel.png"
-						alt="Making your healthcare journey across borders easier"
+						src={card3.image || "/images/why-choose/global-travel.png"}
+						alt={card3.title}
 						fill
 						sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
 						className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
 					/>
 					<CardOverlay
-						title="GLOBAL ACCESS"
-						description="Making your healthcare journey across borders seamless."
+						title={card3.title}
+						description={card3.description}
 					/>
 				</div>
 
 				{/* 5. Doctor Handshake Tall Card: On mobile appears 5th (right side of bottom 2-column row), on desktop Column 2 spanning Rows 1 & 2 */}
 				<div className="group relative col-span-1 order-5 aspect-3/4 sm:aspect-4/5 w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs bg-muted md:order-0 md:col-span-1 md:col-start-2 md:row-start-1 md:row-span-2 md:aspect-auto md:h-full md:min-h-110">
 					<Image
-						src="/images/why-choose/doctor-handshake.jpg"
-						alt="Trusted Medical Care"
+						src={card4.image || "/images/why-choose/doctor-handshake.jpg"}
+						alt={card4.title}
 						fill
 						sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
 						className="object-cover size-full transition-transform duration-500 group-hover:scale-105"
 					/>
 					<CardOverlay
-						title="TRUSTED EXPERTS"
-						description="Certified doctors committed to your safety and care."
+						title={card4.title}
+						description={card4.description}
 					/>
 				</div>
 			</div>

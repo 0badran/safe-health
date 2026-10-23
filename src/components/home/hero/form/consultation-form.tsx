@@ -19,112 +19,76 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import useMutateData from "@/hooks/use-mutate-data";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-	COUNTRIES,
-	DEFAULT_FORM_VALUES,
-	DOCTORS,
-	TREATMENTS,
-} from "./constants";
+import { COUNTRIES, DEFAULT_FORM_VALUES } from "./constants";
 import { ConsultationSuccess } from "./consultation-success";
-import {
-	consultationFormSchema,
-	type ConsultationFormValues,
-} from "./schema";
+import { consultationFormSchema, type ConsultationFormValues } from "./schema";
 
 export interface ConsultationFormProps {
-	onSubmit?: (
-		data: ConsultationFormValues,
-		files?: File[],
-	) => void | Promise<void>;
+	onSubmit?: (data: ConsultationFormValues) => void | Promise<void>;
 	className?: string;
 	title?: string;
 	description?: string;
 	brandName?: string;
-	/** Whether to show the new extended inputs (treatment, doctor preference, image upload). Defaults to false for hero section. */
-	showExtraFields?: boolean;
 	onSuccess?: () => void;
 }
 
 export function ConsultationForm({
 	onSubmit,
 	className,
-	title = "Request A Consultation.",
-	description = "Share your contact details and our team will discuss availability. Required fields are marked *.",
-	brandName = "SafeHealth",
-	showExtraFields = false,
+	title,
+	description,
 	onSuccess,
 }: ConsultationFormProps) {
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-	const [dragOver, setDragOver] = useState(false);
-	const fileInputRef = useRef<HTMLInputElement>(null);
-
+	const { mutateAsync, isPending: isSubmitting } = useMutateData({
+		route: "/contact",
+		onSuccess: () => {
+			setIsSubmitted(true);
+			onSuccess?.();
+		},
+	});
 	const form = useForm<ConsultationFormValues>({
 		resolver: zodResolver(consultationFormSchema),
 		defaultValues: DEFAULT_FORM_VALUES,
 		mode: "onTouched",
 	});
 
-	const handleFileSelect = (files: FileList | null) => {
-		if (!files) return;
-		const validFiles = Array.from(files).filter(
-			(file) =>
-				(file.type === "image/jpeg" ||
-					file.type === "image/png" ||
-					file.type === "image/webp") &&
-				file.size <= 5 * 1024 * 1024,
-		);
-
-		setSelectedFiles((prev) => {
-			const combined = [...prev, ...validFiles];
-			return combined.slice(0, 3);
-		});
-	};
-
-	const handleRemoveFile = (index: number) => {
-		setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
-	};
-
-	const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setDragOver(false);
-		handleFileSelect(e.dataTransfer.files);
-	};
-
 	const handleSubmit = async (data: ConsultationFormValues) => {
-		setIsSubmitting(true);
-		try {
-			if (onSubmit) {
-				await onSubmit(data, selectedFiles);
-			}
-			setIsSubmitted(true);
-			onSuccess?.();
-		} catch (error) {
-			console.error("Consultation form submission error:", error);
-		} finally {
-			setIsSubmitting(false);
+		const payload = { ...data };
+		delete (payload as { agree?: boolean }).agree;
+		await mutateAsync(payload);
+		if (onSubmit) {
+			await onSubmit(data);
 		}
 	};
 
 	const handleReset = () => {
 		form.reset(DEFAULT_FORM_VALUES);
-		setSelectedFiles([]);
 		setIsSubmitted(false);
 	};
 
 	return (
-		<div className={cn("relative z-20 w-full overflow-hidden bg-card text-card-foreground", className)}>
-			<Image src={"/images/form-logo.png"} alt="" width={200} height={200} className="absolute right-0 "/>
-				<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
+		<div
+			className={cn(
+				"relative z-20 w-full overflow-hidden bg-card text-card-foreground",
+				className,
+			)}
+		>
+			<Image
+				src={"/images/form-logo.png"}
+				alt=""
+				width={200}
+				height={200}
+				className="absolute right-0 "
+			/>
+			<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
 				<header className="space-y-1.5">
 					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
 						{title}
@@ -151,7 +115,10 @@ export function ConsultationForm({
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none ">
 											<span>Full name</span>
-											<span className="text-primary font-bold" aria-hidden="true">
+											<span
+												className="text-primary font-bold"
+												aria-hidden="true"
+											>
 												*
 											</span>
 										</FormLabel>
@@ -179,7 +146,10 @@ export function ConsultationForm({
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
 												<span>Email address</span>
-												<span className="text-primary font-bold" aria-hidden="true">
+												<span
+													className="text-primary font-bold"
+													aria-hidden="true"
+												>
 													*
 												</span>
 											</FormLabel>
@@ -254,73 +224,6 @@ export function ConsultationForm({
 								)}
 							/>
 
-							{/* Interested Treatment & Doctor Preference Grid (Visible when showExtraFields is true) */}
-							{showExtraFields && (
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-in fade-in duration-200">
-									<FormField
-										control={form.control}
-										name="treatment"
-										render={({ field }) => (
-											<FormItem className="gap-1.5 min-w-0">
-												<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-													Interested treatment
-												</FormLabel>
-												<Select
-													onValueChange={field.onChange}
-													defaultValue={field.value}
-													disabled={isSubmitting}
-												>
-													<FormControl>
-														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input small">
-															<SelectValue placeholder="Select a treatment" />
-														</SelectTrigger>
-													</FormControl>
-													<SelectContent>
-														{TREATMENTS.map((t) => (
-															<SelectItem className="small" key={t} value={t}>
-																{t}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-												<FormMessage className="small text-destructive font-sans" />
-											</FormItem>
-										)}
-									/>
-
-									<FormField
-										control={form.control}
-										name="doctor"
-										render={({ field }) => (
-											<FormItem className="gap-1.5 min-w-0">
-												<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-													Doctor preference
-												</FormLabel>
-												<Select
-													onValueChange={field.onChange}
-													defaultValue={field.value}
-													disabled={isSubmitting}
-												>
-													<FormControl>
-														<SelectTrigger className="h-10.5 rounded-xl bg-card border-input small">
-															<SelectValue placeholder="Select a doctor (optional)" />
-														</SelectTrigger>
-													</FormControl>
-													<SelectContent>
-														{DOCTORS.map((d) => (
-															<SelectItem className="small" key={d} value={d}>
-																{d}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-												<FormMessage className="small text-destructive font-sans" />
-											</FormItem>
-										)}
-									/>
-								</div>
-							)}
-
 							{/* Message */}
 							<FormField
 								control={form.control}
@@ -343,70 +246,6 @@ export function ConsultationForm({
 									</FormItem>
 								)}
 							/>
-
-							{/* Optional Images Dropzone (Visible when showExtraFields is true) */}
-							{showExtraFields && (
-								<div className="space-y-2 animate-in fade-in duration-200">
-									<div
-										onDragOver={(e) => {
-											e.preventDefault();
-											setDragOver(true);
-										}}
-										onDragLeave={() => setDragOver(false)}
-										onDrop={handleDrop}
-										onClick={() => fileInputRef.current?.click()}
-										className={cn(
-											"relative flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-dashed border-input transition-colors cursor-pointer bg-card hover:bg-muted/30",
-											dragOver && "border-primary bg-primary/5",
-										)}
-									>
-										<input
-											ref={fileInputRef}
-											type="file"
-											multiple
-											accept="image/png,image/jpeg,image/webp"
-											className="hidden"
-											onChange={(e) => handleFileSelect(e.target.files)}
-										/>
-										<div className="size-9 rounded-full bg-secondary/10 text-secondary flex items-center justify-center mb-1.5">
-											<ImagePlus className="size-4.5" />
-										</div>
-										<p className="font-medium text-foreground small">
-											Optional images
-										</p>
-										<p className="small text-muted-foreground text-center">
-											Drag or select up to 3 JPG/PNG images. Each image can be max 5 MB.
-										</p>
-									</div>
-
-									{/* Selected Files List */}
-									{selectedFiles.length > 0 && (
-										<div className="flex flex-wrap gap-2 pt-1">
-											{selectedFiles.map((file, idx) => (
-												<div
-													key={file.name + idx}
-													className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted text-muted-foreground small border border-border"
-												>
-													<span className="truncate max-w-36 font-medium">
-														{file.name}
-													</span>
-													<span className="opacity-70">
-														({(file.size / (1024 * 1024)).toFixed(1)} MB)
-													</span>
-													<button
-														type="button"
-														onClick={() => handleRemoveFile(idx)}
-														className="text-muted-foreground hover:text-destructive transition-colors ml-1"
-														aria-label="Remove image"
-													>
-														<X className="size-3.5" />
-													</button>
-												</div>
-											))}
-										</div>
-									)}
-								</div>
-							)}
 
 							{/* Agreement Checkbox */}
 							<FormField
@@ -441,11 +280,8 @@ export function ConsultationForm({
 							/>
 
 							{/* Submit Button & Info Footer */}
-							<div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-								{showExtraFields && <p className="small text-muted-foreground text-center sm:text-start order-2 sm:order-1">
-									Your request will be reviewed by a {brandName} patient coordinator.
-								</p>}
-								<div className="w-full sm:w-auto order-1 sm:order-2">
+							<div className="pt-2 flex flex-col sm:flex-row items-center justify-end gap-4">
+								<div className="w-full sm:w-auto">
 									<Button
 										type="submit"
 										variant="default"
@@ -460,8 +296,8 @@ export function ConsultationForm({
 						</form>
 					</Form>
 				)}
+			</div>
 		</div>
-		</div >
 	);
 }
 

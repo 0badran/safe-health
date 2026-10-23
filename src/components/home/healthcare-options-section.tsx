@@ -8,67 +8,42 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
-export interface HealthcareOption {
-	id: string;
-	title: string;
-	description: string;
-	image: string;
-	link: string;
-}
-
-export const HEALTHCARE_OPTIONS: HealthcareOption[] = [
-	{
-		id: "plastic-surgery",
-		title: "Plastic Surgery",
-		description:
-			"Enhance your natural beauty and confidence with advanced surgical and aesthetic procedures.",
-		image: "/images/why-choose/aesthetic-care.jpg",
-		link: "/treatments/plastic-surgery",
-	},
-	{
-		id: "hair-transplant",
-		title: "Hair Transplant",
-		description:
-			"Restore natural hair growth and confidence with advanced hair transplant techniques.",
-		image: "/images/why-choose/aesthetic-care.jpg",
-		link: "/treatments/hair-transplant",
-	},
-	{
-		id: "dental",
-		title: "Dental",
-		description:
-			"Achieve a healthy, beautiful smile with our comprehensive dental care solutions.",
-		image: "/images/why-choose/aesthetic-care.jpg",
-		link: "/treatments/dental",
-	},
-	{
-		id: "rhinoplasty-surgery",
-		title: "Rhinoplasty Surgery",
-		description:
-			"Enhance facial harmony with natural-looking results tailored to your features.",
-		image: "/images/why-choose/aesthetic-care.jpg",
-		link: "/treatments/rhinoplasty",
-	},
-	{
-		id: "bariatric-surgery",
-		title: "Bariatric Surgery",
-		description:
-			"Safe and effective weight loss procedures designed to transform your life.",
-		image: "/images/why-choose/aesthetic-care.jpg",
-		link: "/treatments/bariatric",
-	},
-];
+import useFetchData from "@/hooks/use-fetch-data";
+import type { HomeHealthcareOptionsSection, ServiceItem } from "@/types/home";
 
 export interface HealthcareOptionsSectionProps {
-	options?: HealthcareOption[];
+	data?: HomeHealthcareOptionsSection;
+	services?: ServiceItem[];
 }
 
 export function HealthcareOptionsSection({
-	options = HEALTHCARE_OPTIONS,
+	data,
+	services: propServices,
 }: HealthcareOptionsSectionProps = {}) {
-	// Card with ID 'hair-transplant' is active by default to match the design screenshot
-	const [activeId, setActiveId] = useState<string>("hair-transplant");
+	const { data: apiResponse, isLoading } = useFetchData<{ data: ServiceItem[] }>({
+		route: "/services",
+		enabled: !propServices,
+	});
+
+	const services = propServices ?? apiResponse?.data;
+	const [activeId, setActiveId] = useState<number | string | null>(null);
+
+	if (!data || !data.headline) {
+		return null;
+	}
+
+	if (!isLoading && (!services || services.length === 0)) {
+		return null;
+	}
+
+	if (isLoading && !services) {
+		return null;
+	}
+
+	const activeServices = services ?? [];
+	const currentActiveId = activeId ?? activeServices[0]?.id ?? null;
+	const headline = data.headline;
+	const description = data.description;
 
 	return (
 		<section className="relative isolate w-full p-4 lg:p-7" id="healthcare-options">
@@ -97,10 +72,11 @@ export function HealthcareOptionsSection({
 			<div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-8">
 				{/* Left Column: Description & Action Button */}
 				<div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
-					<p className="text-paragraph h5 leading-relaxed">
-						Discover specialized treatments and trusted medical destinations
-						tailored to your needs, with care that puts your health first
-					</p>
+					{description && (
+						<p className="text-paragraph h5 leading-relaxed">
+							{description}
+						</p>
+					)}
 
 					<Link href="/treatments">
 						<Button variant="default" withArrow>
@@ -112,9 +88,7 @@ export function HealthcareOptionsSection({
 				{/* Right Column: Heading sitting in the cutout area */}
 				<div className="lg:col-span-5 order-1 lg:order-2 flex flex-col items-start lg:items-end justify-start">
 					<h2 className="text-heading">
-						Explore Your
-						<br className="hidden lg:block" />{" "}
-						<span>Healthcare Options</span>
+						{headline}
 					</h2>
 				</div>
 			</div>
@@ -122,11 +96,11 @@ export function HealthcareOptionsSection({
 			{/* 3. Cards Carousel */}
 			<div className="relative z-10 w-full mt-6 sm:mt-8">
 				<SectionCarousel
-					items={options}
-					keyExtractor={(card) => card.id}
+					items={activeServices}
+					keyExtractor={(card) => String(card.id)}
 					contentClassName="-ms-4 py-2"
 					renderItem={(card) => {
-						const isActive = activeId === card.id;
+						const isActive = currentActiveId === card.id;
 
 						return (
 							<div className="flex justify-center h-full">
@@ -171,7 +145,7 @@ export function HealthcareOptionsSection({
 									{/* Bottom Image with Circular Arrow Action */}
 									<div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden mt-6 bg-muted">
 										<Image
-											src={card.image}
+											src={card.image_url || "/images/why-choose/aesthetic-care.jpg"}
 											alt={card.title}
 											fill
 											sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -180,7 +154,7 @@ export function HealthcareOptionsSection({
 
 										{/* Circular Action Arrow Overlay */}
 										<Link
-											href={card.link}
+											href={`/treatments/${card.slug}`}
 											className="absolute bottom-3 inset-e-3 size-9 sm:size-10 rounded-full flex items-center justify-center bg-white/38 backdrop-blur-sm transition-all duration-300 shadow-sm text-primary"
 											aria-label={card.title}
 										>

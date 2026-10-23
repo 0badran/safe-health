@@ -1,5 +1,3 @@
-"use client";
-
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { cn } from "@/lib/utils";
