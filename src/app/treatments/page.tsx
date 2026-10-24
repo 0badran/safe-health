@@ -1,3 +1,4 @@
+import StepsSection from "@/components/home/steps-section";
 import { PageHeader } from "@/components/shared/page-header";
 import { TreatmentsContent } from "@/components/treatments/treatments-content";
 import type { Metadata } from "next";
@@ -16,11 +17,12 @@ export default function TreatmentsPage() {
 				title="Discover the Right Treatment for You."
 				description="Explore a range of aesthetic treatments designed to address different needs and goals, with personalized guidance to help you understand your options"
 			/>
-			<section className="pb-20 sm:pb-28">
-				<div className="container">
-					<TreatmentsContent />
-				</div>
-			</section>
+			<div className="container">
+				<TreatmentsContent />
+
+				{/* <StepsSection data={sections?.["patient-journey"]} /> */}
+
+			</div>
 		</main>
 	);
-}
+}

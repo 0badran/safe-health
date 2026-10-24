@@ -4,9 +4,7 @@ import Image from "next/image";
 import React, { type ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
 
-const FONTS = `
-  @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap");
-`;
+
 
 const BLOB_A =
 	"M361.9 3.07C430.64 13.59 480.98 67.09 533.02 113.21C579.79 154.66 624.19 197.95 647.27 256.02C671.55 317.11 689 385.97 665.87 447.51C643.12 508.02 580.29 539.39 527.01 576C475.29 611.52 424.63 655.3 361.9 656.33C298.72 657.38 246.99 613.98 192.79 581.51C132.47 545.37 61.3 519.37 29.02 456.9C-5.76 389.62 -7.38 308.37 14.09 235.73C35.92 161.85 83.95 97.16 147.99 54.32C210.46 12.53 287.6 -8.29 361.9 3.07Z";
@@ -293,7 +291,7 @@ function Step({
 					height={200}
 					className="relative z-10"
 				/>
-				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-secondary/15 text-secondary shadow-xs">
+				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary shadow-xs">
 					{renderStepIcon(icon, Icon)}
 				</span>
 			</div>
@@ -347,10 +345,10 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 
 	return (
 		<section
-			className="relative isolate w-full overflow-hidden p-4 sm:p-6 rounded-3xl"
-			id="steps"
+			className="relative isolate w-full overflow-hidden p-4 sm:p-6 rounded-3xl scroll-mt-28"
+			id="patient-journey"
 		>
-			<style>{FONTS}</style>
+			<span id="steps" className="sr-only -top-28 relative block" aria-hidden="true" />
 
 			{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
 			<div
@@ -369,7 +367,7 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 			<div className="relative z-10 w-full">
 				<header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-end mb-8 sm:mb-10 lg:mb-12">
 					<div className="lg:col-span-7 ">
-						<h2 className="text-heading">{headline}</h2>
+						<h2 className="text-heading max-w-[70%]">{headline}</h2>
 					</div>
 					{description && (
 						<div className="lg:col-span-5 flex lg:justify-end me-4">

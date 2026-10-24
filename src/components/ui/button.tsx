@@ -5,16 +5,16 @@ import { Slot } from "radix-ui";
 import * as React from "react";
 
 const buttonVariants = cva(
-	"group/button inline-flex shrink-0 font-semibold items-center justify-center rounded-4xl border border-transparent bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 ",
+	"group/button relative capitalize overflow-hidden isolate inline-flex shrink-0 font-semibold items-center justify-center rounded-4xl border border-transparent bg-clip-padding whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 ",
 	{
 		variants: {
 			variant: {
 				default:
-					"bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs active:scale-[0.99]",
+					"border-primary bg-primary text-primary-foreground shadow-xs active:scale-[0.99] before:pointer-events-none before:content-[''] before:absolute before:-z-10 before:top-1/2 before:left-0 before:-translate-y-1/2 before:-translate-x-1/2 before:aspect-square before:w-[300%] before:rounded-full before:bg-background before:scale-0 before:transition-transform before:duration-700 before:ease-out hover:before:scale-100 hover:text-primary transition-colors duration-700",
 				secondary:
 					"bg-background border border-primary text-primary hover:opacity-80 shadow-xs active:scale-[0.99] border border-primary",
 				outline:
-					"border border-primary text-primary hover:opacity-90 aria-expanded:bg-muted aria-expanded:text-primary",
+					"border border-primary text-primary bg-background/0 shadow-xs active:scale-[0.99] before:pointer-events-none before:content-[''] before:absolute before:-z-10 before:top-1/2 before:left-0 before:-translate-y-1/2 before:-translate-x-1/2 before:aspect-square before:w-[300%] before:rounded-full before:bg-primary before:scale-0 before:transition-transform before:duration-700 before:ease-out hover:before:scale-100 hover:text-primary-foreground transition-colors duration-700",
 
 				ghost:
 					"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
@@ -39,9 +39,11 @@ const buttonVariants = cva(
 );
 
 const arrowBgVariants: Record<string, string> = {
-	default: "bg-primary-foreground text-primary",
+	default:
+		"bg-primary-foreground text-primary group-hover/button:bg-primary group-hover/button:text-primary-foreground transition-colors duration-300",
 	secondary: "bg-primary text-background",
-	outline: "bg-primary text-primary-foreground",
+	outline:
+		"bg-primary text-primary-foreground group-hover/button:bg-background group-hover/button:text-primary transition-colors duration-300",
 	ghost: "bg-muted text-foreground",
 	destructive: "bg-destructive-foreground text-destructive",
 	link: "bg-transparent text-primary",
@@ -77,11 +79,11 @@ function Button({
 			{withArrow && !size?.startsWith("icon") && (
 				<div
 					className={cn(
-						"inline-flex items-center xl:size-9 size-6 md:size-7 justify-center rounded-full shrink-0",
+						"relative z-10 inline-flex items-center xl:size-9 size-6 md:size-7 justify-center rounded-full shrink-0 transition-colors duration-300",
 						arrowBgVariants[variant!] ?? arrowBgVariants.default,
 					)}
 				>
-					<ArrowRight className="stroke-1 rtl:rotate-180 size-4 md:size-5" />
+					<ArrowRight className="stroke-1 rtl:rotate-180 size-4 md:size-5 transition-colors duration-300" />
 				</div>
 			)}
 		</Comp>

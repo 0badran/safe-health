@@ -129,12 +129,12 @@ export function HealthcareOptionsSection({
 
 									{/* Top Content: Title & Description */}
 									<div className="relative z-10 flex flex-col gap-2.5">
-										<h3 className="font-heading h3 leading-snug tracking-tight">
+										<h3 className="font-heading h3 leading-snug tracking-tight line-clamp-1">
 											{card.title}
 										</h3>
 										<p
 											className={cn(
-												"small leading-relaxed transition-colors",
+												"small leading-relaxed transition-colors line-clamp-3",
 												isActive ? "text-wallpaper" : "text-paragraph",
 											)}
 										>
