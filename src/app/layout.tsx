@@ -41,7 +41,7 @@ export default function RootLayout({
 			dir="ltr"
 			suppressHydrationWarning
 			className={cn(
-				"h-full antialiased font-sans rtl:font-arabic",
+				"h-full antialiased font-sans rtl:font-arabic scroll-smooth",
 				headingFont.variable,
 				sansFont.variable,
 				arabicFont.variable,

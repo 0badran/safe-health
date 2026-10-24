@@ -26,6 +26,7 @@ export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
 					maskImage: `url(${"/images/hero-bg.png"})`,
 					WebkitMaskImage: `url(${"/images/hero-bg.png"})`,
 					maskSize: "cover",
+					background: "oklch(0.343 0.135 288)",
 					WebkitMaskSize: "cover",
 					maskPosition: "top center",
 					WebkitMaskPosition: "top center",
@@ -76,7 +77,7 @@ export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
 					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative pointer-events-auto">
 						<div
 							id="consultation"
-							className="w-full lg:absolute  max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden  lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
+							className="w-full lg:absolute max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden  lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
 						>
 							<ConsultationForm onSubmit={onSubmit} />
 						</div>
