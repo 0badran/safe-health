@@ -7,6 +7,7 @@ import { DirectionProvider } from "@/components/ui/direction";
 import { LanguageProvider } from "@/lib/language-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LucideProvider } from "lucide-react";
+import { Suspense } from "react";
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
@@ -29,7 +30,9 @@ export default function Providers({children}: {children: React.ReactNode}) {
 						>
 							<LucideProvider strokeWidth={1.5}>
 								<LanguageProvider initialLanguage="en">
-									<Navbar />
+									<Suspense fallback={null}>
+										<Navbar />
+									</Suspense>
 									<div className="flex-1 min-h-screen">{children}</div>
 									<Footer />
 								</LanguageProvider>

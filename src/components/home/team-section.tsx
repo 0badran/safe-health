@@ -23,6 +23,7 @@ export function TeamSection({ data }: TeamSectionProps = {}) {
 	const { data: apiResponse, isLoading } = useFetchData<{ data: DoctorItem[] }>(
 		{
 			route: "/doctors",
+			params: { per_page: "8" },
 		},
 	);
 

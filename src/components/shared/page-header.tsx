@@ -23,10 +23,10 @@ export function PageHeader({
 }: PageHeaderProps) {
 	const { t } = useTranslation();
 
-	const displayBadge = badgeKey ? t(badgeKey, { defaultValue: badge }) : badge;
-	const displayTitle = titleKey ? t(titleKey, { defaultValue: title }) : title;
+	const displayBadge = badgeKey ? t(badgeKey) : badge;
+	const displayTitle = titleKey ? t(titleKey) : title;
 	const displayDescription = descriptionKey
-		? t(descriptionKey, { defaultValue: description })
+		? t(descriptionKey)
 		: description;
 
 	return (

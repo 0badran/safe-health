@@ -20,9 +20,12 @@ export function HealthcareOptionsSection({
 	data,
 	services: propServices,
 }: HealthcareOptionsSectionProps = {}) {
-	const { data: apiResponse, isLoading } = useFetchData<{ data: ServiceItem[] }>({
+	const { data: apiResponse, isLoading } = useFetchData<{
+		data: ServiceItem[];
+	}>({
 		route: "/services",
 		enabled: !propServices,
+		params: { per_page: "8" },
 	});
 
 	const services = propServices ?? apiResponse?.data;
@@ -46,7 +49,10 @@ export function HealthcareOptionsSection({
 	const description = data.description;
 
 	return (
-		<section className="relative isolate w-full p-4 lg:p-7" id="healthcare-options">
+		<section
+			className="relative isolate w-full p-4 lg:p-7"
+			id="healthcare-options"
+		>
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
@@ -73,9 +79,7 @@ export function HealthcareOptionsSection({
 				{/* Left Column: Description & Action Button */}
 				<div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
 					{description && (
-						<p className="text-paragraph h5 leading-relaxed">
-							{description}
-						</p>
+						<p className="text-paragraph h5 leading-relaxed">{description}</p>
 					)}
 
 					<Link href="/treatments">
@@ -87,9 +91,7 @@ export function HealthcareOptionsSection({
 
 				{/* Right Column: Heading sitting in the cutout area */}
 				<div className="lg:col-span-5 order-1 lg:order-2 flex flex-col items-start lg:items-end justify-start">
-					<h2 className="text-heading">
-						{headline}
-					</h2>
+					<h2 className="text-heading">{headline}</h2>
 				</div>
 			</div>
 
@@ -98,7 +100,6 @@ export function HealthcareOptionsSection({
 				<SectionCarousel
 					items={activeServices}
 					keyExtractor={(card) => String(card.id)}
-					contentClassName="-ms-4 py-2"
 					renderItem={(card) => {
 						const isActive = currentActiveId === card.id;
 
@@ -145,7 +146,10 @@ export function HealthcareOptionsSection({
 									{/* Bottom Image with Circular Arrow Action */}
 									<div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden mt-6 bg-muted">
 										<Image
-											src={card.image_url || "/images/why-choose/aesthetic-care.jpg"}
+											src={
+												card.image_url ||
+												"/images/why-choose/aesthetic-care.jpg"
+											}
 											alt={card.title}
 											fill
 											sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"

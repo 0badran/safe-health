@@ -11,6 +11,7 @@
 		"beforeAfter": "Before & After",
 		"forPartners": "For Partners",
 		"contact": "Contact",
+		"articles": "Articles",
 		"getConsultation": "Get a Free Consultation"
 	},
 	"hero": {
@@ -97,5 +98,34 @@
 			"successDesc": "Thank you for reaching out to Safe Health. A dedicated medical advisor will connect with you within 2 hours.",
 			"sendAnother": "Send Another Message"
 		}
+	},
+	"blogs": {
+		"viewAll": "View all articles",
+		"readArticle": "Read article"
+	},
+	"articles": {
+		"header": {
+			"badge": "KNOWLEDGE LIBRARY",
+			"title": "Medical Articles & Research",
+			"description": "Explore the latest certified medical articles, surgical guides, and clinical insights from leading specialists."
+		},
+		"title": "Articles",
+		"heroAlt": "Certified medical articles and research on Safe Health platform",
+		"knowledgeLibrary": "Knowledge Library",
+		"latestArticles": "Latest Articles & Medical Guidelines",
+		"readMore": "Read more",
+		"readArticle": "Read article",
+		"loading": "Loading articles...",
+		"errorLoading": "An error occurred while loading articles. Please try again later.",
+		"emptyArticles": "No published articles available at this time.",
+		"backToAll": "Back to all articles",
+		"backToArticles": "Back to articles",
+		"notFoundTitle": "Article Not Found",
+		"notFoundDesc": "We could not find the requested article or an error occurred during loading.",
+		"error": "Error"
+	},
+	"pagination": {
+		"previous": "Previous",
+		"next": "Next"
 	}
 }
