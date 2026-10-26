@@ -79,18 +79,17 @@ export function SectionCarousel<T = unknown>({
 	}, [api, externalSetApi, onSlideChange]);
 
 	return (
-		<div className={cn("relative w-full", className)}>
+		<div className={cn("w-full", className)}>
 			<Carousel
 				setApi={setApi}
 				opts={{
-					align: "start",
 					loop: false,
 					...opts,
 				}}
 				plugins={plugins}
 				className="w-full"
 			>
-				<CarouselContent className={cn("-ms-4 py-2", contentClassName)}>
+				<CarouselContent className={cn("py-2", contentClassName)}>
 					{items && renderItem
 						? items.map((item, index) => {
 								const key = keyExtractor ? keyExtractor(item, index) : index;
@@ -99,7 +98,7 @@ export function SectionCarousel<T = unknown>({
 										{renderItem(item, index)}
 									</CarouselItem>
 								);
-						  })
+							})
 						: React.Children.map(children, (child, index) => {
 								if (!child) return null;
 								return (
@@ -107,7 +106,7 @@ export function SectionCarousel<T = unknown>({
 										{child}
 									</CarouselItem>
 								);
-						  })}
+							})}
 				</CarouselContent>
 
 				{showArrows && (

@@ -6,6 +6,7 @@ import {
 	type QueryKey,
 	type UseMutationOptions,
 } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,6 +32,8 @@ export default function useMutateData<TData = any, TVariables = any>({
 }: MutateDataOptions<TData, TVariables> = {}) {
 	const queryClient = useQueryClient();
 	if (!route) throw new Error("Route is required for mutating data.");
+	const { i18n } = useTranslation();
+	const lang = i18n.resolvedLanguage ?? i18n.language ?? "en";
 
 	return useMutation<TData, Error, TVariables>({
 		mutationFn:
@@ -40,20 +43,19 @@ export default function useMutateData<TData = any, TVariables = any>({
 					typeof FormData !== "undefined" && variables instanceof FormData;
 
 				const headers: Record<string, string> = {
-					"ngrok-skip-browser-warning": "true",
+					"Accept-Language": lang,
 				};
 				if (!isFormData && variables !== undefined) {
 					headers["Content-Type"] = "application/json";
 				}
 
-				const baseUrl = url;
-				const endpoint = `${baseUrl}${route}`;
+				const endpoint = `${url}${route}`;
 
 				const res = await fetch(endpoint, {
 					method,
 					headers,
 					body: isFormData
-						? (variables as FormData)
+						? variables
 						: variables !== undefined
 							? JSON.stringify(variables)
 							: undefined,

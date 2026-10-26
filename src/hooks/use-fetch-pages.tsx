@@ -22,7 +22,6 @@ export default function useFetchPages<T = any>(
 
 	return useFetchData<T>({
 		route,
-		queryKey: ["pages", slug],
 		...queryOptions,
 	});
 }

@@ -34,4 +34,3 @@ trigger: always_on
 - **Fluid Heading Utilities (`h1` to `h6`):** Always use the project's fluid typography utilities (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`) defined in `globals.css` rather than arbitrary Tailwind size utilities (`text-3xl`, `text-xl`, etc.).
 - **Sizes Smaller than 16px (`small`):** For any text sizes smaller than 16px, strictly use the `small` utility (e.g., `small` instead of `text-xs` or `text-sm`).
 - **Gradient Headings (`text-heading`):** Use the `text-heading` utility for primary section titles that use the gradient styling and heading font.
-
