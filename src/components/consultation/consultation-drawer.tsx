@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/drawer";
 import { ConsultationForm, type ConsultationFormProps } from "@/components/home/hero/form/consultation-form";
 import { useLanguage, useTranslation } from "@/lib/language-context";
+import useSettings from "@/hooks/use-settings";
 import { type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
@@ -48,18 +49,23 @@ export function ConsultationDrawer({
 	className,
 	children,
 	trigger,
-	brandName = "GK InterCare",
-	title = "Plan your treatment with GK InterCare",
-	description = "Share your details and our patient coordination team will contact you with clear next steps.",
+	brandName,
+	title,
+	description,
 	onSubmit,
 	open: controlledOpen,
 	onOpenChange: controlledOnOpenChange,
 	drawerClassName,
 	...buttonProps
 }: ConsultationDrawerProps) {
+	const { settings } = useSettings();
 	const { isRtl } = useLanguage();
 	const { t } = useTranslation();
 	const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+
+	const resolvedBrandName = brandName ?? settings?.brand_name ?? undefined;
+	const resolvedTitle = title ?? t("consultation.title");
+	const resolvedDescription = description ?? t("consultation.subtitle");
 
 	const isControlled = controlledOpen !== undefined;
 	const open = isControlled ? controlledOpen : uncontrolledOpen;
@@ -95,15 +101,15 @@ export function ConsultationDrawer({
 			>
 				{/* Accessible Header for Screen Readers */}
 				<DrawerHeader className="sr-only">
-					<DrawerTitle>{title}</DrawerTitle>
-					<DrawerDescription>{description}</DrawerDescription>
+					<DrawerTitle>{resolvedTitle}</DrawerTitle>
+					<DrawerDescription>{resolvedDescription}</DrawerDescription>
 				</DrawerHeader>
 
 				<div className="py-2">
 					<ConsultationForm
-						brandName={brandName}
-						title={title}
-						description={description}
+						brandName={resolvedBrandName}
+						title={resolvedTitle}
+						description={resolvedDescription}
 						onSubmit={onSubmit}
 						onSuccess={handleSuccess}
 					/>

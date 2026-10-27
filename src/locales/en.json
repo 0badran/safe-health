@@ -12,6 +12,7 @@
 		"forPartners": "For Partners",
 		"contact": "Contact",
 		"articles": "Articles",
+		"blogs": "Articles",
 		"getConsultation": "Get a Free Consultation"
 	},
 	"hero": {
@@ -100,15 +101,22 @@
 		}
 	},
 	"blogs": {
+		"title": "Articles",
+		"heroAlt": "Certified medical articles and research on Safe Health platform",
+		"knowledgeLibrary": "Knowledge Library",
+		"latestBlogs": "Latest Articles & Medical Guidelines",
 		"viewAll": "View all articles",
-		"readArticle": "Read article"
+		"readArticle": "Read article",
+		"loading": "Loading articles...",
+		"errorLoading": "An error occurred while loading articles. Please try again later.",
+		"emptyBlogs": "No published articles available at this time.",
+		"backToAll": "Back to all articles",
+		"backToBlogs": "Back to articles",
+		"notFoundTitle": "Article Not Found",
+		"notFoundDesc": "We could not find the requested article or an error occurred during loading.",
+		"error": "Error"
 	},
 	"articles": {
-		"header": {
-			"badge": "KNOWLEDGE LIBRARY",
-			"title": "Medical Articles & Research",
-			"description": "Explore the latest certified medical articles, surgical guides, and clinical insights from leading specialists."
-		},
 		"title": "Articles",
 		"heroAlt": "Certified medical articles and research on Safe Health platform",
 		"knowledgeLibrary": "Knowledge Library",

@@ -12,6 +12,7 @@
 		"forPartners": "Partenaires",
 		"contact": "Contact",
 		"articles": "Articles",
+		"blogs": "Articles",
 		"getConsultation": "Consultation Gratuite"
 	},
 	"hero": {
@@ -100,15 +101,22 @@
 		}
 	},
 	"blogs": {
+		"title": "Articles",
+		"heroAlt": "Articles médicaux et recherches certifiées sur la plateforme Safe Health",
+		"knowledgeLibrary": "Bibliothèque de connaissances",
+		"latestBlogs": "Derniers articles et recommandations médicales",
 		"viewAll": "Voir tous les articles",
-		"readArticle": "Lire l'article"
+		"readArticle": "Lire l'article",
+		"loading": "Chargement des articles...",
+		"errorLoading": "Une erreur est survenue lors du chargement des articles. Veuillez réessayer plus tard.",
+		"emptyBlogs": "Aucun article publié disponible pour le moment.",
+		"backToAll": "Retour à tous les articles",
+		"backToBlogs": "Retour aux articles",
+		"notFoundTitle": "Article introuvable",
+		"notFoundDesc": "Nous n'avons pas pu trouver l'article demandé ou une erreur est survenue lors du chargement.",
+		"error": "Erreur"
 	},
 	"articles": {
-		"header": {
-			"badge": "BIBLIOTHÈQUE DE CONNAISSANCES",
-			"title": "Articles et Recherches Médicales",
-			"description": "Explorez les derniers articles médicaux certifiés, guides chirurgicaux et avis cliniques d'éminents spécialistes."
-		},
 		"title": "Articles",
 		"heroAlt": "Articles médicaux et recherches certifiées sur la plateforme Safe Health",
 		"knowledgeLibrary": "Bibliothèque de connaissances",

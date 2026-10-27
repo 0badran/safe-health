@@ -1,14 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+"use client";
 
-export function FooterCta() {
+import Image from "next/image";
+import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
+import { useTranslation } from "@/lib/language-context";
+import type { HomeConsultationCtaSection } from "@/types/home";
+
+export interface FooterCtaProps {
+	data?: HomeConsultationCtaSection;
+}
+
+export function FooterCta({ data }: FooterCtaProps = {}) {
+	const { t } = useTranslation();
+
+	if (!data || !data.headline) {
+		return null;
+	}
+
+	const headline = data.headline;
+	const description = data.description;
+	const bgImage = data.background_image || "/images/transformation-banner.png";
+
 	return (
 		<section className="relative w-full py-5 lg:py-10 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
 			{/* Background Poster Image */}
 			<Image
-				src="/images/transformation-banner.png"
-				alt="Ready For Your Transformation"
+				src={bgImage}
+				alt={headline}
 				fill
 				priority
 				sizes="100vw"
@@ -24,22 +41,23 @@ export function FooterCta() {
 			{/* Content */}
 			<div className="relative z-10 flex flex-col justify-center items-start px-3 lg:px-6 flex-1">
 				<h2 className="font-heading italic text-primary h3 leading-tight tracking-tight">
-					Ready For Your Transformation?
+					{headline}
 				</h2>
 
-				<p className="text-paragraph h5 lg:mt-3 mt-1 leading-6 lg:leading-9 font-normal max-w-lg line-clamp-3 sm:line-clamp-none">
-					Take the first step toward feeling confident in your own skin. Our
-					specialists are here to guide you every step of the way.
-				</p>
+				{description && (
+					<p className="text-paragraph h5 lg:mt-3 mt-1 leading-6 lg:leading-9 font-normal max-w-lg line-clamp-3 sm:line-clamp-none">
+						{description}
+					</p>
+				)}
 
 				<div className="mt-4 lg:mt-8">
-					<Link href="/contact">
-						<Button variant="default" withArrow>
-							Get A Free Consultation
-						</Button>
-					</Link>
+					<ConsultationDrawer variant="default" withArrow>
+						{t("navbar.getConsultation")}
+					</ConsultationDrawer>
 				</div>
 			</div>
 		</section>
 	);
 }
+
+export default FooterCta;

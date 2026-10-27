@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { Cairo, Inter, Merienda } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import { fetchData } from "@/lib/api";
+import type { SettingsApiResponse } from "@/types/settings";
+
+export const instant = false;
 
 const headingFont = Merienda({
 	subsets: ["latin"],
@@ -22,15 +26,37 @@ const arabicFont = Cairo({
 	display: "swap",
 });
 
-export const metadata: Metadata = {
-	title: "Safe Health | الرعاية الطبية وحلول إدارة العيادات",
-	description:
-		"منظومة متكاملة لربط المرضى بأفضل الأطباء المعتمدين وإدارة العيادات الطبية باحترافية.",
-};
+async function getSettings() {
+	"use cache";
+	try {
+		const json = await fetchData<SettingsApiResponse>({
+			route: "/settings",
+		});
+		return json?.data || null;
+	} catch {
+		return null;
+	}
+}
 
-// Create a client
+export async function generateMetadata(): Promise<Metadata> {
+	"use cache";
+	const settings = await getSettings();
 
-export default function RootLayout({
+	return {
+		title: settings?.brand_name || undefined,
+		description: settings?.footer_description || undefined,
+		icons: settings?.favicon
+			? [
+					{
+						rel: "icon",
+						url: settings.favicon,
+					},
+				]
+			: undefined,
+	};
+}
+
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;

@@ -7,3 +7,4 @@ export * from "./timeline-dot";
 export * from "./approach-guidance-icon";
 export * from "./approach-planning-icon";
 export * from "./approach-coordination-icon";
+export * from "./bootstrap-icons";

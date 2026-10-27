@@ -7,10 +7,9 @@ import {
 	type UseMutationOptions,
 } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { fetchData, type HttpMethod } from "@/lib/api";
 
-const url = process.env.NEXT_PUBLIC_API_URL;
-
-export type HttpMethod = "POST" | "PUT" | "PATCH" | "DELETE";
+export type { HttpMethod };
 
 export interface MutateDataOptions<TData = any, TVariables = any> extends Omit<
 	UseMutationOptions<TData, Error, TVariables>,
@@ -38,35 +37,13 @@ export default function useMutateData<TData = any, TVariables = any>({
 	return useMutation<TData, Error, TVariables>({
 		mutationFn:
 			mutationFn ??
-			(async (variables: TVariables) => {
-				const isFormData =
-					typeof FormData !== "undefined" && variables instanceof FormData;
-
-				const headers: Record<string, string> = {
-					"Accept-Language": lang,
-				};
-				if (!isFormData && variables !== undefined) {
-					headers["Content-Type"] = "application/json";
-				}
-
-				const endpoint = `${url}${route}`;
-
-				const res = await fetch(endpoint, {
+			((variables: TVariables) =>
+				fetchData<TData, TVariables>({
+					route,
 					method,
-					headers,
-					body: isFormData
-						? variables
-						: variables !== undefined
-							? JSON.stringify(variables)
-							: undefined,
-				});
-
-				if (!res.ok) {
-					throw res;
-				}
-
-				return res.json();
-			}),
+					body: variables,
+					lang,
+				})),
 		onSuccess: async (...args) => {
 			if (invalidateKeys && invalidateKeys.length > 0) {
 				return queryClient.invalidateQueries({ queryKey: invalidateKeys });

@@ -1,4 +1,7 @@
+"use client";
+
 import useFetchData from "@/hooks/use-fetch-data";
+import { useTranslation } from "@/lib/language-context";
 import type { HomeDoctorsSection } from "@/types/home";
 import { SectionCarousel } from "../shared/section-carousel";
 import SectionHeader from "../shared/section-header";
@@ -20,6 +23,7 @@ export interface TeamSectionProps {
 }
 
 export function TeamSection({ data }: TeamSectionProps = {}) {
+	const { t } = useTranslation();
 	const { data: apiResponse, isLoading } = useFetchData<{ data: DoctorItem[] }>(
 		{
 			route: "/doctors",
@@ -47,7 +51,7 @@ export function TeamSection({ data }: TeamSectionProps = {}) {
 				subTitle={subTitle}
 				title={title!}
 				desc={desc}
-				buttonText="view doctors team"
+				buttonText={t("navbar.ourDoctors")}
 				buttonLink="/doctors"
 			/>
 

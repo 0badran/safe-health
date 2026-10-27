@@ -1,3 +1,5 @@
+import type { ApiResponse, SeoData } from "./api";
+
 export interface HomeHeroSection {
 	headline?: string;
 	description?: string;
@@ -110,11 +112,9 @@ export interface HomePageSections {
 export interface HomePageData {
 	title: string;
 	slug: string;
+	seo?: SeoData | null;
 	sections: HomePageSections;
 }
 
-export interface HomePageResponse {
-	success?: boolean;
-	data: HomePageData;
-}
+export type HomePageResponse = ApiResponse<HomePageData>;
 

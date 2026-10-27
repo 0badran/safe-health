@@ -1,6 +1,6 @@
 "use client";
 
-import { ArticleCard } from "@/components/articles/article-card";
+import { BlogCard } from "@/components/blogs/blog-card";
 import { SectionCarousel } from "@/components/shared/section-carousel";
 import SectionHeader from "@/components/shared/section-header";
 import useFetchData from "@/hooks/use-fetch-data";
@@ -43,7 +43,7 @@ export function BlogsSection({ data }: BlogsSectionProps = {}) {
 				subTitle={subTitle}
 				title={title}
 				buttonText={t("blogs.viewAll")}
-				buttonLink="/articles"
+				buttonLink="/blogs"
 			/>
 
 			<SectionCarousel
@@ -51,7 +51,7 @@ export function BlogsSection({ data }: BlogsSectionProps = {}) {
 				keyExtractor={(post) => String(post.id)}
 				itemClassName="ps-4 basis-[70%] sm:basis-[40%] md:basis-[40%] lg:basis-1/3"
 				contentClassName="-ms-4 py-2"
-				renderItem={(post) => <ArticleCard article={post} />}
+				renderItem={(post) => <BlogCard blog={post} />}
 			/>
 		</section>
 	);

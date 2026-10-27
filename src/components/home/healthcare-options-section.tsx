@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import useFetchData from "@/hooks/use-fetch-data";
+import { useTranslation } from "@/lib/language-context";
 import type { HomeHealthcareOptionsSection, ServiceItem } from "@/types/home";
 
 export interface HealthcareOptionsSectionProps {
@@ -20,6 +21,7 @@ export function HealthcareOptionsSection({
 	data,
 	services: propServices,
 }: HealthcareOptionsSectionProps = {}) {
+	const { t } = useTranslation();
 	const { data: apiResponse, isLoading } = useFetchData<{
 		data: ServiceItem[];
 	}>({
@@ -50,9 +52,10 @@ export function HealthcareOptionsSection({
 
 	return (
 		<section
-			className="relative isolate w-full p-4 lg:p-7"
+			className="relative isolate w-full p-4 lg:p-7 scroll-mt-28"
 			id="healthcare-options"
 		>
+			<span id="treatments" className="sr-only -top-28 relative block" aria-hidden="true" />
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
@@ -84,7 +87,7 @@ export function HealthcareOptionsSection({
 
 					<Link href="/treatments">
 						<Button variant="default" withArrow>
-							Find Your Care
+							{t("hero.viewTreatments")}
 						</Button>
 					</Link>
 				</div>

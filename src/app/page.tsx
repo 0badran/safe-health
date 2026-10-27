@@ -1,22 +1,40 @@
-"use client";
+import type { Metadata } from "next";
 import HeroSection from "@/components/home/hero";
-import StepsSection from "@/components/home/steps-section";
-import TeamSection from "@/components/home/team-section";
-
-import { BlogsSection } from "@/components/home/blogs-section";
-import { FaqSection } from "@/components/home/faq-section";
-import { HealthcareOptionsSection } from "@/components/home/healthcare-options-section";
-import { RhinoplastySection } from "@/components/home/rhinoplasty-section";
-import { TrustCirclesSection } from "@/components/home/trust-circles-section";
-import { WhyChooseSection } from "@/components/home/why-choose-section";
 import { HeroStatsBanner } from "@/components/home/hero/hero-stats-banner";
+import { WhyChooseSection } from "@/components/home/why-choose-section";
+import { RhinoplastySection } from "@/components/home/rhinoplasty-section";
+import { HealthcareOptionsSection } from "@/components/home/healthcare-options-section";
+import TeamSection from "@/components/home/team-section";
+import { TrustCirclesSection } from "@/components/home/trust-circles-section";
+import StepsSection from "@/components/home/steps-section";
+import { FaqSection } from "@/components/home/faq-section";
+import { BlogsSection } from "@/components/home/blogs-section";
+import { FooterCta } from "@/components/shared/footer-cta";
 import { FadeIn } from "@/components/shared/fade-in";
-import useFetchPages from "@/hooks/use-fetch-pages";
+import { fetchData, getSeoMetadata } from "@/lib/api";
 import type { HomePageResponse } from "@/types/home";
 
-export default function Home() {
-	const { data } = useFetchPages<HomePageResponse>("home");
-	const sections = data?.data?.sections;
+export const instant = false;
+
+async function getHomePage() {
+	try {
+		const json = await fetchData<HomePageResponse>({
+			route: "/pages/home",
+		});
+		return json?.data || null;
+	} catch {
+		return null;
+	}
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+	const page = await getHomePage();
+	return getSeoMetadata(page?.seo);
+}
+
+export default async function HomePage() {
+	const page = await getHomePage();
+	const sections = page?.sections;
 
 	return (
 		<main className="flex flex-col flex-1 w-full space-y-6 sm:space-y-5">
@@ -66,6 +84,12 @@ export default function Home() {
 					<BlogsSection data={sections?.["home-blogs"]} />
 				</FadeIn>
 			</div>
+
+			{sections?.["consultation-cta"] && (
+				<div className="container">
+					<FooterCta data={sections["consultation-cta"]} />
+				</div>
+			)}
 		</main>
 	);
 }
