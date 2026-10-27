@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { HeadingDivider } from "@/components/icons";
 import { cn } from "@/lib/utils";
+import type { GuidingPhilosophySection } from "@/types/about";
+import useSettings from "@/hooks/use-settings";
 
-export function AboutPhilosophy() {
+export interface AboutPhilosophyProps {
+	data?: GuidingPhilosophySection;
+}
+
+export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isInView, setIsInView] = useState(false);
+	const { settings } = useSettings();
 
 	useEffect(() => {
 		const el = containerRef.current;
@@ -18,7 +25,7 @@ export function AboutPhilosophy() {
 			([entry]) => {
 				if (entry.isIntersecting) {
 					setIsInView(true);
-					observer.disconnect(); // Trigger once smoothly
+					observer.disconnect();
 				}
 			},
 			{ threshold: 0.25 },
@@ -28,57 +35,57 @@ export function AboutPhilosophy() {
 		return () => observer.disconnect();
 	}, []);
 
+	if (!data) return null;
+
 	return (
 		<section className="max-w-7xl">
 			{/* Top Grid: Title, Badge, Decoration & Descriptions */}
 			<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-10 lg:mb-14">
 				{/* Left: Badge, Heading, and Dashed Decoration */}
 				<div className="lg:col-span-5 flex flex-col items-start gap-4">
-					<SectionBadge>OUR GUIDING PHILOSOPHY</SectionBadge>
+					{data.tag_text && <SectionBadge>{data.tag_text}</SectionBadge>}
 
-					<h2 className="text-heading leading-tight">
-						Beauty Is Personal.
-						<br />
-						So Is Our Approach.
-					</h2>
+					{data.headline && (
+						<h2 className="text-heading leading-tight whitespace-pre-line">
+							{data.headline}
+						</h2>
+					)}
 
 					<HeadingDivider className="mt-1" />
 				</div>
 
 				{/* Right: Paragraphs */}
 				<div className="lg:col-span-7 flex flex-col gap-4 pt-1 sm:pt-2">
-					<p className="text-paragraph h5 font-normal leading-relaxed">
-						We believe every patient deserves an approach shaped around their
-						individual needs, aesthetic goals, and personal preferences. Our
-						philosophy brings together medical expertise, thoughtful planning,
-						and a commitment to natural-looking results.
-					</p>
+					{data.description && (
+						<p className="text-paragraph h5 font-normal leading-relaxed">
+							{data.description}
+						</p>
+					)}
 
-					<p className="text-paragraph small leading-relaxed">
-						Rather than standardizing aesthetics through rigid templates,
-						SafeHealthMe operates as an intimate sanctuary where surgical
-						mastery, diagnostic precision, and biological longevity converge
-						into lasting harmony.
-					</p>
+					{data.secondary_description && (
+						<p className="text-paragraph small leading-relaxed">
+							{data.secondary_description}
+						</p>
+					)}
 				</div>
 			</div>
 
-			{/* Bottom: Wide Clinic Interior Photo with Gradient Overlay */}
+			{/* Bottom: Wide Clinic Interior Photo with FallbackImage */}
 			<div
 				ref={containerRef}
 				className="relative rounded-4xl w-full aspect-3/1 overflow-hidden select-none group"
 			>
-				{/* Clinic Photo */}
-				<Image
-					src="/images/about/clinic-philosophy.png"
-					alt="Safehealthme Clinic Interior"
+				<FallbackImage
+					src={data.section_image}
+					fallbackSrc="/images/about/clinic-philosophy.png"
+					alt={data.headline || "Safehealthme Clinic Interior"}
 					fill
-					priority
+					preload
 					sizes="(max-width: 1024px) 100vw, 1280px"
 					className="object-cover object-center"
 				/>
 
-				{/* Gradient Layer: linear-gradient(0deg, #FFFFFF -0.3%, rgba(48, 32, 92, 0.1) 59.64%) */}
+				{/* Gradient Layer */}
 				<div
 					className="absolute inset-0 bg-linear-to-t from-background from-[-10%] via-primary/10 via-60% to-transparent"
 					aria-hidden="true"
@@ -93,9 +100,11 @@ export function AboutPhilosophy() {
 							: "-translate-x-1/2 rtl:translate-x-1/2 blur-xs",
 					)}
 				>
-					<span className="font-heading text-[clamp(28px,5.5vw,93.5px)] tracking-tight text-background">
-						Safehealthme Clinic
-					</span>
+					{settings?.brand_name && (
+						<span className="font-heading text-[clamp(28px,5.5vw,93.5px)] tracking-tight text-background">
+							{settings.brand_name}
+						</span>
+					)}
 				</div>
 			</div>
 		</section>

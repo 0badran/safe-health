@@ -1,41 +1,16 @@
-import Image from "next/image";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { ExpertiseBackground } from "@/components/about/expertise-background";
+import type { OurExpertiseSection } from "@/types/about";
 
-interface ExpertisePoint {
-	number: string;
-	title: string;
-	description: string;
+export interface AboutExpertiseProps {
+	data?: OurExpertiseSection;
 }
 
-const EXPERTISE_POINTS: ExpertisePoint[] = [
-	{
-		number: "01",
-		title: "Board-Certified Surgical Fellows & Medical Specialists",
-		description:
-			"Every physician holds verified international accreditations with decades of combined clinical leadership in reconstructive and aesthetic medicine.",
-	},
-	{
-		number: "02",
-		title:
-			"Multidisciplinary Pre-Procedural Diagnostics & 3D Volumetric Planning",
-		description:
-			"Utilizing high-resolution anatomical scanning and digital simulations to map conservative, millimeter-exact treatment pathways.",
-	},
-	{
-		number: "03",
-		title: "Rigorous European & International Clinical Hospital Standards",
-		description:
-			"All operating theaters and surgical suites maintain JCI sterilization protocols and state-of-the-art anesthesia monitoring arrays.",
-	},
-	{
-		number: "04",
-		title: "Continuous Post-Procedural Care Protocol & Recovery Monitoring",
-		description:
-			"Structured longitudinal follow-up protocols combining in-person evaluations and secure telehealth diagnostics for full convalescence.",
-	},
-];
+export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
+	if (!data) return null;
 
-export function AboutExpertise() {
+	const points = data.feature_card ?? [];
+
 	return (
 		<section className="relative w-full">
 			<div className="hidden md:block">
@@ -48,26 +23,29 @@ export function AboutExpertise() {
 				{/* Top Header Row: Title & Subtitle */}
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 my-5">
 					<div className="lg:col-span-6">
-						<h2 className="text-heading font-normal leading-tight">
-							Expertise Built Around <br /> You.
-						</h2>
+						{data.headline && (
+							<h2 className="text-heading font-normal leading-tight whitespace-pre-line">
+								{data.headline}
+							</h2>
+						)}
 					</div>
 
 					<div className="lg:col-span-6 flex justify-end -rotate-7">
-						<p className="font-heading italic text-[#78A9B8] font-semibold h3">
+						<p className="font-heading italic text-secondary font-semibold h3">
 							Personalized Care, <br />
 							Exceptional Results.
 						</p>
 					</div>
 				</div>
 
-				{/* Main Grid: Doctor Team Photo + 4 Feature Cards */}
+				{/* Main Grid: Doctor Team Photo + Feature Cards */}
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end">
-					{/* Left: Specialists Team Image */}
+					{/* Left: Specialists Team Image with FallbackImage */}
 					<div className="lg:col-span-6 relative w-full min-h-80 sm:min-h-100 lg:min-h-120 rounded-3xl overflow-hidden">
-						<Image
-							src="/images/about/team-workspace.jpg"
-							alt="Medical Specialists Care Team"
+						<FallbackImage
+							src={data.feature_image}
+							fallbackSrc="/images/about/team-workspace.jpg"
+							alt={data.headline || "Medical Specialists Care Team"}
 							fill
 							sizes="(max-width: 1024px) 100vw, 50vw"
 							className="object-cover object-center size-full"
@@ -75,30 +53,32 @@ export function AboutExpertise() {
 						/>
 					</div>
 
-					{/* Right: 4 Feature Cards Stack */}
-					<div className="lg:col-span-6 flex flex-col justify-between gap-3 sm:gap-3.5">
-						{EXPERTISE_POINTS.map((point) => (
-							<div
-								key={point.number}
-								className="bg-card rounded-2xl p-4 sm:p-5 shadow-xs border border-border/40 flex items-start gap-4 sm:gap-5 transition-shadow duration-200 hover:shadow-sm"
-							>
-								<span className="font-heading h3 text-primary shrink-0 leading-none">
-									{point.number}
-								</span>
+					{/* Right: Feature Cards Stack */}
+					{points.length > 0 && (
+						<div className="lg:col-span-6 flex flex-col justify-between gap-3 sm:gap-3.5">
+							{points.map((point, index) => (
+								<div
+									key={point.number || index}
+									className="bg-card rounded-2xl p-4 sm:p-5 shadow-xs border border-border/40 flex items-start gap-4 sm:gap-5 transition-shadow duration-200 hover:shadow-sm"
+								>
+									<span className="font-heading h3 text-primary shrink-0 leading-none">
+										{point.number}
+									</span>
 
-								<div className="flex flex-col gap-2">
-									<h3 className="font-heading tracking-tight">{point.title}</h3>
-									<p className="text-paragraph small leading-relaxed">
-										{point.description}
-									</p>
+									<div className="flex flex-col gap-2">
+										<h3 className="font-heading tracking-tight">
+											{point.title}
+										</h3>
+										<p className="text-paragraph small leading-relaxed">
+											{point.description}
+										</p>
+									</div>
 								</div>
-							</div>
-						))}
-					</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		</section>
 	);
 }
-
-export default AboutExpertise;

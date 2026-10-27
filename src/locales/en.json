@@ -114,7 +114,15 @@
 		"backToBlogs": "Back to articles",
 		"notFoundTitle": "Article Not Found",
 		"notFoundDesc": "We could not find the requested article or an error occurred during loading.",
-		"error": "Error"
+		"error": "Error",
+		"searchPlaceholder": "Search article title...",
+		"sortLabel": "Sort by",
+		"sortLatest": "Latest",
+		"sortOldest": "Oldest",
+		"publishedAfter": "Published after",
+		"publishedBefore": "Published before",
+		"filterButton": "Filter",
+		"resetButton": "Reset"
 	},
 	"articles": {
 		"title": "Articles",
@@ -135,5 +143,22 @@
 	"pagination": {
 		"previous": "Previous",
 		"next": "Next"
+	},
+	"doctors": {
+		"loading": "Loading...",
+		"searchPlaceholder": "Search doctor by name...",
+		"allSpecialties": "All Specialties",
+		"allTitles": "All Medical Titles",
+		"consultant": "Consultant",
+		"specialist": "Specialist",
+		"surgeon": "Surgeon",
+		"filterButton": "Filter Team",
+		"resetButton": "Reset",
+		"specialtiesHeading": "Specialized Procedures & Treatments:",
+		"yearsExperience": "Years Experience",
+		"consultationTitle": "Personalized Consultation with",
+		"getPersonalization": "Get Your Personalization",
+		"errorLoading": "An error occurred while loading doctors. Please try again.",
+		"emptyDoctors": "No doctors found matching the selected search criteria."
 	}
 }

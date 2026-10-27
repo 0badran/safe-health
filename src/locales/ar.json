@@ -112,7 +112,17 @@
 		"backToBlogs": "العودة إلى المقالات",
 		"notFoundTitle": "المقال غير موجود",
 		"notFoundDesc": "لم نتمكن من العثور على المقال المطلوب أو حدث خطأ أثناء التحميل.",
-		"error": "خطأ"
+		"error": "خطأ",
+		"heroAlt": "مقالات وأبحاث طبية معتمدة على منصة Safe Health",
+		"knowledgeLibrary": "مكتبة المعرفة",
+		"searchPlaceholder": "البحث في عنوان المقال...",
+		"sortLabel": "الترتيب حسب",
+		"sortLatest": "الأحدث",
+		"sortOldest": "الأقدم",
+		"publishedAfter": "تاريخ البدء",
+		"publishedBefore": "تاريخ الانتهاء",
+		"filterButton": "تصفية",
+		"resetButton": "إعادة تعيين"
 	},
 	"articles": {
 		"title": "المقالات",
@@ -133,5 +143,22 @@
 	"pagination": {
 		"previous": "السابق",
 		"next": "التالي"
+	},
+	"doctors": {
+		"loading": "جاري التحميل...",
+		"searchPlaceholder": "ابحث عن طبيب بالاسم...",
+		"allSpecialties": "جميع التخصصات",
+		"allTitles": "جميع الرتب الطبية",
+		"consultant": "استشاري",
+		"specialist": "أخصائي",
+		"surgeon": "جراح",
+		"filterButton": "تصفية الفريق",
+		"resetButton": "إعادة تعيين",
+		"specialtiesHeading": "التخصصات والإجراءات الطبية:",
+		"yearsExperience": "سنوات خبرة",
+		"consultationTitle": "استشارة مخصصة مع",
+		"getPersonalization": "احصل على استشارتك",
+		"errorLoading": "حدث خطأ أثناء تحميل بيانات الأطباء. يرجى المحاولة مرة أخرى.",
+		"emptyDoctors": "لم يتم العثور على أطباء يطابقون خيارات البحث المحددة."
 	}
 }

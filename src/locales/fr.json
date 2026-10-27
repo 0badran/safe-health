@@ -114,7 +114,15 @@
 		"backToBlogs": "Retour aux articles",
 		"notFoundTitle": "Article introuvable",
 		"notFoundDesc": "Nous n'avons pas pu trouver l'article demandé ou une erreur est survenue lors du chargement.",
-		"error": "Erreur"
+		"error": "Erreur",
+		"searchPlaceholder": "Rechercher par titre...",
+		"sortLabel": "Trier par",
+		"sortLatest": "Plus récents",
+		"sortOldest": "Plus anciens",
+		"publishedAfter": "Publié après",
+		"publishedBefore": "Publié avant",
+		"filterButton": "Filtrer",
+		"resetButton": "Réinitialiser"
 	},
 	"articles": {
 		"title": "Articles",
@@ -135,5 +143,22 @@
 	"pagination": {
 		"previous": "Précédent",
 		"next": "Suivant"
+	},
+	"doctors": {
+		"loading": "Chargement...",
+		"searchPlaceholder": "Rechercher un médecin par son nom...",
+		"allSpecialties": "Toutes les spécialités",
+		"allTitles": "Tous les titres médicaux",
+		"consultant": "Consultant",
+		"specialist": "Spécialiste",
+		"surgeon": "Chirurgien",
+		"filterButton": "Filtrer l'équipe",
+		"resetButton": "Réinitialiser",
+		"specialtiesHeading": "Procédures et spécialités :",
+		"yearsExperience": "Années d'expérience",
+		"consultationTitle": "Consultation personnalisée avec",
+		"getPersonalization": "Obtenir votre consultation",
+		"errorLoading": "Une erreur est survenue lors du chargement des médecins. Veuillez réessayer.",
+		"emptyDoctors": "Aucun médecin ne correspond aux critères de recherche sélectionnés."
 	}
 }

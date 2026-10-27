@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ListFilter } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { ListFilter, RotateCcw } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -11,93 +13,189 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/language-context";
+import { cn } from "@/lib/utils";
+import useFetchData from "@/hooks/use-fetch-data";
+import type { ApiResponse } from "@/types/api";
 
-interface DoctorsFilterProps {
-	onFilter?: (filters: {
-		search: string;
-		specialty: string;
-		procedure: string;
-	}) => void;
+export interface DoctorsFilterProps {
+	className?: string;
 }
 
-export function DoctorsFilter({ onFilter }: DoctorsFilterProps) {
-	const [search, setSearch] = React.useState("");
-	const [specialty, setSpecialty] = React.useState("all");
-	const [procedure, setProcedure] = React.useState("all");
+export function DoctorsFilter({ className }: DoctorsFilterProps) {
+	const { t } = useTranslation();
+	const router = useRouter();
+	const pathname = usePathname();
+	const searchParams = useSearchParams();
+
+	const [specialtiesOpened, setSpecialtiesOpened] = React.useState(false);
+	const [titlesOpened, setTitlesOpened] = React.useState(false);
+
+	const { data: specialtiesRes, isLoading: isSpecialtiesLoading } =
+		useFetchData<ApiResponse<string[]>>({
+			route: "/doctors/dropdowns/specialties",
+			enabled: specialtiesOpened,
+		});
+	const { data: titlesRes, isLoading: isTitlesLoading } =
+		useFetchData<ApiResponse<string[]>>({
+			route: "/doctors/dropdowns/titles",
+			enabled: titlesOpened,
+		});
+
+	const specialties = specialtiesRes?.data ?? [];
+	const titles = titlesRes?.data ?? [];
+
+	const initialSearch = searchParams.get("search") || "";
+	const initialSpecialty = searchParams.get("specialty") || "all";
+	const initialTitle = searchParams.get("title") || "all";
+
+	const [search, setSearch] = React.useState(initialSearch);
+	const [specialty, setSpecialty] = React.useState(initialSpecialty);
+	const [title, setTitle] = React.useState(initialTitle);
+
+	// Synchronize when URL search params change externally
+	const [prevSearchParams, setPrevSearchParams] = React.useState(
+		searchParams.toString(),
+	);
+	const currentParamsString = searchParams.toString();
+	if (currentParamsString !== prevSearchParams) {
+		setPrevSearchParams(currentParamsString);
+		setSearch(searchParams.get("search") || "");
+		setSpecialty(searchParams.get("specialty") || "all");
+		setTitle(searchParams.get("title") || "all");
+	}
+
+	const hasActiveFilters = Boolean(
+		search.trim() ||
+		(specialty && specialty !== "all") ||
+		(title && title !== "all"),
+	);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		onFilter?.({ search, specialty, procedure });
+		const params = new URLSearchParams();
+
+		if (search.trim()) {
+			params.set("search", search.trim());
+		}
+		if (specialty && specialty !== "all") {
+			params.set("specialty", specialty);
+		}
+		if (title && title !== "all") {
+			params.set("title", title);
+		}
+
+		params.set("page", "1");
+		router.push(`${pathname}?${params.toString()}`, { scroll: false });
+	};
+
+	const handleReset = () => {
+		setSearch("");
+		setSpecialty("all");
+		setTitle("all");
+		router.push(pathname, { scroll: false });
 	};
 
 	return (
-		<div className="w-full bg-purple-tint/50 dark:bg-muted/30 rounded-3xl sm:rounded-4xl p-2.5 sm:p-4 lg:p-5 border border-white/15">
+		<div
+			className={cn(
+				"w-full bg-purple-tint/50 dark:bg-muted/30 rounded-3xl sm:rounded-4xl p-2.5 sm:p-4 lg:p-5 border border-white/15",
+				className,
+			)}
+		>
 			<form
 				onSubmit={handleSubmit}
 				className="w-full bg-background rounded-2xl sm:rounded-3xl p-2 sm:p-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-2.5 sm:gap-3"
 			>
+				{/* Doctor Name Search Input */}
 				<div className="flex-1 min-w-0">
 					<Input
 						variant="filter"
-						placeholder="Search doctor by name or technique"
+						placeholder={t("doctors.searchPlaceholder")}
 						value={search}
 						onChange={(e) => setSearch(e.target.value)}
 					/>
 				</div>
 
+				{/* Specialty Dropdown */}
 				<div className="w-full lg:w-60 xl:w-64 shrink-0">
-					<Select value={specialty} onValueChange={setSpecialty}>
+					<Select
+						value={specialty}
+						onValueChange={setSpecialty}
+						onOpenChange={(open) => {
+							if (open) setSpecialtiesOpened(true);
+						}}
+					>
 						<SelectTrigger variant="filter">
-							<SelectValue placeholder="All Specialties" />
+							<SelectValue placeholder={t("doctors.allSpecialties")} />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="all">All Specialties</SelectItem>
-							<SelectItem value="dermatology">
-								Dermatology & Aesthetics
-							</SelectItem>
-							<SelectItem value="plastic-surgery">Plastic Surgery</SelectItem>
-							<SelectItem value="hair-restoration">Hair Restoration</SelectItem>
-							<SelectItem value="dentistry">Aesthetic Dentistry</SelectItem>
-							<SelectItem value="rhinoplasty">Rhinoplasty Surgery</SelectItem>
-							<SelectItem value="bariatric">Bariatric Surgery</SelectItem>
-							<SelectItem value="ophthalmology">
-								Ophthalmology & Vision
-							</SelectItem>
+							<SelectItem value="all">{t("doctors.allSpecialties")}</SelectItem>
+							{isSpecialtiesLoading && specialties.length === 0 ? (
+								<div className="py-2 px-3 text-center small text-muted-foreground">
+									{t("doctors.loading")}
+								</div>
+							) : (
+								specialties.map((spec) => (
+									<SelectItem key={spec} value={spec}>
+										{spec}
+									</SelectItem>
+								))
+							)}
 						</SelectContent>
 					</Select>
 				</div>
 
+				{/* Medical Title Dropdown */}
 				<div className="w-full lg:w-60 xl:w-64 shrink-0">
-					<Select value={procedure} onValueChange={setProcedure}>
+					<Select
+						value={title}
+						onValueChange={setTitle}
+						onOpenChange={(open) => {
+							if (open) setTitlesOpened(true);
+						}}
+					>
 						<SelectTrigger variant="filter">
-							<SelectValue placeholder="All Procedures" />
+							<SelectValue placeholder={t("doctors.allTitles")} />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="all">All Procedures</SelectItem>
-							<SelectItem value="rhinoplasty">Rhinoplasty</SelectItem>
-							<SelectItem value="deep-plane-facelift">
-								Deep Plane Facelift
-							</SelectItem>
-							<SelectItem value="blepharoplasty">Blepharoplasty</SelectItem>
-							<SelectItem value="breast-augmentation">
-								Breast Augmentation
-							</SelectItem>
-							<SelectItem value="lip-enhancement">Lip Enhancement</SelectItem>
-							<SelectItem value="full-facial-volumization">
-								Full Facial Volumization
-							</SelectItem>
-							<SelectItem value="hair-transplant">Hair Transplant</SelectItem>
-							<SelectItem value="dental-veneers">Dental Veneers</SelectItem>
-							<SelectItem value="lasik">LASIK & Vision Correction</SelectItem>
+							<SelectItem value="all">{t("doctors.allTitles")}</SelectItem>
+							{isTitlesLoading && titles.length === 0 ? (
+								<div className="py-2 px-3 text-center small text-muted-foreground">
+									{t("doctors.loading")}
+								</div>
+							) : (
+								titles.map((docTitle) => (
+									<SelectItem key={docTitle} value={docTitle}>
+										{docTitle}
+									</SelectItem>
+								))
+							)}
 						</SelectContent>
 					</Select>
 				</div>
 
-				<Button className="min-w-50" type="submit">
+				{/* Filter Submit Button */}
+				<Button className="min-w-36" type="submit">
 					<ListFilter className="size-4" />
-					<span>Filter Team</span>
+					<span>{t("doctors.filterButton")}</span>
 				</Button>
+
+				{/* Reset Button */}
+				{hasActiveFilters && (
+					<Button
+						type="button"
+						variant="ghost"
+						onClick={handleReset}
+						className="shrink-0"
+					>
+						<RotateCcw className="size-4" />
+						<span>{t("doctors.resetButton")}</span>
+					</Button>
+				)}
 			</form>
 		</div>
 	);
 }
+
+export default DoctorsFilter;

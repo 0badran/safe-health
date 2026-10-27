@@ -3,32 +3,101 @@ import { AboutIntro } from "@/components/about/about-intro";
 import { AboutPhilosophy } from "@/components/about/about-philosophy";
 import { AboutApproach } from "@/components/about/about-approach";
 import { AboutExpertise } from "@/components/about/about-expertise";
+import { AboutPersonalized } from "@/components/about/about-personalized";
+import { TrustCirclesSection } from "@/components/home/trust-circles-section";
 import { PageHeader } from "@/components/shared/page-header";
-import AboutPersonalized from "@/components/about/about-personalized";
-import TrustCirclesSection from "@/components/home/trust-circles-section";
+import { FooterCta } from "@/components/shared/footer-cta";
+import { FadeIn } from "@/components/shared/fade-in";
+import { fetchData, getSeoMetadata } from "@/lib/api";
+import type { AboutPageResponse } from "@/types/about";
 
-export const metadata: Metadata = {
-	title: "من نحن | Safe Health للرعاية الطبية والحلول الصحية",
-	description:
-		"تعرف على Safe Health ورؤيتنا في تقديم منظومة رعاية صحية ذكية ومتكاملة بإشراف نخبة من كبار الاستشاريين والأطباء المعتمدين.",
-};
+export const instant = false;
 
-export default function AboutPage() {
+interface PageProps {
+	params: Promise<{ locale: string }>;
+}
+
+async function getAboutPage(lang?: string) {
+	try {
+		const json = await fetchData<AboutPageResponse>({
+			route: "/pages/about-us",
+			lang,
+		});
+		return json?.data || null;
+	} catch {
+		return null;
+	}
+}
+
+export async function generateMetadata({
+	params,
+}: PageProps): Promise<Metadata> {
+	const { locale } = await params;
+	const page = await getAboutPage(locale);
+	return getSeoMetadata(page?.seo, page?.title);
+}
+
+export default async function AboutPage({ params }: PageProps) {
+	const { locale } = await params;
+	const page = await getAboutPage(locale);
+	const sections = page?.sections;
+	const hero = sections?.["about-hero"];
+	const bottomFeatures = sections?.["global-reach"]?.bottom_feature_card;
+	const ctaData = sections?.["consultation-cta"];
+
 	return (
 		<main className="flex flex-col flex-1">
-			<PageHeader
-				badge="ABOUT US"
-				title="Beauty, Health, Without Borders."
-				description="We welcome patients from around the world, combining advanced aesthetic treatments, personalized care, and a seamless medical tourism experience."
-			/>
+			{hero && (
+				<PageHeader
+					badge={hero.tag_text}
+					title={hero.headline}
+					description={hero.description}
+				/>
+			)}
+
 			<div className="container space-y-14 sm:space-y-18 lg:space-y-25">
-				<AboutIntro />
-				<AboutPhilosophy />
-				<AboutApproach />
-				<AboutExpertise />
-				<AboutPersonalized />
-				<TrustCirclesSection />
+				{sections?.["about-overview"] && (
+					<FadeIn>
+						<AboutIntro data={sections["about-overview"]} />
+					</FadeIn>
+				)}
+
+				{sections?.["guiding-philosophy"] && (
+					<FadeIn>
+						<AboutPhilosophy data={sections["guiding-philosophy"]} />
+					</FadeIn>
+				)}
+
+				{sections?.["approach-to-care"] && (
+					<FadeIn>
+						<AboutApproach data={sections["approach-to-care"]} />
+					</FadeIn>
+				)}
+
+				{sections?.["our-expertise"] && (
+					<FadeIn>
+						<AboutExpertise data={sections["our-expertise"]} />
+					</FadeIn>
+				)}
+
+				{sections?.["global-reach"] && (
+					<FadeIn>
+						<AboutPersonalized data={sections["global-reach"]} />
+					</FadeIn>
+				)}
+
+				{bottomFeatures && bottomFeatures.length > 0 && (
+					<FadeIn>
+						<TrustCirclesSection features={bottomFeatures} />
+					</FadeIn>
+				)}
 			</div>
+
+			{ctaData && (
+				<div className="container mt-14 sm:mt-18 lg:mt-25">
+					<FooterCta data={ctaData} />
+				</div>
+			)}
 		</main>
 	);
 }

@@ -4,6 +4,7 @@ import React from "react";
 import { useSearchParams } from "next/navigation";
 import { BlogCard } from "@/components/blogs/blog-card";
 import { BlogCardSkeletonGrid } from "@/components/blogs/skeletons";
+import { BlogsFilter } from "@/components/blogs/blogs-filter";
 import AppPagination from "@/components/shared/app-pagination";
 import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
@@ -12,7 +13,12 @@ import type { BlogsApiResponse } from "@/types/blogs";
 export function BlogsList() {
 	const { t } = useTranslation();
 	const searchParams = useSearchParams();
-	const current_page = Number(searchParams.get("page")) || 1;
+
+	const page = Number(searchParams.get("page")) || 1;
+	const search = searchParams.get("search") || undefined;
+	const published_after = searchParams.get("published_after") || undefined;
+	const published_before = searchParams.get("published_before") || undefined;
+	const sort = searchParams.get("sort") || undefined;
 
 	const {
 		data: apiResponse,
@@ -20,7 +26,14 @@ export function BlogsList() {
 		isError,
 	} = useFetchData<BlogsApiResponse>({
 		route: "/blogs",
-		params: { page: String(current_page) },
+		params: {
+			page: String(page),
+			per_page: "15",
+			search,
+			published_after,
+			published_before,
+			sort,
+		},
 	});
 
 	const blogs = apiResponse?.data ?? [];
@@ -28,6 +41,8 @@ export function BlogsList() {
 
 	return (
 		<div id="blogs-list" className="w-full">
+			<BlogsFilter className="mb-8 lg:mb-10" />
+
 			{/* Loading State: Skeletons using Shadcn */}
 			{isLoading && <BlogCardSkeletonGrid count={6} />}
 

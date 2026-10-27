@@ -7,7 +7,7 @@ import { fetchData } from "@/lib/api";
 import type { SettingsApiResponse } from "@/types/settings";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
-import { setRequestLocale, getMessages } from "next-intl/server";
+import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 
 export const instant = false;
@@ -83,12 +83,12 @@ export default async function LocaleLayout({
 		notFound();
 	}
 
-	setRequestLocale(locale);
 	const messages = await getMessages();
 	const direction = locale === "ar" ? "rtl" : "ltr";
 
 	return (
 		<html
+			data-scroll-behavior="smooth"
 			lang={locale}
 			dir={direction}
 			suppressHydrationWarning

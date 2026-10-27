@@ -1,63 +1,69 @@
-import { Globe, MapPin, ShieldCheck } from "lucide-react";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import SectionHeader from "../shared/section-header";
 import Image from "next/image";
 import { Card } from "../ui/card";
-export const featuresData = [
-	{
-		id: 1,
-		title: "Dedicated Multilingual Care Liaisons",
-		description:
-			"Native coordinators supporting English, French, German, Arabic, and Japanese patients through every stage of scheduling and travel.",
-		icon: <Globe className="w-6 h-6 text-secondary" />,
-	},
-	{
-		id: 2,
-		title: "International Patient Advocacy & Secure Records",
-		description:
-			"End-to-end encrypted medical data sharing adhering rigorously to international privacy frameworks.",
-		icon: <ShieldCheck className="w-6 h-6 text-secondary" />,
-	},
-	{
-		id: 3,
-		title: "Direct Consultation & Cross-Border Case Review",
-		description:
-			"Preliminary virtual evaluations with the operating surgeon prior to confirming international flight arrangements.",
-		icon: <MapPin className="w-6 h-6 text-secondary" />,
-	},
-];
-export default function AboutPersonalized() {
+import type { GlobalReachSection } from "@/types/about";
+
+export interface AboutPersonalizedProps {
+	data?: GlobalReachSection;
+}
+
+export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
+	if (!data) return null;
+
+	const features = data.feature_card ?? [];
+
 	return (
 		<section>
-			<SectionHeader
-				title="Personalized Care, Beyond Borders."
-				subTitle="OUR GLOBAL REACH"
-				desc="We welcome patients from different parts of the world, helping them
-explore aesthetic treatment options and access personalized healthcare with confidence."
-			/>
+			{data.headline && (
+				<SectionHeader
+					title={data.headline}
+					subTitle={data.tag_text}
+					desc={data.description}
+				/>
+			)}
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14">
-				<div className="flex flex-col gap-4">
-					{featuresData.map((item) => (
-						<Card key={item.id} className="flex-row px-4 shadow-md">
-							<div className="bg-secondary/10 size-12 rounded-full flex items-center justify-center shrink-0">
-								{item.icon}
-							</div>
-							<div>
-								<h3 className="font-heading h5 mb-1">
-									{item.title}
-								</h3>
-								<p className="text-paragraph small leading-relaxed">
-									{item.description}
-								</p>
-							</div>
-						</Card>
-					))}
-				</div>
+				{features.length > 0 && (
+					<div className="flex flex-col gap-4">
+						{features.map((item, index) => (
+							<Card
+								key={item.title || index}
+								className="flex-row px-4 shadow-md"
+							>
+								{item.icon && (
+									<div className="bg-secondary/10 size-12 rounded-full flex items-center justify-center shrink-0">
+										{typeof item.icon === "string" ? (
+											<div className="relative size-6">
+												<Image
+													src={item.icon}
+													alt={item.title}
+													fill
+													className="object-contain"
+												/>
+											</div>
+										) : (
+											item.icon
+										)}
+									</div>
+								)}
+								<div>
+									<h3 className="font-heading h5 mb-1">{item.title}</h3>
+									<p className="text-paragraph small leading-relaxed">
+										{item.description}
+									</p>
+								</div>
+							</Card>
+						))}
+					</div>
+				)}
 
+				{/* Map Image with FallbackImage */}
 				<div className="relative aspect-4/3 w-full overflow-hidden">
-					<Image
-						src="/images/global-flight.png"
-						alt="Advanced aesthetic treatment at SafeHealthMe"
+					<FallbackImage
+						src={data.map_image}
+						fallbackSrc="/images/global-flight.png"
+						alt={data.headline || "Global patient reach at SafeHealthMe"}
 						fill
 						priority
 						sizes="(max-width: 1024px) 100vw, 50vw"
@@ -68,3 +74,5 @@ explore aesthetic treatment options and access personalized healthcare with conf
 		</section>
 	);
 }
+
+export default AboutPersonalized;

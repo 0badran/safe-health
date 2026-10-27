@@ -16,10 +16,7 @@ export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 export interface FetchOptions<TVariables = any> {
 	route: string;
 	lang?: string;
-	params?: Record<
-		string,
-		string | number | boolean | undefined | null
-	>;
+	params?: Record<string, string | number | boolean | undefined | null>;
 	headers?: Record<string, string>;
 	method?: HttpMethod;
 	body?: TVariables;
@@ -64,9 +61,26 @@ export function buildEndpoint(
 		: `${baseUrl}${normalizedRoute}`;
 }
 
+async function resolveLang(explicitLang?: string): Promise<string> {
+	if (explicitLang) {
+		return explicitLang;
+	}
+
+	if (typeof window !== "undefined") {
+		return document.documentElement.lang || "en";
+	}
+
+	try {
+		const { getLocale } = await import("next-intl/server");
+		return (await getLocale()) || "en";
+	} catch {
+		return "en";
+	}
+}
+
 export async function fetchData<TData = any, TVariables = any>({
 	route,
-	lang = "en",
+	lang,
 	params,
 	headers,
 	method = "GET",
@@ -78,13 +92,14 @@ export async function fetchData<TData = any, TVariables = any>({
 		throw new Error("Route is required for fetching data.");
 	}
 
+	const resolvedLang = await resolveLang(lang);
 	const endpoint = buildEndpoint(route, params);
 	const isFormData =
 		typeof FormData !== "undefined" && body instanceof FormData;
 
 	const requestHeaders: Record<string, string> = {
 		Accept: "application/json",
-		"Accept-Language": lang,
+		"Accept-Language": resolvedLang,
 		...headers,
 	};
 

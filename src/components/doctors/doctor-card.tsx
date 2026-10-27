@@ -1,20 +1,26 @@
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { SectionBadge } from "@/components/shared/section-badge";
+import { FallbackImage } from "@/components/shared/fallback-image";
+import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import type { DoctorItem } from "@/types/doctors";
 
 export interface DoctorData {
-	id: string;
+	id: string | number;
 	name: string;
-	specialty: string;
-	experience: string;
-	image: string;
-	description: string;
-	procedures: string[];
+	specialty?: string;
+	title?: string;
+	experience?: string;
+	experience_years?: number;
+	image?: string | null;
+	description?: string;
+	bio?: string;
+	procedures?: string[];
+	specialties?: string[];
 }
 
 export interface DoctorCardProps {
-	doctor: DoctorData;
+	doctor: DoctorItem | DoctorData;
 	flip?: boolean;
 	className?: string;
 }
@@ -24,6 +30,18 @@ export function DoctorCard({
 	flip = false,
 	className,
 }: DoctorCardProps) {
+	const { t } = useTranslation();
+
+	const displayTitle = doctor?.title;
+
+	const displayBio = doctor?.bio;
+
+	const displaySpecialties = doctor?.specialties ?? [];
+
+	const displayExperience = doctor?.experience_years
+		? `${doctor.experience_years}+ ${t("doctors.yearsExperience")}`
+		: undefined;
+
 	return (
 		<section
 			aria-label={`Profile of ${doctor?.name}`}
@@ -42,16 +60,18 @@ export function DoctorCard({
 						: "md:order-1 md:items-end md:text-end items-start text-start",
 				)}
 			>
-				{/* Specialty Pill Badge */}
-				<SectionBadge
-					withoutIcon
-					className={cn(
-						"text-primary font-semibold",
-						flip ? "self-start" : "md:self-end self-start",
-					)}
-				>
-					{doctor.specialty}
-				</SectionBadge>
+				{/* Specialty / Title Pill Badge */}
+				{displayTitle && (
+					<SectionBadge
+						withoutIcon
+						className={cn(
+							"text-primary font-semibold",
+							flip ? "self-start" : "md:self-end self-start",
+						)}
+					>
+						{displayTitle}
+					</SectionBadge>
+				)}
 
 				{/* Doctor Name Heading */}
 				<h2 className="font-heading italic h3 text-primary leading-tight">
@@ -59,36 +79,40 @@ export function DoctorCard({
 				</h2>
 
 				{/* Doctor Philosophy & Approach Description */}
-				<p className="text-paragraph leading-relaxed max-w-xl">
-					{doctor.description}
-				</p>
+				{displayBio && (
+					<p className="text-paragraph leading-relaxed max-w-xl">
+						{displayBio}
+					</p>
+				)}
 
-				{/* Specialized Procedures List */}
-				<div
-					className={cn(
-						"space-y-3 flex flex-col w-full",
-						flip ? "items-start" : "md:items-end items-start",
-					)}
-				>
-					<h4 className="small font-semibold uppercase tracking-wider">
-						SPECIALIZED PROCEDURES:
-					</h4>
+				{/* Specialized Procedures / Specialties List */}
+				{displaySpecialties.length > 0 && (
 					<div
 						className={cn(
-							"flex flex-wrap gap-2 sm:gap-2.5",
-							flip ? "justify-start" : "md:justify-end justify-start",
+							"space-y-3 flex flex-col w-full",
+							flip ? "items-start" : "md:items-end items-start",
 						)}
 					>
-						{doctor.procedures.map((proc) => (
-							<span
-								key={proc}
-								className="rounded-full bg-purple-tint dark:bg-muted small text-primary px-4 py-2 border transition-colors"
-							>
-								{proc}
-							</span>
-						))}
+						<h4 className="small font-semibold uppercase tracking-wider">
+							{t("doctors.specialtiesHeading")}
+						</h4>
+						<div
+							className={cn(
+								"flex flex-wrap gap-2 sm:gap-2.5",
+								flip ? "justify-start" : "md:justify-end justify-start",
+							)}
+						>
+							{displaySpecialties.map((spec) => (
+								<span
+									key={spec}
+									className="rounded-full bg-purple-tint dark:bg-muted small text-primary px-4 py-2 border transition-colors"
+								>
+									{spec}
+								</span>
+							))}
+						</div>
 					</div>
-				</div>
+				)}
 
 				{/* Action Button Triggering Personalization */}
 				<div
@@ -100,9 +124,9 @@ export function DoctorCard({
 					<ConsultationDrawer
 						variant="default"
 						withArrow
-						title={`Personalized Consultation with ${doctor.name}`}
+						title={`${t("doctors.consultationTitle")} ${doctor.name}`}
 					>
-						Get Your Personalization
+						{t("doctors.getPersonalization")}
 					</ConsultationDrawer>
 				</div>
 			</div>
@@ -118,22 +142,25 @@ export function DoctorCard({
 				{/* Architectural Arch Background */}
 				<div className="relative">
 					{/* Floating Experience Badge */}
-					<div
-						className={cn(
-							"absolute top-1/2 lg:top-1/3 z-10 rounded-full bg-purple-tint dark:bg-muted px-4 py-1.5 small font-bold tracking-wider border select-none whitespace-nowrap",
-							flip ? "inset-s-0 lg:-inset-s-8" : "inset-e-0 lg:-inset-e-8",
-						)}
-					>
-						{doctor.experience}
-					</div>
+					{displayExperience && (
+						<div
+							className={cn(
+								"absolute top-1/2 lg:top-1/3 z-10 rounded-full bg-purple-tint dark:bg-muted px-4 py-1.5 small font-bold tracking-wider border select-none whitespace-nowrap",
+								flip ? "inset-s-0 lg:-inset-s-8" : "inset-e-0 lg:-inset-e-8",
+							)}
+						>
+							{displayExperience}
+						</div>
+					)}
 
-					{/* Doctor Cut-out Image */}
-					<Image
+					{/* Doctor Cut-out Image with Fallback */}
+					<FallbackImage
 						src={doctor.image}
+						fallbackSrc="/images/avatar.svg"
 						alt={doctor.name}
 						width={420}
 						height={480}
-						priority
+						preload
 						className="relative z-0 max-h-105 sm:max-h-115 w-auto object-contain object-bottom drop-shadow-sm select-none pointer-events-none"
 					/>
 				</div>

@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { useTranslation } from "@/lib/language-context";
 import type { HomeConsultationCtaSection } from "@/types/home";
 
@@ -18,16 +18,16 @@ export function FooterCta({ data }: FooterCtaProps = {}) {
 
 	const headline = data.headline;
 	const description = data.description;
-	const bgImage = data.background_image || "/images/transformation-banner.png";
 
 	return (
 		<section className="relative w-full py-5 lg:py-10 rounded-3xl overflow-hidden flex items-center translate-y-[7%] z-1">
-			{/* Background Poster Image */}
-			<Image
-				src={bgImage}
+			{/* Background Poster Image with Fallback */}
+			<FallbackImage
+				src={data.background_image}
+				fallbackSrc="/images/transformation-banner.png"
 				alt={headline}
 				fill
-				priority
+				preload
 				sizes="100vw"
 				className="object-cover object-[0_38%] pointer-events-none select-none"
 			/>

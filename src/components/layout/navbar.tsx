@@ -129,15 +129,10 @@ export function Navbar() {
 							priority
 						/>
 					</div>
-					{settings?.brand_name && (
-						<span className="hidden sm:inline-block font-heading font-bold text-base text-white pe-2">
-							{settings.brand_name}
-						</span>
-					)}
 				</Link>
 
 				{/* Desktop Navigation Links */}
-				<nav className="hidden xl:flex items-center gap-1 small font-medium">
+				<nav className="hidden xl:flex whitespace-nowrap items-center gap-1 small font-medium">
 					{navLinks.map((link) => {
 						const active = isActive(link.href);
 						return (
@@ -147,7 +142,7 @@ export function Navbar() {
 								aria-current={active ? "page" : undefined}
 								className={cn(
 									"relative rounded-full transition-all duration-200 select-none",
-									isScrolled ? "px-2.5 py-1" : "px-3 py-1.5",
+									isScrolled ? "px-2.5 py-1 text-xs" : "px-3 py-1.5",
 									active
 										? "text-white font-semibold"
 										: "text-white/85 hover:bg-white/10 hover:text-white",
