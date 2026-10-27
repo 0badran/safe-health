@@ -19,6 +19,7 @@ import Link from "next/link";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { cn } from "@/lib/utils";
+import useSettings from "@/hooks/use-settings";
 
 function subscribe(callback: () => void) {
 	window.addEventListener("scroll", callback, { passive: true });
@@ -48,6 +49,7 @@ function getHashServerSnapshot() {
 }
 
 export function Navbar() {
+	const { settings } = useSettings();
 	const { isRtl } = useLanguage();
 	const { t } = useTranslation();
 	const pathname = usePathname();
@@ -108,7 +110,7 @@ export function Navbar() {
 						: " bg-primary py-1",
 				)}
 			>
-				{/* Brand Logo from user provided asset */}
+				{/* Brand Logo from settings or fallback */}
 				<Link
 					href="/"
 					className="flex items-center gap-2.5 shrink-0 transition-opacity hover:opacity-90 select-none"
@@ -120,14 +122,19 @@ export function Navbar() {
 						)}
 					>
 						<Image
-							src="/images/logo.png"
-							alt="Safe Health Me"
+							src={settings?.logo || "/images/logo.png"}
+							alt={settings?.brand_name || ""}
 							fill
 							sizes="48px"
 							className="object-contain p-1 size-full"
 							priority
 						/>
 					</div>
+					{settings?.brand_name && (
+						<span className="hidden sm:inline-block font-heading font-bold text-base text-white pe-2">
+							{settings.brand_name}
+						</span>
+					)}
 				</Link>
 
 				{/* Desktop Navigation Links */}
@@ -198,15 +205,15 @@ export function Navbar() {
 								<SheetTitle className="flex items-center gap-2.5 text-white">
 									<div className="relative size-9 overflow-hidden rounded-lg bg-white/10 p-0.5 ring-1 ring-white/20">
 										<Image
-											src="/images/logo.png"
-											alt="Safe Health Me"
+											src={settings?.logo || "/images/logo.png"}
+											alt={settings?.brand_name || ""}
 											fill
 											sizes="36px"
 											className="object-contain"
 										/>
 									</div>
 									<span className="font-heading font-bold text-lg text-white">
-										SafeHealth<span className="text-secondary">.me</span>
+										{settings?.brand_name || "SafeHealth.me"}
 									</span>
 								</SheetTitle>
 							</SheetHeader>

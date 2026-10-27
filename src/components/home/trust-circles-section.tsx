@@ -193,11 +193,11 @@ export function TrustCirclesSection({
 		<section className="w-full grid grid-cols-2 xl:w-[80%] max-sm:gap-2 sm:flex justify-items-center items-center  sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-5 sm:rtl:space-x-5">
 			{features.map((item, index) => (
 				<div
-					key={item.id}
-					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bdorder border-dadshed border-secondary/50 bg-backgrosdund/50 backddrop-blur-xs p-2 text-center overflow-hidden w-full  sm:w-1/4"
+					key={item.id ?? item.title ?? index}
+					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full border border-dashed border-secondary/50 bg-background/50 backdrop-blur-xs p-2 text-center overflow-hidden w-full sm:w-1/4"
 				>
 					<svg
-						className="absolute inset-0 w-full h-full"
+						className="absolute inset-0 size-full"
 						viewBox="0 0 100 100"
 						fill="none"
 					>
@@ -205,11 +205,11 @@ export function TrustCirclesSection({
 							<linearGradient id={`g${index}`} x1="0" y1="0" x2="1" y2="1">
 								<stop
 									offset="0%"
-									stop-color={index % 2 === 0 ? "var(--secondary)" : "#fff"}
+									stopColor={index % 2 === 0 ? "var(--secondary)" : "#fff"}
 								/>
 								<stop
 									offset="100%"
-									stop-color={index % 2 === 0 ? "#fff" : "var(--secondary)"}
+									stopColor={index % 2 === 0 ? "#fff" : "var(--secondary)"}
 								/>
 							</linearGradient>
 						</defs>
@@ -218,8 +218,8 @@ export function TrustCirclesSection({
 							cy="50"
 							r="49"
 							stroke={`url(#g${index})`}
-							stroke-width="0.4"
-							stroke-dasharray="2 1.5"
+							strokeWidth="0.4"
+							strokeDasharray="2 1.5"
 						/>
 					</svg>
 

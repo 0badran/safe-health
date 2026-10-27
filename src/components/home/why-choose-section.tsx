@@ -1,9 +1,12 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "../shared/section-header";
 import type { HomeWhyChooseSection } from "@/types/home";
+import { useTranslation } from "@/lib/language-context";
 
 export interface CardOverlayProps {
 	title: string;
@@ -31,6 +34,8 @@ export interface WhyChooseSectionProps {
 }
 
 export function WhyChooseSection({ data }: WhyChooseSectionProps = {}) {
+	const { t } = useTranslation();
+
 	if (!data || !data.headline) return null;
 
 	const title = data.headline;
@@ -61,7 +66,7 @@ export function WhyChooseSection({ data }: WhyChooseSectionProps = {}) {
 
 					<Link href="/about" className="w-fit">
 						<Button variant="outline" size="default" withArrow>
-							Learn About Us
+							{t("navbar.aboutUs")}
 						</Button>
 					</Link>
 				</div>

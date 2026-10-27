@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import { Fragment } from "react";
 import { SectionBadge } from "@/components/shared/section-badge";
-import { Button } from "@/components/ui/button";
+import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { NaturalResultsIcon, PersonalizedCareIcon } from "@/components/icons";
+import { useTranslation } from "@/lib/language-context";
 import type { HomeCoreSpecialtySection } from "@/types/home";
 
 export interface RhinoplastySectionProps {
@@ -37,6 +39,8 @@ function renderFeatureIcon(
 }
 
 export function RhinoplastySection({ data }: RhinoplastySectionProps = {}) {
+	const { t } = useTranslation();
+
 	if (!data || !data.headline) return null;
 
 	const tagText = data.tag_text;
@@ -63,11 +67,11 @@ export function RhinoplastySection({ data }: RhinoplastySectionProps = {}) {
 					</p>
 				)}
 
-				<Link href="/about" className="w-fit">
-					<Button variant="outline" size="default" withArrow>
-						Get a Free Consultation
-					</Button>
-				</Link>
+				<div className="w-fit">
+					<ConsultationDrawer variant="outline" withArrow>
+						{t("navbar.getConsultation")}
+					</ConsultationDrawer>
+				</div>
 			</div>
 
 			{/* Center Column: Arched Profile Photo */}

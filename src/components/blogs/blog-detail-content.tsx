@@ -1,19 +1,24 @@
 "use client";
 
-import { ArticleDetailSkeleton } from "@/components/articles/skeletons";
+import { BlogDetailSkeleton } from "@/components/blogs/skeletons";
 import { PageHero } from "@/components/shared/page-hero";
 import { Button } from "@/components/ui/button";
 import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
-import type { SingleBlogApiResponse } from "@/types/blogs";
+import type { BlogItem, SingleBlogApiResponse } from "@/types/blogs";
 import { ArrowRightIcon, CalendarIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Suspense, use } from "react";
 
-function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
-	const resolvedParams = use(params);
-	const slug = resolvedParams.slug;
+export interface BlogDetailContentProps {
+	slug: string;
+	initialBlog?: BlogItem | null;
+}
+
+export function BlogDetailContent({
+	slug,
+	initialBlog,
+}: BlogDetailContentProps) {
 	const { t } = useTranslation();
 
 	const {
@@ -22,32 +27,39 @@ function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
 		isError,
 	} = useFetchData<SingleBlogApiResponse>({
 		route: `/blogs/${slug}`,
+		initialData: initialBlog
+			? {
+					key: "success",
+					message: "success",
+					data: initialBlog,
+				}
+			: undefined,
 	});
 
-	const article = apiResponse?.data;
+	const blog = apiResponse?.data ?? initialBlog;
 
-	if (isLoading) {
-		return <ArticleDetailSkeleton />;
+	if (isLoading && !blog) {
+		return <BlogDetailSkeleton />;
 	}
 
-	if (isError || !article) {
+	if (isError || !blog) {
 		return (
 			<main className="flex flex-col flex-1">
 				<PageHero
-					title={t("articles.notFoundTitle")}
+					title={t("blogs.notFoundTitle")}
 					breadcrumbs={[
-						{ label: t("articles.title"), href: "/articles" },
-						{ label: t("articles.error") },
+						{ label: t("blogs.title"), href: "/blogs" },
+						{ label: t("blogs.error") },
 					]}
 				/>
 				<div className="container max-w-4xl px-4 py-20 text-center space-y-4">
 					<p className="small text-muted-foreground">
-						{t("articles.notFoundDesc")}
+						{t("blogs.notFoundDesc")}
 					</p>
 					<Button asChild variant="default">
-						<Link href="/articles" className="gap-2">
+						<Link href="/blogs" className="gap-2">
 							<ArrowRightIcon className="size-4 rtl:rotate-180" />
-							<span className="small">{t("articles.backToArticles")}</span>
+							<span className="small">{t("blogs.backToBlogs")}</span>
 						</Link>
 					</Button>
 				</div>
@@ -57,27 +69,27 @@ function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
 
 	return (
 		<main className="flex flex-col flex-1">
-			{/* Hero Banner with Article Title and Breadcrumbs */}
+			{/* Hero Banner with Blog Title and Breadcrumbs */}
 			<PageHero
-				title={article.title}
-				imageSrc={article.image_url || undefined}
+				title={blog.title}
+				imageSrc={blog.image_url || undefined}
 				breadcrumbs={[
-					{ label: t("articles.title"), href: "/articles" },
-					{ label: article.title },
+					{ label: t("blogs.title"), href: "/blogs" },
+					{ label: blog.title },
 				]}
 			/>
 
 			<article className="container max-w-4xl px-4 sm:px-6 py-12 md:py-16 space-y-8">
 				{/* Metadata & Author Bar - Only real available data */}
-				{(article.author_name || article.published_at) && (
+				{(blog.author_name || blog.published_at) && (
 					<div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-border">
-						{article.author_name && (
+						{blog.author_name && (
 							<div className="flex items-center gap-3">
 								<div className="relative size-10 rounded-full overflow-hidden border bg-muted flex items-center justify-center shrink-0">
-									{article.author_image ? (
+									{blog.author_image ? (
 										<Image
-											src={article.author_image}
-											alt={article.author_name}
+											src={blog.author_image}
+											alt={blog.author_name}
 											fill
 											sizes="40px"
 											className="object-cover"
@@ -87,26 +99,26 @@ function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
 									)}
 								</div>
 								<span className="small font-bold text-foreground">
-									{article.author_name}
+									{blog.author_name}
 								</span>
 							</div>
 						)}
 
-						{article.published_at && (
+						{blog.published_at && (
 							<div className="flex items-center gap-1.5 small text-muted-foreground">
 								<CalendarIcon className="size-3.5 text-primary" />
-								<span>{article.published_at}</span>
+								<span>{blog.published_at}</span>
 							</div>
 						)}
 					</div>
 				)}
 
-				{/* Article Cover Image - Only displayed if real image_url exists */}
-				{article.image_url && (
+				{/* Blog Cover Image - Only displayed if real image_url exists */}
+				{blog.image_url && (
 					<div className="relative aspect-video w-full rounded-2xl overflow-hidden shadow-sm bg-muted">
 						<Image
-							src={article.image_url}
-							alt={article.title}
+							src={blog.image_url}
+							alt={blog.title}
 							fill
 							priority
 							sizes="(max-width: 1024px) 100vw, 896px"
@@ -115,19 +127,19 @@ function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
 					</div>
 				)}
 
-				{/* Article Body Content */}
-				{article.content && (
+				{/* Blog Body Content */}
+				{blog.content && (
 					<div className="prose prose-lg dark:prose-invert max-w-none text-paragraph leading-relaxed whitespace-pre-line">
-						{article.content}
+						{blog.content}
 					</div>
 				)}
 
-				{/* Back to Articles Button */}
+				{/* Back to Blogs Button */}
 				<div className="pt-8 border-t border-border flex justify-start">
 					<Button asChild variant="outline">
-						<Link href="/articles" className="gap-2">
+						<Link href="/blogs" className="gap-2">
 							<ArrowRightIcon className="size-4 rtl:rotate-0 rotate-180" />
-							<span className="small">{t("articles.backToAll")}</span>
+							<span className="small">{t("blogs.backToAll")}</span>
 						</Link>
 					</Button>
 				</div>
@@ -136,14 +148,4 @@ function ArticleContent({ params }: { params: Promise<{ slug: string }> }) {
 	);
 }
 
-export default function ArticleDetailPage({
-	params,
-}: {
-	params: Promise<{ slug: string }>;
-}) {
-	return (
-		<Suspense fallback={<ArticleDetailSkeleton />}>
-			<ArticleContent params={params} />
-		</Suspense>
-	);
-}
+export default BlogDetailContent;

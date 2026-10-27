@@ -4,15 +4,15 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/lib/language-context";
 
-export function ArticleDetailSkeleton() {
+export function BlogDetailSkeleton() {
 	const { t } = useTranslation();
 
 	return (
 		<main className="flex flex-col flex-1">
 			<PageHero
-				title={t("articles.loading")}
+				title={t("blogs.loading")}
 				breadcrumbs={[
-					{ label: t("articles.title"), href: "/articles" },
+					{ label: t("blogs.title"), href: "/blogs" },
 					{ label: "..." },
 				]}
 			/>
@@ -42,5 +42,4 @@ export function ArticleDetailSkeleton() {
 	);
 }
 
-export default ArticleDetailSkeleton;
-
+export default BlogDetailSkeleton;

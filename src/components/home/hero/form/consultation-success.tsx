@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/language-context";
 import { CheckCircle2Icon, RotateCcwIcon } from "lucide-react";
 
 interface ConsultationSuccessProps {
@@ -8,8 +11,10 @@ interface ConsultationSuccessProps {
 
 export function ConsultationSuccess({
 	onReset,
-	message = "Thank you! We'll be in touch soon.",
+	message,
 }: ConsultationSuccessProps) {
+	const { t } = useTranslation();
+
 	return (
 		<div className="relative py-12 px-4 flex flex-col items-center justify-center text-center gap-4 animate-in fade-in zoom-in-95 duration-300">
 			<div className="size-16 rounded-full bg-primary/10 text-primary flex items-center justify-center shadow-inner">
@@ -18,10 +23,10 @@ export function ConsultationSuccess({
 
 			<div className="space-y-1.5 max-w-sm">
 				<h3 className="h4 font-semibold text-primary font-heading">
-					{message}
+					{message ?? t("consultation.successTitle")}
 				</h3>
 				<p className="small text-muted-foreground leading-relaxed font-sans">
-					Our medical coordination team will review your details and reach out within 2 hours with available appointment times and options.
+					{t("consultation.successMessage")}
 				</p>
 			</div>
 
@@ -33,7 +38,7 @@ export function ConsultationSuccess({
 					className="mt-2 text-secondary hover:text-secondary"
 				>
 					<RotateCcwIcon className="size-3.5" />
-					<span className="small">Submit another request</span>
+					<span className="small">{t("consultation.sendAnother")}</span>
 				</Button>
 			)}
 		</div>

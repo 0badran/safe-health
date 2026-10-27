@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
-export function ArticleCardSkeleton({ className }: { className?: string }) {
+export function BlogCardSkeleton({ className }: { className?: string }) {
 	return (
 		<div
 			className={cn(
@@ -39,14 +39,14 @@ export function ArticleCardSkeleton({ className }: { className?: string }) {
 	);
 }
 
-export function ArticleCardSkeletonGrid({ count = 6 }: { count?: number }) {
+export function BlogCardSkeletonGrid({ count = 6 }: { count?: number }) {
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{Array.from({ length: count }).map((_, i) => (
-				<ArticleCardSkeleton key={i} />
+				<BlogCardSkeleton key={i} />
 			))}
 		</div>
 	);
 }
 
-export default ArticleCardSkeleton;
+export default BlogCardSkeleton;

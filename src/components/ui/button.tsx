@@ -24,6 +24,8 @@ const buttonVariants = cva(
 				teal: "bg-[#159BA8] text-white hover:bg-[#128a96] shadow-sm active:scale-[0.99]",
 				"nav-white":
 					"bg-white text-secondary hover:bg-white/95 rounded-full font-semibold shadow-sm active:scale-[0.99]",
+				"outline-white":
+					"border border-white text-white bg-transparent shadow-xs active:scale-[0.99] before:pointer-events-none before:content-[''] before:absolute before:-z-10 before:top-1/2 before:left-0 before:-translate-y-1/2 before:-translate-x-1/2 before:aspect-square before:w-[300%] before:rounded-full before:bg-white before:scale-0 before:transition-transform before:duration-700 before:ease-out hover:before:scale-100 hover:text-primary transition-colors duration-700",
 			},
 			size: {
 				default:
@@ -42,6 +44,8 @@ const arrowBgVariants: Record<string, string> = {
 	default:
 		"bg-primary-foreground text-primary group-hover/button:bg-primary group-hover/button:text-primary-foreground transition-colors duration-300",
 	secondary: "bg-primary text-background",
+	"outline-white":
+		"bg-white text-primary group-hover/button:bg-primary group-hover/button:text-white transition-colors duration-300",
 	outline:
 		"bg-primary text-primary-foreground group-hover/button:bg-background group-hover/button:text-primary transition-colors duration-300",
 	ghost: "bg-muted text-foreground",

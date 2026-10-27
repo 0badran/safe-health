@@ -20,10 +20,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import useMutateData from "@/hooks/use-mutate-data";
+import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { COUNTRIES, DEFAULT_FORM_VALUES } from "./constants";
@@ -46,6 +46,7 @@ export function ConsultationForm({
 	description,
 	onSuccess,
 }: ConsultationFormProps) {
+	const { t } = useTranslation();
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const { mutateAsync, isPending: isSubmitting } = useMutateData({
 		route: "/contact",
@@ -91,10 +92,10 @@ export function ConsultationForm({
 			<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
 				<header className="space-y-1.5">
 					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
-						{title}
+						{title ?? t("consultation.title")}
 					</h2>
 					<p className="mt-2 small md:leading-5.5 text-foreground/80 font-sans">
-						{description}
+						{description ?? t("consultation.subtitle")}
 					</p>
 				</header>
 
@@ -114,7 +115,7 @@ export function ConsultationForm({
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none ">
-											<span>Full name</span>
+											<span>{t("consultation.fullName")}</span>
 											<span
 												className="text-primary font-bold"
 												aria-hidden="true"
@@ -127,7 +128,7 @@ export function ConsultationForm({
 												{...field}
 												type="text"
 												disabled={isSubmitting}
-												placeholder="Alex Morgan"
+												placeholder={t("consultation.fullNamePlaceholder")}
 												autoComplete="name"
 												className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 											/>
@@ -145,7 +146,7 @@ export function ConsultationForm({
 									render={({ field }) => (
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
-												<span>Email address</span>
+												<span>{t("consultation.email")}</span>
 												<span
 													className="text-primary font-bold"
 													aria-hidden="true"
@@ -158,7 +159,7 @@ export function ConsultationForm({
 													{...field}
 													type="email"
 													disabled={isSubmitting}
-													placeholder="alex@example.com"
+													placeholder={t("consultation.emailPlaceholder")}
 													autoComplete="email"
 													className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 												/>
@@ -174,14 +175,14 @@ export function ConsultationForm({
 									render={({ field }) => (
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-												Phone / WhatsApp
+												{t("consultation.phone")}
 											</FormLabel>
 											<FormControl>
 												<Input
 													{...field}
 													type="tel"
 													disabled={isSubmitting}
-													placeholder="+90 532 123 45 67"
+													placeholder={t("consultation.phonePlaceholder")}
 													autoComplete="tel"
 													className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 												/>
@@ -199,7 +200,7 @@ export function ConsultationForm({
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-											Country
+											{t("consultation.country")}
 										</FormLabel>
 										<Select
 											onValueChange={field.onChange}
@@ -208,7 +209,7 @@ export function ConsultationForm({
 										>
 											<FormControl>
 												<SelectTrigger className="h-9 md:h-10.5 rounded-xl bg-card border-input small">
-													<SelectValue placeholder="Which country are you from?" />
+													<SelectValue placeholder={t("consultation.countryPlaceholder")} />
 												</SelectTrigger>
 											</FormControl>
 											<SelectContent>
@@ -231,13 +232,13 @@ export function ConsultationForm({
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none	">
-											Message
+											{t("consultation.message")}
 										</FormLabel>
 										<FormControl>
 											<Textarea
 												{...field}
 												disabled={isSubmitting}
-												placeholder="Tell us about the treatment you are considering."
+												placeholder={t("consultation.messagePlaceholder")}
 												rows={3}
 												className="min-h-24 rounded-xl bg-card border-input py-3 resize-none small"
 											/>
@@ -263,15 +264,7 @@ export function ConsultationForm({
 												/>
 											</FormControl>
 											<span className="small leading-normal text-foreground font-sans">
-												I agree to be contacted about this request. See our{" "}
-												<Link
-													href="/privacy"
-													className="underline underline-offset-4 hover:text-primary transition-colors"
-													onClick={(e) => e.stopPropagation()}
-												>
-													Privacy Policy
-												</Link>
-												. <span className="text-primary font-bold">*</span>
+												{t("consultation.agreement")}
 											</span>
 										</label>
 										<FormMessage className="small text-destructive font-sans ps-7 animate-in fade-in slide-in-from-top-1 duration-150" />
@@ -289,7 +282,7 @@ export function ConsultationForm({
 										disabled={isSubmitting}
 										className="w-full sm:w-auto"
 									>
-										{isSubmitting ? "Sending..." : "Send  request"}
+										{isSubmitting ? t("consultation.sending") : t("consultation.send")}
 									</Button>
 								</div>
 							</div>

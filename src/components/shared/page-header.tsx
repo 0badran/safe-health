@@ -5,18 +5,18 @@ import { SectionBadge } from "@/components/shared/section-badge";
 import { useTranslation } from "@/lib/language-context";
 
 interface PageHeaderProps {
-	badge: string;
-	title: string;
-	description: string;
+	badge?: string;
+	title?: string;
+	description?: string;
 	badgeKey?: string;
 	titleKey?: string;
 	descriptionKey?: string;
 }
 
 export function PageHeader({
-	badge,
-	title,
-	description,
+	badge = "",
+	title = "",
+	description = "",
 	badgeKey,
 	titleKey,
 	descriptionKey,
