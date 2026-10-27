@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { I18nextProvider, useTranslation } from "react-i18next";
-import i18n from "@/lib/i18n";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { DirectionProvider } from "@/components/ui/direction";
 
 export type LanguageCode = "ar" | "en" | "fr";
@@ -30,33 +30,23 @@ const AVAILABLE_LANGUAGES: {
 	{ code: "fr", label: "Français", flag: "🇫🇷" },
 ];
 
-function LanguageContextProvider({
+export function LanguageProvider({
 	children,
-	initialLanguage = "en",
 }: {
 	children: React.ReactNode;
 	initialLanguage?: LanguageCode;
 }) {
-	const [language, setLanguageState] =
-		React.useState<LanguageCode>(initialLanguage);
+	const currentLocale = (useLocale() || "en") as LanguageCode;
+	const router = useRouter();
+	const pathname = usePathname();
 
-	const direction: DirectionType = language === "ar" ? "rtl" : "ltr";
+	const direction: DirectionType = currentLocale === "ar" ? "rtl" : "ltr";
 	const isRtl = direction === "rtl";
-
-	React.useEffect(() => {
-		const saved = localStorage.getItem("preferred-language") as LanguageCode;
-		if (saved && (saved === "ar" || saved === "en" || saved === "fr")) {
-			queueMicrotask(() => {
-				setLanguageState(saved);
-				i18n.changeLanguage(saved);
-			});
-		}
-	}, []);
 
 	React.useEffect(() => {
 		if (typeof document !== "undefined") {
 			document.documentElement.dir = direction;
-			document.documentElement.lang = language;
+			document.documentElement.lang = currentLocale;
 			if (direction === "rtl") {
 				document.documentElement.classList.add("rtl");
 				document.documentElement.classList.remove("ltr");
@@ -65,27 +55,30 @@ function LanguageContextProvider({
 				document.documentElement.classList.remove("rtl");
 			}
 		}
-	}, [direction, language]);
+	}, [direction, currentLocale]);
 
-	const setLanguage = React.useCallback((lang: LanguageCode) => {
-		setLanguageState(lang);
-		i18n.changeLanguage(lang);
-		try {
-			localStorage.setItem("preferred-language", lang);
-		} catch {
-			// ignore storage errors
-		}
-	}, []);
+	const setLanguage = React.useCallback(
+		(lang: LanguageCode) => {
+			try {
+				localStorage.setItem("preferred-language", lang);
+			} catch {
+				// ignore storage errors
+			}
+			const search = typeof window !== "undefined" ? window.location.search : "";
+			router.replace(`${pathname}${search}`, { locale: lang });
+		},
+		[pathname, router],
+	);
 
 	const value = React.useMemo(
 		() => ({
-			language,
+			language: currentLocale,
 			direction,
 			isRtl,
 			setLanguage,
 			availableLanguages: AVAILABLE_LANGUAGES,
 		}),
-		[language, direction, isRtl, setLanguage],
+		[currentLocale, direction, isRtl, setLanguage],
 	);
 
 	return (
@@ -97,22 +90,6 @@ function LanguageContextProvider({
 	);
 }
 
-export function LanguageProvider({
-	children,
-	initialLanguage = "en",
-}: {
-	children: React.ReactNode;
-	initialLanguage?: LanguageCode;
-}) {
-	return (
-		<I18nextProvider i18n={i18n}>
-			<LanguageContextProvider initialLanguage={initialLanguage}>
-				{children}
-			</LanguageContextProvider>
-		</I18nextProvider>
-	);
-}
-
 export function useLanguage() {
 	const context = React.useContext(LanguageContext);
 	if (!context) {
@@ -121,4 +98,9 @@ export function useLanguage() {
 	return context;
 }
 
-export { useTranslation };
+export function useTranslation(ns?: string) {
+	const t = useTranslations(ns as any);
+	return { t };
+}
+
+export { useTranslations };

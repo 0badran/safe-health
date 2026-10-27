@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
+import { useLocale } from "next-intl";
 import { fetchData, type FetchOptions } from "@/lib/api";
 
 export interface UseFetchDataOptions<T = any>
@@ -24,8 +24,8 @@ export default function useFetchData<T = any>({
 	if (!route) {
 		throw new Error("Route is required for fetching data.");
 	}
-	const { i18n } = useTranslation();
-	const lang = explicitLang ?? i18n.resolvedLanguage ?? i18n.language ?? "en";
+	const locale = useLocale();
+	const lang = explicitLang ?? locale ?? "en";
 	const resolvedQueryKey = queryKey
 		? [...queryKey, lang]
 		: [route, params, headers, lang];

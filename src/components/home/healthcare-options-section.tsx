@@ -6,7 +6,7 @@ import { SectionCarousel } from "@/components/shared/section-carousel";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
