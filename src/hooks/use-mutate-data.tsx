@@ -6,7 +6,7 @@ import {
 	type QueryKey,
 	type UseMutationOptions,
 } from "@tanstack/react-query";
-import { useTranslation } from "react-i18next";
+import { useLocale } from "next-intl";
 import { fetchData, type HttpMethod } from "@/lib/api";
 
 export type { HttpMethod };
@@ -31,8 +31,8 @@ export default function useMutateData<TData = any, TVariables = any>({
 }: MutateDataOptions<TData, TVariables> = {}) {
 	const queryClient = useQueryClient();
 	if (!route) throw new Error("Route is required for mutating data.");
-	const { i18n } = useTranslation();
-	const lang = i18n.resolvedLanguage ?? i18n.language ?? "en";
+	const locale = useLocale();
+	const lang = locale ?? "en";
 
 	return useMutation<TData, Error, TVariables>({
 		mutationFn:

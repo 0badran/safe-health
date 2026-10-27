@@ -19,26 +19,24 @@ const queryClient = new QueryClient({
 
 export default function Providers({children}: {children: React.ReactNode}) {
 	return (
-				<QueryClientProvider client={queryClient}>
-					<DirectionProvider dir="ltr" direction="ltr">
-						<ThemeProvider
-							attribute="class"
-							defaultTheme="light"
-							enableSystem={false}
-							forcedTheme="light"
-							disableTransitionOnChange
-						>
-							<LucideProvider strokeWidth={1.5}>
-								<LanguageProvider initialLanguage="en">
-									<Suspense fallback={null}>
-										<Navbar />
-									</Suspense>
-									<div className="flex-1 min-h-screen">{children}</div>
-									<Footer />
-								</LanguageProvider>
-							</LucideProvider>
-						</ThemeProvider>
-					</DirectionProvider>
-				</QueryClientProvider>
+		<QueryClientProvider client={queryClient}>
+			<ThemeProvider
+				attribute="class"
+				defaultTheme="light"
+				enableSystem={false}
+				forcedTheme="light"
+				disableTransitionOnChange
+			>
+				<LucideProvider strokeWidth={1.5}>
+					<LanguageProvider>
+						<Suspense fallback={null}>
+							<Navbar />
+						</Suspense>
+						<div className="flex-1 min-h-screen">{children}</div>
+						<Footer />
+					</LanguageProvider>
+				</LucideProvider>
+			</ThemeProvider>
+		</QueryClientProvider>
 	);
 }

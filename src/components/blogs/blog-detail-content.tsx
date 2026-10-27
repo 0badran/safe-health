@@ -8,7 +8,7 @@ import { useTranslation } from "@/lib/language-context";
 import type { BlogItem, SingleBlogApiResponse } from "@/types/blogs";
 import { ArrowRightIcon, CalendarIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export interface BlogDetailContentProps {
 	slug: string;

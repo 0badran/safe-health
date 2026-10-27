@@ -2,7 +2,6 @@
 
 import { useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
@@ -15,7 +14,7 @@ import {
 import { useLanguage, useTranslation } from "@/lib/language-context";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { cn } from "@/lib/utils";

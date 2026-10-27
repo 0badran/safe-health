@@ -8,13 +8,14 @@ import type { BlogItem } from "@/types/blogs";
 export const instant = false;
 
 interface PageProps {
-	params: Promise<{ slug: string }>;
+	params: Promise<{ locale: string; slug: string }>;
 }
 
-async function getBlog(slug: string) {
+async function getBlog(slug: string, lang?: string) {
 	try {
 		const json = await fetchData<ApiResponse<BlogItem>>({
 			route: `/blogs/${slug}`,
+			lang,
 		});
 		return json?.data || null;
 	} catch {
@@ -25,15 +26,15 @@ async function getBlog(slug: string) {
 export async function generateMetadata({
 	params,
 }: PageProps): Promise<Metadata> {
-	const { slug } = await params;
-	const blog = await getBlog(slug);
+	const { slug, locale } = await params;
+	const blog = await getBlog(slug, locale);
 
 	return getSeoMetadata(blog?.seo, blog?.title);
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
-	const { slug } = await params;
-	const blog = await getBlog(slug);
+	const { slug, locale } = await params;
+	const blog = await getBlog(slug, locale);
 
 	return (
 		<Suspense fallback={<BlogDetailSkeleton />}>

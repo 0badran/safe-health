@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import SectionHeader from "../shared/section-header";
 import type { HomeWhyChooseSection } from "@/types/home";
 import { useTranslation } from "@/lib/language-context";
