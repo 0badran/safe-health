@@ -4,7 +4,13 @@ export {
 	type ConsultationDrawerProps,
 	default,
 } from "./consultation-drawer";
+
 export {
-	ConsultationForm,
-	type ConsultationFormProps,
-} from "@/components/home/hero/form/consultation-form";
+	MultiStepConsultationForm,
+	type MultiStepConsultationFormProps,
+} from "./multi-step/multi-step-consultation-form";
+
+export { DoctorInfiniteSelect } from "./multi-step/doctor-infinite-select";
+export { ImageUploader } from "./multi-step/image-uploader";
+export { StepperHeader } from "./multi-step/stepper-header";
+export * from "./multi-step/schema";

@@ -135,7 +135,8 @@ export function DoctorCard({
 					<ConsultationDrawer
 						variant="default"
 						withArrow
-						title={`${t("doctors.consultationTitle")} ${doctor.name}`}
+						doctorId={doctor.id}
+						treatment={displaySpecialties[0]}
 					>
 						{t("doctors.getPersonalization")}
 					</ConsultationDrawer>
