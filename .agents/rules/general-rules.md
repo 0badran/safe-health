@@ -33,10 +33,11 @@
 - **MCP Tools Priority:** For any platform or service asked about (e.g., Postman, Figma, Trello, Slack), prioritize using its dedicated MCP server tools as the primary way to read and inspect data.
 
 
-## 6. Library & Component Installation (Official Commands Only)
+## 6. Library & Component Installation & Shadcn Preference
 
 - **Official Installation Commands:** When installing, adding, or using a library, package, or component, **ALWAYS use the official CLI command** provided by its maintainers. Never manually create or improvise component files from scratch when an official installer exists.
 - **Documentation & Web Search:** If you are unsure of the exact command or package setup, search the web or consult official documentation first before improvising.
+- **Shadcn UI Preference:** Use shadcn/ui components whenever possible to maintain design consistency, theme integrity, and seamless visual integration across all project pages.
 - **Example (shadcn/ui):** To add or install shadcn components, strictly use the official command:
   ```bash
   npx shadcn@latest add <component-name>
