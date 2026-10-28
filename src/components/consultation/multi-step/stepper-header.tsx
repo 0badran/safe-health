@@ -77,3 +77,4 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 }
 
 export default StepperHeader;
+

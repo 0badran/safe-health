@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -62,9 +63,19 @@ export function Navbar() {
 	const { isRtl } = useLanguage();
 	const { t } = useTranslation();
 	const pathname = usePathname();
-	const isScrolled = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
-	const currentHash = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
-	const isMobile = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
+
+	const [isMounted, setIsMounted] = React.useState(false);
+	React.useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	const isScrolledRaw = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
+	const currentHashRaw = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
+	const isMobileRaw = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
+
+	const isScrolled = isMounted ? isScrolledRaw : false;
+	const currentHash = isMounted ? currentHashRaw : "";
+	const isMobile = isMounted ? isMobileRaw : false;
 	const isActive = (href: string) => {
 		const currentPath = pathname?.replace(/\/$/, "") || "/";
 
@@ -135,7 +146,7 @@ export function Navbar() {
 							fill
 							sizes="48px"
 							className="object-contain p-1 size-full"
-							priority
+							preload
 						/>
 					</div>
 				</Link>

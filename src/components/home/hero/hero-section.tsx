@@ -39,7 +39,7 @@ export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
 					src={bgImage}
 					alt=""
 					fill
-					priority
+					preload
 					className="object-cover object-top mix-blend-screen opacity-10"
 					sizes="100vw"
 				/>

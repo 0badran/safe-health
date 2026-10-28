@@ -35,7 +35,7 @@ export function HeroConsultationPreview({
 						alt=""
 						width={200}
 						height={200}
-						className="absolute right-0 top-0 pointer-events-none opacity-85"
+						className="absolute right-0 top-0 pointer-events-none opacity-85 w-auto h-auto"
 					/>
 
 					<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
@@ -123,3 +123,4 @@ export function HeroConsultationPreview({
 }
 
 export default HeroConsultationPreview;
+

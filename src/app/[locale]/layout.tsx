@@ -83,7 +83,10 @@ export default async function LocaleLayout({
 		notFound();
 	}
 
-	const messages = await getMessages();
+	const [messages, settings] = await Promise.all([
+		getMessages(),
+		getSettings(locale),
+	]);
 	const direction = locale === "ar" ? "rtl" : "ltr";
 
 	return (
@@ -101,7 +104,7 @@ export default async function LocaleLayout({
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
 				<NextIntlClientProvider locale={locale} messages={messages}>
-					<Providers>{children}</Providers>
+					<Providers initialSettings={settings}>{children}</Providers>
 				</NextIntlClientProvider>
 			</body>
 		</html>

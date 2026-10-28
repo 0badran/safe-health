@@ -125,11 +125,13 @@ export function ConsultationDrawer({
 
 				{/* Multi-Step Wizard Body */}
 				<div className="py-2">
-					<MultiStepConsultationForm
-						initialDoctorId={doctorId}
-						initialTreatment={treatment}
-						onSuccess={handleSuccess}
-					/>
+					{open && (
+						<MultiStepConsultationForm
+							initialDoctorId={doctorId}
+							initialTreatment={treatment}
+							onSuccess={handleSuccess}
+						/>
+					)}
 				</div>
 			</DrawerContent>
 		</Drawer>
