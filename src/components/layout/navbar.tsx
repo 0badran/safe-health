@@ -64,18 +64,9 @@ export function Navbar() {
 	const { t } = useTranslation();
 	const pathname = usePathname();
 
-	const [isMounted, setIsMounted] = React.useState(false);
-	React.useEffect(() => {
-		setIsMounted(true);
-	}, []);
-
-	const isScrolledRaw = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
-	const currentHashRaw = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
-	const isMobileRaw = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
-
-	const isScrolled = isMounted ? isScrolledRaw : false;
-	const currentHash = isMounted ? currentHashRaw : "";
-	const isMobile = isMounted ? isMobileRaw : false;
+	const isScrolled = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
+	const currentHash = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
+	const isMobile = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
 	const isActive = (href: string) => {
 		const currentPath = pathname?.replace(/\/$/, "") || "/";
 
