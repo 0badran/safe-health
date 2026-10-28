@@ -31,3 +31,13 @@
 - **Preserve Exact API Field Names & Casing:** Whenever API field names are provided or inspected, **ALWAYS use the exact same field names and casing (e.g., `snake_case` like `last_page`, `current_page`, `per_page`)**. Never transform them to `camelCase`.
 - **Zero Fallback/Alternative Keys:** Rely strictly and exclusively on the exact inspected API key. Do not guess, assume, or check multiple alternative keys (e.g., `lastPage ?? last_page`).
 - **MCP Tools Priority:** For any platform or service asked about (e.g., Postman, Figma, Trello, Slack), prioritize using its dedicated MCP server tools as the primary way to read and inspect data.
+
+
+## 6. Library & Component Installation (Official Commands Only)
+
+- **Official Installation Commands:** When installing, adding, or using a library, package, or component, **ALWAYS use the official CLI command** provided by its maintainers. Never manually create or improvise component files from scratch when an official installer exists.
+- **Documentation & Web Search:** If you are unsure of the exact command or package setup, search the web or consult official documentation first before improvising.
+- **Example (shadcn/ui):** To add or install shadcn components, strictly use the official command:
+  ```bash
+  npx shadcn@latest add <component-name>
+  ```
