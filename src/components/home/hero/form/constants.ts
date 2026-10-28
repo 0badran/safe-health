@@ -1,19 +1,7 @@
+import { COUNTRIES as LIB_COUNTRIES } from "@/lib/countries";
 import type { ConsultationFormValues } from "./schema";
 
-export const COUNTRIES = [
-	"Turkey",
-	"Egypt",
-	"Saudi Arabia",
-	"United Arab Emirates",
-	"United Kingdom",
-	"Germany",
-	"United States",
-	"Canada",
-	"France",
-	"Kuwait",
-	"Qatar",
-	"Other",
-] as const;
+export const COUNTRIES = LIB_COUNTRIES;
 
 export const DEFAULT_FORM_VALUES: ConsultationFormValues = {
 	name: "",

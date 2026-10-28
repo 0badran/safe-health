@@ -4,7 +4,7 @@ import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2Icon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { COUNTRIES } from "@/components/home/hero/form/constants";
+import { CountrySelect } from "@/components/shared/country-select";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,15 +17,9 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import useMutateData from "@/hooks/use-mutate-data";
+import { formatCountryMultiLang, getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
 import { useContactSchema, type ContactFormValues } from "@/schema/contact";
 
@@ -62,7 +56,15 @@ export function ContactForm() {
 	});
 
 	const onSubmit = async (values: ContactFormValues) => {
-		await mutateAsync(values);
+		const countryObj = getCountryByCode(values.country);
+		const formattedCountry = countryObj
+			? formatCountryMultiLang(countryObj)
+			: values.country;
+
+		await mutateAsync({
+			...values,
+			country: formattedCountry,
+		});
 	};
 
 	const handleReset = () => {
@@ -191,30 +193,14 @@ export function ContactForm() {
 											{t("contact.form.country")}{" "}
 											<span className="text-destructive">*</span>
 										</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											value={field.value}
-											disabled={isLoading}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue
-														placeholder={t("contact.form.countryPlaceholder")}
-													/>
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{COUNTRIES.map((country) => (
-													<SelectItem
-														key={country}
-														value={country}
-														className="small"
-													>
-														{country}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
+										<FormControl>
+											<CountrySelect
+												value={field.value}
+												onChange={field.onChange}
+												disabled={isLoading}
+												placeholder={t("contact.form.countryPlaceholder")}
+											/>
+										</FormControl>
 										<FormMessage className="small" />
 									</FormItem>
 								)}

@@ -168,7 +168,7 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 							<Geographies geography={GEO_URL}>
 								{({ geographies }) =>
 									geographies
-										.filter((geo) => geo.properties.name !== "Antarctica")
+										.filter((geo) => geo.properties?.name !== "Antarctica")
 										.map((geo) => (
 											<Geography
 												key={geo.rsmKey}
@@ -176,14 +176,7 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 												fill="var(--muted)"
 												stroke="var(--background)"
 												strokeWidth={0.75}
-												style={{
-													default: { outline: "none" },
-													hover: {
-														fill: "var(--accent)",
-														outline: "none",
-													},
-													pressed: { outline: "none" },
-												}}
+												className="outline-none"
 											/>
 										))
 								}

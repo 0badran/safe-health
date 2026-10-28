@@ -11,24 +11,22 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { CountrySelect } from "@/components/shared/country-select";
 import useMutateData from "@/hooks/use-mutate-data";
+import { formatCountryMultiLang, getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { COUNTRIES, DEFAULT_FORM_VALUES } from "./constants";
+import { DEFAULT_FORM_VALUES } from "./constants";
 import { ConsultationSuccess } from "./consultation-success";
-import { consultationFormSchema, type ConsultationFormValues } from "./schema";
+import {
+	useConsultationSchema,
+	type ConsultationFormValues,
+} from "./schema";
 
 export interface ConsultationFormProps {
 	onSubmit?: (data: ConsultationFormValues) => void | Promise<void>;
@@ -48,6 +46,8 @@ export function ConsultationForm({
 }: ConsultationFormProps) {
 	const { t } = useTranslation();
 	const [isSubmitted, setIsSubmitted] = useState(false);
+	const consultationSchema = useConsultationSchema();
+
 	const { mutateAsync, isPending: isSubmitting } = useMutateData({
 		route: "/contact",
 		onSuccess: () => {
@@ -55,15 +55,27 @@ export function ConsultationForm({
 			onSuccess?.();
 		},
 	});
+
 	const form = useForm<ConsultationFormValues>({
-		resolver: zodResolver(consultationFormSchema),
+		resolver: zodResolver(consultationSchema),
 		defaultValues: DEFAULT_FORM_VALUES,
 		mode: "onTouched",
 	});
 
 	const handleSubmit = async (data: ConsultationFormValues) => {
-		const payload = { ...data };
-		delete (payload as { agree?: boolean }).agree;
+		const countryObj = getCountryByCode(data.country);
+		const formattedCountry = countryObj
+			? formatCountryMultiLang(countryObj)
+			: data.country;
+
+		const payload = {
+			name: data.name,
+			email: data.email,
+			phone: data.phone,
+			country: formattedCountry,
+			message: data.message,
+		};
+
 		await mutateAsync(payload);
 		if (onSubmit) {
 			await onSubmit(data);
@@ -114,7 +126,7 @@ export function ConsultationForm({
 								name="name"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none ">
+										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
 											<span>{t("consultation.fullName")}</span>
 											<span
 												className="text-primary font-bold"
@@ -174,8 +186,14 @@ export function ConsultationForm({
 									name="phone"
 									render={({ field }) => (
 										<FormItem className="gap-1.5 min-w-0">
-											<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-												{t("consultation.phone")}
+											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+												<span>{t("consultation.phone")}</span>
+												<span
+													className="text-primary font-bold"
+													aria-hidden="true"
+												>
+													*
+												</span>
 											</FormLabel>
 											<FormControl>
 												<Input
@@ -193,33 +211,29 @@ export function ConsultationForm({
 								/>
 							</div>
 
-							{/* Country Select */}
+							{/* Country Select (Searchable Dropdown) */}
 							<FormField
 								control={form.control}
 								name="country"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none">
-											{t("consultation.country")}
+										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<span>{t("consultation.country")}</span>
+											<span
+												className="text-primary font-bold"
+												aria-hidden="true"
+											>
+												*
+											</span>
 										</FormLabel>
-										<Select
-											onValueChange={field.onChange}
-											defaultValue={field.value}
-											disabled={isSubmitting}
-										>
-											<FormControl>
-												<SelectTrigger className="h-9 md:h-10.5 rounded-xl bg-card border-input small">
-													<SelectValue placeholder={t("consultation.countryPlaceholder")} />
-												</SelectTrigger>
-											</FormControl>
-											<SelectContent>
-												{COUNTRIES.map((c) => (
-													<SelectItem className="small" key={c} value={c}>
-														{c}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
+										<FormControl>
+											<CountrySelect
+												value={field.value}
+												onChange={field.onChange}
+												disabled={isSubmitting}
+												placeholder={t("consultation.countryPlaceholder")}
+											/>
+										</FormControl>
 										<FormMessage className="small text-destructive font-sans" />
 									</FormItem>
 								)}
@@ -231,8 +245,14 @@ export function ConsultationForm({
 								name="message"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans select-none	">
-											{t("consultation.message")}
+										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<span>{t("consultation.message")}</span>
+											<span
+												className="text-primary font-bold"
+												aria-hidden="true"
+											>
+												*
+											</span>
 										</FormLabel>
 										<FormControl>
 											<Textarea
@@ -282,7 +302,9 @@ export function ConsultationForm({
 										disabled={isSubmitting}
 										className="w-full sm:w-auto"
 									>
-										{isSubmitting ? t("consultation.sending") : t("consultation.send")}
+										{isSubmitting
+											? t("consultation.sending")
+											: t("consultation.send")}
 									</Button>
 								</div>
 							</div>

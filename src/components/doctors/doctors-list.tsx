@@ -32,7 +32,6 @@ export function DoctorsList() {
 			title,
 		},
 	});
-	console.log(apiResponse);
 
 	const doctors = apiResponse?.data ?? [];
 	const last_page = apiResponse?.pagination?.meta?.last_page ?? 1;
