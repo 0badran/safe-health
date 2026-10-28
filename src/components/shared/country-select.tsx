@@ -7,6 +7,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
 import {
 	getCountryByCode,
 	getLocalizedCountryName,
@@ -40,32 +41,33 @@ export function CountrySelect({
 	const [searchQuery, setSearchQuery] = React.useState("");
 	const searchInputRef = React.useRef<HTMLInputElement>(null);
 
-	const selectedCountry = React.useMemo(
-		() => getCountryByCode(value),
-		[value],
-	);
+	const selectedCountry = React.useMemo(() => getCountryByCode(value), [value]);
 
 	const filteredCountries = React.useMemo(
 		() => searchCountries(searchQuery, locale),
 		[searchQuery, locale],
 	);
 
-	// Focus search input on open
-	React.useEffect(() => {
-		if (isOpen) {
-			const timer = setTimeout(() => {
-				searchInputRef.current?.focus();
-			}, 50);
-			return () => clearTimeout(timer);
-		} else {
+	const handleOpenChange = (open: boolean) => {
+		setIsOpen(open);
+		if (!open) {
 			setSearchQuery("");
 		}
+	};
+
+	// Focus search input on open
+	React.useEffect(() => {
+		if (!isOpen) return;
+
+		const timer = setTimeout(() => {
+			searchInputRef.current?.focus();
+		}, 50);
+		return () => clearTimeout(timer);
 	}, [isOpen]);
 
 	const handleSelect = (country: Country) => {
 		onChange?.(country.code);
-		setIsOpen(false);
-		setSearchQuery("");
+		handleOpenChange(false);
 	};
 
 	const displayLabel = selectedCountry
@@ -73,7 +75,7 @@ export function CountrySelect({
 		: placeholder;
 
 	return (
-		<Popover open={isOpen} onOpenChange={setIsOpen}>
+		<Popover open={isOpen} onOpenChange={handleOpenChange}>
 			<PopoverTrigger asChild>
 				<button
 					id={id}
@@ -102,24 +104,24 @@ export function CountrySelect({
 			<PopoverContent
 				align="start"
 				sideOffset={6}
-				className="w-(--radix-popover-trigger-width) min-w-[260px] p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-lg"
+				className="w-(--radix-popover-trigger-width) min-w-65 p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-lg"
 			>
 				{/* Search Box */}
 				<div className="relative mb-2 flex items-center">
-					<SearchIcon className="absolute start-2.5 size-4 text-muted-foreground pointer-events-none" />
-					<input
+					<SearchIcon className="absolute inset-s-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
+					<Input
 						ref={searchInputRef}
 						type="text"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={t("consultation.searchCountry")}
-						className="h-8.5 w-full rounded-lg bg-secondary/50 ps-8 pe-8 text-foreground placeholder:text-muted-foreground small outline-none focus:ring-1 focus:ring-ring border border-input/50"
+						className="h-8.5 rounded-lg bg-secondary/50 ps-8 pe-8 text-foreground placeholder:text-muted-foreground small border-input/50"
 					/>
 					{searchQuery && (
 						<button
 							type="button"
 							onClick={() => setSearchQuery("")}
-							className="absolute end-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm"
+							className="absolute inset-e-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm z-10"
 							aria-label="Clear search"
 						>
 							<XIcon className="size-3.5" />
