@@ -1,28 +1,74 @@
 "use client";
 
 import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2Icon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { COUNTRIES } from "@/components/home/hero/form/constants";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import useMutateData from "@/hooks/use-mutate-data";
 import { useTranslation } from "@/lib/language-context";
+import { useContactSchema, type ContactFormValues } from "@/schema/contact";
+
+const DEFAULT_VALUES: ContactFormValues = {
+	name: "",
+	email: "",
+	phone: "",
+	country: "",
+	message: "",
+};
 
 export function ContactForm() {
 	const { t } = useTranslation();
+	const contactSchema = useContactSchema();
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
-	const [isLoading, setIsLoading] = React.useState(false);
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setIsLoading(true);
+	const form = useForm<ContactFormValues>({
+		resolver: zodResolver(contactSchema),
+		defaultValues: DEFAULT_VALUES,
+		mode: "onTouched",
+	});
 
-		// Simulating response feedback
-		setTimeout(() => {
-			setIsLoading(false);
+	const {
+		mutateAsync,
+		isPending: isLoading,
+		isError,
+		error,
+		reset: resetMutation,
+	} = useMutateData<unknown, ContactFormValues>({
+		route: "/contact",
+		onSuccess: () => {
 			setIsSubmitted(true);
-		}, 800);
+		},
+	});
+
+	const onSubmit = async (values: ContactFormValues) => {
+		await mutateAsync(values);
+	};
+
+	const handleReset = () => {
+		form.reset(DEFAULT_VALUES);
+		resetMutation();
+		setIsSubmitted(false);
 	};
 
 	return (
@@ -55,99 +101,174 @@ export function ContactForm() {
 								{t("contact.form.successDesc")}
 							</p>
 						</div>
-						<Button
-							variant="outline"
-							onClick={() => setIsSubmitted(false)}
-						>
+						<Button variant="outline" onClick={handleReset}>
 							{t("contact.form.sendAnother")}
 						</Button>
 					</div>
 				) : (
-					<form onSubmit={handleSubmit} className="space-y-4.5">
-						<div className="space-y-1.5 text-start">
-							<label
-								htmlFor="name"
-								className="small font-medium text-foreground"
-							>
-								{t("contact.form.fullName")}{" "}
-								<span className="text-destructive">*</span>
-							</label>
-							<Input
-								id="name"
-								name="name"
-								required
-								placeholder={t("contact.form.fullNamePlaceholder")}
-							/>
-						</div>
-
-						<div className="space-y-1.5 text-start">
-							<label
-								htmlFor="email"
-								className="small font-medium text-foreground"
-							>
-								{t("contact.form.email")}{" "}
-								<span className="text-destructive">*</span>
-							</label>
-							<Input
-								id="email"
-								name="email"
-								type="email"
-								required
-								placeholder={t("contact.form.emailPlaceholder")}
-							/>
-						</div>
-
-						<div className="space-y-1.5 text-start">
-							<label
-								htmlFor="subject"
-								className="small font-medium text-foreground"
-							>
-								{t("contact.form.subject")}
-							</label>
-							<Input
-								id="subject"
-								name="subject"
-								placeholder={t("contact.form.subjectPlaceholder")}
-							/>
-						</div>
-
-						<div className="space-y-1.5 text-start">
-							<label
-								htmlFor="message"
-								className="small font-medium text-foreground"
-							>
-								{t("contact.form.message")}{" "}
-								<span className="text-destructive">*</span>
-							</label>
-							<Textarea
-								id="message"
-								name="message"
-								required
-								rows={4}
-								placeholder={t("contact.form.messagePlaceholder")}
-							/>
-						</div>
-
-						<Button
-							type="submit"
-							disabled={isLoading}
-							withArrow={!isLoading}
-							className="w-full"
+					<Form {...form}>
+						<form
+							onSubmit={form.handleSubmit(onSubmit)}
+							noValidate
+							className="space-y-4.5"
 						>
-							{isLoading ? (
-								<div className="flex items-center gap-2">
-									<span className="size-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
-									<span>{t("contact.form.sending")}</span>
-								</div>
-							) : (
-								<span>{t("contact.form.sendNow")}</span>
-							)}
-						</Button>
+							<FormField
+								control={form.control}
+								name="name"
+								render={({ field }) => (
+									<FormItem className="space-y-1.5 text-start">
+										<FormLabel className="small font-medium text-foreground">
+											{t("contact.form.fullName")}{" "}
+											<span className="text-destructive">*</span>
+										</FormLabel>
+										<FormControl>
+											<Input
+												{...field}
+												disabled={isLoading}
+												placeholder={t("contact.form.fullNamePlaceholder")}
+												autoComplete="name"
+											/>
+										</FormControl>
+										<FormMessage className="small" />
+									</FormItem>
+								)}
+							/>
 
-						<p className="text-center small text-muted-foreground">
-							{t("contact.form.privacyNote")}
-						</p>
-					</form>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+								<FormField
+									control={form.control}
+									name="email"
+									render={({ field }) => (
+										<FormItem className="space-y-1.5 text-start">
+											<FormLabel className="small font-medium text-foreground">
+												{t("contact.form.email")}{" "}
+												<span className="text-destructive">*</span>
+											</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													type="email"
+													disabled={isLoading}
+													placeholder={t("contact.form.emailPlaceholder")}
+													autoComplete="email"
+												/>
+											</FormControl>
+											<FormMessage className="small" />
+										</FormItem>
+									)}
+								/>
+
+								<FormField
+									control={form.control}
+									name="phone"
+									render={({ field }) => (
+										<FormItem className="space-y-1.5 text-start">
+											<FormLabel className="small font-medium text-foreground">
+												{t("contact.form.phone")}{" "}
+												<span className="text-destructive">*</span>
+											</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													type="tel"
+													disabled={isLoading}
+													placeholder={t("contact.form.phonePlaceholder")}
+													autoComplete="tel"
+												/>
+											</FormControl>
+											<FormMessage className="small" />
+										</FormItem>
+									)}
+								/>
+							</div>
+
+							<FormField
+								control={form.control}
+								name="country"
+								render={({ field }) => (
+									<FormItem className="space-y-1.5 text-start">
+										<FormLabel className="small font-medium text-foreground">
+											{t("contact.form.country")}{" "}
+											<span className="text-destructive">*</span>
+										</FormLabel>
+										<Select
+											onValueChange={field.onChange}
+											value={field.value}
+											disabled={isLoading}
+										>
+											<FormControl>
+												<SelectTrigger>
+													<SelectValue
+														placeholder={t("contact.form.countryPlaceholder")}
+													/>
+												</SelectTrigger>
+											</FormControl>
+											<SelectContent>
+												{COUNTRIES.map((country) => (
+													<SelectItem
+														key={country}
+														value={country}
+														className="small"
+													>
+														{country}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+										<FormMessage className="small" />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name="message"
+								render={({ field }) => (
+									<FormItem className="space-y-1.5 text-start">
+										<FormLabel className="small font-medium text-foreground">
+											{t("contact.form.message")}{" "}
+											<span className="text-destructive">*</span>
+										</FormLabel>
+										<FormControl>
+											<Textarea
+												{...field}
+												rows={4}
+												disabled={isLoading}
+												placeholder={t("contact.form.messagePlaceholder")}
+											/>
+										</FormControl>
+										<FormMessage className="small" />
+									</FormItem>
+								)}
+							/>
+
+							{isError && (
+								<p className="small text-destructive font-medium text-start">
+									{error?.message || t("contact.form.errorMessage")}
+								</p>
+							)}
+
+							<Button
+								type="submit"
+								disabled={isLoading}
+								withArrow={!isLoading}
+								className="w-full"
+							>
+								{isLoading ? (
+									<div className="flex items-center gap-2">
+										<span className="size-4 rounded-full border-2 border-primary-foreground border-t-transparent animate-spin" />
+										<span>{t("contact.form.sending")}</span>
+									</div>
+								) : (
+									<span>{t("contact.form.sendNow")}</span>
+								)}
+							</Button>
+
+							<p className="text-center small text-muted-foreground">
+								{t("contact.form.privacyNote")}
+							</p>
+						</form>
+					</Form>
 				)}
 			</CardContent>
 		</Card>

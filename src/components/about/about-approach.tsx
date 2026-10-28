@@ -3,9 +3,12 @@
 import { TimelineDot } from "@/components/icons";
 import { SectionBadge } from "@/components/shared/section-badge";
 import type { ApproachToCareSection } from "@/types/about";
+import { motion } from "framer-motion";
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+
+const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 function StepBadge({ number }: { number: string }) {
 	return (
@@ -92,18 +95,35 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 	if (!data || steps.length === 0) return null;
 
 	return (
-		<section className="container">
+		<section>
 			{/* Top Section Header */}
-			<div className="flex flex-col items-center justify-center text-center gap-4 mb-16">
-				{data.tag_text && <SectionBadge>{data.tag_text}</SectionBadge>}
+			<div className="flex flex-col items-center justify-center text-center gap-4 mb-10">
+				{data.tag_text && (
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-40px" }}
+						transition={{ duration: 0.5, ease: EASE }}
+					>
+						<SectionBadge>{data.tag_text}</SectionBadge>
+					</motion.div>
+				)}
 
 				{data.headline && (
-					<h2 className="text-heading uppercase">{data.headline}</h2>
+					<motion.h2
+						initial={{ opacity: 0, y: 24 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true, margin: "-40px" }}
+						transition={{ duration: 0.55, delay: 0.1, ease: EASE }}
+						className="text-heading uppercase"
+					>
+						{data.headline}
+					</motion.h2>
 				)}
 			</div>
 
 			{/* Timeline Container */}
-			<div ref={containerRef} className="relative max-w-5xl mx-auto">
+			<div ref={containerRef} className="relative">
 				{/* Central Vertical Dashed Line (SVG) */}
 				{lineGeometry && (
 					<svg
@@ -128,15 +148,23 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 				)}
 
 				{/* Desktop Alternating Steps (md+) */}
-				<div className="hidden md:flex flex-col space-y-16 lg:space-y-24">
+				<div className="hidden md:flex flex-col space-y-12 lg:space-y-20">
 					{steps.map((step, index) => {
 						const isFirst = index === 0;
 						const isLast = index === steps.length - 1;
 						const isLeftFirst = index % 2 === 0;
 
 						return (
-							<div
+							<motion.div
 								key={step.step_number || index}
+								initial={{ opacity: 0, y: 28 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true, margin: "-40px" }}
+								transition={{
+									duration: 0.55,
+									delay: index * 0.12,
+									ease: EASE,
+								}}
 								className="grid grid-cols-[1fr_auto_1fr] items-start gap-6 lg:gap-12"
 							>
 								{/* Left Column */}
@@ -180,7 +208,7 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 										</p>
 									</div>
 								)}
-							</div>
+							</motion.div>
 						);
 					})}
 				</div>
@@ -189,7 +217,18 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 				<div className="flex flex-col md:hidden space-y-8">
 					{steps.map((step, index) => {
 						return (
-							<div key={step.step_number || index} className="flex gap-4">
+							<motion.div
+								key={step.step_number || index}
+								initial={{ opacity: 0, y: 24 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true, margin: "-40px" }}
+								transition={{
+									duration: 0.55,
+									delay: index * 0.12,
+									ease: EASE,
+								}}
+								className="flex gap-4"
+							>
 								{/* Dot + Connecting Line Column */}
 								<div className="flex flex-col items-center">
 									<TimelineDot />
@@ -211,7 +250,7 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 										{step.description}
 									</p>
 								</div>
-							</div>
+							</motion.div>
 						);
 					})}
 				</div>

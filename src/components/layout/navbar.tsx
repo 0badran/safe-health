@@ -22,10 +22,12 @@ import useSettings from "@/hooks/use-settings";
 
 function subscribe(callback: () => void) {
 	window.addEventListener("scroll", callback, { passive: true });
+	window.addEventListener("resize", callback, { passive: true });
 	window.addEventListener("hashchange", callback);
 	window.addEventListener("popstate", callback);
 	return () => {
 		window.removeEventListener("scroll", callback);
+		window.removeEventListener("resize", callback);
 		window.removeEventListener("hashchange", callback);
 		window.removeEventListener("popstate", callback);
 	};
@@ -36,6 +38,14 @@ function getScrollSnapshot() {
 }
 
 function getScrollServerSnapshot() {
+	return false;
+}
+
+function getMobileSnapshot() {
+	return window.innerWidth < 1024;
+}
+
+function getMobileServerSnapshot() {
 	return false;
 }
 
@@ -54,7 +64,7 @@ export function Navbar() {
 	const pathname = usePathname();
 	const isScrolled = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
 	const currentHash = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
-
+	const isMobile = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
 	const isActive = (href: string) => {
 		const currentPath = pathname?.replace(/\/$/, "") || "/";
 
@@ -89,24 +99,23 @@ export function Navbar() {
 		<motion.header
 			initial={false}
 			animate={{
-				maxWidth: isScrolled ? "1100px" : "1360px",
-				width: isScrolled ? "92%" : "100%",
-				top: isScrolled ? "0.75rem" : "1.25rem",
+				maxWidth: !isMobile ? (isScrolled ? "1100px" : "1360px") : "100%",
+				width: !isMobile ? (isScrolled ? "92%" : "95%") : "100%",
+				top: !isMobile ? (isScrolled ? "0.75rem" : "1.25rem") : "0",
 			}}
 			transition={{
 				duration: 0.4,
 			}}
 			className={cn(
 				"fixed inset-x-0 z-50 mx-auto ",
-				isScrolled ? "px-2 sm:px-4" : "px-4 md:px-12 2xl:px-10",
 			)}
 		>
 			<div
 				className={cn(
-					"flex bg-primary rounded-full border border-white/10 backdrop-blur-md items-center justify-between transition-all duration-300",
-					isScrolled
-						? "shadow-2xl shadow-primary/80 border-white/20 bg-primary/95 py-0.5"
-						: " bg-primary py-1",
+					"flex bg-primary lg:rounded-full border border-white/10 backdrop-blur-md items-center justify-between transition-all duration-300",
+					!isMobile ? (isScrolled
+						? "md:shadow-2xl shadow-primary/80 border-white/20 bg-primary/95 py-0.5"
+						: " bg-primary py-1") : "py-1 bg-primary  rounded-b-xl backdrop-blur-sm",
 				)}
 			>
 				{/* Brand Logo from settings or fallback */}
@@ -117,7 +126,7 @@ export function Navbar() {
 					<div
 						className={cn(
 							"relative flex shrink-0 items-center justify-center rounded-xl overflow-hidden p-1 mx-2 transition-all duration-300",
-							isScrolled ? "size-10 sm:size-11" : "size-11 sm:size-12",
+							!isMobile && isScrolled ? "size-10 sm:size-11" : "size-11 sm:size-12",
 						)}
 					>
 						<Image
@@ -132,7 +141,7 @@ export function Navbar() {
 				</Link>
 
 				{/* Desktop Navigation Links */}
-				<nav className="hidden xl:flex whitespace-nowrap items-center gap-1 small font-medium">
+				<nav className="hidden md:flex whitespace-nowrap items-center gap-1 small max-lg:text-xs! font-medium">
 					{navLinks.map((link) => {
 						const active = isActive(link.href);
 						return (
@@ -142,7 +151,7 @@ export function Navbar() {
 								aria-current={active ? "page" : undefined}
 								className={cn(
 									"relative rounded-full transition-all duration-200 select-none",
-									isScrolled ? "px-2.5 py-1 text-xs" : "px-3 py-1.5",
+									isScrolled && !isMobile ? "px-2.5 py-1 text-xs" : " px-1 lg:px-3 py-1.5",
 									active
 										? "text-white font-semibold"
 										: "text-white/85 hover:bg-white/10 hover:text-white",
@@ -166,18 +175,18 @@ export function Navbar() {
 				</nav>
 
 				{/* Right Controls: CTA & Language Switcher & Theme */}
-				<div className="hidden xl:flex items-center gap-2.5">
+				<div className="hidden md:flex items-center lg:gap-2.5">
 					{/* Language Switcher Dropdown */}
 					<LanguageSwitcher />
 					{/* Primary Call to Action Button */}
 					<ConsultationDrawer
 						variant="secondary"
-						className="m-2"
+						className="lg:m-2 max-lg:p-1  max-lg:text-xs! "
 					/>
 				</div>
 
 				{/* Mobile Navigation Drawer Trigger */}
-				<div className="flex xl:hidden items-center gap-2 px-2">
+				<div className="flex md:hidden items-center gap-2 px-2">
 					{/* Language Switcher on Mobile Header */}
 					<LanguageSwitcher />
 					<Sheet>

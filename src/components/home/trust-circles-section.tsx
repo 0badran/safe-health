@@ -1,5 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
 import React from "react";
+
+const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 export interface TrustCircleItem {
 	id?: string | number;
@@ -190,11 +195,19 @@ export function TrustCirclesSection({
 	}
 
 	return (
-		<section className="w-full grid grid-cols-2 xl:w-[80%] max-sm:gap-2 sm:flex justify-items-center items-center  sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-5 sm:rtl:space-x-5">
+		<section className="w-full grid grid-cols-2 xl:w-[90%] max-sm:gap-2 sm:flex justify-items-center items-center sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-4 sm:rtl:space-x-4">
 			{features.map((item, index) => (
-				<div
+				<motion.div
 					key={item.id ?? item.title ?? index}
-					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full border border-dashed border-secondary/50 bg-background/50 backdrop-blur-xs p-2 text-center overflow-hidden w-full sm:w-1/4"
+					initial={{ opacity: 0, y: 24, scale: 0.92 }}
+					whileInView={{ opacity: 1, y: 0, scale: 1 }}
+					viewport={{ once: true, margin: "-40px" }}
+					transition={{
+						duration: 0.55,
+						delay: index * 0.14,
+						ease: EASE,
+					}}
+					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bg-background/50 p-2 text-center overflow-hidden w-full sm:w-1/4"
 				>
 					<svg
 						className="absolute inset-0 size-full"
@@ -243,7 +256,7 @@ export function TrustCirclesSection({
 					<p className="relative z-10 small text-paragraph leading-relaxed mt-2 px-2">
 						{item.description}
 					</p>
-				</div>
+				</motion.div>
 			))}
 		</section>
 	);

@@ -88,6 +88,10 @@
 			"fullNamePlaceholder": "مثال: أحمد محمد",
 			"email": "البريد الإلكتروني",
 			"emailPlaceholder": "example@domain.com",
+			"phone": "رقم الهاتف",
+			"phonePlaceholder": "+201234567890",
+			"country": "الدولة",
+			"countryPlaceholder": "اختر دولتك",
 			"subject": "موضوع الاستفسار أو التخصص الطبي",
 			"subjectPlaceholder": "مثال: استشارة تجميل أنف / استفسار عن تكلفة عملية",
 			"message": "تفاصيل الرسالة",
@@ -97,7 +101,16 @@
 			"privacyNote": "بياناتك الطبية مشفرة ومحمية بخصوصية تامة 100%",
 			"successTitle": "تم استلام رسالتك بنجاح!",
 			"successDesc": "شكراً لتواصلك مع Safe Health. سيقوم أحد مستشارينا الطبيين بالتواصل معك خلال أقل من ساعتين.",
-			"sendAnother": "إرسال رسالة أخرى"
+			"sendAnother": "إرسال رسالة أخرى",
+			"errorMessage": "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.",
+			"validation": {
+				"nameRequired": "يرجى إدخال الاسم الكامل.",
+				"emailRequired": "يرجى إدخال البريد الإلكتروني.",
+				"emailInvalid": "يرجى إدخال بريد إلكتروني صحيح.",
+				"phoneRequired": "يرجى إدخال رقم الهاتف.",
+				"countryRequired": "يرجى اختيار الدولة.",
+				"messageRequired": "يرجى كتابة تفاصيل الرسالة."
+			}
 		}
 	},
 	"blogs": {
