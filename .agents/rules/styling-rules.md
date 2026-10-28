@@ -20,7 +20,8 @@ trigger: always_on
 
 ## 2. No External Color Overrides on Shadcn UI Components
 
-- **Inspect Before Styling:** Never override shadcn components (especially `Button`, `Badge`, `Card`, `Input`, `Textarea`, `Dialog`) with external background colors (`bg-*`), text colors (`text-*`), or custom shadows.
+- **Inspect Inside Shadcn Components First:** ALWAYS inspect the component file implementation in `src/components/ui/*.tsx` before applying any custom Tailwind classes. Be fully aware of its internal structure, slots, and default classes.
+- **No External Color/Background Overrides:** Never override shadcn components (especially `Button`, `Badge`, `Card`, `Input`, `Textarea`, `Dialog`) with external background colors (`bg-*`), text colors (`text-*`), or custom shadows.
 - **Rely on Built-in Variants:** Always use the component's internal semantic variants:
   - `<Button variant="default">`, `<Button variant="secondary">`, `<Button variant="outline">`, `<Button variant="ghost">`, etc.
   - `<Badge variant="default">`, `<Badge variant="secondary">`, `<Badge variant="outline">`, etc.

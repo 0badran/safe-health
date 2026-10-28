@@ -183,11 +183,11 @@ export function DoctorInfiniteSelect({
 			<PopoverContent
 				align="start"
 				sideOffset={6}
-				className="w-(--radix-popover-trigger-width) min-w-[280px] p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-xl z-50"
+				className="w-(--radix-popover-trigger-width) min-w-70 p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-xl z-50"
 			>
 				{/* Search Box */}
 				<div className="relative mb-2 flex items-center">
-					<SearchIcon className="absolute start-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
+					<SearchIcon className="absolute inset-s-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
 					<Input
 						ref={searchInputRef}
 						type="text"
@@ -200,7 +200,7 @@ export function DoctorInfiniteSelect({
 						<button
 							type="button"
 							onClick={() => setSearchQuery("")}
-							className="absolute end-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm z-10 cursor-pointer"
+							className="absolute inset-e-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm z-10 cursor-pointer"
 							aria-label="Clear search"
 						>
 							<XIcon className="size-3.5" />
