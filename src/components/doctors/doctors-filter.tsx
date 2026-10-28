@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { ListFilter, RotateCcw } from "lucide-react";
@@ -97,7 +98,10 @@ export function DoctorsFilter({ className }: DoctorsFilterProps) {
 	};
 
 	return (
-		<div
+		<motion.div
+			initial={{ opacity: 0, y: -10 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.45, ease: "easeOut" }}
 			className={cn(
 				"w-full bg-purple-tint/50 dark:bg-muted/30 rounded-3xl sm:rounded-4xl p-2.5 sm:p-4 lg:p-5 border border-white/15",
 				className,
@@ -182,19 +186,28 @@ export function DoctorsFilter({ className }: DoctorsFilterProps) {
 				</Button>
 
 				{/* Reset Button */}
-				{hasActiveFilters && (
-					<Button
-						type="button"
-						variant="ghost"
-						onClick={handleReset}
-						className="shrink-0"
-					>
-						<RotateCcw className="size-4" />
-						<span>{t("doctors.resetButton")}</span>
-					</Button>
-				)}
+				<AnimatePresence>
+					{hasActiveFilters && (
+						<motion.div
+							initial={{ opacity: 0, scale: 0.85 }}
+							animate={{ opacity: 1, scale: 1 }}
+							exit={{ opacity: 0, scale: 0.85 }}
+							transition={{ duration: 0.18 }}
+						>
+							<Button
+								type="button"
+								variant="ghost"
+								onClick={handleReset}
+								className="shrink-0"
+							>
+								<RotateCcw className="size-4" />
+								<span>{t("doctors.resetButton")}</span>
+							</Button>
+						</motion.div>
+					)}
+				</AnimatePresence>
 			</form>
-		</div>
+		</motion.div>
 	);
 }
 

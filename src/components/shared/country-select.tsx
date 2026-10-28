@@ -115,7 +115,7 @@ export function CountrySelect({
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={t("consultation.searchCountry")}
-						className="h-8.5 rounded-lg bg-secondary/50 ps-8 pe-8 text-foreground placeholder:text-muted-foreground small border-input/50"
+						className="h-9 md:h-10.5 rounded-xl bg-card border-input small ps-8"
 					/>
 					{searchQuery && (
 						<button

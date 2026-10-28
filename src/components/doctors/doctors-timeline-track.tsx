@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion } from "framer-motion";
 import { TimelineDot } from "@/components/icons/timeline-dot";
 import { cn } from "@/lib/utils";
 
@@ -87,7 +88,7 @@ export function DoctorsTimelineTrack({
 				className,
 			)}
 		>
-			{/* Snake Dashed SVG Line */}
+			{/* Snake Dashed SVG Line with smooth draw animation */}
 			<svg
 				width="268"
 				height={totalHeight}
@@ -97,12 +98,16 @@ export function DoctorsTimelineTrack({
 				className="w-full h-full overflow-visible"
 				preserveAspectRatio="none"
 			>
-				<path
+				<motion.path
 					d={d}
 					stroke="url(#paint0_linear_doctors_snake)"
 					strokeWidth="1"
 					strokeDasharray="5 5"
 					vectorEffect="non-scaling-stroke"
+					initial={{ pathLength: 0, opacity: 0.2 }}
+					whileInView={{ pathLength: 1, opacity: 1 }}
+					viewport={{ once: true, margin: "-40px" }}
+					transition={{ duration: 1.4, ease: "easeInOut" }}
 				/>
 				<defs>
 					<linearGradient
@@ -120,18 +125,27 @@ export function DoctorsTimelineTrack({
 				</defs>
 			</svg>
 
-			{/* Dynamic Timeline Dots for each doctor position */}
+			{/* Dynamic Timeline Dots for each doctor position with spring entrance */}
 			{dots.map((dot) => (
-				<div
+				<motion.div
 					key={dot.id}
 					style={{ top: `${dot.topPercent}%` }}
+					initial={{ scale: 0, opacity: 0 }}
+					whileInView={{ scale: 1, opacity: 1 }}
+					viewport={{ once: true, margin: "-30px" }}
+					transition={{
+						type: "spring",
+						stiffness: 320,
+						damping: 20,
+						delay: 0.15 + dot.id * 0.1,
+					}}
 					className={cn(
 						"absolute -translate-x-1/2 -translate-y-1/2 z-10",
 						dot.sideClass,
 					)}
 				>
 					<TimelineDot />
-				</div>
+				</motion.div>
 			))}
 		</div>
 	);

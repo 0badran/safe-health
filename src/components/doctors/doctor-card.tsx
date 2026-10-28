@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { FallbackImage } from "@/components/shared/fallback-image";
@@ -43,15 +46,21 @@ export function DoctorCard({
 		: undefined;
 
 	return (
-		<section
+		<motion.article
 			aria-label={`Profile of ${doctor?.name}`}
+			initial={{ opacity: 0, y: 35 }}
+			whileInView={{ opacity: 1, y: 0 }}
+			viewport={{ once: true, margin: "-60px" }}
+			transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
 			className={cn(
 				"w-full relative grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center",
 				className,
 			)}
 		>
-			{/* Info Column */}
-			<div
+			{/* Info Column with subtle interactive elevation */}
+			<motion.div
+				whileHover={{ y: -2 }}
+				transition={{ duration: 0.2 }}
 				className={cn(
 					"w-full bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 global-shadow flex flex-col gap-6",
 					"order-2 md:col-span-7",
@@ -103,12 +112,14 @@ export function DoctorCard({
 							)}
 						>
 							{displaySpecialties.map((spec) => (
-								<span
+								<motion.span
 									key={spec}
-									className="rounded-full bg-purple-tint dark:bg-muted small text-primary px-4 py-2 border transition-colors"
+									whileHover={{ scale: 1.05 }}
+									transition={{ duration: 0.15 }}
+									className="rounded-full bg-purple-tint dark:bg-muted small text-primary px-4 py-2 border transition-colors select-none"
 								>
 									{spec}
-								</span>
+								</motion.span>
 							))}
 						</div>
 					</div>
@@ -129,10 +140,14 @@ export function DoctorCard({
 						{t("doctors.getPersonalization")}
 					</ConsultationDrawer>
 				</div>
-			</div>
+			</motion.div>
 
 			{/* Visual Column: Arched Doctor Portrait with Floating Badges */}
-			<div
+			<motion.div
+				initial={{ opacity: 0, scale: 0.95 }}
+				whileInView={{ opacity: 1, scale: 1 }}
+				viewport={{ once: true }}
+				transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
 				className={cn(
 					"flex justify-center items-end relative pt-8 sm:pt-12",
 					"order-1 md:col-span-5",
@@ -141,16 +156,25 @@ export function DoctorCard({
 			>
 				{/* Architectural Arch Background */}
 				<div className="relative">
-					{/* Floating Experience Badge */}
+					{/* Floating Experience Badge with Spring Entrance */}
 					{displayExperience && (
-						<div
+						<motion.div
+							initial={{ scale: 0, opacity: 0 }}
+							whileInView={{ scale: 1, opacity: 1 }}
+							viewport={{ once: true }}
+							transition={{
+								type: "spring",
+								stiffness: 350,
+								damping: 20,
+								delay: 0.22,
+							}}
 							className={cn(
 								"absolute top-1/2 lg:top-1/3 z-10 rounded-full bg-purple-tint dark:bg-muted px-4 py-1.5 small font-bold tracking-wider border select-none whitespace-nowrap",
 								flip ? "inset-s-0 lg:-inset-s-8" : "inset-e-0 lg:-inset-e-8",
 							)}
 						>
 							{displayExperience}
-						</div>
+						</motion.div>
 					)}
 
 					{/* Doctor Cut-out Image with Fallback */}
@@ -164,7 +188,7 @@ export function DoctorCard({
 						className="relative z-0 max-h-105 sm:max-h-115 w-auto object-contain object-bottom drop-shadow-sm select-none pointer-events-none"
 					/>
 				</div>
-			</div>
-		</section>
+			</motion.div>
+		</motion.article>
 	);
 }
