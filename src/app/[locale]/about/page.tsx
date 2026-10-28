@@ -46,7 +46,7 @@ export default async function AboutPage({ params }: PageProps) {
 	const ctaData = sections?.["consultation-cta"];
 
 	return (
-		<main className="flex flex-col flex-1">
+		<main className="flex flex-col flex-1 overflow-x-clip">
 			{hero && (
 				<PageHeader
 					badge={hero.tag_text}
@@ -55,7 +55,7 @@ export default async function AboutPage({ params }: PageProps) {
 				/>
 			)}
 
-			<div className="container space-y-14 sm:space-y-18 lg:space-y-25">
+			<div className="container space-y-5 sm:space-y-10 lg:space-y-16">
 				{sections?.["about-overview"] && (
 					<FadeIn>
 						<AboutIntro data={sections["about-overview"]} />
@@ -63,9 +63,7 @@ export default async function AboutPage({ params }: PageProps) {
 				)}
 
 				{sections?.["guiding-philosophy"] && (
-					<FadeIn>
-						<AboutPhilosophy data={sections["guiding-philosophy"]} />
-					</FadeIn>
+					<AboutPhilosophy data={sections["guiding-philosophy"]} />
 				)}
 
 				{sections?.["approach-to-care"] && (
@@ -94,7 +92,7 @@ export default async function AboutPage({ params }: PageProps) {
 			</div>
 
 			{ctaData && (
-				<div className="container mt-14 sm:mt-18 lg:mt-25">
+				<div className="container mt-14">
 					<FooterCta data={ctaData} />
 				</div>
 			)}

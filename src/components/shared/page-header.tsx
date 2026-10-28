@@ -30,7 +30,7 @@ export function PageHeader({
 		: description;
 
 	return (
-		<section className="relative overflow-hidden pt-20 pb-20 lg:pt-32 lg:pb-20">
+		<section className="relative overflow-hidden pt-24 lg:pt-32 pb-10 lg:pb-20">
 			{/* Interactive Grid Hover Effect matching template */}
 			<InteractiveGridBackground
 				borderColor="var(--border)"
