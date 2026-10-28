@@ -11,3 +11,4 @@ export interface ServiceItem {
 }
 
 export type ServicesApiResponse = PaginatedApiResponse<ServiceItem>;
+

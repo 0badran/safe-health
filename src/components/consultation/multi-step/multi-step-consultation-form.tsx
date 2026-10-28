@@ -258,7 +258,7 @@ export function MultiStepConsultationForm({
 													disabled={isSubmitting}
 													placeholder={t("consultation.fullNamePlaceholder")}
 													autoComplete="name"
-													className="h-10.5 rounded-xl bg-card border-input small"
+													className="h-10.5 rounded-xl small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans" />
@@ -283,7 +283,7 @@ export function MultiStepConsultationForm({
 														disabled={isSubmitting}
 														placeholder={t("consultation.emailPlaceholder")}
 														autoComplete="email"
-														className="h-10.5 rounded-xl bg-card border-input small"
+														className="h-10.5 rounded-xl small"
 													/>
 												</FormControl>
 												<FormMessage className="small text-destructive font-sans" />
@@ -311,7 +311,7 @@ export function MultiStepConsultationForm({
 															const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
 															field.onChange(val);
 														}}
-														className="h-10.5 rounded-xl bg-card border-input small"
+														className="h-10.5 rounded-xl small"
 													/>
 												</FormControl>
 												<FormMessage className="small text-destructive font-sans" />
@@ -370,7 +370,7 @@ export function MultiStepConsultationForm({
 													disabled={isSubmitting}
 													placeholder={t("consultation.messagePlaceholder")}
 													rows={3}
-													className="min-h-20 rounded-xl bg-card border-input py-2.5 resize-none small"
+													className="min-h-20 py-2.5 resize-none small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans" />

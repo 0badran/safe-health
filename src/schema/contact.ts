@@ -7,10 +7,9 @@ export function useContactSchema() {
 	return z.object({
 		name: z.string().trim().min(1, t("contact.form.validation.nameRequired")),
 		email: z
-			.string()
+		.email(t("contact.form.validation.emailInvalid"))
 			.trim()
-			.min(1, t("contact.form.validation.emailRequired"))
-			.email(t("contact.form.validation.emailInvalid")),
+			.min(1, t("contact.form.validation.emailRequired")),
 		phone: z
 			.string()
 			.trim()

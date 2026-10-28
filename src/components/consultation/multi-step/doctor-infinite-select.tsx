@@ -134,7 +134,7 @@ export function DoctorInfiniteSelect({
 					disabled={disabled}
 					aria-expanded={isOpen}
 					className={cn(
-						"flex h-11 md:h-12 w-full items-center justify-between rounded-xl border border-input bg-card px-3.5 py-2 text-start font-sans small outline-none transition-colors",
+						"flex h-11 md:h-12 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start font-sans small outline-none transition-colors",
 						"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
 						"disabled:cursor-not-allowed disabled:opacity-50",
 						className,
@@ -194,7 +194,7 @@ export function DoctorInfiniteSelect({
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={t("consultation.searchDoctor")}
-						className="h-8.5 rounded-lg bg-secondary/50 ps-8 pe-8 text-foreground placeholder:text-muted-foreground small border-input/50"
+						className="h-8.5 rounded-lg ps-8 pe-8 small"
 					/>
 					{searchQuery && (
 						<button

@@ -83,7 +83,7 @@ export function CountrySelect({
 					disabled={disabled}
 					aria-expanded={isOpen}
 					className={cn(
-						"flex h-9 md:h-10.5 w-full items-center justify-between rounded-xl border border-input bg-card px-3.5 py-2 text-start font-sans small outline-none transition-colors",
+						"flex h-9 md:h-10.5 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start font-sans small outline-none transition-colors",
 						"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
 						"disabled:cursor-not-allowed disabled:opacity-50",
 						!selectedCountry && "text-muted-foreground",
@@ -115,7 +115,7 @@ export function CountrySelect({
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={t("consultation.searchCountry")}
-						className="h-9 md:h-10.5 rounded-xl bg-card border-input small ps-8"
+						className="h-8.5 rounded-lg small ps-8"
 					/>
 					{searchQuery && (
 						<button

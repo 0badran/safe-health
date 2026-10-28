@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
-import { ImagePlusIcon, Trash2Icon, UploadCloudIcon } from "lucide-react";
 import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
+import { Trash2Icon, UploadCloudIcon } from "lucide-react";
+import Image from "next/image";
+import * as React from "react";
 
 export interface ImageUploaderProps {
 	files: File[];
@@ -154,7 +154,7 @@ export function ImageUploader({
 							<button
 								type="button"
 								onClick={() => handleRemove(index)}
-								className="absolute top-1.5 end-1.5 size-6 rounded-full bg-background/80 hover:bg-destructive hover:text-destructive-foreground flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+								className="absolute top-1.5 inset-e-1.5 size-6 rounded-full bg-background/80 hover:bg-destructive hover:text-destructive-foreground flex items-center justify-center shadow-xs transition-colors cursor-pointer"
 								aria-label="Remove image"
 							>
 								<Trash2Icon className="size-3.5" />
