@@ -5,18 +5,29 @@ export function useMultiStepConsultationSchema() {
 	const { t } = useTranslation();
 
 	return z.object({
-		// Step 1: Treatment & Doctor
-		treatment: z
-			.string()
-			.trim()
-			.min(1, t("consultation.treatmentRequired")),
+		// Step 1: Service & Doctor (key is service_id)
+		service_id: z
+			.union([z.number(), z.string()])
+			.refine(
+				(val) =>
+					val !== undefined &&
+					val !== null &&
+					String(val).trim().length > 0,
+				{
+					message: t("consultation.serviceRequired"),
+				},
+			),
+		treatment: z.string().optional(),
 		doctor_id: z.union([z.number(), z.string()]).optional(),
 
 		// Step 2: Patient Details
 		name: z.string().trim().min(1, t("contact.form.validation.nameRequired")),
 		email: z
-			.email(t("contact.form.validation.emailInvalid"))
-			.min(1, t("contact.form.validation.emailRequired")),
+			.union([
+				z.email(t("contact.form.validation.emailInvalid")),
+				z.literal(""),
+			])
+			.optional(),
 		phone: z
 			.string()
 			.trim()
@@ -55,6 +66,7 @@ export type MultiStepFormValues = z.infer<
 >;
 
 export const DEFAULT_MULTI_STEP_VALUES: MultiStepFormValues = {
+	service_id: "",
 	treatment: "",
 	doctor_id: undefined,
 	name: "",

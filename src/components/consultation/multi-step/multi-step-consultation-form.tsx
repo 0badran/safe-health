@@ -22,11 +22,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { CountrySelect } from "@/components/shared/country-select";
 import { ConsultationSuccess } from "@/components/home/hero/form/consultation-success";
 import useMutateData from "@/hooks/use-mutate-data";
-import { formatCountryMultiLang, getCountryByCode } from "@/lib/countries";
+import { getCountryByCode, getLocalizedCountryName } from "@/lib/countries";
 import { useLanguage, useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 
 import { DoctorInfiniteSelect } from "./doctor-infinite-select";
+import { ServiceInfiniteSelect } from "./service-infinite-select";
 import { ImageUploader } from "./image-uploader";
 import { StepperHeader } from "./stepper-header";
 import {
@@ -37,22 +38,15 @@ import {
 
 export interface MultiStepConsultationFormProps {
 	initialDoctorId?: number | string;
+	initialServiceId?: number | string;
 	initialTreatment?: string;
 	onSuccess?: () => void;
 	className?: string;
 }
 
-const POPULAR_TREATMENTS = [
-	"Rhinoplasty",
-	"Hair Transplant",
-	"Cosmetic Dentistry",
-	"Plastic Surgery",
-	"Dermatology & Laser",
-	"Bariatric Surgery",
-];
-
 export function MultiStepConsultationForm({
 	initialDoctorId,
+	initialServiceId,
 	initialTreatment,
 	onSuccess,
 	className,
@@ -70,6 +64,7 @@ export function MultiStepConsultationForm({
 		defaultValues: {
 			...DEFAULT_MULTI_STEP_VALUES,
 			doctor_id: initialDoctorId,
+			service_id: initialServiceId ?? initialTreatment ?? "",
 			treatment: initialTreatment || "",
 		},
 		mode: "onTouched",
@@ -92,7 +87,7 @@ export function MultiStepConsultationForm({
 		let isValid = false;
 
 		if (currentStep === 1) {
-			isValid = await form.trigger(["treatment", "doctor_id"]);
+			isValid = await form.trigger(["service_id", "doctor_id"]);
 		} else if (currentStep === 2) {
 			isValid = await form.trigger(["name", "email", "phone", "country"]);
 		}
@@ -115,7 +110,10 @@ export function MultiStepConsultationForm({
 			formData.append("email", data.email);
 		}
 
-		formData.append("treatment", data.treatment);
+		// Exact key requested by user: service_id
+		formData.append("service_id", String(data.service_id));
+		// Required backend validator key: treatment (use service title if available, fallback to service_id)
+		formData.append("treatment", data.treatment || String(data.service_id));
 
 		if (data.doctor_id !== undefined && data.doctor_id !== null && data.doctor_id !== "") {
 			formData.append("doctor_id", String(data.doctor_id));
@@ -124,7 +122,7 @@ export function MultiStepConsultationForm({
 		if (data.country) {
 			const countryObj = getCountryByCode(data.country);
 			const formattedCountry = countryObj
-				? formatCountryMultiLang(countryObj)
+				? getLocalizedCountryName(countryObj, locale)
 				: data.country;
 			formData.append("country", formattedCountry);
 		}
@@ -149,6 +147,7 @@ export function MultiStepConsultationForm({
 		form.reset({
 			...DEFAULT_MULTI_STEP_VALUES,
 			doctor_id: initialDoctorId,
+			service_id: initialServiceId ?? initialTreatment ?? "",
 			treatment: initialTreatment || "",
 		});
 		setCurrentStep(1);
@@ -182,45 +181,29 @@ export function MultiStepConsultationForm({
 								transition={{ duration: 0.25, ease: "easeInOut" }}
 								className="space-y-4"
 							>
-								{/* Treatment Input */}
+								{/* Service Infinite Selector */}
 								<FormField
 									control={form.control}
-									name="treatment"
+									name="service_id"
 									render={({ field }) => (
 										<FormItem className="space-y-1.5 text-start">
 											<FormLabel className="small font-medium text-foreground flex items-center gap-1 select-none">
-												<span>{t("consultation.treatment")}</span>
+												<span>{t("consultation.service")}</span>
 												<span className="text-primary font-bold">*</span>
 											</FormLabel>
 											<FormControl>
-												<Input
-													{...field}
-													type="text"
+												<ServiceInfiniteSelect
+													value={field.value}
+													onChange={(serviceId, service) => {
+														field.onChange(serviceId ?? "");
+														if (service) {
+															form.setValue("treatment", service.title);
+														}
+													}}
 													disabled={isSubmitting}
-													placeholder={t("consultation.treatmentPlaceholder")}
-													className="h-10.5 rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans" />
-
-											{/* Quick Treatment Selection Pills */}
-											<div className="flex flex-wrap gap-1.5 pt-1">
-												{POPULAR_TREATMENTS.map((item) => (
-													<button
-														key={item}
-														type="button"
-														onClick={() => field.onChange(item)}
-														className={cn(
-															"text-[11px] px-2.5 py-1 rounded-full border transition-colors cursor-pointer select-none",
-															field.value === item
-																? "bg-primary text-primary-foreground border-primary"
-																: "bg-secondary/40 text-foreground/80 border-border hover:bg-secondary",
-														)}
-													>
-														{item}
-													</button>
-												))}
-											</div>
 										</FormItem>
 									)}
 								/>
@@ -290,9 +273,8 @@ export function MultiStepConsultationForm({
 										name="email"
 										render={({ field }) => (
 											<FormItem className="space-y-1.5 text-start">
-												<FormLabel className="small font-medium text-foreground flex items-center gap-1 select-none">
-													<span>{t("consultation.email")}</span>
-													<span className="text-primary font-bold">*</span>
+												<FormLabel className="small font-medium text-foreground select-none">
+													{t("consultation.email")}
 												</FormLabel>
 												<FormControl>
 													<Input

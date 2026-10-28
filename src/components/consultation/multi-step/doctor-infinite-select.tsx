@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { CheckIcon, ChevronDownIcon, Loader2Icon, SearchIcon, SparklesIcon, XIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, Loader2Icon, SearchIcon, XIcon } from "lucide-react";
 import {
 	Popover,
 	PopoverContent,
@@ -164,7 +164,6 @@ export function DoctorInfiniteSelect({
 							</>
 						) : (
 							<div className="flex items-center gap-2 text-foreground">
-								<SparklesIcon className="size-4 text-primary shrink-0" />
 								<span className="truncate small font-medium">
 									{t("consultation.anyDoctor")}
 								</span>
@@ -228,9 +227,6 @@ export function DoctorInfiniteSelect({
 						)}
 					>
 						<div className="flex items-center gap-2.5 min-w-0">
-							<div className="size-7 rounded-full bg-primary/15 text-primary flex items-center justify-center shrink-0">
-								<SparklesIcon className="size-3.5" />
-							</div>
 							<span className="truncate">{t("consultation.anyDoctor")}</span>
 						</div>
 						{!value && (

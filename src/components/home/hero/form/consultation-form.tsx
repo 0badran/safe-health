@@ -14,8 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { CountrySelect } from "@/components/shared/country-select";
 import useMutateData from "@/hooks/use-mutate-data";
-import { formatCountryMultiLang, getCountryByCode } from "@/lib/countries";
+import { getCountryByCode, getLocalizedCountryName } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
+import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -45,6 +46,7 @@ export function ConsultationForm({
 	onSuccess,
 }: ConsultationFormProps) {
 	const { t } = useTranslation();
+	const locale = useLocale();
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const consultationSchema = useConsultationSchema();
 
@@ -65,7 +67,7 @@ export function ConsultationForm({
 	const handleSubmit = async (data: ConsultationFormValues) => {
 		const countryObj = getCountryByCode(data.country);
 		const formattedCountry = countryObj
-			? formatCountryMultiLang(countryObj)
+			? getLocalizedCountryName(countryObj, locale)
 			: data.country;
 
 		const payload = {

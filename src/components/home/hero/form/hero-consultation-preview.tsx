@@ -55,14 +55,14 @@ export function HeroConsultationPreview({
 
 						{/* Mock Preview Fields */}
 						<div className="flex flex-col gap-3 pointer-events-none">
-							{/* Treatment Preview Field */}
+							{/* Service Preview Field */}
 							<div className="space-y-1 text-start">
 								<span className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1">
-									{t("consultation.treatment")}
+									{t("consultation.service")}
 									<span className="text-primary font-bold">*</span>
 								</span>
 								<div className="h-9.5 md:h-10.5 rounded-xl bg-card border border-input px-3.5 flex items-center justify-between text-muted-foreground small">
-									<span className="truncate">{t("consultation.treatmentPlaceholder")}</span>
+									<span className="truncate">{t("consultation.servicePlaceholder")}</span>
 									<ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
 								</div>
 							</div>

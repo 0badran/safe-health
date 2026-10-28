@@ -24,6 +24,8 @@ export interface ConsultationDrawerProps
 		VariantProps<typeof buttonVariants> {
 	/** Optional pre-selected doctor ID */
 	doctorId?: number | string;
+	/** Optional pre-selected service ID */
+	serviceId?: number | string;
 	/** Optional pre-selected treatment / procedure */
 	treatment?: string;
 	/** Whether to display arrow icon in trigger button */
@@ -46,6 +48,7 @@ export interface ConsultationDrawerProps
 
 export function ConsultationDrawer({
 	doctorId,
+	serviceId,
 	treatment,
 	variant = "secondary",
 	size = "default",
@@ -128,6 +131,7 @@ export function ConsultationDrawer({
 					{open && (
 						<MultiStepConsultationForm
 							initialDoctorId={doctorId}
+							initialServiceId={serviceId ?? treatment}
 							initialTreatment={treatment}
 							onSuccess={handleSuccess}
 						/>
