@@ -85,9 +85,13 @@
 			"titlePart2": "Conversation Aujourd'hui",
 			"description": "Notre équipe consultative est prête à répondre à vos questions, expliquer les détails des interventions et organiser une consultation gratuite.",
 			"fullName": "Nom complet",
-			"fullNamePlaceholder": "ex. Alex Morgan",
+			"fullNamePlaceholder": "ex. Jane Doe",
 			"email": "Adresse e-mail",
-			"emailPlaceholder": "alex@exemple.com",
+			"emailPlaceholder": "jane.doe@example.com",
+			"phone": "Numéro de téléphone",
+			"phonePlaceholder": "+201234567890",
+			"country": "Pays",
+			"countryPlaceholder": "Sélectionnez votre pays",
 			"subject": "Objet de la demande ou spécialité médicale",
 			"subjectPlaceholder": "ex. Consultation rhinoplastie / Demande de tarif",
 			"message": "Détails du message",
@@ -97,7 +101,16 @@
 			"privacyNote": "Vos données médicales sont 100% confidentielles et sécurisées.",
 			"successTitle": "Message reçu avec succès !",
 			"successDesc": "Merci d'avoir contacté Safe Health. Un conseiller médical dédié vous répondra sous 2 heures.",
-			"sendAnother": "Envoyer un autre message"
+			"sendAnother": "Envoyer un autre message",
+			"errorMessage": "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.",
+			"validation": {
+				"nameRequired": "Veuillez entrer votre nom complet.",
+				"emailRequired": "Veuillez entrer votre adresse e-mail.",
+				"emailInvalid": "Veuillez entrer une adresse e-mail valide.",
+				"phoneRequired": "Veuillez entrer votre numéro de téléphone.",
+				"countryRequired": "Veuillez sélectionner votre pays.",
+				"messageRequired": "Veuillez entrer votre message."
+			}
 		}
 	},
 	"blogs": {

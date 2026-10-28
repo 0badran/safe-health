@@ -100,7 +100,7 @@ export function Navbar() {
 			initial={false}
 			animate={{
 				maxWidth: !isMobile ? (isScrolled ? "1100px" : "1360px") : "100%",
-				width: !isMobile ? (isScrolled ? "92%" : "100%") : "100%",
+				width: !isMobile ? (isScrolled ? "92%" : "95%") : "100%",
 				top: !isMobile ? (isScrolled ? "0.75rem" : "1.25rem") : "0",
 			}}
 			transition={{
@@ -108,7 +108,6 @@ export function Navbar() {
 			}}
 			className={cn(
 				"fixed inset-x-0 z-50 mx-auto ",
-				!isMobile && (isScrolled ? "px-2 sm:px-4" : "md:px-12 2xl:px-10"),
 			)}
 		>
 			<div
@@ -116,7 +115,7 @@ export function Navbar() {
 					"flex bg-primary lg:rounded-full border border-white/10 backdrop-blur-md items-center justify-between transition-all duration-300",
 					!isMobile ? (isScrolled
 						? "md:shadow-2xl shadow-primary/80 border-white/20 bg-primary/95 py-0.5"
-						: " bg-primary py-1") : "py-1",
+						: " bg-primary py-1") : "py-1 bg-primary  rounded-b-xl backdrop-blur-sm",
 				)}
 			>
 				{/* Brand Logo from settings or fallback */}

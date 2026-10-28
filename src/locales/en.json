@@ -85,19 +85,32 @@
 			"titlePart2": "Conversation Today",
 			"description": "Our advisory team is ready to answer questions, explain procedure details, and coordinate a free consultation with board-certified surgeons.",
 			"fullName": "Full Name",
-			"fullNamePlaceholder": "e.g. Alex Morgan",
+			"fullNamePlaceholder": "e.g. Jane Doe",
 			"email": "Email Address",
-			"emailPlaceholder": "alex@example.com",
+			"emailPlaceholder": "jane.doe@example.com",
+			"phone": "Phone Number",
+			"phonePlaceholder": "+201234567890",
+			"country": "Country",
+			"countryPlaceholder": "Select your country",
 			"subject": "Inquiry Subject or Medical Specialty",
 			"subjectPlaceholder": "e.g. Rhinoplasty consultation / Cost inquiry",
 			"message": "Message Details",
-			"messagePlaceholder": "Share your questions or health goals so we can assist you...",
+			"messagePlaceholder": "I would like to book a consultation about laser hair removal.",
 			"sendNow": "Send Message Now",
 			"sending": "Sending...",
 			"privacyNote": "Your medical data is 100% confidential and securely protected.",
 			"successTitle": "Message Received Successfully!",
 			"successDesc": "Thank you for reaching out to Safe Health. A dedicated medical advisor will connect with you within 2 hours.",
-			"sendAnother": "Send Another Message"
+			"sendAnother": "Send Another Message",
+			"errorMessage": "An error occurred while sending your message. Please try again.",
+			"validation": {
+				"nameRequired": "Please enter your full name.",
+				"emailRequired": "Please enter your email address.",
+				"emailInvalid": "Please enter a valid email address.",
+				"phoneRequired": "Please enter your phone number.",
+				"countryRequired": "Please select your country.",
+				"messageRequired": "Please enter your message."
+			}
 		}
 	},
 	"blogs": {
