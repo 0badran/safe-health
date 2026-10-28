@@ -111,6 +111,7 @@
 				"emailRequired": "Veuillez entrer votre adresse e-mail.",
 				"emailInvalid": "Veuillez entrer une adresse e-mail valide.",
 				"phoneRequired": "Veuillez entrer votre numéro de téléphone.",
+				"phoneInvalid": "Veuillez entrer un numéro de téléphone valide.",
 				"countryRequired": "Veuillez sélectionner votre pays.",
 				"messageRequired": "Veuillez entrer votre message."
 			}

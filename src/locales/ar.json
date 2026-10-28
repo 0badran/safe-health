@@ -111,6 +111,7 @@
 				"emailRequired": "يرجى إدخال البريد الإلكتروني.",
 				"emailInvalid": "يرجى إدخال بريد إلكتروني صحيح.",
 				"phoneRequired": "يرجى إدخال رقم الهاتف.",
+				"phoneInvalid": "يرجى إدخال رقم هاتف صحيح.",
 				"countryRequired": "يرجى اختيار الدولة.",
 				"messageRequired": "يرجى كتابة تفاصيل الرسالة."
 			}

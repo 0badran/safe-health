@@ -11,7 +11,23 @@ export function useContactSchema() {
 			.trim()
 			.min(1, t("contact.form.validation.emailRequired"))
 			.email(t("contact.form.validation.emailInvalid")),
-		phone: z.string().trim().min(1, t("contact.form.validation.phoneRequired")),
+		phone: z
+			.string()
+			.trim()
+			.min(1, t("contact.form.validation.phoneRequired"))
+			.regex(
+				/^\+?[0-9\s\-()]{7,20}$/,
+				t("contact.form.validation.phoneInvalid"),
+			)
+			.refine(
+				(val) => {
+					const digits = val.replace(/\D/g, "");
+					return digits.length >= 7 && digits.length <= 15;
+				},
+				{
+					message: t("contact.form.validation.phoneInvalid"),
+				},
+			),
 		country: z
 			.string()
 			.trim()

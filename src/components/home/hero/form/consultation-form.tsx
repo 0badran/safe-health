@@ -202,10 +202,14 @@ export function ConsultationForm({
 													disabled={isSubmitting}
 													placeholder={t("consultation.phonePlaceholder")}
 													autoComplete="tel"
+													onChange={(e) => {
+														const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
+														field.onChange(val);
+													}}
 													className="h-9 md:h-10.5 rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
 										</FormItem>
 									)}
 								/>
