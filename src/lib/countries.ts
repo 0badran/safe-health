@@ -17,12 +17,43 @@ const countryMapByNameEn = new Map<string, Country>(
 );
 
 /**
- * Normalizes text for insensitive searching, handling Arabic letter variations.
+ * Common popular country search aliases and alternate names.
+ */
+const COUNTRY_ALIASES: Record<string, string[]> = {
+	US: ["usa", "united states of america", "america"],
+	GB: [
+		"uk",
+		"united kingdom",
+		"great britain",
+		"britain",
+		"england",
+		"scotland",
+		"wales",
+	],
+	AE: ["uae", "united arab emirates", "emirates"],
+	TR: ["turkiye", "turkey"],
+	PS: ["palestine", "palestinian"],
+	NL: ["holland", "netherlands"],
+	CZ: ["czech republic", "czechia"],
+	KR: ["south korea", "korea"],
+	KP: ["north korea"],
+	RU: ["russia", "russian federation"],
+	SZ: ["swaziland", "eswatini"],
+	MM: ["burma", "myanmar"],
+	CD: ["congo drc", "drc", "democratic republic of the congo"],
+	CG: ["republic of the congo"],
+};
+
+/**
+ * Normalizes text for insensitive searching, handling Latin diacritics and Arabic letter variations.
  */
 function normalizeText(text: string): string {
 	return text
 		.toLowerCase()
 		.trim()
+		.normalize("NFD")
+		.replace(/[\u0300-\u036f]/g, "") // strip Latin diacritics (e.g. ü -> u, é -> e, å -> a, ç -> c, ô -> o)
+		.replace(/[’'ʻ`]/g, "") // normalize apostrophes
 		.replace(/[أإآ]/g, "ا")
 		.replace(/ة/g, "ه")
 		.replace(/ى/g, "ي")
@@ -35,10 +66,20 @@ function normalizeText(text: string): string {
 export function getCountryByCode(codeOrName?: string): Country | undefined {
 	if (!codeOrName) return undefined;
 	const trimmed = codeOrName.trim();
-	return (
+	const directMatch =
 		countryMapByCode.get(trimmed.toUpperCase()) ||
-		countryMapByNameEn.get(trimmed.toLowerCase())
-	);
+		countryMapByNameEn.get(trimmed.toLowerCase());
+	if (directMatch) return directMatch;
+
+	// Check common aliases (e.g. USA -> US, UK -> GB, UAE -> AE, Turkiye -> TR)
+	const norm = normalizeText(trimmed);
+	for (const [code, aliases] of Object.entries(COUNTRY_ALIASES)) {
+		if (aliases.some((alias) => normalizeText(alias) === norm)) {
+			return countryMapByCode.get(code);
+		}
+	}
+
+	return undefined;
 }
 
 /**
@@ -77,11 +118,20 @@ export function searchCountries(
 		const frNorm = normalizeText(country.name_fr);
 		const codeNorm = country.code.toLowerCase();
 
-		return (
+		const matchesBase =
 			enNorm.includes(normalizedQuery) ||
 			arNorm.includes(normalizedQuery) ||
 			frNorm.includes(normalizedQuery) ||
-			codeNorm.includes(normalizedQuery)
+			codeNorm.includes(normalizedQuery);
+
+		if (matchesBase) return true;
+
+		const aliases = COUNTRY_ALIASES[country.code];
+		return (
+			aliases !== undefined &&
+			aliases.some((alias) =>
+				normalizeText(alias).includes(normalizedQuery),
+			)
 		);
 	});
 
