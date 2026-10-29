@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CountrySelect } from "@/components/shared/country-select";
 import { ConsultationSuccess } from "@/components/home/hero/form/consultation-success";
 import useMutateData from "@/hooks/use-mutate-data";
-import { getCountryByCode, getLocalizedCountryName } from "@/lib/countries";
+import { getCountryByCode } from "@/lib/countries";
 import { useLanguage, useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 
@@ -121,9 +121,7 @@ export function MultiStepConsultationForm({
 
 		if (data.country) {
 			const countryObj = getCountryByCode(data.country);
-			const formattedCountry = countryObj
-				? getLocalizedCountryName(countryObj, locale)
-				: data.country;
+			const formattedCountry = countryObj ? countryObj.name_en : data.country;
 			formData.append("country", formattedCountry);
 		}
 

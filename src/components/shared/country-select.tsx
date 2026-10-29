@@ -10,12 +10,10 @@ import {
 import { Input } from "@/components/ui/input";
 import {
 	getCountryByCode,
-	getLocalizedCountryName,
 	searchCountries,
 	type Country,
 } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
-import { useLocale } from "next-intl";
 import { cn } from "@/lib/utils";
 
 export interface CountrySelectProps {
@@ -36,7 +34,6 @@ export function CountrySelect({
 	id,
 }: CountrySelectProps) {
 	const { t } = useTranslation();
-	const locale = useLocale();
 	const [isOpen, setIsOpen] = React.useState(false);
 	const [searchQuery, setSearchQuery] = React.useState("");
 	const searchInputRef = React.useRef<HTMLInputElement>(null);
@@ -44,8 +41,8 @@ export function CountrySelect({
 	const selectedCountry = React.useMemo(() => getCountryByCode(value), [value]);
 
 	const filteredCountries = React.useMemo(
-		() => searchCountries(searchQuery, locale),
-		[searchQuery, locale],
+		() => searchCountries(searchQuery),
+		[searchQuery],
 	);
 
 	const handleOpenChange = (open: boolean) => {
@@ -66,12 +63,12 @@ export function CountrySelect({
 	}, [isOpen]);
 
 	const handleSelect = (country: Country) => {
-		onChange?.(country.code);
+		onChange?.(country.name_en);
 		handleOpenChange(false);
 	};
 
 	const displayLabel = selectedCountry
-		? getLocalizedCountryName(selectedCountry, locale)
+		? selectedCountry.name_en
 		: placeholder;
 
 	return (
@@ -140,8 +137,9 @@ export function CountrySelect({
 						</div>
 					) : (
 						filteredCountries.map((country) => {
-							const isSelected = country.code === value;
-							const localizedName = getLocalizedCountryName(country, locale);
+							const isSelected =
+								country.code === value ||
+								country.name_en.toLowerCase() === value?.toLowerCase();
 
 							return (
 								<button
@@ -157,7 +155,7 @@ export function CountrySelect({
 											: "text-foreground hover:bg-accent hover:text-accent-foreground",
 									)}
 								>
-									<span className="truncate">{localizedName}</span>
+									<span className="truncate">{country.name_en}</span>
 									{isSelected && (
 										<CheckIcon className="size-4 shrink-0 text-primary ms-2" />
 									)}

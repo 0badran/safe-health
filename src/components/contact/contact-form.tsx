@@ -19,9 +19,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import useMutateData from "@/hooks/use-mutate-data";
-import { getCountryByCode, getLocalizedCountryName } from "@/lib/countries";
+import { getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
-import { useLocale } from "next-intl";
 import { useContactSchema, type ContactFormValues } from "@/schema/contact";
 
 const DEFAULT_VALUES: ContactFormValues = {
@@ -34,7 +33,6 @@ const DEFAULT_VALUES: ContactFormValues = {
 
 export function ContactForm() {
 	const { t } = useTranslation();
-	const locale = useLocale();
 	const contactSchema = useContactSchema();
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
 
@@ -59,9 +57,7 @@ export function ContactForm() {
 
 	const onSubmit = async (values: ContactFormValues) => {
 		const countryObj = getCountryByCode(values.country);
-		const formattedCountry = countryObj
-			? getLocalizedCountryName(countryObj, locale)
-			: values.country;
+		const formattedCountry = countryObj ? countryObj.name_en : values.country;
 
 		await mutateAsync({
 			...values,

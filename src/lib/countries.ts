@@ -12,6 +12,9 @@ export const COUNTRIES: Country[] = countriesData as Country[];
 const countryMapByCode = new Map<string, Country>(
 	COUNTRIES.map((c) => [c.code.toUpperCase(), c]),
 );
+const countryMapByNameEn = new Map<string, Country>(
+	COUNTRIES.map((c) => [c.name_en.toLowerCase(), c]),
+);
 
 /**
  * Normalizes text for insensitive searching, handling Arabic letter variations.
@@ -27,11 +30,15 @@ function normalizeText(text: string): string {
 }
 
 /**
- * Returns a country by its 2-letter ISO code.
+ * Returns a country by its 2-letter ISO code or English name.
  */
-export function getCountryByCode(code?: string): Country | undefined {
-	if (!code) return undefined;
-	return countryMapByCode.get(code.toUpperCase());
+export function getCountryByCode(codeOrName?: string): Country | undefined {
+	if (!codeOrName) return undefined;
+	const trimmed = codeOrName.trim();
+	return (
+		countryMapByCode.get(trimmed.toUpperCase()) ||
+		countryMapByNameEn.get(trimmed.toLowerCase())
+	);
 }
 
 /**
@@ -60,30 +67,25 @@ export function formatCountryMultiLang(country: Country): string {
  */
 export function searchCountries(
 	query: string,
-	locale: string = "en",
 ): Country[] {
 	const normalizedQuery = normalizeText(query);
 
 	const filtered = COUNTRIES.filter((country) => {
 		if (!normalizedQuery) return true;
-		const arNorm = normalizeText(country.name_ar);
 		const enNorm = normalizeText(country.name_en);
+		const arNorm = normalizeText(country.name_ar);
 		const frNorm = normalizeText(country.name_fr);
 		const codeNorm = country.code.toLowerCase();
 
 		return (
-			arNorm.includes(normalizedQuery) ||
 			enNorm.includes(normalizedQuery) ||
+			arNorm.includes(normalizedQuery) ||
 			frNorm.includes(normalizedQuery) ||
 			codeNorm.includes(normalizedQuery)
 		);
 	});
 
-	// Sort alphabetically by the localized name in current locale
-	return filtered.sort((a, b) => {
-		const nameA = getLocalizedCountryName(a, locale);
-		const nameB = getLocalizedCountryName(b, locale);
-		return nameA.localeCompare(nameB, locale);
-	});
+	// Sort alphabetically by English name
+	return filtered.sort((a, b) => a.name_en.localeCompare(b.name_en, "en"));
 }
 
