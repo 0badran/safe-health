@@ -24,8 +24,6 @@ export function Footer() {
 
 	const yourVisitLinks = [
 		{ label: t("footer.bookConsultation"), href: "/contact" },
-		{ label: t("footer.firstConsultation"), href: "/how-it-works" },
-		{ label: t("footer.aftercare"), href: "/how-it-works#aftercare" },
 		{ label: t("footer.contactTeam"), href: "/contact" },
 	];
 
@@ -161,7 +159,7 @@ export function Footer() {
 								</h3>
 								<ul className="space-y-2.5">
 									{yourVisitLinks.map((link) => (
-										<li key={link.href}>
+										<li key={link.label}>
 											<Link
 												href={link.href}
 												className="transition-colors hover:text-secondary"
