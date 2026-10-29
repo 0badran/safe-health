@@ -425,7 +425,12 @@ export function MultiStepConsultationForm({
 					{/* Submission Error Banner */}
 					{submitError && (
 						<p className="small text-destructive text-center py-1">
-							{submitError.message || t("contact.form.errorMessage")}
+							{(submitError as any)?.status === 413 ||
+							submitError.message?.includes("413") ||
+							submitError.message?.includes("too large") ||
+							submitError.message?.includes("Failed to fetch")
+								? t("consultation.payloadTooLargeError")
+								: submitError.message || t("contact.form.errorMessage")}
 						</p>
 					)}
 

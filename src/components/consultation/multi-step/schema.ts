@@ -57,7 +57,13 @@ export function useMultiStepConsultationSchema() {
 		}),
 		images: z
 			.array(z.custom<File>())
-			.max(3, t("consultation.imagesMaxError")),
+			.max(3, t("consultation.imagesMaxError"))
+			.refine(
+				(files) => files.every((f) => f.size <= 1024 * 1024),
+				{
+					message: t("consultation.imageSizeError"),
+				},
+			),
 	});
 }
 

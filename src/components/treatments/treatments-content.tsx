@@ -73,11 +73,9 @@ export function TreatmentsContent({
 	const [expandedId, setExpandedId] = React.useState<number | null>(null);
 
 	// Auto-expand the first service once loaded if none is expanded
-	React.useEffect(() => {
-		if (expandedId === null && services.length > 0) {
-			setExpandedId(services[0].id);
-		}
-	}, [services, expandedId]);
+	if (expandedId === null && services.length > 0) {
+		setExpandedId(services[0].id);
+	}
 
 	const toggleCategory = (id: number) => {
 		setExpandedId((prev) => (prev === id ? null : id));

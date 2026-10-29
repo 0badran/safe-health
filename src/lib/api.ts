@@ -119,7 +119,19 @@ export async function fetchData<TData = any, TVariables = any>({
 		next,
 	};
 
-	const res = await fetch(endpoint, requestInit);
+	let res: Response;
+	try {
+		res = await fetch(endpoint, requestInit);
+	} catch (networkError: any) {
+		if (isFormData) {
+			throw new ApiError(
+				"Request entity too large or connection closed by server. The uploaded files exceed the server limit.",
+				413,
+				networkError,
+			);
+		}
+		throw networkError;
+	}
 
 	if (!res.ok) {
 		let errorData: any;
@@ -129,7 +141,9 @@ export async function fetchData<TData = any, TVariables = any>({
 			errorData = await res.text();
 		}
 		throw new ApiError(
-			errorData?.message || `API request failed with status ${res.status}`,
+			res.status === 413
+				? "Request entity too large. The uploaded files exceed the server limit."
+				: errorData?.message || `API request failed with status ${res.status}`,
 			res.status,
 			errorData,
 		);
