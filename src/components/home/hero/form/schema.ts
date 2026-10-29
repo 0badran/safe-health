@@ -7,10 +7,8 @@ export function useConsultationSchema() {
 	return z.object({
 		name: z.string().trim().min(1, t("contact.form.validation.nameRequired")),
 		email: z
-			.string()
-			.trim()
-			.min(1, t("contact.form.validation.emailRequired"))
-			.email(t("contact.form.validation.emailInvalid")),
+			.email(t("contact.form.validation.emailInvalid"))
+			.min(1, t("contact.form.validation.emailRequired")),
 		phone: z
 			.string()
 			.trim()
@@ -28,8 +26,14 @@ export function useConsultationSchema() {
 					message: t("contact.form.validation.phoneInvalid"),
 				},
 			),
-		country: z.string().trim().min(1, t("contact.form.validation.countryRequired")),
-		message: z.string().trim().min(1, t("contact.form.validation.messageRequired")),
+		country: z
+			.string()
+			.trim()
+			.min(1, t("contact.form.validation.countryRequired")),
+		message: z
+			.string()
+			.trim()
+			.min(1, t("contact.form.validation.messageRequired")),
 		agree: z.boolean().refine((val) => val === true, {
 			message: t("consultation.agreeRequired"),
 		}),

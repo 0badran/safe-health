@@ -11,8 +11,13 @@ import {
 	AnatomicalFilter,
 	TREATMENT_CATEGORIES,
 } from "./treatments-data";
+import type { ExploreOurTreatmentsSection } from "@/types/treatments";
 
-export function TreatmentsContent() {
+export interface TreatmentsContentProps {
+	exploreSection?: ExploreOurTreatmentsSection;
+}
+
+export function TreatmentsContent({ exploreSection }: TreatmentsContentProps = {}) {
 	const [selectedFilter, setSelectedFilter] = useState<AnatomicalFilter>("Nose");
 	const [expandedId, setExpandedId] = useState<string | null>("plastic-surgery");
 
@@ -76,13 +81,15 @@ export function TreatmentsContent() {
 			<section aria-label="Explore Our Treatments" className="w-full">
 				{/* Section Header */}
 				<div className="flex flex-col items-start gap-3 sm:gap-4 mb-8 sm:mb-12">
-					<SectionBadge>EXPLORE OUR TREATMENTS</SectionBadge>
+					<SectionBadge>
+						{exploreSection?.tag_text || "EXPLORE OUR TREATMENTS"}
+					</SectionBadge>
 					<h2 className="text-heading text-start">
-						A World of Possibilities, Tailored to You.
+						{exploreSection?.headline || "A World of Possibilities, Tailored to You."}
 					</h2>
 					<p className="text-paragraph h5 max-w-3xl leading-relaxed text-start">
-						Explore our range of aesthetic treatment categories and discover the
-						procedures available to support your individual goals.
+						{exploreSection?.description ||
+							"Explore our range of aesthetic treatment categories and discover the procedures available to support your individual goals."}
 					</p>
 				</div>
 
@@ -97,7 +104,7 @@ export function TreatmentsContent() {
 								key={item.id}
 								className={cn(
 									"py-5 sm:py-7 transition-colors",
-									isHighlighted && !isExpanded && "bg-primary/[0.015]"
+									isHighlighted && !isExpanded && "bg-primary/1.5"
 								)}
 							>
 								{/* Category Header Row */}
