@@ -206,6 +206,12 @@
 		"errorLoading": "An error occurred while loading doctors. Please try again.",
 		"emptyDoctors": "No doctors found matching the selected search criteria."
 	},
+	"treatments": {
+		"searchPlaceholder": "Search treatments...",
+		"subServices": "Specialized Procedures",
+		"empty": "No treatments found.",
+		"errorLoading": "An error occurred while loading treatments. Please try again."
+	},
 	"footer": {
 		"explore": "Explore",
 		"yourVisit": "Your Visit",

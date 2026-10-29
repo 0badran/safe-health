@@ -206,6 +206,12 @@
 		"errorLoading": "Une erreur est survenue lors du chargement des médecins. Veuillez réessayer.",
 		"emptyDoctors": "Aucun médecin ne correspond aux critères de recherche sélectionnés."
 	},
+	"treatments": {
+		"searchPlaceholder": "Rechercher des traitements...",
+		"subServices": "Procédures spécialisées",
+		"empty": "Aucun traitement trouvé.",
+		"errorLoading": "Une erreur est survenue lors du chargement des traitements. Veuillez réessayer."
+	},
 	"footer": {
 		"explore": "Explorer",
 		"yourVisit": "Votre Visite",
