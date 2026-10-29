@@ -63,13 +63,13 @@ export default async function TreatmentsPage({ params }: PageProps) {
 						<StepsSection data={journeySection} />
 					</FadeIn>
 				)}
-
-				{ctaData && (
-					<FadeIn>
-						<FooterCta data={ctaData} />
-					</FadeIn>
-				)}
 			</div>
+
+			{ctaData && (
+				<div className="container mt-14">
+					<FooterCta data={ctaData} />
+				</div>
+			)}
 		</main>
 	);
 }
