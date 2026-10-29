@@ -2,6 +2,7 @@
 
 import { TimelineDot } from "@/components/icons";
 import { SectionBadge } from "@/components/shared/section-badge";
+import SectionHeader from "@/components/shared/section-header";
 import type { ApproachToCareSection } from "@/types/about";
 import { motion } from "framer-motion";
 import { ArrowDownIcon } from "lucide-react";
@@ -97,30 +98,11 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 	return (
 		<section>
 			{/* Top Section Header */}
-			<div className="flex flex-col items-center justify-center text-center gap-4 mb-10">
-				{data.tag_text && (
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-40px" }}
-						transition={{ duration: 0.5, ease: EASE }}
-					>
-						<SectionBadge>{data.tag_text}</SectionBadge>
-					</motion.div>
-				)}
-
-				{data.headline && (
-					<motion.h2
-						initial={{ opacity: 0, y: 24 }}
-						whileInView={{ opacity: 1, y: 0 }}
-						viewport={{ once: true, margin: "-40px" }}
-						transition={{ duration: 0.55, delay: 0.1, ease: EASE }}
-						className="text-heading uppercase"
-					>
-						{data.headline}
-					</motion.h2>
-				)}
-			</div>
+			<SectionHeader
+				align="center"
+				subTitle={data.tag_text}
+				title={data.headline || ""}
+			/>
 
 			{/* Timeline Container */}
 			<div ref={containerRef} className="relative">

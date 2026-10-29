@@ -66,6 +66,7 @@ export default function SectionHeader({
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true, margin: "-40px" }}
 					transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+					className="mt-3"
 				>
 					<Link href={buttonLink}>
 						<Button variant="outline" withArrow>

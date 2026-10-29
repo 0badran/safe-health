@@ -2,37 +2,79 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ContactCards } from "@/components/contact/contact-cards";
 import { ContactForm } from "@/components/contact/contact-form";
+import { fetchData, getSeoMetadata } from "@/lib/api";
+import type { ContactPageResponse } from "@/types/contact";
+import type { SettingsApiResponse } from "@/types/settings";
 
-export const metadata: Metadata = {
-	title: "اتصل بنا | Contact Us | Safe Health",
-	description:
-		"تواصل مع فريق Safe Health الطبي لحجز الاستشارات الطبية، معرفة التكاليف والخيارات العلاجية، وتنسيق الرعاية المباشرة على مدار الساعة. Connect with our medical coordinators for personalized care.",
-};
+interface PageProps {
+	params: Promise<{ locale: string }>;
+}
 
-export default function ContactPage() {
+async function getContactPage(lang?: string) {
+	try {
+		const json = await fetchData<ContactPageResponse>({
+			route: "/pages/contact-us",
+			lang,
+		});
+		return json?.data || null;
+	} catch {
+		return null;
+	}
+}
+
+async function getSettings(lang?: string) {
+	try {
+		const json = await fetchData<SettingsApiResponse>({
+			route: "/settings",
+			lang,
+		});
+		return json?.data || null;
+	} catch {
+		return null;
+	}
+}
+
+export async function generateMetadata({
+	params,
+}: PageProps): Promise<Metadata> {
+	const { locale } = await params;
+	const page = await getContactPage(locale);
+	return getSeoMetadata(page?.seo, page?.title);
+}
+
+export default async function ContactPage({ params }: PageProps) {
+	const { locale } = await params;
+	const [page, settings] = await Promise.all([
+		getContactPage(locale),
+		getSettings(locale),
+	]);
+
+	const sections = page?.sections;
+	const hero = sections?.["contact-hero"];
+	const formSection = sections?.["contact-form-section"];
+
 	return (
 		<main className="flex flex-col flex-1">
-			{/* PageHeader with grid background, section badge and fluid display heading */}
-			<PageHeader
-				badge="GET IN TOUCH"
-				title="We're Here to Guide Your Health Journey."
-				description="Connect with our international care specialists for consultations, treatment options, personalized pricing, and seamless medical coordination."
-				badgeKey="contact.header.badge"
-				titleKey="contact.header.title"
-				descriptionKey="contact.header.description"
-			/>
+			{/* PageHeader with dynamic content from /pages/contact-us */}
+			{hero && (
+				<PageHeader
+					badge={hero.tag_text}
+					title={hero.headline}
+					description={hero.description}
+				/>
+			)}
 
 			{/* Main Content: 2-column Grid matching the project layout & theme */}
 			<section className="container">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-					{/* Column 1: 4 Contact Cards & Location Map */}
+					{/* Column 1: Contact Cards & Location Map from /settings API */}
 					<div className="lg:col-span-6">
-						<ContactCards />
+						<ContactCards settings={settings} />
 					</div>
 
-					{/* Column 2: Contact Form */}
-					<div className="lg:col-span-6">
-						<ContactForm />
+					{/* Column 2: Contact Form with dynamic section data */}
+					<div className="lg:col-span-6 mb-14">
+						<ContactForm sectionData={formSection} />
 					</div>
 				</div>
 			</section>

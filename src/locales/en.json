@@ -228,7 +228,10 @@
 		"searchPlaceholder": "Search treatments...",
 		"subServices": "Specialized Procedures",
 		"empty": "No treatments found.",
-		"errorLoading": "An error occurred while loading treatments. Please try again."
+		"errorLoading": "An error occurred while loading treatments. Please try again.",
+		"anatomicalFocus": "ANATOMICAL FOCUS",
+		"whereToStart": "Where Would You Like to Start?",
+		"resetButton": "Reset"
 	},
 	"beforeAfter": {
 		"searchPlaceholder": "Search cases and treatments...",

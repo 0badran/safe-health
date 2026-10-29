@@ -65,7 +65,7 @@ export function HealthcareOptionsSection({
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 					preserveAspectRatio="none"
-					className="hidden lg:block size-full text-wallpaper"
+					className="hidden lg:block size-full text-wallpaper rtl:scale-x-[-1]"
 					aria-hidden="true"
 				>
 					<path

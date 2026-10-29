@@ -5,9 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { Minus, Plus, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SectionBadge } from "@/components/shared/section-badge";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { FallbackImage } from "@/components/shared/fallback-image";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AppPagination from "@/components/shared/app-pagination";
 import { TreatmentsSkeleton } from "./treatments-skeleton";
@@ -15,10 +15,16 @@ import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
 import type { ExploreOurTreatmentsSection } from "@/types/treatments";
 import type { ServicesApiResponse } from "@/types/services";
+import type {
+	AnatomicalArea,
+	AnatomicalAreasResponse,
+} from "@/types/anatomical-areas";
+import SectionHeader from "@/components/shared/section-header";
 
 export interface TreatmentsContentProps {
 	exploreSection?: ExploreOurTreatmentsSection;
 	initialData?: ServicesApiResponse | null;
+	initialAreas?: AnatomicalArea[] | null;
 }
 
 const DEFAULT_SERVICE_IMAGES = [
@@ -31,6 +37,7 @@ const DEFAULT_SERVICE_IMAGES = [
 export function TreatmentsContent({
 	exploreSection,
 	initialData,
+	initialAreas,
 }: TreatmentsContentProps = {}) {
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -38,16 +45,27 @@ export function TreatmentsContent({
 	const searchParams = useSearchParams();
 
 	const page = Number(searchParams.get("page")) || 1;
-	const initialSearch = searchParams.get("search") || "";
-	const [searchInput, setSearchInput] = React.useState(initialSearch);
+	const currentSearchParam = searchParams.get("search") || "";
+	const currentAreaId = searchParams.get("area_id") || "";
+	const [searchInput, setSearchInput] = React.useState(currentSearchParam);
 
 	// Synchronize when URL search param changes externally (e.g. back/forward)
-	const currentSearchParam = searchParams.get("search") || "";
-	const [prevSearchParam, setPrevSearchParam] = React.useState(currentSearchParam);
+	const [prevSearchParam, setPrevSearchParam] =
+		React.useState(currentSearchParam);
 	if (currentSearchParam !== prevSearchParam) {
 		setPrevSearchParam(currentSearchParam);
 		setSearchInput(currentSearchParam);
 	}
+
+	const { data: areasResponse, isLoading: isAreasLoading } =
+		useFetchData<AnatomicalAreasResponse>({
+			route: "/anatomical-areas",
+			initialData: initialAreas
+				? { key: "success", message: "success", data: initialAreas }
+				: undefined,
+		});
+
+	const areas = areasResponse?.data ?? initialAreas ?? [];
 
 	const {
 		data: apiResponse,
@@ -58,10 +76,11 @@ export function TreatmentsContent({
 		params: {
 			page: String(page),
 			search: currentSearchParam || undefined,
+			area_id: currentAreaId || undefined,
 		},
 		initialData:
-			!currentSearchParam && page === 1
-				? initialData ?? undefined
+			!currentSearchParam && !currentAreaId && page === 1
+				? (initialData ?? undefined)
 				: undefined,
 	});
 
@@ -79,6 +98,17 @@ export function TreatmentsContent({
 
 	const toggleCategory = (id: number) => {
 		setExpandedId((prev) => (prev === id ? null : id));
+	};
+
+	const handleAreaSelect = (areaId?: string) => {
+		const params = new URLSearchParams(searchParams.toString());
+		if (areaId) {
+			params.set("area_id", areaId);
+		} else {
+			params.delete("area_id");
+		}
+		params.delete("page"); // Reset to page 1 on filter change
+		router.push(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
 	// Debounce or commit search to URL
@@ -108,24 +138,74 @@ export function TreatmentsContent({
 		router.push(`${pathname}?${params.toString()}`, { scroll: false });
 	};
 
+	const clearAllFilters = () => {
+		setSearchInput("");
+		const params = new URLSearchParams(searchParams.toString());
+		params.delete("search");
+		params.delete("area_id");
+		params.delete("page");
+		router.push(`${pathname}?${params.toString()}`, { scroll: false });
+	};
+
 	return (
 		<div className="space-y-12 sm:space-y-16">
+			{/* Top Section: Anatomical Focus Filter Bar */}
+			{(areas.length > 0 || isAreasLoading) && (
+				<section
+					aria-label={t("treatments.anatomicalFocus")}
+					className="rounded-3xl bg-primary/10 dark:bg-muted/30 p-4 border border-border/15 shadow-xs"
+				>
+					<p className="small font-semibold tracking-wider uppercase">
+						{t("treatments.anatomicalFocus")}
+					</p>
+					<h3 className="h3 font-heading font-semibold text-primary mt-1 mb-5 sm:mb-6">
+						{t("treatments.whereToStart")}
+					</h3>
+
+					<div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+						{isAreasLoading && areas.length === 0 && (
+							<>
+								{Array.from({ length: 7 }).map((_, i) => (
+									<div
+										key={i}
+										className="h-9 w-20 rounded-full bg-white/70 dark:bg-card/70 animate-pulse"
+									/>
+								))}
+							</>
+						)}
+
+						{areas.map((area) => {
+							const isSelected = String(area.id) === currentAreaId;
+							return (
+								<button
+									key={area.id}
+									type="button"
+									onClick={() =>
+										handleAreaSelect(isSelected ? undefined : String(area.id))
+									}
+									className={cn(
+										"rounded-full px-5 sm:px-6 py-2 small transition-all cursor-pointer select-none",
+										isSelected
+											? "bg-primary text-primary-foreground font-medium shadow-xs scale-[1.02]"
+											: "bg-white dark:bg-card text-foreground/90 hover:text-primary hover:bg-white/90 font-medium shadow-2xs border border-transparent hover:border-primary/10",
+									)}
+								>
+									{area.name}
+								</button>
+							);
+						})}
+					</div>
+				</section>
+			)}
+
 			{/* Main Section: Explore Our Treatments */}
 			<section aria-label="Explore Our Treatments" className="w-full">
 				{/* Section Header */}
-				<div className="flex flex-col items-start gap-3 sm:gap-4 mb-8 sm:mb-10">
-					<SectionBadge>
-						{exploreSection?.tag_text || t("navbar.treatments")}
-					</SectionBadge>
-					<h2 className="text-heading text-start">
-						{exploreSection?.headline || t("navbar.treatments")}
-					</h2>
-					{exploreSection?.description && (
-						<p className="text-paragraph h5 max-w-3xl leading-relaxed text-start">
-							{exploreSection.description}
-						</p>
-					)}
-				</div>
+				<SectionHeader
+					subTitle={exploreSection?.tag_text }
+					title={exploreSection?.headline || t("navbar.treatments")}
+					desc={exploreSection?.description}
+				/>
 
 				{/* Search Bar */}
 				<div className="relative max-w-md w-full mb-8">
@@ -150,9 +230,7 @@ export function TreatmentsContent({
 				</div>
 
 				{/* Loading Skeleton */}
-				{isLoading && services.length === 0 && (
-					<TreatmentsSkeleton count={4} />
-				)}
+				{isLoading && services.length === 0 && <TreatmentsSkeleton count={4} />}
 
 				{/* Error State */}
 				{!isLoading && isError && (
@@ -165,10 +243,19 @@ export function TreatmentsContent({
 
 				{/* Empty State */}
 				{!isLoading && !isError && services.length === 0 && (
-					<div className="rounded-2xl border border-border/60 bg-card p-12 text-center my-6">
+					<div className="rounded-2xl border border-border/60 bg-card p-12 text-center my-6 space-y-4">
 						<p className="text-muted-foreground font-medium small">
 							{t("treatments.empty")}
 						</p>
+						{(currentSearchParam || currentAreaId) && (
+							<Button
+								variant="outline"
+								onClick={clearAllFilters}
+								className="rounded-full small"
+							>
+								{t("treatments.resetButton")}
+							</Button>
+						)}
 					</div>
 				)}
 
@@ -181,9 +268,7 @@ export function TreatmentsContent({
 								(page - 1) * 15 + index + 1,
 							).padStart(2, "0");
 							const fallbackImage =
-								DEFAULT_SERVICE_IMAGES[
-									index % DEFAULT_SERVICE_IMAGES.length
-								];
+								DEFAULT_SERVICE_IMAGES[index % DEFAULT_SERVICE_IMAGES.length];
 
 							return (
 								<div

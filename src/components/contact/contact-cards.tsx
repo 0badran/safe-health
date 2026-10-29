@@ -10,18 +10,33 @@ import { BootstrapWhatsappIcon } from "@/components/icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "@/lib/language-context";
 import useSettings from "@/hooks/use-settings";
+import type { SettingsData } from "@/types/settings";
 
-export function ContactCards() {
+interface ContactCardsProps {
+	settings?: SettingsData | null;
+}
+
+export function ContactCards({ settings: propSettings }: ContactCardsProps = {}) {
 	const { t } = useTranslation();
-	const { settings, isLoading } = useSettings();
+	const { settings: contextSettings, isLoading } = useSettings();
+	const settings = propSettings ?? contextSettings;
 
-	const contactItems = [];
+	if (isLoading && !settings) {
+		return null;
+	}
+
+	const contactItems: Array<{
+		title: string;
+		value: string;
+		href?: string;
+		icon: React.ComponentType<{ className?: string }>;
+		colorClass: string;
+	}> = [];
 
 	if (settings?.phone) {
 		contactItems.push({
 			title: t("contact.cards.phone.title"),
 			value: settings.phone,
-			subValue: t("contact.cards.phone.subValue"),
 			href: `tel:${settings.phone.replace(/\s+/g, "")}`,
 			icon: PhoneCallIcon,
 			colorClass: "bg-primary/10 text-primary",
@@ -31,8 +46,7 @@ export function ContactCards() {
 	if (settings?.whatsapp_url) {
 		contactItems.push({
 			title: t("contact.cards.whatsapp.title"),
-			value: settings.phone || "WhatsApp",
-			subValue: t("contact.cards.whatsapp.subValue"),
+			value: settings.phone || settings.whatsapp_url,
 			href: settings.whatsapp_url,
 			icon: BootstrapWhatsappIcon,
 			colorClass: "bg-primary/10 text-primary",
@@ -43,7 +57,6 @@ export function ContactCards() {
 		contactItems.push({
 			title: t("contact.cards.email.title"),
 			value: settings.email,
-			subValue: t("contact.cards.email.subValue"),
 			href: `mailto:${settings.email}`,
 			icon: MailIcon,
 			colorClass: "bg-secondary/15 text-secondary",
@@ -54,15 +67,10 @@ export function ContactCards() {
 		contactItems.push({
 			title: t("contact.cards.hq.title"),
 			value: settings.address,
-			subValue: t("contact.cards.hq.subValue"),
-			href: settings.google_maps_url || "#",
+			href: settings.google_maps_url || undefined,
 			icon: MapPinIcon,
 			colorClass: "bg-primary/10 text-primary",
 		});
-	}
-
-	if (isLoading) {
-		return null;
 	}
 
 	if (contactItems.length === 0 && !settings?.google_maps_url) {
@@ -92,16 +100,19 @@ export function ContactCards() {
 										<span className="block small font-semibold text-muted-foreground uppercase tracking-wider">
 											{item.title}
 										</span>
-										<Link
-											href={item.href}
-											dir="ltr"
-											className="block font-heading h6 font-bold text-foreground transition-colors hover:text-primary truncate"
-										>
-											{item.value}
-										</Link>
-										<span className="block small text-muted-foreground">
-											{item.subValue}
-										</span>
+										{item.href ? (
+											<Link
+												href={item.href}
+												dir="ltr"
+												className="block font-heading h6 font-bold text-foreground transition-colors hover:text-primary truncate"
+											>
+												{item.value}
+											</Link>
+										) : (
+											<span className="block font-heading h6 font-bold text-foreground truncate">
+												{item.value}
+											</span>
+										)}
 									</div>
 								</CardContent>
 							</Card>

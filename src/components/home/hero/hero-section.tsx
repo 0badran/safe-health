@@ -21,7 +21,7 @@ export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
 			{/* Background Image & Texture Overlay */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute  bg-primary inset-0 z-0 select-none overflow-hidden"
+				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden"
 				style={{
 					maskImage: `url(${"/images/hero-bg.png"})`,
 					WebkitMaskImage: `url(${"/images/hero-bg.png"})`,

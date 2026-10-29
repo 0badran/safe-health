@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
 	CheckIcon,
 	ChevronDownIcon,
@@ -7,7 +8,6 @@ import {
 	SearchIcon,
 	XIcon,
 } from "lucide-react";
-import * as React from "react";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -18,14 +18,12 @@ import {
 import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
-import type {
-	AnatomicalArea,
-	AnatomicalAreasResponse,
-} from "@/types/anatomical-areas";
+import type { ServiceItem, ServicesApiResponse } from "@/types/services";
 
 export interface ServiceInfiniteSelectProps {
 	value?: number | string;
-	onChange: (value?: number | string, item?: AnatomicalArea) => void;
+	selectedTitle?: string;
+	onChange: (value?: number | string, item?: ServiceItem) => void;
 	disabled?: boolean;
 	className?: string;
 	placeholder?: string;
@@ -33,6 +31,7 @@ export interface ServiceInfiniteSelectProps {
 
 export function ServiceInfiniteSelect({
 	value,
+	selectedTitle,
 	onChange,
 	disabled = false,
 	className,
@@ -40,31 +39,38 @@ export function ServiceInfiniteSelect({
 }: ServiceInfiniteSelectProps) {
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = React.useState(false);
-	const [hasOpened, setHasOpened] = React.useState(false);
 	const [searchQuery, setSearchQuery] = React.useState("");
+	const [debouncedQuery, setDebouncedQuery] = React.useState("");
 	const searchInputRef = React.useRef<HTMLInputElement>(null);
 
-	// Fetch anatomical areas ONLY when the user opens the list
-	const { data: apiResponse, isLoading } =
-		useFetchData<AnatomicalAreasResponse>({
-			route: "/anatomical-areas",
-			enabled: isOpen || hasOpened,
-		});
+	// Debounce search query by 300ms for backend search
+	React.useEffect(() => {
+		const handler = setTimeout(() => {
+			setDebouncedQuery(searchQuery.trim());
+		}, 300);
+		return () => clearTimeout(handler);
+	}, [searchQuery]);
 
-	const areas = apiResponse?.data ?? [];
+	// Real client-side HTTP request via useFetchData with backend search
+	const { data: apiResponse, isLoading } = useFetchData<ServicesApiResponse>({
+		route: "/services",
+		params: {
+			search: debouncedQuery || undefined,
+			per_page: 15,
+		},
+	});
 
-	// Local filtering by search query
-	const filteredAreas = React.useMemo(() => {
-		if (!searchQuery.trim()) return areas;
-		const q = searchQuery.toLowerCase().trim();
-		return areas?.filter((area) => area.name.toLowerCase().includes(q));
-	}, [areas, searchQuery]);
+	const services = React.useMemo(() => {
+		return (apiResponse?.data ?? []).filter(
+			(service) => service.is_active !== false,
+		);
+	}, [apiResponse]);
 
-	// Find currently selected area by ID
-	const selectedArea = React.useMemo(() => {
+	// Find currently selected service by ID
+	const selectedService = React.useMemo(() => {
 		if (value === undefined || value === null || value === "") return undefined;
-		return areas.find((a) => String(a.id) === String(value));
-	}, [value, areas]);
+		return services.find((s) => String(s.id) === String(value));
+	}, [value, services]);
 
 	// Focus search input on popover open
 	React.useEffect(() => {
@@ -78,20 +84,21 @@ export function ServiceInfiniteSelect({
 
 	const handleOpenChange = (open: boolean) => {
 		setIsOpen(open);
-		if (open) {
-			setHasOpened(true);
-		} else {
+		if (!open) {
 			setSearchQuery("");
 		}
 	};
 
-	const handleSelect = (area?: AnatomicalArea) => {
-		onChange(area?.id, area);
+	const handleSelect = (service?: ServiceItem) => {
+		onChange(service?.id, service);
 		handleOpenChange(false);
 	};
 
 	const displayPlaceholder =
 		placeholder ?? t("consultation.servicePlaceholder");
+
+	const currentDisplayTitle =
+		selectedService?.title || selectedTitle || undefined;
 
 	return (
 		<Popover open={isOpen} onOpenChange={handleOpenChange}>
@@ -108,9 +115,9 @@ export function ServiceInfiniteSelect({
 					)}
 				>
 					<div className="flex items-center gap-2 min-w-0 flex-1">
-						{selectedArea ? (
+						{currentDisplayTitle ? (
 							<span className="truncate font-medium text-foreground">
-								{selectedArea.name}
+								{currentDisplayTitle}
 							</span>
 						) : (
 							<span className="truncate text-muted-foreground">
@@ -120,7 +127,7 @@ export function ServiceInfiniteSelect({
 					</div>
 
 					<div className="flex items-center gap-1.5 shrink-0 ms-2">
-						{selectedArea && !disabled && (
+						{value && !disabled && (
 							<span
 								role="button"
 								tabIndex={0}
@@ -155,7 +162,7 @@ export function ServiceInfiniteSelect({
 				sideOffset={6}
 				className="w-(--radix-popover-trigger-width) min-w-70 p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-xl z-50"
 			>
-				{/* Search Box */}
+				{/* Search Box - triggers backend search via debouncedQuery */}
 				<div className="relative mb-2 flex items-center">
 					<SearchIcon className="absolute inset-s-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
 					<Input
@@ -178,13 +185,13 @@ export function ServiceInfiniteSelect({
 					)}
 				</div>
 
-				{/* Anatomical Areas List */}
+				{/* Services List */}
 				<div
 					role="listbox"
 					className="max-h-60 overflow-y-auto space-y-1 scrollbar-thin scrollbar-thumb-muted-foreground/20 pe-1"
 				>
 					{/* Loading State */}
-					{isLoading && areas.length === 0 && (
+					{isLoading && (
 						<div className="py-6 flex items-center justify-center gap-2 small text-muted-foreground">
 							<Loader2Icon className="size-4 animate-spin text-primary" />
 							<span>{t("consultation.loadingServices")}</span>
@@ -192,43 +199,53 @@ export function ServiceInfiniteSelect({
 					)}
 
 					{/* Empty State */}
-					{!isLoading && filteredAreas.length === 0 && (
+					{!isLoading && services.length === 0 && (
 						<div className="py-6 text-center small text-muted-foreground">
 							{t("consultation.noServiceFound")}
 						</div>
 					)}
 
-					{/* Area Items */}
-					{filteredAreas.map((area: AnatomicalArea) => {
-						const isSelected = String(area.id) === String(value);
+					{/* Service Items from API */}
+					{!isLoading &&
+						services.map((service: ServiceItem) => {
+							const isSelected = String(service.id) === String(value);
 
-						return (
-							<button
-								key={area.id}
-								type="button"
-								role="option"
-								aria-selected={isSelected}
-								onClick={() => handleSelect(area)}
-								className={cn(
-									"flex w-full items-center justify-between px-2.5 py-2 rounded-lg small font-sans text-start transition-colors cursor-pointer",
-									isSelected
-										? "bg-primary/10 text-primary font-medium"
-										: "text-foreground hover:bg-accent hover:text-accent-foreground",
-								)}
-							>
-								<span className="truncate font-medium">{area.name}</span>
+							return (
+								<button
+									key={service.id}
+									type="button"
+									role="option"
+									aria-selected={isSelected}
+									onClick={() => handleSelect(service)}
+									className={cn(
+										"flex w-full items-center justify-between px-2.5 py-2 rounded-lg small font-sans text-start transition-colors cursor-pointer",
+										isSelected
+											? "bg-primary/10 text-primary font-medium"
+											: "text-foreground hover:bg-accent hover:text-accent-foreground",
+									)}
+								>
+									<div className="flex flex-col min-w-0 flex-1">
+										<span className="truncate font-medium">
+											{service.title}
+										</span>
+										{service.sub_services &&
+											service.sub_services.length > 0 && (
+												<span className="truncate text-muted-foreground text-[11px] leading-tight">
+													{service.sub_services.slice(0, 3).join(" • ")}
+												</span>
+											)}
+									</div>
 
-								{isSelected && (
-									<CheckIcon className="size-4 shrink-0 text-primary ms-2" />
-								)}
-							</button>
-						);
-					})}
+									{isSelected && (
+										<CheckIcon className="size-4 shrink-0 text-primary ms-2" />
+									)}
+								</button>
+							);
+						})}
 				</div>
 			</PopoverContent>
 		</Popover>
 	);
 }
 
-export const AnatomicalAreaSelect = ServiceInfiniteSelect;
 export default ServiceInfiniteSelect;

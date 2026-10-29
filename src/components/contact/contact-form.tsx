@@ -22,6 +22,7 @@ import useMutateData from "@/hooks/use-mutate-data";
 import { getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
 import { useContactSchema, type ContactFormValues } from "@/schema/contact";
+import type { ContactFormSection } from "@/types/contact";
 
 const DEFAULT_VALUES: ContactFormValues = {
 	name: "",
@@ -31,7 +32,11 @@ const DEFAULT_VALUES: ContactFormValues = {
 	message: "",
 };
 
-export function ContactForm() {
+interface ContactFormProps {
+	sectionData?: ContactFormSection;
+}
+
+export function ContactForm({ sectionData }: ContactFormProps = {}) {
 	const { t } = useTranslation();
 	const contactSchema = useContactSchema();
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
@@ -75,18 +80,25 @@ export function ContactForm() {
 		<Card className="py-0">
 			<CardContent className="p-8 sm:p-10 space-y-6">
 				{/* Header with SectionBadge & Title matching template */}
-				<div className="space-y-3">
-					<SectionBadge>{t("contact.form.badge")}</SectionBadge>
+				{sectionData && (
+					<div className="space-y-3">
+						{sectionData.tag_text && (
+							<SectionBadge>{sectionData.tag_text}</SectionBadge>
+						)}
 
-					<h2 className="font-heading h2 font-medium tracking-tight text-foreground">
-						<span className="text-primary">{t("contact.form.titlePart1")}</span>{" "}
-						{t("contact.form.titlePart2")}
-					</h2>
+						{sectionData.headline && (
+							<h2 className="font-heading h2 font-medium tracking-tight text-foreground">
+								{sectionData.headline}
+							</h2>
+						)}
 
-					<p className="text-paragraph small leading-relaxed">
-						{t("contact.form.description")}
-					</p>
-				</div>
+						{sectionData.description && (
+							<p className="text-paragraph small leading-relaxed">
+								{sectionData.description}
+							</p>
+						)}
+					</div>
+				)}
 
 				{isSubmitted ? (
 					<div className="flex flex-col items-center justify-center text-center py-10 space-y-4 rounded-2xl bg-secondary/10 border border-border p-6">

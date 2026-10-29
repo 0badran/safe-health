@@ -243,10 +243,11 @@ export function MultiStepConsultationForm({
 											<FormControl>
 												<ServiceInfiniteSelect
 													value={field.value}
-													onChange={(areaId, area) => {
-														field.onChange(areaId ?? "");
-														if (area) {
-															form.setValue("treatment", area.name);
+													selectedTitle={form.watch("treatment")}
+													onChange={(serviceId, service) => {
+														field.onChange(serviceId ?? "");
+														if (service) {
+															form.setValue("treatment", service.title);
 														}
 													}}
 													disabled={isSubmitting}

@@ -228,7 +228,10 @@
 		"searchPlaceholder": "Rechercher des traitements...",
 		"subServices": "Procédures spécialisées",
 		"empty": "Aucun traitement trouvé.",
-		"errorLoading": "Une erreur est survenue lors du chargement des traitements. Veuillez réessayer."
+		"errorLoading": "Une erreur est survenue lors du chargement des traitements. Veuillez réessayer.",
+		"anatomicalFocus": "FOCUS ANATOMIQUE",
+		"whereToStart": "Par où souhaitez-vous commencer ?",
+		"resetButton": "Réinitialiser"
 	},
 	"beforeAfter": {
 		"searchPlaceholder": "Rechercher des cas et des traitements...",

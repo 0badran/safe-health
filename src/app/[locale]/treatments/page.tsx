@@ -9,12 +9,13 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { fetchData, getSeoMetadata } from "@/lib/api";
 import type { TreatmentsPageResponse } from "@/types/treatments";
 import type { ServicesApiResponse } from "@/types/services";
+import type { AnatomicalAreasResponse } from "@/types/anatomical-areas";
 
 export const instant = false;
 
 interface PageProps {
 	params: Promise<{ locale: string }>;
-	searchParams?: Promise<{ page?: string; search?: string }>;
+	searchParams?: Promise<{ page?: string; search?: string; area_id?: string }>;
 }
 
 async function getTreatmentsPage(lang?: string) {
@@ -29,7 +30,12 @@ async function getTreatmentsPage(lang?: string) {
 	}
 }
 
-async function getServices(lang?: string, page: number = 1, search?: string) {
+async function getServices(
+	lang?: string,
+	page: number = 1,
+	search?: string,
+	area_id?: string,
+) {
 	try {
 		const json = await fetchData<ServicesApiResponse>({
 			route: "/services",
@@ -37,11 +43,24 @@ async function getServices(lang?: string, page: number = 1, search?: string) {
 			params: {
 				page: String(page),
 				search,
+				area_id,
 			},
 		});
 		return json || null;
 	} catch {
 		return null;
+	}
+}
+
+async function getAnatomicalAreas(lang?: string) {
+	try {
+		const json = await fetchData<AnatomicalAreasResponse>({
+			route: "/anatomical-areas",
+			lang,
+		});
+		return json?.data || [];
+	} catch {
+		return [];
 	}
 }
 
@@ -64,10 +83,12 @@ export default async function TreatmentsPage({
 	const resolvedSearchParams = searchParams ? await searchParams : undefined;
 	const pageParam = Number(resolvedSearchParams?.page) || 1;
 	const searchParam = resolvedSearchParams?.search;
+	const areaIdParam = resolvedSearchParams?.area_id;
 
-	const [page, servicesResponse] = await Promise.all([
+	const [page, servicesResponse, anatomicalAreas] = await Promise.all([
 		getTreatmentsPage(locale),
-		getServices(locale, pageParam, searchParam),
+		getServices(locale, pageParam, searchParam, areaIdParam),
+		getAnatomicalAreas(locale),
 	]);
 
 	const sections = page?.sections;
@@ -93,6 +114,7 @@ export default async function TreatmentsPage({
 					<TreatmentsContent
 						exploreSection={exploreSection}
 						initialData={servicesResponse}
+						initialAreas={anatomicalAreas}
 					/>
 				</Suspense>
 
