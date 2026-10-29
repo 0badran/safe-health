@@ -86,9 +86,9 @@ export function HealthcareOptionsSection({
 						<p className="text-paragraph h5 leading-relaxed">{description}</p>
 					)}
 
-					<Link href="/services">
+					<Link href="/treatments">
 						<Button variant="default" withArrow>
-							{t("hero.viewServices")}
+							{t("hero.viewTreatments")}
 						</Button>
 					</Link>
 				</div>
@@ -162,7 +162,7 @@ export function HealthcareOptionsSection({
 
 										{/* Circular Action Arrow Overlay */}
 										<Link
-											href={`/services/${card.slug}`}
+											href={`/treatments/${card.slug}`}
 											className="absolute bottom-3 inset-e-3 size-9 sm:size-10 rounded-full flex items-center justify-center bg-white/38 backdrop-blur-sm transition-all duration-300 shadow-sm text-primary"
 											aria-label={card.title}
 										>

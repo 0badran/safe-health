@@ -15,7 +15,7 @@ export function Footer() {
 	const { t } = useTranslation();
 
 	const exploreLinks = [
-		{ label: t("footer.treatments"), href: "/services" },
+		{ label: t("footer.treatments"), href: "/treatments" },
 		{ label: t("footer.ourApproach"), href: "/about" },
 		{ label: t("footer.ourTeam"), href: "/doctors" },
 		{ label: t("footer.beforeAfter"), href: "/before-after" },
@@ -31,8 +31,6 @@ export function Footer() {
 
 	const informationLinks = [
 		{ label: t("footer.privacyNotice"), href: "/privacy" },
-		{ label: t("footer.cookiePreferences"), href: "#cookie-preferences" },
-		{ label: t("footer.accessibility"), href: "#accessibility" },
 		{ label: t("footer.termsOfUse"), href: "/terms" },
 	];
 

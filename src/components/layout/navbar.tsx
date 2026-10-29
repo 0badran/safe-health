@@ -90,7 +90,7 @@ export function Navbar() {
 	const navLinks = [
 		{ href: "/", label: t("navbar.home") },
 		{ href: "/about", label: t("navbar.aboutUs") },
-		{ href: "/services", label: t("navbar.treatments") },
+		{ href: "/treatments", label: t("navbar.treatments") },
 		{ href: "/doctors", label: t("navbar.ourDoctors") },
 		{ href: "/#patient-journey", label: t("navbar.patientJourney") },
 		{ href: "/before-after", label: t("navbar.beforeAfter") },

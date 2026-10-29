@@ -9,21 +9,21 @@ import { ConsultationDrawer } from "@/components/consultation/consultation-drawe
 import {
 	ANATOMICAL_FILTERS,
 	AnatomicalFilter,
-	SERVICE_CATEGORIES,
-} from "./services-data";
+	TREATMENT_CATEGORIES,
+} from "./treatments-data";
 
-export function ServicesContent() {
+export function TreatmentsContent() {
 	const [selectedFilter, setSelectedFilter] = useState<AnatomicalFilter>("Nose");
 	const [expandedId, setExpandedId] = useState<string | null>("plastic-surgery");
 
 	const handleFilterSelect = (filter: AnatomicalFilter) => {
 		setSelectedFilter(filter);
-		// Auto-expand the first service matching the selected anatomical filter if current expanded doesn't match
-		const currentCategory = SERVICE_CATEGORIES.find(
+		// Auto-expand the first treatment matching the selected anatomical filter if current expanded doesn't match
+		const currentCategory = TREATMENT_CATEGORIES.find(
 			(cat) => cat.id === expandedId
 		);
 		if (!currentCategory || !currentCategory.anatomicalFocus.includes(filter)) {
-			const matchingCategory = SERVICE_CATEGORIES.find((cat) =>
+			const matchingCategory = TREATMENT_CATEGORIES.find((cat) =>
 				cat.anatomicalFocus.includes(filter)
 			);
 			if (matchingCategory) {
@@ -72,23 +72,23 @@ export function ServicesContent() {
 				</div>
 			</section>
 
-			{/* Main Section: Explore Our Services */}
-			<section aria-label="Explore Our Services" className="w-full">
+			{/* Main Section: Explore Our Treatments */}
+			<section aria-label="Explore Our Treatments" className="w-full">
 				{/* Section Header */}
 				<div className="flex flex-col items-start gap-3 sm:gap-4 mb-8 sm:mb-12">
-					<SectionBadge>EXPLORE OUR SERVICES</SectionBadge>
+					<SectionBadge>EXPLORE OUR TREATMENTS</SectionBadge>
 					<h2 className="text-heading text-start">
 						A World of Possibilities, Tailored to You.
 					</h2>
 					<p className="text-paragraph h5 max-w-3xl leading-relaxed text-start">
-						Explore our range of aesthetic service categories and discover the
+						Explore our range of aesthetic treatment categories and discover the
 						procedures available to support your individual goals.
 					</p>
 				</div>
 
 				{/* Accordion Categories List */}
 				<div className="divide-y divide-border/60">
-					{SERVICE_CATEGORIES.map((item) => {
+					{TREATMENT_CATEGORIES.map((item) => {
 						const isExpanded = expandedId === item.id;
 						const isHighlighted = item.anatomicalFocus.includes(selectedFilter);
 
@@ -222,5 +222,5 @@ export function ServicesContent() {
 	);
 }
 
-export const TreatmentsContent = ServicesContent;
-export default ServicesContent;
+export const ServicesContent = TreatmentsContent;
+export default TreatmentsContent;

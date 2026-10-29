@@ -21,10 +21,10 @@ export function HeroCtaButtons({ className }: HeroCtaButtonsProps) {
 				</Button>
 			</Link>
 
-			{/* View Services Button */}
-			<Link href="#services">
+			{/* View Treatments Button */}
+			<Link href="#treatments">
 				<Button variant="outline-white" withArrow>
-					<span>{t("hero.viewServices")}</span>
+					<span>{t("hero.viewTreatments")}</span>
 				</Button>
 			</Link>
 		</div>

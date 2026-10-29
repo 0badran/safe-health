@@ -1,4 +1,4 @@
-export interface ServiceCategory {
+export interface TreatmentCategory {
 	id: string;
 	number: string;
 	title: string;
@@ -13,4 +13,4 @@ export interface ServiceCategory {
 	anatomicalFocus: string[];
 }
 
-export type TreatmentCategory = ServiceCategory;
+export type ServiceCategory = TreatmentCategory;
