@@ -28,3 +28,4 @@ export interface TreatmentsPageData {
 }
 
 export type TreatmentsPageResponse = ApiResponse<TreatmentsPageData>;
+
