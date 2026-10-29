@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { Minus, Plus, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { Input } from "@/components/ui/input";
 import AppPagination from "@/components/shared/app-pagination";
 import { TreatmentsSkeleton } from "./treatments-skeleton";
@@ -279,8 +279,9 @@ export function TreatmentsContent({
 												{/* Right Column: Hero Visual Card */}
 												<div className="lg:col-span-5">
 													<div className="relative w-full aspect-4/3 rounded-2xl overflow-hidden shadow-xs border border-border/40 bg-muted">
-														<Image
-															src={service.image_url || fallbackImage}
+														<FallbackImage
+															src={service.image_url}
+															fallbackSrc={fallbackImage}
 															alt={service.title}
 															fill
 															sizes="(max-width: 1024px) 100vw, 40vw"
@@ -288,7 +289,7 @@ export function TreatmentsContent({
 														/>
 
 														{/* Floating Glassmorphic Badges */}
-														<div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 flex items-center justify-between gap-2 pointer-events-none">
+														<div className="absolute inset-x-0 bottom-0 p-3 sm:p-4 flex items-center justify-between gap-2 pointer-events-none z-10">
 															<span className="bg-background/85 backdrop-blur-md text-foreground small font-medium px-3.5 py-1.5 rounded-full border border-border/40 shadow-xs truncate max-w-[60%]">
 																{service.title}
 															</span>

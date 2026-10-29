@@ -17,3 +17,4 @@ export function TreatmentsSkeleton({ count = 4 }: { count?: number }) {
 }
 
 export default TreatmentsSkeleton;
+
