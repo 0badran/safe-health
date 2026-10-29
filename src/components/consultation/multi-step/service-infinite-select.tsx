@@ -1,24 +1,31 @@
 "use client";
 
+import {
+	CheckIcon,
+	ChevronDownIcon,
+	Loader2Icon,
+	SearchIcon,
+	XIcon,
+} from "lucide-react";
 import * as React from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { CheckIcon, ChevronDownIcon, Loader2Icon, SearchIcon, XIcon } from "lucide-react";
-import { useLocale } from "next-intl";
 
+import { Input } from "@/components/ui/input";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
-import { fetchData } from "@/lib/api";
+import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
-import type { ServiceItem, ServicesApiResponse } from "@/types/services";
+import type {
+	AnatomicalArea,
+	AnatomicalAreasResponse,
+} from "@/types/anatomical-areas";
 
 export interface ServiceInfiniteSelectProps {
 	value?: number | string;
-	onChange: (value?: number | string, service?: ServiceItem) => void;
+	onChange: (value?: number | string, item?: AnatomicalArea) => void;
 	disabled?: boolean;
 	className?: string;
 	placeholder?: string;
@@ -32,81 +39,32 @@ export function ServiceInfiniteSelect({
 	placeholder,
 }: ServiceInfiniteSelectProps) {
 	const { t } = useTranslation();
-	const locale = useLocale();
 	const [isOpen, setIsOpen] = React.useState(false);
+	const [hasOpened, setHasOpened] = React.useState(false);
 	const [searchQuery, setSearchQuery] = React.useState("");
-	const [debouncedQuery, setDebouncedQuery] = React.useState("");
 	const searchInputRef = React.useRef<HTMLInputElement>(null);
-	const loadMoreRef = React.useRef<HTMLDivElement>(null);
 
-	// Debounce search input by 300ms
-	React.useEffect(() => {
-		const handler = setTimeout(() => {
-			setDebouncedQuery(searchQuery.trim());
-		}, 300);
-		return () => clearTimeout(handler);
-	}, [searchQuery]);
+	// Fetch anatomical areas ONLY when the user opens the list
+	const { data: apiResponse, isLoading } =
+		useFetchData<AnatomicalAreasResponse>({
+			route: "/anatomical-areas",
+			enabled: isOpen || hasOpened,
+		});
 
-	// Server-side infinite query for services
-	const {
-		data,
-		fetchNextPage,
-		hasNextPage,
-		isFetchingNextPage,
-		isLoading,
-	} = useInfiniteQuery({
-		queryKey: ["services-infinite-select", debouncedQuery, locale],
-		queryFn: ({ pageParam = 1 }) =>
-			fetchData<ServicesApiResponse>({
-				route: "/services",
-				params: {
-					page: String(pageParam),
-					search: debouncedQuery || undefined,
-					per_page: 15,
-				},
-			}),
-		initialPageParam: 1,
-		getNextPageParam: (lastPage) => {
-			const meta = lastPage?.pagination?.meta;
-			if (!meta) return undefined;
-			return meta.current_page < meta.last_page
-				? meta.current_page + 1
-				: undefined;
-		},
-	});
+	const areas = apiResponse?.data ?? [];
 
-	// Flatten all services across paginated responses
-	const allServices = React.useMemo(() => {
-		if (!data?.pages) return [];
-		return data.pages.flatMap((page) => page?.data ?? []);
-	}, [data]);
+	// Local filtering by search query
+	const filteredAreas = React.useMemo(() => {
+		if (!searchQuery.trim()) return areas;
+		const q = searchQuery.toLowerCase().trim();
+		return areas?.filter((area) => area.name.toLowerCase().includes(q));
+	}, [areas, searchQuery]);
 
-	// Find currently selected service by ID
-	const selectedService = React.useMemo(() => {
+	// Find currently selected area by ID
+	const selectedArea = React.useMemo(() => {
 		if (value === undefined || value === null || value === "") return undefined;
-		return allServices.find((s) => String(s.id) === String(value));
-	}, [value, allServices]);
-
-	// Auto-trigger fetchNextPage when sentinel element comes into view
-	React.useEffect(() => {
-		if (!isOpen || !hasNextPage || isFetchingNextPage) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting) {
-					fetchNextPage();
-				}
-			},
-			{ threshold: 0.1 },
-		);
-
-		const el = loadMoreRef.current;
-		if (el) observer.observe(el);
-
-		return () => {
-			if (el) observer.unobserve(el);
-		};
-	}, [isOpen, hasNextPage, isFetchingNextPage, fetchNextPage]);
+		return areas.find((a) => String(a.id) === String(value));
+	}, [value, areas]);
 
 	// Focus search input on popover open
 	React.useEffect(() => {
@@ -120,17 +78,20 @@ export function ServiceInfiniteSelect({
 
 	const handleOpenChange = (open: boolean) => {
 		setIsOpen(open);
-		if (!open) {
+		if (open) {
+			setHasOpened(true);
+		} else {
 			setSearchQuery("");
 		}
 	};
 
-	const handleSelect = (service?: ServiceItem) => {
-		onChange(service?.id, service);
+	const handleSelect = (area?: AnatomicalArea) => {
+		onChange(area?.id, area);
 		handleOpenChange(false);
 	};
 
-	const displayPlaceholder = placeholder ?? t("consultation.servicePlaceholder");
+	const displayPlaceholder =
+		placeholder ?? t("consultation.servicePlaceholder");
 
 	return (
 		<Popover open={isOpen} onOpenChange={handleOpenChange}>
@@ -140,16 +101,16 @@ export function ServiceInfiniteSelect({
 					disabled={disabled}
 					aria-expanded={isOpen}
 					className={cn(
-						"flex h-9.5 md:h-10.5 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start font-sans small outline-none transition-colors",
+						"flex h-8 md:h-9 xl:h-11 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start font-sans small outline-none transition-colors",
 						"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
 						"disabled:cursor-not-allowed disabled:opacity-50",
 						className,
 					)}
 				>
 					<div className="flex items-center gap-2 min-w-0 flex-1">
-						{selectedService ? (
+						{selectedArea ? (
 							<span className="truncate font-medium text-foreground">
-								{selectedService.title}
+								{selectedArea.name}
 							</span>
 						) : (
 							<span className="truncate text-muted-foreground">
@@ -159,7 +120,7 @@ export function ServiceInfiniteSelect({
 					</div>
 
 					<div className="flex items-center gap-1.5 shrink-0 ms-2">
-						{selectedService && !disabled && (
+						{selectedArea && !disabled && (
 							<span
 								role="button"
 								tabIndex={0}
@@ -192,24 +153,24 @@ export function ServiceInfiniteSelect({
 			<PopoverContent
 				align="start"
 				sideOffset={6}
-				className="w-(--radix-popover-trigger-width) min-w-[280px] p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-xl z-50"
+				className="w-(--radix-popover-trigger-width) min-w-70 p-2 bg-popover text-popover-foreground border-border rounded-xl shadow-xl z-50"
 			>
 				{/* Search Box */}
 				<div className="relative mb-2 flex items-center">
-					<SearchIcon className="absolute start-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
+					<SearchIcon className="absolute inset-s-2.5 size-4 text-muted-foreground pointer-events-none z-10" />
 					<Input
 						ref={searchInputRef}
 						type="text"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 						placeholder={t("consultation.searchService")}
-						className="h-8.5 rounded-lg ps-8 pe-8 small"
+						className="rounded-lg ps-8 pe-8 small"
 					/>
 					{searchQuery && (
 						<button
 							type="button"
 							onClick={() => setSearchQuery("")}
-							className="absolute end-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm z-10 cursor-pointer"
+							className="absolute inset-e-2 text-muted-foreground hover:text-foreground p-0.5 rounded-sm z-10 cursor-pointer"
 							aria-label="Clear search"
 						>
 							<XIcon className="size-3.5" />
@@ -217,13 +178,13 @@ export function ServiceInfiniteSelect({
 					)}
 				</div>
 
-				{/* Services List with Infinite Scroll */}
+				{/* Anatomical Areas List */}
 				<div
 					role="listbox"
 					className="max-h-60 overflow-y-auto space-y-1 scrollbar-thin scrollbar-thumb-muted-foreground/20 pe-1"
 				>
-					{/* Loading Initial State */}
-					{isLoading && allServices.length === 0 && (
+					{/* Loading State */}
+					{isLoading && areas.length === 0 && (
 						<div className="py-6 flex items-center justify-center gap-2 small text-muted-foreground">
 							<Loader2Icon className="size-4 animate-spin text-primary" />
 							<span>{t("consultation.loadingServices")}</span>
@@ -231,23 +192,23 @@ export function ServiceInfiniteSelect({
 					)}
 
 					{/* Empty State */}
-					{!isLoading && allServices.length === 0 && (
+					{!isLoading && filteredAreas.length === 0 && (
 						<div className="py-6 text-center small text-muted-foreground">
 							{t("consultation.noServiceFound")}
 						</div>
 					)}
 
-					{/* Service Items */}
-					{allServices.map((service: ServiceItem) => {
-						const isSelected = String(service.id) === String(value);
+					{/* Area Items */}
+					{filteredAreas.map((area: AnatomicalArea) => {
+						const isSelected = String(area.id) === String(value);
 
 						return (
 							<button
-								key={service.id}
+								key={area.id}
 								type="button"
 								role="option"
 								aria-selected={isSelected}
-								onClick={() => handleSelect(service)}
+								onClick={() => handleSelect(area)}
 								className={cn(
 									"flex w-full items-center justify-between px-2.5 py-2 rounded-lg small font-sans text-start transition-colors cursor-pointer",
 									isSelected
@@ -255,16 +216,7 @@ export function ServiceInfiniteSelect({
 										: "text-foreground hover:bg-accent hover:text-accent-foreground",
 								)}
 							>
-								<div className="flex flex-col min-w-0 pe-2">
-									<span className="truncate font-medium">
-										{service.title}
-									</span>
-									{service.description && (
-										<span className="truncate text-muted-foreground text-[11px] leading-tight">
-											{service.description}
-										</span>
-									)}
-								</div>
+								<span className="truncate font-medium">{area.name}</span>
 
 								{isSelected && (
 									<CheckIcon className="size-4 shrink-0 text-primary ms-2" />
@@ -272,20 +224,11 @@ export function ServiceInfiniteSelect({
 							</button>
 						);
 					})}
-
-					{/* Loading Next Page Sentinel */}
-					<div ref={loadMoreRef} className="py-1">
-						{isFetchingNextPage && (
-							<div className="flex items-center justify-center gap-1.5 py-2 text-xs text-muted-foreground">
-								<Loader2Icon className="size-3.5 animate-spin text-primary" />
-								<span>{t("consultation.loadingServices")}</span>
-							</div>
-						)}
-					</div>
 				</div>
 			</PopoverContent>
 		</Popover>
 	);
 }
 
+export const AnatomicalAreaSelect = ServiceInfiniteSelect;
 export default ServiceInfiniteSelect;

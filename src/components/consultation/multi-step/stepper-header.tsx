@@ -25,7 +25,7 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 	return (
 		<div className={cn("w-full space-y-3 select-none", className)}>
 			{/* Top Progress Track */}
-			<div className="relative w-full h-1 bg-secondary/50 rounded-full overflow-hidden">
+			<div className="relative w-full h-1 bg-muted rounded-full overflow-hidden">
 				<motion.div
 					className="h-full bg-primary"
 					initial={{ width: 0 }}
@@ -53,10 +53,10 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 							<div className="flex items-center gap-1.5">
 								<div
 									className={cn(
-										"size-6 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 transition-colors",
+										"size-6 rounded-full flex items-center justify-center small font-semibold shrink-0 transition-colors",
 										isActive && "bg-primary text-primary-foreground shadow-xs",
 										isCompleted && "bg-primary/20 text-primary",
-										!isActive && !isCompleted && "bg-secondary text-muted-foreground",
+										!isActive && !isCompleted && "bg-muted text-muted-foreground",
 									)}
 								>
 									{isCompleted ? <CheckIcon className="size-3.5" /> : step.number}
@@ -65,7 +65,7 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 									{step.label}
 								</span>
 							</div>
-							<span className="sm:hidden text-[11px] font-medium truncate mt-1">
+							<span className="sm:hidden small font-medium truncate mt-1">
 								{step.label}
 							</span>
 						</div>

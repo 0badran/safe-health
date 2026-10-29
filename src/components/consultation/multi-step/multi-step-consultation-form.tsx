@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -40,6 +41,11 @@ export interface MultiStepConsultationFormProps {
 	initialDoctorId?: number | string;
 	initialServiceId?: number | string;
 	initialTreatment?: string;
+	utmSource?: string;
+	utmMedium?: string;
+	utmCampaign?: string;
+	utmTerm?: string;
+	utmContent?: string;
 	onSuccess?: () => void;
 	className?: string;
 }
@@ -48,12 +54,50 @@ export function MultiStepConsultationForm({
 	initialDoctorId,
 	initialServiceId,
 	initialTreatment,
+	utmSource: propUtmSource,
+	utmMedium: propUtmMedium,
+	utmCampaign: propUtmCampaign,
+	utmTerm: propUtmTerm,
+	utmContent: propUtmContent,
 	onSuccess,
 	className,
 }: MultiStepConsultationFormProps) {
 	const { t } = useTranslation();
 	const { isRtl } = useLanguage();
 	const locale = useLocale();
+	const searchParams = useSearchParams();
+
+	// Helper to extract UTM parameters from props, URL query params, or sessionStorage cache
+	const getUtmValue = React.useCallback(
+		(key: string, propVal?: string) => {
+			if (propVal) return propVal;
+			if (!searchParams) return undefined;
+			const fromUrl = searchParams.get(key);
+			if (fromUrl) {
+				try {
+					sessionStorage.setItem(key, fromUrl);
+				} catch {}
+				return fromUrl;
+			}
+			try {
+				return sessionStorage.getItem(key) || undefined;
+			} catch {
+				return undefined;
+			}
+		},
+		[searchParams],
+	);
+
+	const utmSource = getUtmValue("utm_source", propUtmSource);
+	const utmMedium = getUtmValue("utm_medium", propUtmMedium);
+	const utmCampaign = getUtmValue("utm_campaign", propUtmCampaign);
+	const utmTerm = getUtmValue("utm_term", propUtmTerm);
+	const utmContent = getUtmValue("utm_content", propUtmContent);
+
+	const resolvedDoctorId =
+		initialDoctorId ?? (searchParams?.get("doctor_id") || undefined);
+	const resolvedServiceId =
+		initialServiceId ?? (searchParams?.get("service_id") || undefined);
 
 	const [currentStep, setCurrentStep] = React.useState<1 | 2 | 3>(1);
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
@@ -63,8 +107,8 @@ export function MultiStepConsultationForm({
 		resolver: zodResolver(multiStepSchema),
 		defaultValues: {
 			...DEFAULT_MULTI_STEP_VALUES,
-			doctor_id: initialDoctorId,
-			service_id: initialServiceId ?? initialTreatment ?? "",
+			doctor_id: resolvedDoctorId,
+			service_id: resolvedServiceId ?? initialTreatment ?? "",
 			treatment: initialTreatment || "",
 		},
 		mode: "onTouched",
@@ -132,6 +176,13 @@ export function MultiStepConsultationForm({
 		formData.append("privacy_policy_accepted", "1");
 		formData.append("language", locale || "en");
 
+		// Marketing attribution query parameters (UTM)
+		if (utmSource) formData.append("utm_source", utmSource);
+		if (utmMedium) formData.append("utm_medium", utmMedium);
+		if (utmCampaign) formData.append("utm_campaign", utmCampaign);
+		if (utmTerm) formData.append("utm_term", utmTerm);
+		if (utmContent) formData.append("utm_content", utmContent);
+
 		if (data.images && data.images.length > 0) {
 			data.images.forEach((file) => {
 				formData.append("images[]", file);
@@ -144,8 +195,8 @@ export function MultiStepConsultationForm({
 	const handleReset = () => {
 		form.reset({
 			...DEFAULT_MULTI_STEP_VALUES,
-			doctor_id: initialDoctorId,
-			service_id: initialServiceId ?? initialTreatment ?? "",
+			doctor_id: resolvedDoctorId,
+			service_id: resolvedServiceId ?? initialTreatment ?? "",
 			treatment: initialTreatment || "",
 		});
 		setCurrentStep(1);
@@ -192,10 +243,10 @@ export function MultiStepConsultationForm({
 											<FormControl>
 												<ServiceInfiniteSelect
 													value={field.value}
-													onChange={(serviceId, service) => {
-														field.onChange(serviceId ?? "");
-														if (service) {
-															form.setValue("treatment", service.title);
+													onChange={(areaId, area) => {
+														field.onChange(areaId ?? "");
+														if (area) {
+															form.setValue("treatment", area.name);
 														}
 													}}
 													disabled={isSubmitting}
@@ -256,7 +307,7 @@ export function MultiStepConsultationForm({
 													disabled={isSubmitting}
 													placeholder={t("consultation.fullNamePlaceholder")}
 													autoComplete="name"
-													className="h-10.5 rounded-xl small"
+													className="rounded-xl small"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive font-sans" />
@@ -281,7 +332,7 @@ export function MultiStepConsultationForm({
 														disabled={isSubmitting}
 														placeholder={t("consultation.emailPlaceholder")}
 														autoComplete="email"
-														className="h-10.5 rounded-xl small"
+														className="rounded-xl small"
 													/>
 												</FormControl>
 												<FormMessage className="small text-destructive font-sans" />
@@ -309,7 +360,7 @@ export function MultiStepConsultationForm({
 															const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
 															field.onChange(val);
 														}}
-														className="h-10.5 rounded-xl small"
+														className="rounded-xl small"
 													/>
 												</FormControl>
 												<FormMessage className="small text-destructive font-sans" />

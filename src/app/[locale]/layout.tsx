@@ -91,12 +91,11 @@ export default async function LocaleLayout({
 
 	return (
 		<html
-			data-scroll-behavior="smooth"
 			lang={locale}
 			dir={direction}
 			suppressHydrationWarning
 			className={cn(
-				"h-full antialiased font-sans rtl:font-arabic scroll-smooth",
+				"h-full antialiased ltr:font-sans rtl:font-arabic scroll-smooth",
 				headingFont.variable,
 				sansFont.variable,
 				arabicFont.variable,

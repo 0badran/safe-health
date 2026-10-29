@@ -61,7 +61,7 @@ export function HeroConsultationPreview({
 									{t("consultation.service")}
 									<span className="text-primary font-bold">*</span>
 								</span>
-								<div className="h-9.5 md:h-10.5 rounded-xl bg-input/30 border border-input px-3.5 flex items-center justify-between text-muted-foreground small">
+								<div className="h-8 md:h-9 xl:h-11 rounded-xl bg-input/30 border border-input px-3.5 flex items-center justify-between text-muted-foreground small">
 									<span className="truncate">{t("consultation.servicePlaceholder")}</span>
 									<ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
 								</div>
@@ -74,7 +74,7 @@ export function HeroConsultationPreview({
 										{t("consultation.fullName")}
 										<span className="text-primary font-bold">*</span>
 									</span>
-									<div className="h-9.5 md:h-10.5 rounded-xl bg-input/30 border border-input px-3.5 flex items-center text-muted-foreground small">
+									<div className="h-8 md:h-9 xl:h-11 rounded-xl bg-input/30 border border-input px-3.5 flex items-center text-muted-foreground small">
 										<span>{t("consultation.fullNamePlaceholder")}</span>
 									</div>
 								</div>
@@ -84,7 +84,7 @@ export function HeroConsultationPreview({
 										{t("consultation.phone")}
 										<span className="text-primary font-bold">*</span>
 									</span>
-									<div className="h-9.5 md:h-10.5 rounded-xl bg-input/30 border border-input px-3.5 flex items-center text-muted-foreground small">
+									<div className="h-8 md:h-9 xl:h-11 rounded-xl bg-input/30 border border-input px-3.5 flex items-center text-muted-foreground small">
 										<span>{t("consultation.phonePlaceholder")}</span>
 									</div>
 								</div>
@@ -96,7 +96,7 @@ export function HeroConsultationPreview({
 									{t("consultation.country")}
 									<span className="text-primary font-bold">*</span>
 								</span>
-								<div className="h-9.5 md:h-10.5 rounded-xl bg-input/30 border border-input px-3.5 flex items-center justify-between text-muted-foreground small">
+								<div className="h-8 md:h-9 xl:h-11 rounded-xl bg-input/30 border border-input px-3.5 flex items-center justify-between text-muted-foreground small">
 									<span>{t("consultation.countryPlaceholder")}</span>
 									<ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
 								</div>

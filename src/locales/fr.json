@@ -84,6 +84,21 @@
 		"successMessage": "Notre conseiller médical vous contactera d'ici 24 heures pour planifier votre consultation.",
 		"sendAnother": "Soumettre une autre demande"
 	},
+	"consultationPage": {
+		"badge": "Consultation Gratuite",
+		"title": "Réservez Votre Consultation Médicale Personnalisée",
+		"description": "Une étape simple vers un plan de traitement complet supervisé par les meilleurs chirurgiens et spécialistes certifiés en Turquie.",
+		"trustTitle": "Pourquoi les patients choisissent Safe Health",
+		"trustSubtitle": "Nous vous garantissons une expérience médicale sûre et haut de gamme dès le premier jour.",
+		"trust1Title": "Spécialistes Certifiés",
+		"trust1Desc": "Évaluation directe de votre dossier par des chirurgiens expérimentés et accrédités internationalement.",
+		"trust2Title": "Confidentialité 100% Garantie",
+		"trust2Desc": "Vos dossiers et photos médicales sont strictement cryptés et confidentiels.",
+		"trust3Title": "Réponse Rapide sous 24h",
+		"trust3Desc": "Votre conseiller médical dédié vous contactera par téléphone ou WhatsApp avec une estimation personnalisée.",
+		"trust4Title": "Coordination Médicale et VIP",
+		"trust4Desc": "Transferts aéroport VIP, hébergement hôtelier et accompagnement avec traducteur personnel."
+	},
 	"contact": {
 		"header": {
 			"badge": "CONTACTEZ-NOUS",
@@ -214,6 +229,28 @@
 		"subServices": "Procédures spécialisées",
 		"empty": "Aucun traitement trouvé.",
 		"errorLoading": "Une erreur est survenue lors du chargement des traitements. Veuillez réessayer."
+	},
+	"beforeAfter": {
+		"searchPlaceholder": "Rechercher des cas et des traitements...",
+		"allTreatments": "Tous les traitements",
+		"allLocations": "Toutes les cliniques",
+		"sortLatest": "Plus récents d'abord",
+		"sortOldest": "Plus anciens d'abord",
+		"filterButton": "Filtrer les cas",
+		"resetButton": "Réinitialiser",
+		"before": "AVANT",
+		"after": "APRÈS",
+		"readMore": "Voir les détails",
+		"caseNotFound": "Cas non trouvé",
+		"caseNotFoundDesc": "Désolé, nous n'avons pas pu trouver les détails de ce cas médical.",
+		"backToCases": "Retour à Avant & Après",
+		"ctaTitle": "Intéressé par des résultats similaires ?",
+		"ctaSubtitle": "Consultez nos spécialistes pour évaluer votre cas et discuter d'un plan de traitement personnalisé.",
+		"emptyCases": "Aucun cas trouvé correspondant à vos critères de recherche.",
+		"errorLoading": "Une erreur est survenue lors du chargement des cas. Veuillez réessayer.",
+		"loading": "Chargement...",
+		"noTreatmentsFound": "Aucun traitement disponible",
+		"noLocationsFound": "Aucune clinique disponible"
 	},
 	"footer": {
 		"explore": "Explorer",

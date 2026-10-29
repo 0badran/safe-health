@@ -84,6 +84,21 @@
 		"successMessage": "Our dedicated medical advisor will reach out to you within 24 hours to schedule your consultation.",
 		"sendAnother": "Submit another request"
 	},
+	"consultationPage": {
+		"badge": "Free Consultation",
+		"title": "Book Your Personalized Medical Consultation",
+		"description": "One simple step towards a comprehensive treatment plan supervised by leading board-certified surgeons and medical specialists in Turkey.",
+		"trustTitle": "Why International Patients Choose Safe Health",
+		"trustSubtitle": "We guarantee a safe, premium medical experience with exceptional outcomes from day one.",
+		"trust1Title": "Board-Certified Specialists",
+		"trust1Desc": "Direct medical review and assessment by experienced, internationally accredited surgeons.",
+		"trust2Title": "100% Confidential & Secure",
+		"trust2Desc": "Your medical records, photos, and consultation details are strictly encrypted and private.",
+		"trust3Title": "Rapid 24-Hour Response",
+		"trust3Desc": "Your dedicated medical advisor will reach out via call or WhatsApp with a tailored initial plan.",
+		"trust4Title": "Comprehensive VIP Coordination",
+		"trust4Desc": "Airport transfers, luxury hotel arrangements, and personal translation throughout your stay."
+	},
 	"contact": {
 		"header": {
 			"badge": "GET IN TOUCH",
@@ -214,6 +229,28 @@
 		"subServices": "Specialized Procedures",
 		"empty": "No treatments found.",
 		"errorLoading": "An error occurred while loading treatments. Please try again."
+	},
+	"beforeAfter": {
+		"searchPlaceholder": "Search cases and treatments...",
+		"allTreatments": "All Treatments",
+		"allLocations": "All Clinics",
+		"sortLatest": "Newest First",
+		"sortOldest": "Oldest First",
+		"filterButton": "Filter Cases",
+		"resetButton": "Reset",
+		"before": "BEFORE",
+		"after": "AFTER",
+		"readMore": "View Details",
+		"caseNotFound": "Case Not Found",
+		"caseNotFoundDesc": "Sorry, we could not find the details for this medical case.",
+		"backToCases": "Back to Before & After",
+		"ctaTitle": "Interested in Similar Results?",
+		"ctaSubtitle": "Speak with our specialists to evaluate your case and discuss a tailored treatment plan.",
+		"emptyCases": "No cases found matching your search criteria.",
+		"errorLoading": "An error occurred while loading cases. Please try again.",
+		"loading": "Loading...",
+		"noTreatmentsFound": "No treatments available",
+		"noLocationsFound": "No clinics available"
 	},
 	"footer": {
 		"explore": "Explore",

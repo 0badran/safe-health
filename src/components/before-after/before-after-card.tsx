@@ -1,31 +1,21 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { Clock, MapPin, ArrowUpRight, ChevronsLeftRight } from "lucide-react";
+import { MapPin, ChevronsLeftRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import SectionBadge from "../shared/section-badge";
-
-export interface BeforeAfterCase {
-	id: string;
-	title: string;
-	category: string;
-	timeframe: string;
-	description: string;
-	country: string;
-	beforeImage: string;
-	afterImage: string;
-	href?: string;
-}
+import SectionBadge from "@/components/shared/section-badge";
+import { FallbackImage } from "@/components/shared/fallback-image";
+import { useTranslation } from "@/lib/language-context";
+import type { CaseItem } from "@/types/before-after";
 
 export interface BeforeAfterCardProps {
-	caseItem: BeforeAfterCase;
+	caseItem: CaseItem;
 	className?: string;
 }
 
 export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
-	// Slider position percentage (0 to 100, default 50%)
+	const { t } = useTranslation();
 	const [sliderPosition, setSliderPosition] = React.useState(50);
 	const [isDragging, setIsDragging] = React.useState(false);
 	const containerRef = React.useRef<HTMLDivElement>(null);
@@ -51,7 +41,7 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 	return (
 		<article
 			className={cn(
-				"bg-card rounded-3xl sm:rounded-4xl p-3.5 sm:p-4 border border-border/40 flex flex-col gap-4 sm:gap-5",
+				"bg-card rounded-3xl sm:rounded-4xl p-3.5 sm:p-4 border border-border/60 flex flex-col gap-4 sm:gap-5 shadow-2xs hover:shadow-xs transition-shadow",
 				className,
 			)}
 		>
@@ -68,9 +58,9 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 				className="relative w-full aspect-4/3 rounded-2xl sm:rounded-3xl overflow-hidden select-none cursor-ew-resize bg-muted"
 			>
 				{/* AFTER Image (Full background) */}
-				<Image
-					src={caseItem.afterImage}
-					alt={`${caseItem.title} - After`}
+				<FallbackImage
+					src={caseItem.image_after_url}
+					alt={`${caseItem.title} - ${t("beforeAfter.after")}`}
 					fill
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					className="object-cover object-center pointer-events-none"
@@ -81,9 +71,9 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 					className="absolute inset-0 overflow-hidden pointer-events-none"
 					style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
 				>
-					<Image
-						src={caseItem.beforeImage}
-						alt={`${caseItem.title} - Before`}
+					<FallbackImage
+						src={caseItem.image_before_url}
+						alt={`${caseItem.title} - ${t("beforeAfter.before")}`}
 						fill
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						className="object-cover object-center pointer-events-none"
@@ -92,11 +82,11 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 
 				{/* Badges on Top */}
 				<div className="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none z-10">
-					<span className="rounded-full bg-primary/70 text-primary-foreground small font-bold tracking-wider px-3 py-1 uppercase shadow-sm select-none">
-						BEFORE
+					<span className="rounded-full bg-primary/80 backdrop-blur-xs text-primary-foreground small font-bold tracking-wider px-3 py-1 uppercase shadow-xs select-none">
+						{t("beforeAfter.before")}
 					</span>
-					<span className="rounded-full bg-purple-tint/90 text-primary small font-bold tracking-wider px-3 py-1 uppercase border border-border/50 shadow-sm select-none">
-						AFTER
+					<span className="rounded-full bg-card/90 backdrop-blur-xs text-primary small font-bold tracking-wider px-3 py-1 uppercase border border-border/50 shadow-xs select-none">
+						{t("beforeAfter.after")}
 					</span>
 				</div>
 
@@ -109,7 +99,7 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 					<div className="w-0.5 h-full bg-white/90 shadow-sm" />
 
 					{/* Center Round Handle Button */}
-					<div className="absolute size-8 sm:size-9 rounded-full bg-primary text-white flex items-center justify-center shadow-md border-2 border-white pointer-events-auto cursor-grab active:cursor-grabbing hover:scale-105 transition-transform">
+					<div className="absolute size-8 sm:size-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md border-2 border-white pointer-events-auto cursor-grab active:cursor-grabbing hover:scale-105 transition-transform">
 						<ChevronsLeftRight className="size-4" />
 					</div>
 				</div>
@@ -117,45 +107,42 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 
 			{/* Middle Content Area */}
 			<div className="flex flex-col gap-2.5 sm:gap-3 px-1">
-				{/* Category Pill + Timeframe */}
+				{/* Category Pill */}
 				<div className="flex items-center justify-between gap-2">
 					<SectionBadge withoutIcon className="small font-bold text-primary">
-						{caseItem.category}
+						{caseItem.treatment}
 					</SectionBadge>
-
-					<div className="flex items-center gap-1.5 text-paragraph small font-medium">
-						<Clock className="size-3.5 shrink-0" />
-						<span>{caseItem.timeframe}</span>
-					</div>
 				</div>
 
 				{/* Case Title */}
-				<h3 className="font-heading font-medium h4 text-primary leading-tight">
-					{caseItem.title}
-				</h3>
+				<Link href={`/before-after/${caseItem.slug}`} className="group/title">
+					<h3 className="font-heading font-medium h5 text-foreground leading-tight line-clamp-2 group-hover/title:text-primary transition-colors">
+						{caseItem.title}
+					</h3>
+				</Link>
 
 				{/* Description */}
-				<p className="text-paragraph small leading-relaxed line-clamp-2">
-					{caseItem.description}
-				</p>
+				{caseItem.description_preview && (
+					<p className="text-muted-foreground small leading-relaxed line-clamp-2">
+						{caseItem.description_preview}
+					</p>
+				)}
 			</div>
 
-			{/* Bottom Action Footer Bar */}
+			{/* Bottom Location Bar */}
 			<div className="mt-auto pt-1">
-				<div className="rounded-full bg-wallpaper px-4 py-2 flex items-center justify-between">
-					{/* Country with Location Pin */}
-					<div className="flex items-center gap-1.5 text-primary small font-semibold">
-						<MapPin className="size-6 stroke-2 text-secondary shrink-0" />
-						<span>{caseItem.country}</span>
+				<div className="rounded-xl bg-muted/60 px-3.5 py-2 flex items-center justify-between">
+					<div className="flex items-center gap-1.5 text-foreground small font-medium">
+						<MapPin className="size-4 stroke-2 text-primary shrink-0" />
+						<span>{caseItem.location}</span>
 					</div>
 
-					{/* Read More Link */}
 					<Link
-						href={caseItem.href ?? "#"}
-						className="inline-flex items-center gap-1 text-primary font-bold hover:opacity-80 transition-opacity"
+						href={`/before-after/${caseItem.slug}`}
+						className="inline-flex items-center gap-1 text-primary small font-semibold hover:opacity-80 transition-opacity"
 					>
-						<span>Read more</span>
-						<ArrowUpRight className="size-4 shrink-0" />
+						<span>{t("beforeAfter.readMore")}</span>
+						<ArrowUpRight className="size-3.5 shrink-0 rtl:rotate-270" />
 					</Link>
 				</div>
 			</div>

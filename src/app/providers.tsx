@@ -9,6 +9,7 @@ import type { SettingsData } from "@/types/settings";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LucideProvider } from "lucide-react";
 import { Suspense } from "react";
+import { usePathname } from "next/navigation";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -26,6 +27,10 @@ export default function Providers({
 	children: React.ReactNode;
 	initialSettings?: SettingsData | null;
 }) {
+	const pathname = usePathname();
+	const isConsultationPage =
+		pathname === "/consultation" || pathname?.includes("/consultation");
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<SettingsProvider initialSettings={initialSettings}>
@@ -38,11 +43,13 @@ export default function Providers({
 				>
 					<LucideProvider strokeWidth={1.5}>
 						<LanguageProvider>
-							<Suspense fallback={null}>
-								<Navbar />
-							</Suspense>
+							{!isConsultationPage && (
+								<Suspense fallback={null}>
+									<Navbar />
+								</Suspense>
+							)}
 							<div className="flex-1 min-h-screen">{children}</div>
-							<Footer />
+							{!isConsultationPage && <Footer />}
 						</LanguageProvider>
 					</LucideProvider>
 				</ThemeProvider>

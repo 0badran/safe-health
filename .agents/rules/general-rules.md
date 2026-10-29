@@ -40,10 +40,11 @@
 - **Shadcn UI Preference:** Use shadcn/ui components whenever possible to maintain design consistency, theme integrity, and seamless visual integration across all project pages.
 - **Inspect Inside Shadcn Components First:** Before adding, passing, or styling any shadcn component with custom Tailwind classes (`className`), **ALWAYS inspect its source code in `src/components/ui/*.tsx` first**. Check its internal DOM elements, default styles, variants, borders, paddings, backgrounds, and state styles so you are fully aware of what is already built-in, preventing redundant, conflicting, or breaking overrides (e.g., overriding `bg-*` on `Input`).
 - **Example (shadcn/ui):** To add or install shadcn components, strictly use the official command:
+
   ```bash
   npx shadcn@latest add <component-name>
   ```
 
 ## 7. Git & Version Control
 
-- **Never Push Without Explicit Request:** NEVER execute `git push` to remote repositories unless the user explicitly asks or instructs you to push. Always restrict git actions to local staging and commits, leaving pushing strictly to the user's explicit command.
+- **Never Commit or Push Without Explicit Request:** NEVER execute `git commit` or `git push` unless the user explicitly asks or instructs you to do so (e.g., `اعمل commit`). Keep all code changes directly in the working directory as unstaged/modified files, leaving committing and pushing strictly to the user's explicit command.

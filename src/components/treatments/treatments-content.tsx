@@ -135,7 +135,7 @@ export function TreatmentsContent({
 						value={searchInput}
 						onChange={(e) => setSearchInput(e.target.value)}
 						placeholder={t("treatments.searchPlaceholder")}
-						className="ps-10 pe-9 h-11 rounded-xl bg-card border-border/80 small"
+						className="ps-10 pe-9 rounded-xl bg-card border-border/80 small"
 					/>
 					{searchInput && (
 						<button
