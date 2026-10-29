@@ -205,5 +205,23 @@
 		"getPersonalization": "احصل على استشارتك",
 		"errorLoading": "حدث خطأ أثناء تحميل بيانات الأطباء. يرجى المحاولة مرة أخرى.",
 		"emptyDoctors": "لم يتم العثور على أطباء يطابقون خيارات البحث المحددة."
+	},
+	"footer": {
+		"explore": "استكشف",
+		"yourVisit": "زيارتك",
+		"information": "معلومات",
+		"treatments": "العلاجات",
+		"ourApproach": "نهجنا ورؤيتنا",
+		"ourTeam": "فريقنا الطبي",
+		"beforeAfter": "قبل وبعد",
+		"journal": "المقالات",
+		"bookConsultation": "حجز استشارة",
+		"firstConsultation": "استشارتك الأولى",
+		"aftercare": "إرشادات ما بعد الرعاية",
+		"contactTeam": "تواصل مع فريقنا",
+		"privacyNotice": "سياسة الخصوصية",
+		"cookiePreferences": "تفضيلات ملفات تعريف الارتباط",
+		"accessibility": "إمكانية الوصول",
+		"termsOfUse": "شروط الاستخدام"
 	}
 }

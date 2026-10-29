@@ -205,5 +205,23 @@
 		"getPersonalization": "Get Your Personalization",
 		"errorLoading": "An error occurred while loading doctors. Please try again.",
 		"emptyDoctors": "No doctors found matching the selected search criteria."
+	},
+	"footer": {
+		"explore": "Explore",
+		"yourVisit": "Your Visit",
+		"information": "Information",
+		"treatments": "Treatments",
+		"ourApproach": "Our approach",
+		"ourTeam": "Our team",
+		"beforeAfter": "Before & After",
+		"journal": "Journal",
+		"bookConsultation": "Book consultation",
+		"firstConsultation": "Your first consultation",
+		"aftercare": "Aftercare information",
+		"contactTeam": "Contact our team",
+		"privacyNotice": "Privacy notice",
+		"cookiePreferences": "Cookie preferences",
+		"accessibility": "Accessibility",
+		"termsOfUse": "Terms of use"
 	}
 }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import useSettings from "@/hooks/use-settings";
+import { useTranslation } from "@/lib/language-context";
 import {
 	BootstrapWhatsappIcon,
 	BootstrapFacebookIcon,
@@ -11,27 +12,28 @@ import {
 
 export function Footer() {
 	const { settings } = useSettings();
+	const { t } = useTranslation();
 
 	const exploreLinks = [
-		{ label: "Treatments", href: "/services" },
-		{ label: "Our approach", href: "/about" },
-		{ label: "Our team", href: "/doctors" },
-		{ label: "Before & After", href: "/before-after" },
-		{ label: "Journal", href: "/blogs" },
+		{ label: t("footer.treatments"), href: "/services" },
+		{ label: t("footer.ourApproach"), href: "/about" },
+		{ label: t("footer.ourTeam"), href: "/doctors" },
+		{ label: t("footer.beforeAfter"), href: "/before-after" },
+		{ label: t("footer.journal"), href: "/blogs" },
 	];
 
 	const yourVisitLinks = [
-		{ label: "Book consultation", href: "/contact" },
-		{ label: "Your first consultation", href: "/how-it-works" },
-		{ label: "Aftercare information", href: "/how-it-works#aftercare" },
-		{ label: "Contact our team", href: "/contact" },
+		{ label: t("footer.bookConsultation"), href: "/contact" },
+		{ label: t("footer.firstConsultation"), href: "/how-it-works" },
+		{ label: t("footer.aftercare"), href: "/how-it-works#aftercare" },
+		{ label: t("footer.contactTeam"), href: "/contact" },
 	];
 
 	const informationLinks = [
-		{ label: "Privacy notice", href: "/privacy" },
-		{ label: "Cookie preferences", href: "#cookie-preferences" },
-		{ label: "Accessibility", href: "#accessibility" },
-		{ label: "Terms of use", href: "/terms" },
+		{ label: t("footer.privacyNotice"), href: "/privacy" },
+		{ label: t("footer.cookiePreferences"), href: "#cookie-preferences" },
+		{ label: t("footer.accessibility"), href: "#accessibility" },
+		{ label: t("footer.termsOfUse"), href: "/terms" },
 	];
 
 	return (
@@ -138,11 +140,11 @@ export function Footer() {
 							{/* EXPLORE */}
 							<div className="flex flex-col space-y-3.5">
 								<h3 className="text-border font-semibold uppercase tracking-wider">
-									EXPLORE
+									{t("footer.explore")}
 								</h3>
 								<ul className="space-y-2.5">
 									{exploreLinks.map((link) => (
-										<li key={link.label}>
+										<li key={link.href}>
 											<Link
 												href={link.href}
 												className="transition-colors hover:text-secondary"
@@ -157,11 +159,11 @@ export function Footer() {
 							{/* YOUR VISIT */}
 							<div className="flex flex-col space-y-3.5">
 								<h3 className="text-border font-semibold uppercase tracking-wider">
-									YOUR VISIT
+									{t("footer.yourVisit")}
 								</h3>
 								<ul className="space-y-2.5">
 									{yourVisitLinks.map((link) => (
-										<li key={link.label}>
+										<li key={link.href}>
 											<Link
 												href={link.href}
 												className="transition-colors hover:text-secondary"
@@ -176,11 +178,11 @@ export function Footer() {
 							{/* INFORMATION */}
 							<div className="flex flex-col space-y-3.5">
 								<h3 className="text-border font-semibold uppercase tracking-wider">
-									INFORMATION
+									{t("footer.information")}
 								</h3>
 								<ul className="space-y-2.5">
 									{informationLinks.map((link) => (
-										<li key={link.label}>
+										<li key={link.href}>
 											<Link
 												href={link.href}
 												className="transition-colors hover:text-secondary"
