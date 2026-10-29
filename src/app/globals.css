@@ -145,7 +145,7 @@
 }
 
 @utility h1 {
-	font-size: clamp(20px, 3.3333vw, 48px);
+	font-size: clamp(24px, 3.8889vw, 56px);
 }
 
 @utility h2 {
@@ -182,7 +182,7 @@
 	-webkit-background-clip: text;
 	color: transparent;
 	background-clip: text;
-	font-size: clamp(20px, 3.3333vw, 48px);
+	font-size: clamp(24px, 3.8889vw, 56px);
 	letter-spacing: -2px;
 	font-family: var(--font-heading);
 	vertical-align: middle;
