@@ -5,6 +5,7 @@
 		"brandSub": "Soins Médicaux",
 		"home": "Accueil",
 		"aboutUs": "À propos",
+		"services": "Services",
 		"treatments": "Traitements",
 		"ourDoctors": "Nos Médecins",
 		"patientJourney": "Parcours Patient",
@@ -18,6 +19,7 @@
 	"hero": {
 		"tagline": "Où les soins esthétiques de pointe rencontrent une approche personnalisée de la beauté, de la confiance et du bien-être.",
 		"startPlanning": "commencer à planifier",
+		"viewServices": "voir les services",
 		"viewTreatments": "voir les traitements",
 		"heading": {
 			"part1": "Votre Parcours",

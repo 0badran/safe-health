@@ -13,7 +13,7 @@ export function Footer() {
 	const { settings } = useSettings();
 
 	const exploreLinks = [
-		{ label: "Treatments", href: "/treatments" },
+		{ label: "Treatments", href: "/services" },
 		{ label: "Our approach", href: "/about" },
 		{ label: "Our team", href: "/doctors" },
 		{ label: "Before & After", href: "/before-after" },

@@ -1,4 +1,4 @@
-import { TreatmentCategory } from "./types";
+import { ServiceCategory } from "./types";
 
 export const ANATOMICAL_FILTERS = [
 	"Nose",
@@ -12,7 +12,7 @@ export const ANATOMICAL_FILTERS = [
 
 export type AnatomicalFilter = (typeof ANATOMICAL_FILTERS)[number];
 
-export const TREATMENT_CATEGORIES: TreatmentCategory[] = [
+export const SERVICE_CATEGORIES: ServiceCategory[] = [
 	{
 		id: "plastic-surgery",
 		number: "01",
@@ -140,3 +140,5 @@ export const TREATMENT_CATEGORIES: TreatmentCategory[] = [
 		anatomicalFocus: ["Body", "Breast"],
 	},
 ];
+
+export const TREATMENT_CATEGORIES = SERVICE_CATEGORIES;

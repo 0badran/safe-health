@@ -55,6 +55,7 @@ export function HealthcareOptionsSection({
 			className="relative isolate w-full p-4 lg:p-7 scroll-mt-28"
 			id="healthcare-options"
 		>
+			<span id="services" className="sr-only -top-28 relative block" aria-hidden="true" />
 			<span id="treatments" className="sr-only -top-28 relative block" aria-hidden="true" />
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
@@ -85,9 +86,9 @@ export function HealthcareOptionsSection({
 						<p className="text-paragraph h5 leading-relaxed">{description}</p>
 					)}
 
-					<Link href="/treatments">
+					<Link href="/services">
 						<Button variant="default" withArrow>
-							{t("hero.viewTreatments")}
+							{t("hero.viewServices")}
 						</Button>
 					</Link>
 				</div>
@@ -161,7 +162,7 @@ export function HealthcareOptionsSection({
 
 										{/* Circular Action Arrow Overlay */}
 										<Link
-											href={`/treatments/${card.slug}`}
+											href={`/services/${card.slug}`}
 											className="absolute bottom-3 inset-e-3 size-9 sm:size-10 rounded-full flex items-center justify-center bg-white/38 backdrop-blur-sm transition-all duration-300 shadow-sm text-primary"
 											aria-label={card.title}
 										>

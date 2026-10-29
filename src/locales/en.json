@@ -5,6 +5,7 @@
 		"brandSub": "Medical Care",
 		"home": "Home",
 		"aboutUs": "About Us",
+		"services": "Services",
 		"treatments": "Treatments",
 		"ourDoctors": "Our Doctors",
 		"patientJourney": "Patient Journey",
@@ -18,6 +19,7 @@
 	"hero": {
 		"tagline": "Where advanced aesthetic care meets a personalized approach to beauty, confidence, and well-being.",
 		"startPlanning": "start planning",
+		"viewServices": "view services",
 		"viewTreatments": "view treatments",
 		"heading": {
 			"part1": "Your Health",

@@ -5,6 +5,7 @@
 		"brandSub": "الرعاية المعتمدة",
 		"home": "الرئيسية",
 		"aboutUs": "من نحن",
+		"services": "الخدمات",
 		"treatments": "العلاجات",
 		"ourDoctors": "أطباؤنا",
 		"patientJourney": "رحلة المريض",
@@ -18,6 +19,7 @@
 	"hero": {
 		"tagline": "حيث تلتقي الرعاية التجميلية المتطورة بنهج شخصي استثنائي نحو الجمال، الثقة، وجودة الحياة.",
 		"startPlanning": "ابدأ التخطيط",
+		"viewServices": "عرض الخدمات",
 		"viewTreatments": "عرض العلاجات",
 		"heading": {
 			"part1": "رحلتك",
