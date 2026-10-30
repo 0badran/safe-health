@@ -212,12 +212,12 @@ export function HeroStatsBanner({
 	return (
 		<div
 			className={cn(
-				"relative flex flex-col justify-center  select-none",
+				"relative flex flex-col lg:justify-center    w-full select-none",
 				className,
 			)}
 		>
 			{/* Heading with Anchored Flight Lines */}
-			<div className="relative inline-block text-center w-full sm:w-auto">
+			<div className="relative max-lg:hidden inline-block text-center w-full sm:w-auto">
 				{/* Main Headline with fluid typography */}
 				<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
 					{/* Left Decorative Line:
@@ -261,7 +261,7 @@ export function HeroStatsBanner({
 			{/* Stats Card:
 			    - Responsive 2x2 grid on mobile, locks to -ml-[62px] & w-[calc(100%+186px)] row on sm+
 			*/}
-			<div className="relative mt-4 w-full text-center bg-purple-tint/50 backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 shadow-xs">
+			<div className="relative lg:mt-4 w-full text-center bg-purple-tint/50 backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 ">
 				{stats.map((item, index) => {
 					const rawCount = item.count ?? item.number ?? "";
 					const suffix =

@@ -89,7 +89,7 @@ export function DoctorCard({
 
 				{/* Doctor Philosophy & Approach Description */}
 				{displayBio && (
-					<p className="text-paragraph leading-relaxed max-w-xl">
+					<p className="text-paragraph leading-relaxed max-w-xl line-clamp-2">
 						{displayBio}
 					</p>
 				)}

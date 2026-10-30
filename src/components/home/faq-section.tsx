@@ -34,7 +34,7 @@ export function FaqSection({ data }: FaqSectionProps = {}) {
 			className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
 		>
 			{/* Left Column: Shadcn Accordion in cards variant */}
-			<div className="lg:col-span-7">
+			<div className="lg:col-span-7 order-2 lg:order-1">
 				<Accordion type="single" collapsible defaultValue="01" variant="cards">
 					{activeFaqs.map((faq) => (
 						<AccordionItem
@@ -62,7 +62,7 @@ export function FaqSection({ data }: FaqSectionProps = {}) {
 			</div>
 
 			{/* Right Column: FAQ Illustration */}
-			<div className="lg:col-span-5 flex items-center justify-center max-lg:hidden">
+			<div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2">
 				<div className="relative w-full aspect-4/3 max-w-md lg:max-w-none">
 					<Image
 						src={illustrationSrc}
