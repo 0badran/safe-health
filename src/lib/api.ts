@@ -134,7 +134,7 @@ export async function fetchData<TData = any, TVariables = any>({
 	}
 
 	if (!res.ok) {
-		let errorData: any;
+		let errorData;
 		try {
 			errorData = await res.json();
 		} catch {

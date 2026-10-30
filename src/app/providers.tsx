@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/lib/language-context";
 import { SettingsProvider } from "@/hooks/use-settings";
 import type { SettingsData } from "@/types/settings";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LucideProvider } from "lucide-react";
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
@@ -54,6 +55,7 @@ export default function Providers({
 					</LucideProvider>
 				</ThemeProvider>
 			</SettingsProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	);
 }

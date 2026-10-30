@@ -119,7 +119,7 @@ export function HeroConsultationPreview({
 					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
 						{t("consultation.previewCardTitle")}
 					</h2>
-					<p className="mt-1 small md:leading-5.5 text-foreground/80 font-sans">
+					<p className="mt-1 small md:leading-5.5 text-foreground/80 ">
 						{t("consultation.previewCardSubtitle")}
 					</p>
 				</header>
@@ -139,7 +139,7 @@ export function HeroConsultationPreview({
 								name="service_id"
 								render={({ field }) => (
 									<FormItem className="space-y-1 text-start min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.service")}</span>
 											<span className="text-primary font-bold">*</span>
 										</FormLabel>
@@ -158,7 +158,7 @@ export function HeroConsultationPreview({
 												disabled={isSubmitting}
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive font-sans" />
+										<FormMessage className="small text-destructive " />
 									</FormItem>
 								)}
 							/>
@@ -170,7 +170,7 @@ export function HeroConsultationPreview({
 									name="name"
 									render={({ field }) => (
 										<FormItem className="space-y-1 text-start min-w-0">
-											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.fullName")}</span>
 												<span className="text-primary font-bold">*</span>
 											</FormLabel>
@@ -185,7 +185,7 @@ export function HeroConsultationPreview({
 													className="small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -195,7 +195,7 @@ export function HeroConsultationPreview({
 									name="phone"
 									render={({ field }) => (
 										<FormItem className="space-y-1 text-start min-w-0">
-											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.phone")}</span>
 												<span className="text-primary font-bold">*</span>
 											</FormLabel>
@@ -217,7 +217,7 @@ export function HeroConsultationPreview({
 													className="small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -229,7 +229,7 @@ export function HeroConsultationPreview({
 								name="country"
 								render={({ field }) => (
 									<FormItem className="space-y-1 text-start min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.country")}</span>
 											<span className="text-primary font-bold">*</span>
 										</FormLabel>
@@ -241,7 +241,7 @@ export function HeroConsultationPreview({
 												placeholder={t("consultation.countryPlaceholder")}
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive font-sans" />
+										<FormMessage className="small text-destructive " />
 									</FormItem>
 								)}
 							/>

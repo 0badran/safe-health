@@ -8,7 +8,6 @@ import { HeroConsultationPreview } from "./form";
 import { HeroCtaButtons } from "./hero-cta-buttons";
 import { HeroVideoCard } from "./hero-video-card";
 import type { HeroSectionProps } from "./types";
-import HeroStatsBanner from "./hero-stats-banner";
 
 // Instant inline SVG mask anchored to the bottom-left cutout (1024x507) so the cutout pocket always stays at the bottom-left regardless of viewport height
 const HERO_MASK_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -23,15 +22,12 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 
 	return (
 		<section
-			className={cn(
-				"relative w-full lg:min-h-175 text-background",
-				className,
-			)}
+			className={cn("relative w-full lg:min-h-175 text-background", className)}
 		>
 			{/* Instant Primary Masked Background & Texture Overlay */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden"
+				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden rtl:scale-x-[-1]"
 				style={{
 					maskImage: `url("${HERO_MASK_SVG}")`,
 					WebkitMaskImage: `url("${HERO_MASK_SVG}")`,
@@ -94,7 +90,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 							</div>
 
 							{/* Tagline */}
-							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl font-sans tracking-wide">
+							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl  tracking-wide">
 								{description}
 							</h1>
 

@@ -15,4 +15,4 @@ export const DEFAULT_FORM_VALUES: ConsultationFormValues = {
 export const INPUT_BASE_CLASSES =
 	"w-full bg-transparent rounded-xl px-3.5 text-base text-foreground outline-none transition-all duration-200 " +
 	"border border-input placeholder:text-muted-foreground " +
-	"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 font-sans disabled:opacity-50 disabled:cursor-not-allowed";
+	"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50  disabled:opacity-50 disabled:cursor-not-allowed";

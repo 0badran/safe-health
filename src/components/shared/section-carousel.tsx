@@ -76,7 +76,7 @@ export function SectionCarousel<T = unknown>({
 			api.off("select", updatePagination);
 			api.off("reInit", updatePagination);
 		};
-	}, [api, externalSetApi, onSlideChange]);
+	}, [api, current, externalSetApi, onSlideChange]);
 
 	return (
 		<div className={cn("w-full", className)}>

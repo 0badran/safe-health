@@ -3,7 +3,6 @@ import type { HomePatientJourneySection } from "@/types/home";
 import Image from "next/image";
 import React, { type ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
-import SectionHeader from "../shared/section-header";
 
 
 
@@ -104,7 +103,7 @@ function renderStepIcon(
 function StepConnector({ stepIndex }: { stepIndex: number }) {
 	if (stepIndex === 1) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-41.25 top-40.75 z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
 				{/* Small starting dot */}
 				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
 				{/* Connecting wave line ending with fade */}
@@ -140,7 +139,7 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 2) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 hidden h-[120px] w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-41.25 top-13.75 z-20 hidden h-30 w-[calc(100%-125px)] overflow-visible lg:block">
 				{/* Small starting dot */}
 				<span className="absolute -left-1 bottom-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
 				{/* Connecting wave line surging up to step 3 ending with fade */}
@@ -218,7 +217,7 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 4) {
 		return (
-			<div className="pointer-events-none absolute -right-2 top-[163px] z-20 hidden overflow-visible lg:block">
+			<div className="pointer-events-none absolute -right-2 top-40.75 z-20 hidden overflow-visible lg:block">
 				{/* Small landing airplane at the finish */}
 				<svg
 					width="22"
@@ -292,7 +291,7 @@ function Step({
 						alt={title}
 						width={200}
 						height={200}
-						className="relative z-10"
+						className="relative z-10 w-auto h-auto"
 					/>
 					<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary shadow-xs">
 						{renderStepIcon(icon, Icon)}

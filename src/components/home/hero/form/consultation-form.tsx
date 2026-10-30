@@ -23,10 +23,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { DEFAULT_FORM_VALUES } from "./constants";
 import { ConsultationSuccess } from "./consultation-success";
-import {
-	useConsultationSchema,
-	type ConsultationFormValues,
-} from "./schema";
+import { useConsultationSchema, type ConsultationFormValues } from "./schema";
 
 export interface ConsultationFormProps {
 	onSubmit?: (data: ConsultationFormValues) => void | Promise<void>;
@@ -104,7 +101,7 @@ export function ConsultationForm({
 					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
 						{title ?? t("consultation.title")}
 					</h2>
-					<p className="mt-2 small md:leading-5.5 text-foreground/80 font-sans">
+					<p className="mt-2 small md:leading-5.5 text-foreground/80 ">
 						{description ?? t("consultation.subtitle")}
 					</p>
 				</header>
@@ -124,7 +121,7 @@ export function ConsultationForm({
 								name="name"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.fullName")}</span>
 											<span
 												className="text-primary font-bold"
@@ -143,7 +140,7 @@ export function ConsultationForm({
 												className="rounded-xl bg-card border-input small"
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
+										<FormMessage className="small text-destructive  animate-in fade-in slide-in-from-top-1 duration-150" />
 									</FormItem>
 								)}
 							/>
@@ -155,7 +152,7 @@ export function ConsultationForm({
 									name="email"
 									render={({ field }) => (
 										<FormItem className="gap-1.5 min-w-0">
-											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.email")}</span>
 												<span
 													className="text-primary font-bold"
@@ -174,7 +171,7 @@ export function ConsultationForm({
 													className="rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
+											<FormMessage className="small text-destructive  animate-in fade-in slide-in-from-top-1 duration-150" />
 										</FormItem>
 									)}
 								/>
@@ -184,7 +181,7 @@ export function ConsultationForm({
 									name="phone"
 									render={({ field }) => (
 										<FormItem className="gap-1.5 min-w-0">
-											<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.phone")}</span>
 												<span
 													className="text-primary font-bold"
@@ -201,13 +198,16 @@ export function ConsultationForm({
 													placeholder={t("consultation.phonePlaceholder")}
 													autoComplete="tel"
 													onChange={(e) => {
-														const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
+														const val = e.target.value.replace(
+															/[^0-9+\s\-()]/g,
+															"",
+														);
 														field.onChange(val);
 													}}
 													className="rounded-xl bg-card border-input small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans animate-in fade-in slide-in-from-top-1 duration-150" />
+											<FormMessage className="small text-destructive  animate-in fade-in slide-in-from-top-1 duration-150" />
 										</FormItem>
 									)}
 								/>
@@ -219,7 +219,7 @@ export function ConsultationForm({
 								name="country"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.country")}</span>
 											<span
 												className="text-primary font-bold"
@@ -236,7 +236,7 @@ export function ConsultationForm({
 												placeholder={t("consultation.countryPlaceholder")}
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive font-sans" />
+										<FormMessage className="small text-destructive " />
 									</FormItem>
 								)}
 							/>
@@ -247,7 +247,7 @@ export function ConsultationForm({
 								name="message"
 								render={({ field }) => (
 									<FormItem className="gap-1.5 min-w-0">
-										<FormLabel className="small leading-5 font-medium text-foreground font-sans flex items-center gap-1 select-none">
+										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.message")}</span>
 											<span
 												className="text-primary font-bold"
@@ -265,7 +265,7 @@ export function ConsultationForm({
 												className="min-h-24 rounded-xl bg-card border-input py-3 resize-none small"
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive font-sans" />
+										<FormMessage className="small text-destructive " />
 									</FormItem>
 								)}
 							/>
@@ -285,11 +285,11 @@ export function ConsultationForm({
 													className="mt-0.5"
 												/>
 											</FormControl>
-											<span className="small leading-normal text-foreground font-sans">
+											<span className="small leading-normal text-foreground ">
 												{t("consultation.agreement")}
 											</span>
 										</label>
-										<FormMessage className="small text-destructive font-sans ps-7 animate-in fade-in slide-in-from-top-1 duration-150" />
+										<FormMessage className="small text-destructive  ps-7 animate-in fade-in slide-in-from-top-1 duration-150" />
 									</FormItem>
 								)}
 							/>

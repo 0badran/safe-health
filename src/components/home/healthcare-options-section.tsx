@@ -27,7 +27,6 @@ export function HealthcareOptionsSection({
 	}>({
 		route: "/services",
 		enabled: !propServices,
-		params: { per_page: "8" },
 	});
 
 	const services = propServices ?? apiResponse?.data;
@@ -55,8 +54,16 @@ export function HealthcareOptionsSection({
 			className="relative isolate w-full  scroll-mt-28"
 			id="healthcare-options"
 		>
-			<span id="services" className="sr-only -top-28 relative block" aria-hidden="true" />
-			<span id="treatments" className="sr-only -top-28 relative block" aria-hidden="true" />
+			<span
+				id="services"
+				className="sr-only -top-28 relative block"
+				aria-hidden="true"
+			/>
+			<span
+				id="treatments"
+				className="sr-only -top-28 relative block"
+				aria-hidden="true"
+			/>
 			{/* 1. Responsive background that stretches dynamically with any content height */}
 			<div className="absolute inset-0 size-full pointer-events-none z-0">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}

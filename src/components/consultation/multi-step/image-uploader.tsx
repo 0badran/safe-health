@@ -63,12 +63,9 @@ export function ImageUploader({
 			for (const rawFile of selectedList.slice(0, availableSlots)) {
 				// Check mime type
 				if (
-					![
-						"image/jpeg",
-						"image/png",
-						"image/webp",
-						"image/jpg",
-					].includes(rawFile.type)
+					!["image/jpeg", "image/png", "image/webp", "image/jpg"].includes(
+						rawFile.type,
+					)
 				) {
 					setError(t("consultation.imageTypeError"));
 					continue;
@@ -157,9 +154,7 @@ export function ImageUploader({
 
 			{/* Error Message */}
 			{error && (
-				<p className="small text-destructive font-sans animate-in fade-in">
-					{error}
-				</p>
+				<p className="small text-destructive  animate-in fade-in">{error}</p>
 			)}
 
 			{/* Thumbnails Grid */}

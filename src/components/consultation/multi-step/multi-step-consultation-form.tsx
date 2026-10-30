@@ -115,10 +115,11 @@ export function MultiStepConsultationForm({
 	});
 
 	// API mutation to /leads
-	const { mutateAsync, isPending: isSubmitting, error: submitError } = useMutateData<
-		unknown,
-		FormData
-	>({
+	const {
+		mutateAsync,
+		isPending: isSubmitting,
+		error: submitError,
+	} = useMutateData<unknown, FormData>({
 		route: "/leads",
 		onSuccess: () => {
 			setIsSubmitted(true);
@@ -159,7 +160,11 @@ export function MultiStepConsultationForm({
 		// Required backend validator key: treatment (use service title if available, fallback to service_id)
 		formData.append("treatment", data.treatment || String(data.service_id));
 
-		if (data.doctor_id !== undefined && data.doctor_id !== null && data.doctor_id !== "") {
+		if (
+			data.doctor_id !== undefined &&
+			data.doctor_id !== null &&
+			data.doctor_id !== ""
+		) {
 			formData.append("doctor_id", String(data.doctor_id));
 		}
 
@@ -253,7 +258,7 @@ export function MultiStepConsultationForm({
 													disabled={isSubmitting}
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -274,7 +279,7 @@ export function MultiStepConsultationForm({
 													disabled={isSubmitting}
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -311,7 +316,7 @@ export function MultiStepConsultationForm({
 													className="rounded-xl small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -336,7 +341,7 @@ export function MultiStepConsultationForm({
 														className="rounded-xl small"
 													/>
 												</FormControl>
-												<FormMessage className="small text-destructive font-sans" />
+												<FormMessage className="small text-destructive " />
 											</FormItem>
 										)}
 									/>
@@ -358,13 +363,16 @@ export function MultiStepConsultationForm({
 														placeholder={t("consultation.phonePlaceholder")}
 														autoComplete="tel"
 														onChange={(e) => {
-															const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
+															const val = e.target.value.replace(
+																/[^0-9+\s\-()]/g,
+																"",
+															);
 															field.onChange(val);
 														}}
 														className="rounded-xl small"
 													/>
 												</FormControl>
-												<FormMessage className="small text-destructive font-sans" />
+												<FormMessage className="small text-destructive " />
 											</FormItem>
 										)}
 									/>
@@ -388,7 +396,7 @@ export function MultiStepConsultationForm({
 													placeholder={t("consultation.countryPlaceholder")}
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -423,7 +431,7 @@ export function MultiStepConsultationForm({
 													className="min-h-20 py-2.5 resize-none small"
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -442,7 +450,7 @@ export function MultiStepConsultationForm({
 													maxFiles={3}
 												/>
 											</FormControl>
-											<FormMessage className="small text-destructive font-sans" />
+											<FormMessage className="small text-destructive " />
 										</FormItem>
 									)}
 								/>
@@ -462,11 +470,11 @@ export function MultiStepConsultationForm({
 														className="mt-0.5"
 													/>
 												</FormControl>
-												<span className="small leading-normal text-foreground font-sans">
+												<span className="small leading-normal text-foreground ">
 													{t("consultation.agreement")}
 												</span>
 											</label>
-											<FormMessage className="small text-destructive font-sans ps-7 animate-in fade-in" />
+											<FormMessage className="small text-destructive  ps-7 animate-in fade-in" />
 										</FormItem>
 									)}
 								/>
@@ -546,4 +554,3 @@ export function MultiStepConsultationForm({
 }
 
 export default MultiStepConsultationForm;
-

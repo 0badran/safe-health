@@ -25,7 +25,7 @@ export function ConsultationSuccess({
 				<h3 className="h4 font-semibold text-primary font-heading">
 					{message ?? t("consultation.successTitle")}
 				</h3>
-				<p className="small text-muted-foreground leading-relaxed font-sans">
+				<p className="small text-muted-foreground leading-relaxed ">
 					{t("consultation.successMessage")}
 				</p>
 			</div>

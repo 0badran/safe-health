@@ -54,10 +54,13 @@ export function ServiceInfiniteSelect({
 	// Real client-side HTTP request via useFetchData with backend search
 	const { data: apiResponse, isLoading } = useFetchData<ServicesApiResponse>({
 		route: "/services",
-		params: {
-			search: debouncedQuery || undefined,
-			per_page: 15,
-		},
+		...(debouncedQuery
+			? {
+					params: {
+						search: debouncedQuery,
+					},
+				}
+			: undefined),
 	});
 
 	const services = React.useMemo(() => {
@@ -108,7 +111,7 @@ export function ServiceInfiniteSelect({
 					disabled={disabled}
 					aria-expanded={isOpen}
 					className={cn(
-						"flex h-8 md:h-9 xl:h-11 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start font-sans small outline-none transition-colors",
+						"flex h-8 md:h-9 xl:h-11 w-full items-center justify-between rounded-xl border border-input bg-input/30 px-3.5 py-2 text-start  small outline-none transition-colors",
 						"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
 						"disabled:cursor-not-allowed disabled:opacity-50",
 						className,
@@ -218,7 +221,7 @@ export function ServiceInfiniteSelect({
 									aria-selected={isSelected}
 									onClick={() => handleSelect(service)}
 									className={cn(
-										"flex w-full items-center justify-between px-2.5 py-2 rounded-lg small font-sans text-start transition-colors cursor-pointer",
+										"flex w-full items-center justify-between px-2.5 py-2 rounded-lg small  text-start transition-colors cursor-pointer",
 										isSelected
 											? "bg-primary/10 text-primary font-medium"
 											: "text-foreground hover:bg-accent hover:text-accent-foreground",
