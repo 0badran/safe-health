@@ -8,12 +8,13 @@ import { HeroConsultationPreview } from "./form";
 import { HeroCtaButtons } from "./hero-cta-buttons";
 import { HeroVideoCard } from "./hero-video-card";
 import type { HeroSectionProps } from "./types";
+import HeroStatsBanner from "./hero-stats-banner";
 
-export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
+export function HeroSection({ data, className }: HeroSectionProps) {
 	const description = data?.description;
 	const bgImage = data?.background_image || "/images/hero.jpg";
 	const videoUrl = data?.hero_video || undefined;
-
+	const title = data?.headline
 	return (
 		<section
 			className={cn("relative w-full lg:h-screen text-background", className)}
@@ -54,6 +55,27 @@ export function HeroSection({ data, onSubmit, className }: HeroSectionProps) {
 					{/* Left Column: Tagline, Video Preview, CTA Buttons & Bottom Stats Banner */}
 					<div className="lg:col-span-7 flex max-lg:items-center flex-col justify-between min-h-full">
 						<div className="space-y-4">
+							{/* Heading with Anchored Flight Lines */}
+							<div className="relative inline-block lg:hidden text-center w-full sm:w-auto">
+								{/* Main Headline with fluid typography */}
+								<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
+									{title ? (
+										title.includes(",") ? (
+											<>
+												<span className="block h1 font-heading text-secondary! ">
+													{title.split(",")[0]},
+												</span>
+												<span className="block h1 font-heading text-secondary! ">
+													{title.split(",").slice(1).join(",").trim()}
+												</span>
+											</>
+										) : (
+											<span className="block h1 font-heading text-secondary! ">{title}</span>
+										)
+									) : null}
+								</h2>
+							</div>
+
 							{/* Tagline */}
 							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl font-sans tracking-wide">
 								{description}

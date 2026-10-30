@@ -24,7 +24,7 @@ const GEO_URL =
 
 const HUB_COORDS: [number, number] = [31.2357, 30.0444];
 
-const COUNTRY_MARKERS: {
+const DEFAULT_COUNTRY_MARKERS: {
 	name: string;
 	coordinates: [number, number];
 	flag: string;
@@ -62,20 +62,29 @@ const COUNTRY_MARKERS: {
 	},
 ];
 
-const SANCTUARY_DOTS: [number, number][] = [
-	[-98.5795, 39.8283],
-	[-3.436, 55.3781],
-	[31.2357, 30.0444],
-	[53.8478, 23.4241],
-	[104.1954, 35.8617],
-	[24.6727, -28.4793],
-	[-63.6167, -38.4161],
-];
+
 
 export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 	if (!data) return null;
 
 	const features = data.feature_card ?? [];
+
+	const apiMarkers = (data.map_countries ?? [])
+		.map((country) => {
+			const lng = Number(country.longitude);
+			const lat = Number(country.latitude);
+			if (!Number.isFinite(lng) || !Number.isFinite(lat)) return null;
+			return {
+				name: country.name,
+				flag: country.flag,
+				coordinates: [lng, lat] as [number, number],
+				offset: [-42, -28] as [number, number],
+			};
+		})
+		.filter((item): item is NonNullable<typeof item> => item !== null);
+
+	const countryMarkers =
+		apiMarkers.length > 0 ? apiMarkers : DEFAULT_COUNTRY_MARKERS;
 
 	return (
 		<section>
@@ -144,10 +153,9 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 					whileInView={{ opacity: 1, scale: 1, y: 0 }}
 					viewport={{ once: true, margin: "-40px" }}
 					transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
-					className="relative w-full  "
+					className="relative w-full"
 				>
 					<div className="flex items-center justify-between gap-2 mb-2">
-					
 						<span className="inline-flex items-center gap-2 small font-medium text-primary">
 							<span className="size-2.5 rounded-full bg-secondary animate-pulse" />
 							Active Sanctuaries
@@ -183,9 +191,9 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 							</Geographies>
 
 							{/* Patient Pathway Lines */}
-							{COUNTRY_MARKERS.map((marker) => (
+							{countryMarkers.map((marker, idx) => (
 								<Line
-									key={`line-${marker.name}`}
+									key={`line-${marker.name}-${idx}`}
 									from={marker.coordinates}
 									to={HUB_COORDS}
 									stroke="var(--secondary)"
@@ -196,21 +204,13 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 								/>
 							))}
 
-							{/* Active Sanctuary Dots */}
-							{SANCTUARY_DOTS.map((coords, idx) => (
-								<Marker key={`dot-${idx}`} coordinates={coords}>
-									<circle
-										r={4}
-										fill="var(--secondary)"
-										stroke="var(--background)"
-										strokeWidth={1.5}
-									/>
-								</Marker>
-							))}
-
+						
 							{/* Featured Country Markers with Badges */}
-							{COUNTRY_MARKERS.map((marker) => (
-								<Marker key={marker.name} coordinates={marker.coordinates}>
+							{countryMarkers.map((marker, idx) => (
+								<Marker
+									key={`${marker.name}-${idx}`}
+									coordinates={marker.coordinates}
+								>
 									<circle
 										r={5}
 										fill="var(--secondary)"
@@ -225,7 +225,17 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 										className="overflow-visible pointer-events-none"
 									>
 										<div className="inline-flex items-center gap-1.5 rounded-lg bg-card px-2.5 py-1 shadow-sm border border-border/60 whitespace-nowrap">
-											<span className="leading-none">{marker.flag}</span>
+											{marker.flag &&
+											(marker.flag.startsWith("http") ||
+												marker.flag.startsWith("/")) ? (
+												<img
+													src={marker.flag}
+													alt={marker.name}
+													className="size-4 object-contain shrink-0"
+												/>
+											) : (
+												<span className="leading-none">{marker.flag}</span>
+											)}
 											<span className="small font-medium text-foreground leading-none">
 												{marker.name}
 											</span>

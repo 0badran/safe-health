@@ -1,6 +1,6 @@
 "use client";
 
-import { PageHero } from "@/components/shared/page-hero";
+import { PageHeader } from "@/components/shared/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/lib/language-context";
 
@@ -9,14 +9,8 @@ export function BlogDetailSkeleton() {
 
 	return (
 		<main className="flex flex-col flex-1">
-			<PageHero
-				title={t("blogs.loading")}
-				breadcrumbs={[
-					{ label: t("blogs.title"), href: "/blogs" },
-					{ label: "..." },
-				]}
-			/>
-			<div className="container max-w-4xl px-4 sm:px-6 py-12 md:py-16 space-y-8">
+			<PageHeader badge={t("blogs.title")} title={t("blogs.loading")} />
+			<div className="container max-w-4xl px-4 sm:px-6 pb-12 md:pb-16 space-y-8">
 				{/* Author bar placeholder */}
 				<div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-border">
 					<div className="flex items-center gap-3">

@@ -3,6 +3,7 @@ import type { HomePatientJourneySection } from "@/types/home";
 import Image from "next/image";
 import React, { type ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
+import SectionHeader from "../shared/section-header";
 
 
 
@@ -267,40 +268,46 @@ function Step({
 				offset,
 			)}
 		>
-			<div className="relative h-50.75 w-52.25 shrink-0">
-				<svg
-					viewBox="0 0 676.72 656.35"
-					preserveAspectRatio="none"
-					aria-hidden="true"
-					className="absolute inset-0 size-full text-secondary/15"
-				>
-					<path d={BLOB_A} fill="currentColor" />
-				</svg>
-				<svg
-					viewBox="0 0 248 241"
-					preserveAspectRatio="none"
-					aria-hidden="true"
-					className="absolute left-0.75 -top-1.25 h-48 w-47 text-secondary/15"
-				>
-					<path d={BLOB_B} fill="currentColor" />
-				</svg>
-				<Image
-					src={imgSrc}
-					alt={title}
-					width={200}
-					height={200}
-					className="relative z-10"
-				/>
-				<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary shadow-xs">
-					{renderStepIcon(icon, Icon)}
-				</span>
+			<div className="flex ">
+
+				<div className="relative h-50.75 w-52.25 shrink-0">
+					<svg
+						viewBox="0 0 676.72 656.35"
+						preserveAspectRatio="none"
+						aria-hidden="true"
+						className="absolute inset-0 size-full text-secondary/15"
+					>
+						<path d={BLOB_A} fill="currentColor" />
+					</svg>
+					<svg
+						viewBox="0 0 248 241"
+						preserveAspectRatio="none"
+						aria-hidden="true"
+						className="absolute left-0.75 -top-1.25 h-48 w-47 text-secondary/15"
+					>
+						<path d={BLOB_B} fill="currentColor" />
+					</svg>
+					<Image
+						src={imgSrc}
+						alt={title}
+						width={200}
+						height={200}
+						className="relative z-10"
+					/>
+					<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary shadow-xs">
+						{renderStepIcon(icon, Icon)}
+					</span>
+				</div>
+					<span className="font-heading block lg:hidden text-3xl leading-9 tracking-tight text-primary">
+						{stepNumber}
+					</span>
 			</div>
 
 			{/* Connecting wave line starting with small circle dot and ending with fade */}
 			<StepConnector stepIndex={n} />
 
 			<div className="flex flex-col gap-1">
-				<span className="font-heading text-3xl leading-9 tracking-tight text-primary">
+				<span className="font-heading hidden lg:block text-3xl leading-9 tracking-tight text-primary">
 					{stepNumber}
 				</span>
 				<h3 className="font-heading text-xl font-bold leading-7 text-foreground">
@@ -345,7 +352,7 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 
 	return (
 		<section
-			className="relative isolate w-full overflow-hidden p-4 sm:p-6 rounded-3xl scroll-mt-28"
+			className="relative isolate w-full overflow-hidden p-4 lg:p-6 rounded-3xl scroll-mt-28"
 			id="patient-journey"
 		>
 			<span id="steps" className="sr-only -top-28 relative block" aria-hidden="true" />
@@ -365,13 +372,13 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 			/>
 
 			<div className="relative z-10 w-full">
-				<header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-end mb-8 sm:mb-10 lg:mb-12">
+				<header className="grid grid-cols-1 max-lg:text-center  lg:grid-cols-12 gap-1 lg:gap-8 items-end mb-4  lg:mb-5">
 					<div className="lg:col-span-7 ">
-						<h2 className="text-heading max-w-[70%]">{headline}</h2>
+						<h2 className="text-heading lg:max-w-[70%]">{headline}</h2>
 					</div>
 					{description && (
 						<div className="lg:col-span-5 flex lg:justify-end me-4">
-							<p className="text-paragraph h5 leading-relaxed max-w-lg">
+							<p className="text-paragraph  h5 leading-relaxed w-full lg:max-w-lg">
 								{description}
 							</p>
 						</div>

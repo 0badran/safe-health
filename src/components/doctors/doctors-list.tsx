@@ -101,7 +101,7 @@ export function DoctorsList() {
 							count={doctors.length}
 							className="rtl:scale-x-[-1]"
 						/>
-						<div className="flex flex-col gap-16 lg:gap-20 relative z-10">
+						<div className="flex flex-col gap-16 lg:gap-24 relative z-10">
 							{doctors.map((doctor, index) => (
 								<DoctorCard
 									key={doctor.id}

@@ -76,6 +76,25 @@ export function ClipPathReveal({
 	once = true,
 	margin = "-40px",
 }: ClipPathRevealProps) {
+	const [isMobile, setIsMobile] = React.useState(false);
+
+	React.useEffect(() => {
+		const mediaQuery = window.matchMedia("(max-width: 767px)");
+		setIsMobile(mediaQuery.matches);
+
+		const handleChange = (event: MediaQueryListEvent) => {
+			setIsMobile(event.matches);
+		};
+
+		mediaQuery.addEventListener("change", handleChange);
+		return () => mediaQuery.removeEventListener("change", handleChange);
+	}, []);
+
+	if (isMobile) {
+		const Tag = as;
+		return <Tag className={className}>{children}</Tag>;
+	}
+
 	const Component = motion[as] as typeof motion.div;
 	const variant = clipPathVariants[direction] || clipPathVariants.up;
 
@@ -89,7 +108,10 @@ export function ClipPathReveal({
 				delay,
 				ease: [0.16, 1, 0.3, 1], // Smooth exponential out
 			}}
-			className={cn("will-change-[clip-path,transform,opacity]", className)}
+			className={cn(
+				"md:will-change-[clip-path,transform,opacity] max-md:opacity-100! max-md:[clip-path:none]! max-md:transform-none!",
+				className,
+			)}
 		>
 			{children}
 		</Component>

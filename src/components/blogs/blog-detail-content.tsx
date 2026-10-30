@@ -1,7 +1,7 @@
 "use client";
 
 import { BlogDetailSkeleton } from "@/components/blogs/skeletons";
-import { PageHero } from "@/components/shared/page-hero";
+import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import useFetchData from "@/hooks/use-fetch-data";
 import { useTranslation } from "@/lib/language-context";
@@ -45,17 +45,12 @@ export function BlogDetailContent({
 	if (isError || !blog) {
 		return (
 			<main className="flex flex-col flex-1">
-				<PageHero
+				<PageHeader
+					badge={t("blogs.title")}
 					title={t("blogs.notFoundTitle")}
-					breadcrumbs={[
-						{ label: t("blogs.title"), href: "/blogs" },
-						{ label: t("blogs.error") },
-					]}
+					description={t("blogs.notFoundDesc")}
 				/>
-				<div className="container max-w-4xl px-4 py-20 text-center space-y-4">
-					<p className="small text-muted-foreground">
-						{t("blogs.notFoundDesc")}
-					</p>
+				<div className="container max-w-4xl px-4 pb-20 text-center space-y-4">
 					<Button asChild variant="default">
 						<Link href="/blogs" className="gap-2">
 							<ArrowRightIcon className="size-4 rtl:rotate-180" />
@@ -69,17 +64,10 @@ export function BlogDetailContent({
 
 	return (
 		<main className="flex flex-col flex-1">
-			{/* Hero Banner with Blog Title and Breadcrumbs */}
-			<PageHero
-				title={blog.title}
-				imageSrc={blog.image_url || undefined}
-				breadcrumbs={[
-					{ label: t("blogs.title"), href: "/blogs" },
-					{ label: blog.title },
-				]}
-			/>
+			{/* PageHeader matching other pages */}
+			<PageHeader badge={t("blogs.title")} title={blog.title} />
 
-			<article className="container max-w-4xl px-4 sm:px-6 py-12 md:py-16 space-y-8">
+			<article className="container max-w-4xl px-4 sm:px-6 pb-12 md:pb-16 space-y-8">
 				{/* Metadata & Author Bar - Only real available data */}
 				{(blog.author_name || blog.published_at) && (
 					<div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-border">
@@ -120,7 +108,7 @@ export function BlogDetailContent({
 							src={blog.image_url}
 							alt={blog.title}
 							fill
-							priority
+							preload
 							sizes="(max-width: 1024px) 100vw, 896px"
 							className="object-cover"
 						/>

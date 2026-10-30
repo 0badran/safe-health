@@ -60,6 +60,13 @@ export interface GlobalReachSection {
 		title: string;
 		description: string;
 	}>;
+	map_countries:
+	{
+		name: string
+		flag: string,
+		longitude: number,
+		latitude: number
+	}[]
 }
 
 export interface AboutConsultationCtaSection {
