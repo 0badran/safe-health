@@ -60,8 +60,8 @@ const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 
 	const maskStyles: React.CSSProperties = maskImage
 		? {
-				maskImage: `url(${maskImage})`,
-				WebkitMaskImage: `url(${maskImage})`,
+				maskImage: `url("${maskImage}")`,
+				WebkitMaskImage: `url("${maskImage}")`,
 				maskSize: "cover",
 				WebkitMaskSize: "cover",
 				maskPosition: "top center",

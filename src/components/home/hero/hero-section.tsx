@@ -10,32 +10,40 @@ import { HeroVideoCard } from "./hero-video-card";
 import type { HeroSectionProps } from "./types";
 import HeroStatsBanner from "./hero-stats-banner";
 
+// Instant inline SVG mask anchored to the bottom-left cutout (1024x507) so the cutout pocket always stays at the bottom-left regardless of viewport height
+const HERO_MASK_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(
+	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 507" preserveAspectRatio="none"><path d="M0 0H1024V507H592C580 507 570 502 560 493L492 434C482 426 472 423 458 423H0V0Z" fill="black"/></svg>',
+)}`;
+
 export function HeroSection({ data, className }: HeroSectionProps) {
 	const description = data?.description;
 	const bgImage = data?.background_image || "/images/hero.jpg";
 	const videoUrl = data?.hero_video || undefined;
-	const title = data?.headline
+	const title = data?.headline;
+
 	return (
 		<section
-			className={cn("relative w-full lg:h-screen text-background", className)}
+			className={cn(
+				"relative w-full lg:min-h-175 text-background",
+				className,
+			)}
 		>
-			{/* Background Image & Texture Overlay */}
+			{/* Instant Primary Masked Background & Texture Overlay */}
 			<div
 				aria-hidden="true"
 				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden"
 				style={{
-					maskImage: `url(${"/images/hero-bg.png"})`,
-					WebkitMaskImage: `url(${"/images/hero-bg.png"})`,
-					maskSize: "cover",
-					background: "oklch(0.343 0.135 288)",
-					WebkitMaskSize: "cover",
-					maskPosition: "top center",
-					WebkitMaskPosition: "top center",
+					maskImage: `url("${HERO_MASK_SVG}")`,
+					WebkitMaskImage: `url("${HERO_MASK_SVG}")`,
+					maskSize: "100% 100%",
+					WebkitMaskSize: "100% 100%",
+					maskPosition: "bottom center",
+					WebkitMaskPosition: "bottom center",
 					maskRepeat: "no-repeat",
 					WebkitMaskRepeat: "no-repeat",
 				}}
 			>
-				<div className="absolute inset-x-0  top-0 w-full h-30 bg-linear-to-b from-primary via-primary to-transparent"></div>
+				<div className="absolute inset-x-0 top-0 w-full h-30 bg-linear-to-b from-primary via-primary to-transparent z-10" />
 				<Image
 					src={bgImage}
 					alt=""
@@ -46,31 +54,40 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 				/>
 			</div>
 
-			{/* Interactive Grid Layer - placed above hero-bg.png and below Main Content, masked to hero-bg.png */}
-			<InteractiveGridBackground maskImage="/images/hero-bg.png" />
+			{/* Interactive Grid Layer - masked with the same instant SVG mask */}
+			<InteractiveGridBackground
+				maskImage={HERO_MASK_SVG}
+				style={{
+					maskSize: "100% 100%",
+					WebkitMaskSize: "100% 100%",
+					maskPosition: "bottom center",
+					WebkitMaskPosition: "bottom center",
+				}}
+			/>
 
 			{/* Main Content Container */}
-			<div className="relative z-10 container pt-20 md:pt-28 pb-0 pointer-events-none">
+			<div className="relative z-10 container pt-20 md:pt-28 pb-8 lg:pb-36 pointer-events-none">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-					{/* Left Column: Tagline, Video Preview, CTA Buttons & Bottom Stats Banner */}
-					<div className="lg:col-span-7 flex max-lg:items-center flex-col justify-between min-h-full">
+					{/* Left Column: Tagline, Video Preview, CTA Buttons */}
+					<div className="lg:col-span-7 flex  max-lg:items-center flex-col justify-between min-h-full">
 						<div className="space-y-4">
-							{/* Heading with Anchored Flight Lines */}
-							<div className="relative inline-block lg:hidden text-center w-full sm:w-auto">
-								{/* Main Headline with fluid typography */}
-								<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
+							{/* Heading on Mobile/Tablet */}
+							<div className="relative inline-block lg:hidden text-center w-full lg:w-auto">
+								<h2 className="relative w-fit mx-auto leading-[1.12] tracking-tight">
 									{title ? (
 										title.includes(",") ? (
 											<>
-												<span className="block h1 font-heading text-secondary! ">
+												<span className="block h1 font-heading text-secondary!">
 													{title.split(",")[0]},
 												</span>
-												<span className="block h1 font-heading text-secondary! ">
+												<span className="block h1 font-heading text-secondary!">
 													{title.split(",").slice(1).join(",").trim()}
 												</span>
 											</>
 										) : (
-											<span className="block h1 font-heading text-secondary! ">{title}</span>
+											<span className="block h1 font-heading text-secondary!">
+												{title}
+											</span>
 										)
 									) : null}
 								</h2>
@@ -82,7 +99,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 							</h1>
 
 							{/* Video Card Preview */}
-							<div className="pointer-events-auto ">
+							<div className="pointer-events-auto">
 								<HeroVideoCard videoSrc={videoUrl} />
 							</div>
 
@@ -91,12 +108,10 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 								<HeroCtaButtons />
 							</div>
 						</div>
-
-						{/* White Stats & Journey Banner aligned at bottom */}
 					</div>
 
-					{/* Right Column: Consultation Form Preview Card */}
-					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-8 lg:pb-12 relative pointer-events-auto">
+					{/* Right Column: Consultation Form Card */}
+					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-4 lg:pb-0 relative pointer-events-auto">
 						<div
 							id="consultation"
 							className="w-full lg:absolute max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
