@@ -92,7 +92,7 @@ export function Navbar() {
 		{ href: "/about", label: t("navbar.aboutUs") },
 		{ href: "/treatments", label: t("navbar.treatments") },
 		{ href: "/doctors", label: t("navbar.ourDoctors") },
-		{ href: "/#patient-journey", label: t("navbar.patientJourney") },
+		{ href: "/patient-journey", label: t("navbar.patientJourney") },
 		{ href: "/before-after", label: t("navbar.beforeAfter") },
 		{ href: "/contact", label: t("navbar.contact") },
 	];
