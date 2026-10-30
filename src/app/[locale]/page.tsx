@@ -40,7 +40,7 @@ export default async function HomePage() {
 		<main className="flex flex-col flex-1 w-full space-y-6 sm:space-y-5">
 			<HeroSection data={sections?.["home-hero"]} />
 
-			<div className="container relative z-10 lg:-translate-y-16">
+			<div className="container relative z-10 lg:-mt-28">
 				<FadeIn delay={0.15} className="w-fit max-lg:mx-auto lg:w-1/2">
 					<HeroStatsBanner
 						title={sections?.["home-hero"]?.headline}
