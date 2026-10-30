@@ -24,10 +24,8 @@ export function JourneySteps({ data }: JourneyStepsProps = {}) {
 					return (
 						<div
 							key={step.step_number || index}
-							style={{
-								zIndex: index + 1,
-							}}
-							className="relative lg:sticky lg:top-28 bg-background lg:py-8 lg:min-h-[42vh] flex items-start"
+							style={{ zIndex: index + 1 }}
+							className="relative lg:sticky lg:top-28 bg-background lg:py-8 lg:min-h-[62vh] flex items-start"
 						>
 							<FadeIn
 								delay={0.05}
