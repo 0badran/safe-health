@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion } from "framer-motion";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { SectionBadge } from "@/components/shared/section-badge";
@@ -34,23 +35,41 @@ export function DoctorCard({
 	className,
 }: DoctorCardProps) {
 	const { t } = useTranslation();
+	const [isExpanded, setIsExpanded] = React.useState(false);
+	const [isOverflowing, setIsOverflowing] = React.useState(false);
+	const bioRef = React.useRef<HTMLParagraphElement>(null);
 
 	const displayTitle = doctor?.title;
-
 	const displayBio = doctor?.bio;
-
 	const displaySpecialties = doctor?.specialties ?? [];
-
 	const displayExperience = doctor?.experience_years
 		? `${doctor.experience_years}+ ${t("doctors.yearsExperience")}`
 		: undefined;
+
+	React.useEffect(() => {
+		const el = bioRef.current;
+		if (!el || !displayBio) return;
+
+		const checkOverflow = () => {
+			if (!isExpanded) {
+				setIsOverflowing(el.scrollHeight > el.clientHeight + 2);
+			}
+		};
+
+		checkOverflow();
+
+		const resizeObserver = new ResizeObserver(checkOverflow);
+		resizeObserver.observe(el);
+
+		return () => resizeObserver.disconnect();
+	}, [displayBio, isExpanded]);
 
 	return (
 		<motion.article
 			aria-label={`Profile of ${doctor?.name}`}
 			initial={{ opacity: 0, y: 35 }}
 			whileInView={{ opacity: 1, y: 0 }}
-			viewport={{ once: true, margin: "-60px" }}
+			viewport={{ once: true, margin: "-20px" }}
 			transition={{ duration: 0.55, ease: [0.21, 0.47, 0.32, 0.98] }}
 			className={cn(
 				"w-full relative grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center",
@@ -87,11 +106,33 @@ export function DoctorCard({
 					{doctor.name}
 				</h2>
 
-				{/* Doctor Philosophy & Approach Description */}
+				{/* Doctor Philosophy & Approach Description with See More / See Less */}
 				{displayBio && (
-					<p className="text-paragraph leading-relaxed max-w-xl line-clamp-2">
-						{displayBio}
-					</p>
+					<div
+						className={cn(
+							"flex flex-col gap-1.5 max-w-xl",
+							flip ? "items-start" : "md:items-end items-start",
+						)}
+					>
+						<p
+							ref={bioRef}
+							className={cn(
+								"text-paragraph leading-relaxed",
+								!isExpanded && "line-clamp-2",
+							)}
+						>
+							{displayBio}
+						</p>
+						{(isOverflowing || isExpanded) && (
+							<button
+								type="button"
+								onClick={() => setIsExpanded((prev) => !prev)}
+								className="small font-semibold text-primary hover:underline cursor-pointer select-none"
+							>
+								{isExpanded ? t("doctors.seeLess") : t("doctors.seeMore")}
+							</button>
+						)}
+					</div>
 				)}
 
 				{/* Specialized Procedures / Specialties List */}

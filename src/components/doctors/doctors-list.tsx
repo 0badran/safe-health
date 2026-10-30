@@ -94,14 +94,15 @@ export function DoctorsList() {
 						initial={{ opacity: 0, y: 15 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -15 }}
-						transition={{ duration: 0.35, ease: "easeOut" }}
+						transition={{ duration: 0.35, ease: "easeOut"}}
+						viewport={{ amount: 0.2 }}
 						className="relative mb-20"
 					>
 						<DoctorsTimelineTrack
 							count={doctors.length}
 							className="rtl:scale-x-[-1]"
 						/>
-						<div className="flex flex-col gap-16 lg:gap-24 relative z-10">
+						<div className="flex flex-col gap-16 lg:gap-24 relative z-10 ">
 							{doctors.map((doctor, index) => (
 								<DoctorCard
 									key={doctor.id}

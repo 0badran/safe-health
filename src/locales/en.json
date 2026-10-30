@@ -222,7 +222,9 @@
 		"consultationTitle": "Personalized Consultation with",
 		"getPersonalization": "Get Your Personalization",
 		"errorLoading": "An error occurred while loading doctors. Please try again.",
-		"emptyDoctors": "No doctors found matching the selected search criteria."
+		"emptyDoctors": "No doctors found matching the selected search criteria.",
+		"seeMore": "See more",
+		"seeLess": "See less"
 	},
 	"treatments": {
 		"searchPlaceholder": "Search treatments...",
