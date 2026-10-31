@@ -2,7 +2,7 @@
 
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { FallbackImage } from "@/components/shared/fallback-image";
-import { PageHero } from "@/components/shared/page-hero";
+import { PageHeader } from "@/components/shared/page-header";
 import { SectionBadge } from "@/components/shared/section-badge";
 import { Button } from "@/components/ui/button";
 import useFetchData from "@/hooks/use-fetch-data";
@@ -77,17 +77,12 @@ export function CaseDetailContent({
 	if (isError || !caseItem) {
 		return (
 			<main className="flex flex-col flex-1">
-				<PageHero
+				<PageHeader
+					badge={t("footer.beforeAfter")}
 					title={t("beforeAfter.caseNotFound")}
-					breadcrumbs={[
-						{ label: t("footer.beforeAfter"), href: "/before-after" },
-						{ label: t("beforeAfter.caseNotFound") },
-					]}
+					description={t("beforeAfter.caseNotFoundDesc")}
 				/>
-				<div className="container max-w-4xl px-4 py-20 text-center space-y-4">
-					<p className="small text-muted-foreground">
-						{t("beforeAfter.caseNotFoundDesc")}
-					</p>
+				<div className="container max-w-4xl px-4 pb-20 text-center space-y-4">
 					<Button asChild variant="default">
 						<Link href="/before-after" className="gap-2">
 							<ArrowRightIcon className="size-4 rtl:rotate-180" />
@@ -101,14 +96,10 @@ export function CaseDetailContent({
 
 	return (
 		<main className="flex flex-col flex-1">
-			{/* Page Hero with Case Title and Breadcrumbs */}
-			<PageHero
+			{/* PageHeader with Case Title */}
+			<PageHeader
+				badge={caseItem.treatment || t("footer.beforeAfter")}
 				title={caseItem.title}
-				imageSrc={caseItem.image_after_url}
-				breadcrumbs={[
-					{ label: t("footer.beforeAfter"), href: "/before-after" },
-					{ label: caseItem.title },
-				]}
 			/>
 
 			{/* Main Article Container */}

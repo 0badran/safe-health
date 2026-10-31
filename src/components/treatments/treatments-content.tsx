@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { Minus, Plus, Search, X } from "lucide-react";
+import { Minus, Plus, RotateCcw, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { FallbackImage } from "@/components/shared/fallback-image";
@@ -48,6 +48,7 @@ export function TreatmentsContent({
 	const currentSearchParam = searchParams.get("search") || "";
 	const currentAreaId = searchParams.get("area_id") || "";
 	const [searchInput, setSearchInput] = React.useState(currentSearchParam);
+	const hasActiveFilters = Boolean(currentAreaId || currentSearchParam);
 
 	// Synchronize when URL search param changes externally (e.g. back/forward)
 	const [prevSearchParam, setPrevSearchParam] =
@@ -194,6 +195,17 @@ export function TreatmentsContent({
 								</button>
 							);
 						})}
+
+						{hasActiveFilters && (
+							<button
+								type="button"
+								onClick={clearAllFilters}
+								className="rounded-full px-1 py-0.5 small font-medium transition-all cursor-pointer select-none inline-flex items-end gap-1.5 hover:text-destructive hover:underline"
+							>
+								<RotateCcw className="size-3.5" />
+								<span>{t("treatments.resetButton")}</span>
+							</button>
+						)}
 					</div>
 				</section>
 			)}
@@ -247,7 +259,7 @@ export function TreatmentsContent({
 						<p className="text-muted-foreground font-medium small">
 							{t("treatments.empty")}
 						</p>
-						{(currentSearchParam || currentAreaId) && (
+						{hasActiveFilters && (
 							<Button
 								variant="outline"
 								onClick={clearAllFilters}

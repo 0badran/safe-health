@@ -1,13 +1,13 @@
 "use client";
 
-import * as React from "react";
-import { Link } from "@/i18n/navigation";
-import { MapPin, ChevronsLeftRight, ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import SectionBadge from "@/components/shared/section-badge";
 import { FallbackImage } from "@/components/shared/fallback-image";
+import SectionBadge from "@/components/shared/section-badge";
+import { Link } from "@/i18n/navigation";
 import { useTranslation } from "@/lib/language-context";
+import { cn } from "@/lib/utils";
 import type { CaseItem } from "@/types/before-after";
+import { ChevronsLeftRight } from "lucide-react";
+import * as React from "react";
 
 export interface BeforeAfterCardProps {
 	caseItem: CaseItem;
@@ -127,24 +127,6 @@ export function BeforeAfterCard({ caseItem, className }: BeforeAfterCardProps) {
 						{caseItem.description_preview}
 					</p>
 				)}
-			</div>
-
-			{/* Bottom Location Bar */}
-			<div className="mt-auto pt-1">
-				<div className="rounded-xl bg-muted/60 px-3.5 py-2 flex items-center justify-between">
-					<div className="flex items-center gap-1.5 text-foreground small font-medium">
-						<MapPin className="size-4 stroke-2 text-primary shrink-0" />
-						<span>{caseItem.location}</span>
-					</div>
-
-					<Link
-						href={`/before-after/${caseItem.slug}`}
-						className="inline-flex items-center gap-1 text-primary small font-semibold hover:opacity-80 transition-opacity"
-					>
-						<span>{t("beforeAfter.readMore")}</span>
-						<ArrowUpRight className="size-3.5 shrink-0 rtl:rotate-270" />
-					</Link>
-				</div>
 			</div>
 		</article>
 	);

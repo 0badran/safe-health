@@ -281,6 +281,7 @@ export function MultiStepConsultationForm({
 													value={field.value}
 													onChange={field.onChange}
 													disabled={isSubmitting}
+													serviceId={form.watch("service_id")}
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive " />

@@ -26,6 +26,7 @@ export interface DoctorInfiniteSelectProps {
 	onChange: (value?: number | string) => void;
 	disabled?: boolean;
 	className?: string;
+	serviceId?: number | string; // Optional service ID to filter doctors by service
 }
 
 export function DoctorInfiniteSelect({
@@ -33,6 +34,7 @@ export function DoctorInfiniteSelect({
 	onChange,
 	disabled = false,
 	className,
+	serviceId,
 }: DoctorInfiniteSelectProps) {
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = React.useState(false);
@@ -52,7 +54,7 @@ export function DoctorInfiniteSelect({
 	// Server-side infinite query for doctors
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
 		useInfiniteQuery({
-			queryKey: ["doctors-infinite-select", debouncedQuery],
+			queryKey: ["doctors-infinite-select", debouncedQuery, serviceId],
 			queryFn: ({ pageParam = 1 }) =>
 				fetchData<DoctorsApiResponse>({
 					route: "/doctors",
@@ -60,6 +62,7 @@ export function DoctorInfiniteSelect({
 						page: String(pageParam),
 						search: debouncedQuery || undefined,
 						per_page: 10,
+						...(serviceId ? { service_id: String(serviceId) } : {}),
 					},
 				}),
 			initialPageParam: 1,

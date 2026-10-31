@@ -124,7 +124,7 @@ export function ConsultationForm({
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.fullName")}</span>
 											<span
-												className="text-primary font-bold"
+												className="font-bold"
 												aria-hidden="true"
 											>
 												*
@@ -155,7 +155,7 @@ export function ConsultationForm({
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.email")}</span>
 												<span
-													className="text-primary font-bold"
+													className="font-bold"
 													aria-hidden="true"
 												>
 													*
@@ -184,7 +184,7 @@ export function ConsultationForm({
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.phone")}</span>
 												<span
-													className="text-primary font-bold"
+													className="font-bold"
 													aria-hidden="true"
 												>
 													*
@@ -222,7 +222,7 @@ export function ConsultationForm({
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.country")}</span>
 											<span
-												className="text-primary font-bold"
+												className="font-bold"
 												aria-hidden="true"
 											>
 												*
@@ -250,7 +250,7 @@ export function ConsultationForm({
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.message")}</span>
 											<span
-												className="text-primary font-bold"
+												className="font-bold"
 												aria-hidden="true"
 											>
 												*
