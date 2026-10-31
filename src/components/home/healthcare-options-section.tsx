@@ -86,9 +86,9 @@ export function HealthcareOptionsSection({
 			</div>
 
 			{/* 2. Top Header Grid (Positioned in alignment with the SVG curve) */}
-			<div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-8">
+			<div className="relative z-10 grid grid-cols-1 lg:grid-cols-12  gap-2 lg:gap-8">
 				{/* Left Column: Description & Action Button */}
-				<div className="lg:col-span-7 px-4 pt-4 lg:p-7  order-2 lg:order-1 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
+				<div className="lg:col-span-7 px-4  lg:p-7  order-2 lg:order-1 flex flex-col justify-start items-start gap-4 sm:gap-5 max-w-xl">
 					{description && (
 						<p className="text-paragraph h5 leading-relaxed">{description}</p>
 					)}
@@ -101,13 +101,13 @@ export function HealthcareOptionsSection({
 				</div>
 
 				{/* Right Column: Heading sitting in the cutout area */}
-				<div className="lg:col-span-5  px-4 pt-4 lg:p-7 order-1 lg:order-2 flex flex-col items-start lg:items-end justify-start">
-					<h2 className="text-heading">{headline}</h2>
+				<div className="lg:col-span-5  px-4 pt-4 lg:px-7 order-1 lg:order-2 flex flex-col items-start lg:items-end justify-start">
+					<h2 className="text-heading  pb-0!">{headline}</h2>
 				</div>
 			</div>
 
 			{/* 3. Cards Carousel */}
-			<div className="relative z-10 p-4 lg:p-7 w-ful">
+			<div className="relative z-10 px-4 py-4 lg:px-7 w-ful">
 				<SectionCarousel
 					items={activeServices}
 					keyExtractor={(card) => String(card.id)}

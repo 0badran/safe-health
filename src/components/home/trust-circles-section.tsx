@@ -195,7 +195,7 @@ export function TrustCirclesSection({
 	}
 
 	return (
-		<section className="container sm:px-10 grid max-[480px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-2 justify-items-center items-center sm:justify-center sm:-space-x-4 sm:rtl:space-x-4">
+		<section className="w-full grid grid-cols-2 xl:w-[90%] max-sm:gap-2 sm:flex justify-items-center items-center sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-4 sm:rtl:space-x-4">
 			{features.map((item, index) => (
 				<motion.div
 					key={item.id ?? item.title ?? index}
@@ -207,7 +207,7 @@ export function TrustCirclesSection({
 						delay: index * 0.14,
 						ease: EASE,
 					}}
-					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bg-background/50 p-2 text-center overflow-hidden w-full"
+					className="group relative flex aspect-square shrink-0 flex-col items-center justify-center rounded-full bg-background/50 p-2 text-center overflow-hidden w-full sm:w-1/4"
 				>
 					<svg
 						className="absolute inset-0 size-full"

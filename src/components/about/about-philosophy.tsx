@@ -33,15 +33,16 @@ export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 	const height = useTransform(smoothProgress, [0, 0.85], ["46vh", "100vh"]);
 	const borderRadius = useTransform(smoothProgress, [0, 0.85], [32, 0]);
 	const x = useTransform(smoothProgress, [0, 1], [-40, 220]);
+	const scale = useTransform(smoothProgress, [0, 1], [0.85, 1.75]);
 
 	if (!data) return null;
 
 	return (
 		<section>
 			{/* Top Grid: Title, Badge, Decoration & Descriptions */}
-			<div className="max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-6 lg:mb-10">
+			<div className=" grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-14 items-start mb-6 lg:mb-10">
 				{/* Left: Badge, Heading, and Dashed Decoration */}
-				<div className="lg:col-span-5 flex flex-col items-start gap-4">
+				<div className="lg:col-span-5 flex flex-col items-start gap-2 lg:gap-4">
 					{data.tag_text && (
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
@@ -71,7 +72,7 @@ export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 						viewport={{ once: true, margin: "-40px" }}
 						transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
 					>
-						<HeadingDivider className="mt-1" />
+						<HeadingDivider />
 					</motion.div>
 				</div>
 
@@ -106,7 +107,7 @@ export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 			{/* Scroll Track for Pinning & Expanding Image to Full Screen */}
 			<div
 				ref={containerRef}
-				className="relative h-[220vh] w-screen left-1/2 -translate-x-1/2 rtl:left-auto rtl:right-1/2 rtl:translate-x-1/2"
+				className="relative h-[220vh] -mt-40 w-screen left-1/2 -translate-x-1/2 rtl:left-auto rtl:right-1/2 rtl:translate-x-1/2"
 			>
 				<div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
 					<motion.div
@@ -125,15 +126,15 @@ export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 
 						{/* Gradient Layer */}
 						<div
-							className="absolute inset-0 bg-linear-to-t from-background from-[-10%] via-primary/10 via-60% to-transparent"
+							className="absolute inset-0 bg-linear-to-t from-secondary from-[-10%] via-primary/10 via-60% to-transparent"
 							aria-hidden="true"
 						/>
 
 						{/* Decorative Clinic Typography with On-Scroll Animation */}
 						{settings?.brand_name && (
 							<motion.div
-								style={{ x }}
-								className="absolute w-full bottom-0 left-3 pointer-events-none will-change-transform"
+								style={{ x, scale }}
+								className="absolute w-full bottom-2 left-3 origin-bottom-left pointer-events-none will-change-transform"
 							>
 								<span className="font-heading text-[clamp(28px,5.5vw,93.5px)] tracking-tight text-background inline-block">
 									{settings.brand_name}

@@ -26,7 +26,7 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 			{/* Section Content */}
 			<div className="relative z-10 py-5 px-6 max-md:bg-wallpaper rounded-2xl">
 				{/* Top Header Row: Title & Subtitle */}
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 mb-5">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-8 mb-5">
 					<div className="lg:col-span-6">
 						{data.headline && (
 							<motion.h2
@@ -90,7 +90,7 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 										delay: index * 0.15,
 										ease: EASE,
 									}}
-									className="bg-card rounded-2xl p-4 sm:p-5 shadow-xs border border-border/40 flex items-start gap-4 sm:gap-5 transition-shadow duration-200 hover:shadow-sm"
+									className="bg-card rounded-2xl p-4 sm:p-5 border-border/40 flex items-start gap-4 sm:gap-5 transition-shadow duration-200 "
 								>
 									<span className="font-heading h3 text-primary shrink-0 leading-none">
 										{point.number}

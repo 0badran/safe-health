@@ -128,7 +128,7 @@ export function Navbar() {
 					<div
 						className={cn(
 							"relative flex shrink-0 items-center justify-center rounded-xl overflow-hidden p-1 mx-2 transition-all duration-300",
-							!isMobile && isScrolled ? "size-10 sm:size-11" : "size-11 sm:size-12",
+							!isMobile && isScrolled ? "size-10 lg:size-11" : "size-11 lg:size-14",
 						)}
 					>
 						<Image
@@ -153,7 +153,7 @@ export function Navbar() {
 								aria-current={active ? "page" : undefined}
 								className={cn(
 									"relative rounded-full transition-all duration-200 select-none",
-									isScrolled && !isMobile ? "px-2.5 py-1 text-xs" : " px-1 lg:px-3 py-1.5",
+									isScrolled && !isMobile ? "px-2.5 py-2 text-xs" : " px-1 lg:px-3 py-1.5",
 									active
 										? "text-white font-semibold"
 										: "text-white/85 hover:bg-white/10 hover:text-white",
@@ -208,16 +208,16 @@ export function Navbar() {
 						>
 							<SheetHeader className="text-start pb-4 border-b border-white/10">
 								<SheetTitle className="flex items-center gap-2.5 text-white">
-									<div className="relative size-9 overflow-hidden rounded-lg bg-white/10 p-0.5 ring-1 ring-white/20">
+									<div className="relative size-10 overflow-hidden rounded-lg  p-0.5 ring-1 ring-white/20">
 										<Image
 											src={settings?.logo || "/images/logo.png"}
 											alt={settings?.brand_name || ""}
 											fill
-											sizes="36px"
-											className="object-contain"
+											sizes="60px"
+											className="object-contain w-full h-full"
 										/>
 									</div>
-									<span className="font-heading font-bold text-lg text-white">
+									<span className="font-heading font-bold text-xl text-white">
 										{settings?.brand_name || "SafeHealth.me"}
 									</span>
 								</SheetTitle>
@@ -232,7 +232,7 @@ export function Navbar() {
 												href={link.href}
 												aria-current={active ? "page" : undefined}
 												className={cn(
-													"rounded-xl px-3 py-2.5 small font-medium transition-colors flex items-center justify-between",
+													"rounded-xl px-3 py-2.5 text-lg font-medium transition-colors flex items-center justify-between",
 													active
 														? "bg-white/20 text-white font-semibold border border-white/15 shadow-xs"
 														: "text-white/90 hover:bg-white/10 hover:text-white",
