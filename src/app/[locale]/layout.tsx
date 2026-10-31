@@ -93,6 +93,7 @@ export default async function LocaleLayout({
 		<html
 			lang={locale}
 			dir={direction}
+			data-scroll-behavior="smooth"
 			suppressHydrationWarning
 			className={cn(
 				"h-full antialiased ltr:font-sans rtl:font-arabic scroll-smooth",

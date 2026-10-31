@@ -316,7 +316,7 @@ export function TreatmentsContent({
 												<div className="lg:col-span-7 flex flex-col gap-5 sm:gap-6">
 													{service.slug && (
 														<span className="small font-semibold px-3.5 py-1 rounded-full bg-muted text-muted-foreground tracking-wider uppercase w-fit">
-															{service.slug.replace(/-/g, " ")}
+															{service.slug.replaceAll("-", " ")}
 														</span>
 													)}
 

@@ -1,11 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import {
-	PhoneCallIcon,
-	MailIcon,
-	MapPinIcon,
-} from "lucide-react";
+import { PhoneCallIcon, MailIcon, MapPinIcon } from "lucide-react";
 import { BootstrapWhatsappIcon } from "@/components/icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "@/lib/language-context";
@@ -16,7 +12,9 @@ interface ContactCardsProps {
 	settings?: SettingsData | null;
 }
 
-export function ContactCards({ settings: propSettings }: ContactCardsProps = {}) {
+export function ContactCards({
+	settings: propSettings,
+}: ContactCardsProps = {}) {
 	const { t } = useTranslation();
 	const { settings: contextSettings, isLoading } = useSettings();
 	const settings = propSettings ?? contextSettings;
@@ -85,37 +83,29 @@ export function ContactCards({ settings: propSettings }: ContactCardsProps = {})
 					{contactItems.map((item) => {
 						const IconComponent = item.icon;
 						return (
-							<Card
-								key={item.title}
-								className="transition-all duration-300 hover:-translate-y-0.5 group py-0"
-							>
-								<CardContent className="p-6 flex flex-col items-center text-center space-y-3">
-									<div
-										className={`flex size-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${item.colorClass}`}
-									>
-										<IconComponent className="size-6" />
-									</div>
+							<Link key={item.title} href={item.href || "#"} className="block">
+								<Card className="transition-all duration-300 hover:-translate-y-0.5 group py-0">
+									<CardContent className="p-6 flex flex-col items-center text-center space-y-3">
+										<div
+											className={`flex size-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 ${item.colorClass}`}
+										>
+											<IconComponent className="size-6" />
+										</div>
 
-									<div className="space-y-1 w-full">
-										<span className="block small font-semibold text-muted-foreground uppercase tracking-wider">
-											{item.title}
-										</span>
-										{item.href ? (
-											<Link
-												href={item.href}
+										<div className="space-y-1 w-full">
+											<span className="block small font-semibold text-muted-foreground uppercase tracking-wider">
+												{item.title}
+											</span>
+											<p
 												dir="ltr"
-												className="block font-heading h6 font-bold text-foreground transition-colors hover:text-primary truncate"
+												className="font-heading h6 font-bold text-foreground transition-colors hover:text-primary truncate"
 											>
 												{item.value}
-											</Link>
-										) : (
-											<span className="block font-heading h6 font-bold text-foreground truncate">
-												{item.value}
-											</span>
-										)}
-									</div>
-								</CardContent>
-							</Card>
+											</p>
+										</div>
+									</CardContent>
+								</Card>
+							</Link>
 						);
 					})}
 				</div>

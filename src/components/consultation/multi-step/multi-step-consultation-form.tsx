@@ -46,6 +46,7 @@ export interface MultiStepConsultationFormProps {
 	utmCampaign?: string;
 	utmTerm?: string;
 	utmContent?: string;
+	eventId?: string;
 	onSuccess?: () => void;
 	className?: string;
 }
@@ -59,6 +60,7 @@ export function MultiStepConsultationForm({
 	utmCampaign: propUtmCampaign,
 	utmTerm: propUtmTerm,
 	utmContent: propUtmContent,
+	eventId: propEventId,
 	onSuccess,
 	className,
 }: MultiStepConsultationFormProps) {
@@ -93,6 +95,7 @@ export function MultiStepConsultationForm({
 	const utmCampaign = getUtmValue("utm_campaign", propUtmCampaign);
 	const utmTerm = getUtmValue("utm_term", propUtmTerm);
 	const utmContent = getUtmValue("utm_content", propUtmContent);
+	const eventId = getUtmValue("event_id", propEventId);
 
 	const resolvedDoctorId =
 		initialDoctorId ?? (searchParams?.get("doctor_id") || undefined);
@@ -181,12 +184,13 @@ export function MultiStepConsultationForm({
 		formData.append("privacy_policy_accepted", "1");
 		formData.append("language", locale || "en");
 
-		// Marketing attribution query parameters (UTM)
+		// Marketing attribution query parameters (UTM & Event ID)
 		if (utmSource) formData.append("utm_source", utmSource);
 		if (utmMedium) formData.append("utm_medium", utmMedium);
 		if (utmCampaign) formData.append("utm_campaign", utmCampaign);
 		if (utmTerm) formData.append("utm_term", utmTerm);
 		if (utmContent) formData.append("utm_content", utmContent);
+		if (eventId) formData.append("event_id", eventId);
 
 		if (data.images && data.images.length > 0) {
 			data.images.forEach((file) => {

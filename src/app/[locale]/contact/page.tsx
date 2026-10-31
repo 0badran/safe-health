@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ContactCards } from "@/components/contact/contact-cards";
 import { ContactForm } from "@/components/contact/contact-form";
+import {
+	ContactCardsSkeleton,
+	ContactFormSkeleton,
+} from "@/components/contact/contact-skeleton";
 import { fetchData, getSeoMetadata } from "@/lib/api";
 import type { ContactPageResponse } from "@/types/contact";
 import type { SettingsApiResponse } from "@/types/settings";
+import { Suspense } from "react";
 
 interface PageProps {
 	params: Promise<{ locale: string }>;
@@ -69,12 +74,16 @@ export default async function ContactPage({ params }: PageProps) {
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 					{/* Column 1: Contact Cards & Location Map from /settings API */}
 					<div className="lg:col-span-6">
-						<ContactCards settings={settings} />
+						<Suspense fallback={<ContactCardsSkeleton />}>
+							<ContactCards settings={settings} />
+						</Suspense>
 					</div>
 
 					{/* Column 2: Contact Form with dynamic section data */}
 					<div className="lg:col-span-6 mb-14">
-						<ContactForm sectionData={formSection} />
+						<Suspense fallback={<ContactFormSkeleton />}>
+							<ContactForm sectionData={formSection} />
+						</Suspense>
 					</div>
 				</div>
 			</section>
