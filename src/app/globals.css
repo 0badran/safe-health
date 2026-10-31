@@ -182,7 +182,7 @@
 	-webkit-background-clip: text;
 	color: transparent;
 	background-clip: text;
-	font-size: clamp(24px, 3.8889vw, 48px);
+	font-size: clamp(24px, 3vw, 48px);
 	letter-spacing: -2px;
 	font-family: var(--font-heading);
 	vertical-align: middle;

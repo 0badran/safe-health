@@ -22,7 +22,7 @@ export function BlogCard({ blog, className }: BlogCardProps) {
 			href={`/blogs/${blog.slug}`}
 			aria-label={postTitle}
 			className={cn(
-				"group h-full flex flex-col justify-between rounded-3xl bg-card p-4 sm:p-5 transition-all duration-300 border hover:shadow-xl hover:-translate-y-1 cursor-pointer select-none",
+				"group h-full flex flex-col justify-between rounded-3xl bg-card p-4 sm:p-5 transition-all duration-300 border  hover:-translate-y-1 cursor-pointer select-none",
 				className,
 			)}
 		>
