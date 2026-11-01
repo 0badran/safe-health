@@ -31,6 +31,7 @@ export interface CaseItem {
 	description_full: string;
 	image_before_url: string;
 	image_after_url: string;
+	seo?: SeoData | null;
 }
 
 export type CasesApiResponse = PaginatedApiResponse<CaseItem>;

@@ -71,7 +71,7 @@ export async function generateMetadata({
 	const page = await getTreatmentsPage(locale);
 	return getSeoMetadata(
 		page?.seo,
-		page?.title || "العلاجات | Safe Health للرعاية الطبية والحلول الصحية",
+		page?.title
 	);
 }
 
