@@ -29,10 +29,7 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { slug, locale } = await params;
 	const caseItem = await getCase(slug, locale);
-	return getSeoMetadata(caseItem?.seo, {
-		title: caseItem?.title,
-		description: caseItem?.description_preview,
-	});
+	return getSeoMetadata(caseItem?.seo);
 }
 
 export default async function CaseDetailPage({ params }: PageProps) {
