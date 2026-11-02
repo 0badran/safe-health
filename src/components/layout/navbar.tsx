@@ -89,12 +89,12 @@ export function Navbar() {
 
 	const navLinks = [
 		{ href: "/", label: t("navbar.home") },
-		{ href: "/about", label: t("navbar.aboutUs") },
+		{ href: "/about-us", label: t("navbar.aboutUs") },
 		{ href: "/treatments", label: t("navbar.treatments") },
-		{ href: "/doctors", label: t("navbar.ourDoctors") },
+		{ href: "/our-doctors", label: t("navbar.ourDoctors") },
 		{ href: "/patient-journey", label: t("navbar.patientJourney") },
 		{ href: "/before-after", label: t("navbar.beforeAfter") },
-		{ href: "/contact", label: t("navbar.contact") },
+		{ href: "/contact-us", label: t("navbar.contact") },
 	];
 
 	return (

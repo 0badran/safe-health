@@ -16,20 +16,20 @@ export function Footer() {
 
 	const exploreLinks = [
 		{ label: t("footer.treatments"), href: "/treatments" },
-		{ label: t("footer.ourApproach"), href: "/about" },
-		{ label: t("footer.ourTeam"), href: "/doctors" },
+		{ label: t("footer.ourApproach"), href: "/about-us" },
+		{ label: t("footer.ourTeam"), href: "/our-doctors" },
 		{ label: t("footer.beforeAfter"), href: "/before-after" },
 		{ label: t("footer.journal"), href: "/blogs" },
 	];
 
 	const yourVisitLinks = [
-		{ label: t("footer.bookConsultation"), href: "/contact" },
-		{ label: t("footer.contactTeam"), href: "/contact" },
+		{ label: t("footer.bookConsultation"), href: "/contact-us" },
+		{ label: t("footer.contactTeam"), href: "/contact-us" },
 	];
 
 	const informationLinks = [
-		{ label: t("footer.privacyNotice"), href: "/privacy" },
-		{ label: t("footer.termsOfUse"), href: "/terms" },
+		{ label: t("footer.privacyNotice"), href: "/privacy-policy" },
+		{ label: t("footer.termsOfUse"), href: "/terms-and-conditions" },
 	];
 
 	return (

@@ -54,6 +54,7 @@ export function DoctorInfiniteSelect({
 	// Server-side infinite query for doctors
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
 		useInfiniteQuery({
+			enabled: isOpen,
 			queryKey: ["doctors-infinite-select", debouncedQuery, serviceId],
 			queryFn: ({ pageParam = 1 }) =>
 				fetchData<DoctorsApiResponse>({
@@ -61,7 +62,6 @@ export function DoctorInfiniteSelect({
 					params: {
 						page: String(pageParam),
 						search: debouncedQuery || undefined,
-						per_page: 10,
 						...(serviceId ? { service_id: String(serviceId) } : {}),
 					},
 				}),

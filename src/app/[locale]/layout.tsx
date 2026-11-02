@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Cairo, Inter, Merienda } from "next/font/google";
 import "../globals.css";
 import Providers from "../providers";
+import { MetaPixel } from "@/components/shared/meta-pixel";
+import { GoogleAnalytics } from "@/components/shared/google-analytics";
 import { fetchData } from "@/lib/api";
 import type { SettingsApiResponse } from "@/types/settings";
 import { routing } from "@/i18n/routing";
@@ -57,6 +59,9 @@ export async function generateMetadata({
 	const settings = await getSettings(locale);
 
 	return {
+		metadataBase: new URL(
+			process.env.NEXT_PUBLIC_SITE_URL || "https://safehealthme.cloud",
+		),
 		title: settings?.brand_name || undefined,
 		description: settings?.footer_description || undefined,
 		icons: settings?.favicon
@@ -67,6 +72,9 @@ export async function generateMetadata({
 					},
 				]
 			: undefined,
+		verification: {
+			google: "tqnvojer9jAdbZoE_DIwiFvj5wv3N_7lfm0oZoMGk68",
+		},
 	};
 }
 
@@ -103,6 +111,8 @@ export default async function LocaleLayout({
 			)}
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
+				<GoogleAnalytics />
+				<MetaPixel />
 				<NextIntlClientProvider locale={locale} messages={messages}>
 					<Providers initialSettings={settings}>{children}</Providers>
 				</NextIntlClientProvider>

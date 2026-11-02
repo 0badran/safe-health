@@ -2,10 +2,12 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { useLocale } from "next-intl";
+import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackGAEvent } from "@/components/shared/google-analytics";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -116,7 +118,8 @@ export function MultiStepConsultationForm({
 		},
 		mode: "onTouched",
 	});
-
+	const treatment = useWatch({ name: "treatment", control: form.control });
+	const serviceId = useWatch({ name: "service_id", control: form.control });
 	// API mutation to /leads
 	const {
 		mutateAsync,
@@ -127,6 +130,14 @@ export function MultiStepConsultationForm({
 		onSuccess: () => {
 			setIsSubmitted(true);
 			onSuccess?.();
+			trackFbEvent(
+				"Lead",
+				undefined,
+				eventId ? { eventID: eventId } : undefined,
+			);
+			trackGAEvent("generate_lead", {
+				event_id: eventId,
+			});
 		},
 	});
 
@@ -252,7 +263,7 @@ export function MultiStepConsultationForm({
 											<FormControl>
 												<ServiceInfiniteSelect
 													value={field.value}
-													selectedTitle={form.watch("treatment")}
+													selectedTitle={treatment}
 													onChange={(serviceId, service) => {
 														field.onChange(serviceId ?? "");
 														if (service) {
@@ -281,7 +292,7 @@ export function MultiStepConsultationForm({
 													value={field.value}
 													onChange={field.onChange}
 													disabled={isSubmitting}
-													serviceId={form.watch("service_id")}
+													serviceId={serviceId}
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive " />

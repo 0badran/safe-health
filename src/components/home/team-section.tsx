@@ -52,7 +52,7 @@ export function TeamSection({ data }: TeamSectionProps = {}) {
 				title={title!}
 				desc={desc}
 				buttonText={t("navbar.ourDoctors")}
-				buttonLink="/doctors"
+				buttonLink="/our-doctors"
 			/>
 
 			<SectionCarousel

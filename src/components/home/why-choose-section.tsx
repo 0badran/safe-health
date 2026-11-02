@@ -64,7 +64,7 @@ export function WhyChooseSection({ data }: WhyChooseSectionProps = {}) {
 						{description}
 					</p>
 
-					<Link href="/about" className="w-fit">
+					<Link href="/about-us" className="w-fit">
 						<Button variant="outline" size="default" withArrow>
 							{t("navbar.aboutUs")}
 						</Button>

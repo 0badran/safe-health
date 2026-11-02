@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackGAEvent } from "@/components/shared/google-analytics";
 import useMutateData from "@/hooks/use-mutate-data";
 import { getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
@@ -57,6 +59,8 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 		route: "/contact",
 		onSuccess: () => {
 			setIsSubmitted(true);
+			trackFbEvent("Contact");
+			trackGAEvent("contact");
 		},
 	});
 
