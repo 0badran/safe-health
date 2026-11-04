@@ -5,8 +5,7 @@ import { useLocale } from "next-intl";
 import { fetchData, type FetchOptions } from "@/lib/api";
 
 export interface UseFetchDataOptions<T = any>
-	extends Partial<UseQueryOptions<T>>,
-		Omit<FetchOptions, "lang"> {
+	extends Partial<UseQueryOptions<T>>, Omit<FetchOptions, "lang"> {
 	lang?: string;
 }
 

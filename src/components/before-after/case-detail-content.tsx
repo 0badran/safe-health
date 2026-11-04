@@ -215,4 +215,3 @@ export function CaseDetailContent({
 }
 
 export default CaseDetailContent;
-

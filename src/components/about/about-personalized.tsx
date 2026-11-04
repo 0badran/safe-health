@@ -62,8 +62,6 @@ const DEFAULT_COUNTRY_MARKERS: {
 	},
 ];
 
-
-
 export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 	if (!data) return null;
 
@@ -204,7 +202,6 @@ export function AboutPersonalized({ data }: AboutPersonalizedProps = {}) {
 								/>
 							))}
 
-						
 							{/* Featured Country Markers with Badges */}
 							{countryMarkers.map((marker, idx) => (
 								<Marker

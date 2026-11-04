@@ -64,7 +64,8 @@ export function LanguageProvider({
 			} catch {
 				// ignore storage errors
 			}
-			const search = typeof window !== "undefined" ? window.location.search : "";
+			const search =
+				typeof window !== "undefined" ? window.location.search : "";
 			router.replace(`${pathname}${search}`, { locale: lang });
 		},
 		[pathname, router],

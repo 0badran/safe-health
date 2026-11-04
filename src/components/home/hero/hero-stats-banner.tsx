@@ -19,8 +19,6 @@ import { useEffect, useRef } from "react";
 import EndLine from "./stats-banner/endline-svg";
 import { StartLine } from "./stats-banner/startline-svg";
 
-
-
 export function AirplanePath() {
 	return (
 		<g transform="translate(-11, -11)">
@@ -95,10 +93,6 @@ function getFlightState(
 
 	return { opacity, scale };
 }
-
-
-
-
 
 export function HeroStatsBanner({
 	className,
@@ -269,8 +263,8 @@ export function HeroStatsBanner({
 						rawCount.match(/^[+]?\d+[%]?([a-zA-Z]+)$/)?.[1]?.toLowerCase();
 					const displayCount =
 						suffix &&
-							(rawCount.endsWith(suffix.toUpperCase()) ||
-								rawCount.endsWith(suffix.toLowerCase()))
+						(rawCount.endsWith(suffix.toUpperCase()) ||
+							rawCount.endsWith(suffix.toLowerCase()))
 							? rawCount.slice(0, -suffix.length)
 							: rawCount;
 

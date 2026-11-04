@@ -214,7 +214,7 @@ export function TreatmentsContent({
 			<section aria-label="Explore Our Treatments" className="w-full">
 				{/* Section Header */}
 				<SectionHeader
-					subTitle={exploreSection?.tag_text }
+					subTitle={exploreSection?.tag_text}
 					title={exploreSection?.headline || t("navbar.treatments")}
 					desc={exploreSection?.description}
 				/>

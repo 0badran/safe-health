@@ -142,9 +142,7 @@ function AccordionContent({
 			className="overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up data-open:h-auto"
 			{...props}
 		>
-			<div
-				className={cn(accordionContentVariants({ variant }), className)}
-			>
+			<div className={cn(accordionContentVariants({ variant }), className)}>
 				{children}
 			</div>
 		</AccordionPrimitive.Content>

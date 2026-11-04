@@ -9,7 +9,9 @@ export function DoctorCardSkeleton({ flip = false }: { flip?: boolean }) {
 				className={cn(
 					"w-full bg-card rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 global-shadow flex flex-col gap-6",
 					"order-2 md:col-span-7",
-					flip ? "md:order-2 items-start" : "md:order-1 md:items-end items-start",
+					flip
+						? "md:order-2 items-start"
+						: "md:order-1 md:items-end items-start",
 				)}
 			>
 				{/* Pill Badge */}

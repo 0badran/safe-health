@@ -123,10 +123,7 @@ export function ConsultationForm({
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.fullName")}</span>
-											<span
-												className="font-bold"
-												aria-hidden="true"
-											>
+											<span className="font-bold" aria-hidden="true">
 												*
 											</span>
 										</FormLabel>
@@ -154,10 +151,7 @@ export function ConsultationForm({
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.email")}</span>
-												<span
-													className="font-bold"
-													aria-hidden="true"
-												>
+												<span className="font-bold" aria-hidden="true">
 													*
 												</span>
 											</FormLabel>
@@ -183,10 +177,7 @@ export function ConsultationForm({
 										<FormItem className="gap-1.5 min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.phone")}</span>
-												<span
-													className="font-bold"
-													aria-hidden="true"
-												>
+												<span className="font-bold" aria-hidden="true">
 													*
 												</span>
 											</FormLabel>
@@ -221,10 +212,7 @@ export function ConsultationForm({
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.country")}</span>
-											<span
-												className="font-bold"
-												aria-hidden="true"
-											>
+											<span className="font-bold" aria-hidden="true">
 												*
 											</span>
 										</FormLabel>
@@ -249,10 +237,7 @@ export function ConsultationForm({
 									<FormItem className="gap-1.5 min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.message")}</span>
-											<span
-												className="font-bold"
-												aria-hidden="true"
-											>
+											<span className="font-bold" aria-hidden="true">
 												*
 											</span>
 										</FormLabel>

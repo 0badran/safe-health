@@ -117,4 +117,3 @@ export function BeforeAfterList() {
 }
 
 export default BeforeAfterList;
-

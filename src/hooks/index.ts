@@ -8,4 +8,3 @@ export {
 	type HttpMethod,
 	type MutateDataOptions,
 } from "./use-mutate-data";
-

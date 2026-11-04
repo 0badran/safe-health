@@ -117,4 +117,3 @@ export interface HomePageData {
 }
 
 export type HomePageResponse = ApiResponse<HomePageData>;
-

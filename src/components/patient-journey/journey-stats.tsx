@@ -41,4 +41,3 @@ export function JourneyStats({ data }: JourneyStatsProps = {}) {
 }
 
 export default JourneyStats;
-

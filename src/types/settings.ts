@@ -18,4 +18,3 @@ export interface SettingsData {
 }
 
 export type SettingsApiResponse = ApiResponse<SettingsData>;
-

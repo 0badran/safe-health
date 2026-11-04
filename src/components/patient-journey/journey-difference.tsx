@@ -40,8 +40,7 @@ export function JourneyDifference({ data }: JourneyDifferenceProps = {}) {
 			{features.length > 0 && (
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
 					{features.map((item, index) => {
-						const FallbackIcon =
-							FALLBACK_ICONS[index % FALLBACK_ICONS.length];
+						const FallbackIcon = FALLBACK_ICONS[index % FALLBACK_ICONS.length];
 
 						return (
 							<FadeIn key={item.title || index} delay={index * 0.1}>
@@ -83,4 +82,3 @@ export function JourneyDifference({ data }: JourneyDifferenceProps = {}) {
 }
 
 export default JourneyDifference;
-

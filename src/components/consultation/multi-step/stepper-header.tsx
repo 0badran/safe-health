@@ -56,10 +56,16 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 										"size-6 rounded-full flex items-center justify-center small font-semibold shrink-0 transition-colors",
 										isActive && "bg-primary text-primary-foreground shadow-xs",
 										isCompleted && "bg-primary/20 text-primary",
-										!isActive && !isCompleted && "bg-muted text-muted-foreground",
+										!isActive &&
+											!isCompleted &&
+											"bg-muted text-muted-foreground",
 									)}
 								>
-									{isCompleted ? <CheckIcon className="size-3.5" /> : step.number}
+									{isCompleted ? (
+										<CheckIcon className="size-3.5" />
+									) : (
+										step.number
+									)}
 								</div>
 								<span className="hidden sm:inline small font-medium truncate">
 									{step.label}
@@ -77,4 +83,3 @@ export function StepperHeader({ currentStep, className }: StepperHeaderProps) {
 }
 
 export default StepperHeader;
-

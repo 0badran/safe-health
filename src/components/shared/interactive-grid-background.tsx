@@ -83,7 +83,10 @@ const InteractiveGridBackground: React.FC<InteractiveGridProps> = ({
 				...maskStyles,
 				...style,
 			}}
-			className={cn("overflow-hidden absolute pointer-events-auto inset-0 z-0", className)}
+			className={cn(
+				"overflow-hidden absolute pointer-events-auto inset-0 z-0",
+				className,
+			)}
 		>
 			{/* Grid Layer */}
 			<div

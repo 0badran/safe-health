@@ -20,7 +20,8 @@ import { useLanguage, useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
 
 export interface ConsultationDrawerProps
-	extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSubmit">,
+	extends
+		Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onSubmit">,
 		VariantProps<typeof buttonVariants> {
 	/** Optional pre-selected doctor ID */
 	doctorId?: number | string;

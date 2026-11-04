@@ -13,7 +13,9 @@ export function HeroCtaButtons({ className }: HeroCtaButtonsProps) {
 	const { t } = useTranslation();
 
 	return (
-		<div className={cn("flex flex-wrap items-center gap-3 sm:gap-4", className)}>
+		<div
+			className={cn("flex flex-wrap items-center gap-3 sm:gap-4", className)}
+		>
 			{/* Start Planning Button */}
 			<Link href="#consultation">
 				<Button variant="secondary" withArrow>

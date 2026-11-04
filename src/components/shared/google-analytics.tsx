@@ -71,4 +71,3 @@ export function GoogleAnalytics() {
 }
 
 export default GoogleAnalytics;
-

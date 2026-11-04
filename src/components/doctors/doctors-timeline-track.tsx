@@ -131,7 +131,9 @@ export function DoctorsTimelineTrack({
 				// Midpoint in the gap between card i and card i + 1
 				const rawMid = (currentBottom + nextTop) / 2;
 				const fallbackMid =
-					(currentRect.bottom - trackRect.top + (nextRect.top - trackRect.top)) /
+					(currentRect.bottom -
+						trackRect.top +
+						(nextRect.top - trackRect.top)) /
 					2;
 
 				const turnY = nextTop > currentBottom ? rawMid : fallbackMid;
@@ -172,7 +174,10 @@ export function DoctorsTimelineTrack({
 		};
 	}, [count]);
 
-	const fallback = React.useMemo(() => generateFallbackGeometry(count), [count]);
+	const fallback = React.useMemo(
+		() => generateFallbackGeometry(count),
+		[count],
+	);
 	const activeGeometry = measured ?? fallback;
 
 	if (!count || count <= 0) {

@@ -44,4 +44,3 @@ export interface ApiResponse<T = any> {
 
 export type PaginatedApiResponse<T = any> = ApiResponse<T[]>;
 export type SingleApiResponse<T = any> = ApiResponse<T>;
-

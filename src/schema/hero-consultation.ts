@@ -9,9 +9,7 @@ export function useHeroConsultationSchema() {
 			.union([z.number(), z.string()])
 			.refine(
 				(val) =>
-					val !== undefined &&
-					val !== null &&
-					String(val).trim().length > 0,
+					val !== undefined && val !== null && String(val).trim().length > 0,
 				{
 					message: t("consultation.serviceRequired"),
 				},
@@ -53,4 +51,3 @@ export const DEFAULT_HERO_CONSULTATION_VALUES: HeroConsultationFormValues = {
 	phone: "",
 	country: "",
 };
-

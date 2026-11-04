@@ -79,4 +79,3 @@ export default async function PatientJourneyPage({ params }: PageProps) {
 		</main>
 	);
 }
-

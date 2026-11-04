@@ -36,4 +36,3 @@ export function BeforeAfterSkeleton({ count = 6 }: { count?: number }) {
 }
 
 export default BeforeAfterSkeleton;
-

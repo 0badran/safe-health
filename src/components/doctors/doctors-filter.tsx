@@ -37,11 +37,12 @@ export function DoctorsFilter({ className }: DoctorsFilterProps) {
 			route: "/doctors/dropdowns/specialties",
 			enabled: specialtiesOpened,
 		});
-	const { data: titlesRes, isLoading: isTitlesLoading } =
-		useFetchData<ApiResponse<string[]>>({
-			route: "/doctors/dropdowns/titles",
-			enabled: titlesOpened,
-		});
+	const { data: titlesRes, isLoading: isTitlesLoading } = useFetchData<
+		ApiResponse<string[]>
+	>({
+		route: "/doctors/dropdowns/titles",
+		enabled: titlesOpened,
+	});
 
 	const specialties = specialtiesRes?.data ?? [];
 	const titles = titlesRes?.data ?? [];

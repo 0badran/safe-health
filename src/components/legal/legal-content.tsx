@@ -19,10 +19,7 @@ export function LegalContent({
 }: LegalContentProps) {
 	return (
 		<main className="flex flex-col flex-1 overflow-x-clip">
-			<PageHeader
-				badge={badge || title}
-				title={title}
-			/>
+			<PageHeader badge={badge || title} title={title} />
 
 			<div className="container pb-20">
 				<motion.div
@@ -50,4 +47,3 @@ export function LegalContent({
 }
 
 export default LegalContent;
-

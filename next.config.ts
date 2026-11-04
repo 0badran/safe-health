@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "dashboard.safehealthme.cloud",
+				hostname: "dashboard.safehealthme.com",
 			},
 		],
 	},
@@ -25,35 +25,6 @@ const nextConfig: NextConfig = {
 				as: "*.css",
 			},
 		},
-	},
-	async redirects() {
-		return [
-			{
-				source: "/:locale(ar|en|fr)/about",
-				destination: "/:locale/about-us",
-				permanent: true,
-			},
-			{
-				source: "/:locale(ar|en|fr)/doctors",
-				destination: "/:locale/our-doctors",
-				permanent: true,
-			},
-			{
-				source: "/:locale(ar|en|fr)/contact",
-				destination: "/:locale/contact-us",
-				permanent: true,
-			},
-			{
-				source: "/:locale(ar|en|fr)/privacy",
-				destination: "/:locale/privacy-policy",
-				permanent: true,
-			},
-			{
-				source: "/:locale(ar|en|fr)/terms",
-				destination: "/:locale/terms-and-conditions",
-				permanent: true,
-			},
-		];
 	},
 };
 

@@ -46,4 +46,3 @@ export interface DoctorsQueryParams {
 	page?: number | string;
 	per_page?: number | string;
 }
-

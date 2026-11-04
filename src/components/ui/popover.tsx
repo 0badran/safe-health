@@ -50,11 +50,4 @@ function PopoverClose({
 	return <PopoverPrimitive.Close data-slot="popover-close" {...props} />;
 }
 
-export {
-	Popover,
-	PopoverTrigger,
-	PopoverContent,
-	PopoverAnchor,
-	PopoverClose,
-};
-
+export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor, PopoverClose };

@@ -1,8 +1,6 @@
 "use client";
 
-import * as React from "react";
-import { useSyncExternalStore } from "react";
-import { motion } from "framer-motion";
+import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
@@ -12,14 +10,15 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import useSettings from "@/hooks/use-settings";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useLanguage, useTranslation } from "@/lib/language-context";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
-import { Link, usePathname } from "@/i18n/navigation";
-import { ConsultationDrawer } from "@/components/consultation/consultation-drawer";
+import { useSyncExternalStore } from "react";
 import { LanguageSwitcher } from "../LanguageSwitcher";
-import { cn } from "@/lib/utils";
-import useSettings from "@/hooks/use-settings";
 
 function subscribe(callback: () => void) {
 	window.addEventListener("scroll", callback, { passive: true });
@@ -51,7 +50,9 @@ function getMobileServerSnapshot() {
 }
 
 function getHashSnapshot() {
-	return typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : "";
+	return typeof window !== "undefined"
+		? window.location.hash.replace(/^#/, "")
+		: "";
 }
 
 function getHashServerSnapshot() {
@@ -64,9 +65,21 @@ export function Navbar() {
 	const { t } = useTranslation();
 	const pathname = usePathname();
 
-	const isScrolled = useSyncExternalStore(subscribe, getScrollSnapshot, getScrollServerSnapshot);
-	const currentHash = useSyncExternalStore(subscribe, getHashSnapshot, getHashServerSnapshot);
-	const isMobile = useSyncExternalStore(subscribe, getMobileSnapshot, getMobileServerSnapshot);
+	const isScrolled = useSyncExternalStore(
+		subscribe,
+		getScrollSnapshot,
+		getScrollServerSnapshot,
+	);
+	const currentHash = useSyncExternalStore(
+		subscribe,
+		getHashSnapshot,
+		getHashServerSnapshot,
+	);
+	const isMobile = useSyncExternalStore(
+		subscribe,
+		getMobileSnapshot,
+		getMobileServerSnapshot,
+	);
 	const isActive = (href: string) => {
 		const currentPath = pathname?.replace(/\/$/, "") || "/";
 
@@ -95,6 +108,7 @@ export function Navbar() {
 		{ href: "/patient-journey", label: t("navbar.patientJourney") },
 		{ href: "/before-after", label: t("navbar.beforeAfter") },
 		{ href: "/contact-us", label: t("navbar.contact") },
+		{ href: "/blogs", label: t("navbar.blogs") },
 	];
 
 	return (
@@ -108,16 +122,16 @@ export function Navbar() {
 			transition={{
 				duration: 0.4,
 			}}
-			className={cn(
-				"fixed inset-x-0 z-50 mx-auto ",
-			)}
+			className={cn("fixed inset-x-0 z-50 mx-auto ")}
 		>
 			<div
 				className={cn(
 					"flex bg-primary lg:rounded-full border border-white/10 backdrop-blur-md items-center justify-between transition-all duration-300",
-					!isMobile ? (isScrolled
-						? "md:shadow-2xl shadow-primary/80 border-white/20 bg-primary/95 py-0.5"
-						: " bg-primary py-1") : "py-1 bg-primary  rounded-b-xl backdrop-blur-sm",
+					!isMobile
+						? isScrolled
+							? "md:shadow-2xl shadow-primary/80 border-white/20 bg-primary/95 py-0.5"
+							: " bg-primary py-1"
+						: "py-1 bg-primary  rounded-b-xl backdrop-blur-sm",
 				)}
 			>
 				{/* Brand Logo from settings or fallback */}
@@ -128,7 +142,9 @@ export function Navbar() {
 					<div
 						className={cn(
 							"relative flex shrink-0 items-center justify-center rounded-xl overflow-hidden p-1 mx-2 transition-all duration-300",
-							!isMobile && isScrolled ? "size-10 lg:size-11" : "size-11 lg:size-14",
+							!isMobile && isScrolled
+								? "size-10 lg:size-11"
+								: "size-11 lg:size-14",
 						)}
 					>
 						<Image
@@ -153,7 +169,9 @@ export function Navbar() {
 								aria-current={active ? "page" : undefined}
 								className={cn(
 									"relative rounded-full transition-all duration-200 select-none",
-									isScrolled && !isMobile ? "px-2.5 py-2 text-xs" : " px-1 lg:px-3 py-1.5",
+									isScrolled && !isMobile
+										? "px-2.5 py-2 text-xs"
+										: " px-1 lg:px-3 py-1.5",
 									active
 										? "text-white font-semibold"
 										: "text-white/85 hover:bg-white/10 hover:text-white",

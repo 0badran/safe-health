@@ -1,5 +1,8 @@
 import type { ApiResponse, SeoData } from "./api";
-import type { HomeConsultationCtaSection, HomePatientJourneySection } from "./home";
+import type {
+	HomeConsultationCtaSection,
+	HomePatientJourneySection,
+} from "./home";
 
 export interface TreatmentsHeroSection {
 	tag_text?: string;
@@ -28,4 +31,3 @@ export interface TreatmentsPageData {
 }
 
 export type TreatmentsPageResponse = ApiResponse<TreatmentsPageData>;
-

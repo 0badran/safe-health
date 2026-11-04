@@ -39,4 +39,3 @@ export function CaseDetailSkeleton() {
 }
 
 export default CaseDetailSkeleton;
-

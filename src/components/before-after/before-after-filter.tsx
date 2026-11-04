@@ -154,7 +154,9 @@ export function BeforeAfterFilter({ className }: BeforeAfterFilterProps) {
 							<SelectValue placeholder={t("beforeAfter.allTreatments")} />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="all">{t("beforeAfter.allTreatments")}</SelectItem>
+							<SelectItem value="all">
+								{t("beforeAfter.allTreatments")}
+							</SelectItem>
 							{isTreatmentsLoading && treatments.length === 0 && (
 								<div className="flex items-center justify-center gap-2 py-2.5 px-3 text-center small text-muted-foreground">
 									<Loader2 className="size-3.5 animate-spin text-primary" />
@@ -188,7 +190,9 @@ export function BeforeAfterFilter({ className }: BeforeAfterFilterProps) {
 							<SelectValue placeholder={t("beforeAfter.allLocations")} />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="all">{t("beforeAfter.allLocations")}</SelectItem>
+							<SelectItem value="all">
+								{t("beforeAfter.allLocations")}
+							</SelectItem>
 							{isLocationsLoading && locations.length === 0 && (
 								<div className="flex items-center justify-center gap-2 py-2.5 px-3 text-center small text-muted-foreground">
 									<Loader2 className="size-3.5 animate-spin text-primary" />
@@ -222,8 +226,12 @@ export function BeforeAfterFilter({ className }: BeforeAfterFilterProps) {
 							<SelectValue placeholder={t("beforeAfter.sortLatest")} />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value="latest">{t("beforeAfter.sortLatest")}</SelectItem>
-							<SelectItem value="oldest">{t("beforeAfter.sortOldest")}</SelectItem>
+							<SelectItem value="latest">
+								{t("beforeAfter.sortLatest")}
+							</SelectItem>
+							<SelectItem value="oldest">
+								{t("beforeAfter.sortOldest")}
+							</SelectItem>
 						</SelectContent>
 					</Select>
 				</div>

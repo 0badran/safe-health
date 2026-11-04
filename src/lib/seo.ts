@@ -46,4 +46,3 @@ export async function fetchPageSeo(
 }
 
 export default getSeoMetadata;
-

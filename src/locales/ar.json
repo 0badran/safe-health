@@ -12,8 +12,7 @@
 		"beforeAfter": "قبل وبعد",
 		"forPartners": "للشركاء",
 		"contact": "اتصل بنا",
-		"articles": "المقالات",
-		"blogs": "المقالات",
+		"blogs": "المدونه",
 		"getConsultation": "استشارة مجانية"
 	},
 	"hero": {
@@ -187,22 +186,6 @@
 		"filterButton": "تصفية",
 		"resetButton": "إعادة تعيين"
 	},
-	"articles": {
-		"title": "المقالات",
-		"heroAlt": "المقالات والأبحاث الطبية المعتمدة في منصة Safe Health",
-		"knowledgeLibrary": "المكتبة المعرفية",
-		"latestArticles": "أحدث المقالات والإرشادات الطبية",
-		"readMore": "اقرأ المزيد",
-		"readArticle": "اقرأ مقال",
-		"loading": "جاري تحميل المقالات...",
-		"errorLoading": "حدث خطأ أثناء تحميل المقالات. يرجى المحاولة مرة أخرى لاحقاً.",
-		"emptyArticles": "لا توجد مقالات منشورة حالياً في هذه الصفحة.",
-		"backToAll": "العودة إلى جميع المقالات",
-		"backToArticles": "العودة إلى المقالات",
-		"notFoundTitle": "المقال غير موجود",
-		"notFoundDesc": "لم نتمكن من العثور على المقال المطلوب أو حدث خطأ أثناء التحميل.",
-		"error": "خطأ"
-	},
 	"pagination": {
 		"previous": "السابق",
 		"next": "التالي"
@@ -265,7 +248,7 @@
 		"ourApproach": "نهجنا ورؤيتنا",
 		"ourTeam": "فريقنا الطبي",
 		"beforeAfter": "قبل وبعد",
-		"journal": "المقالات",
+		"blogs": "المدونة",
 		"bookConsultation": "حجز استشارة",
 		"contactTeam": "تواصل مع فريقنا",
 		"privacyNotice": "سياسة الخصوصية",

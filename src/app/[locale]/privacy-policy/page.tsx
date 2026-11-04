@@ -48,4 +48,3 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
 		</Suspense>
 	);
 }
-

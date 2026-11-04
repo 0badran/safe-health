@@ -71,7 +71,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			locales.map((locale) => {
 				const languageAlternates: Record<string, string> = {};
 				for (const altLocale of locales) {
-					languageAlternates[altLocale] = `${BASE_URL}/${altLocale}/blogs/${blog.slug}`;
+					languageAlternates[altLocale] =
+						`${BASE_URL}/${altLocale}/blogs/${blog.slug}`;
 				}
 
 				return {
@@ -104,7 +105,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			locales.map((locale) => {
 				const languageAlternates: Record<string, string> = {};
 				for (const altLocale of locales) {
-					languageAlternates[altLocale] = `${BASE_URL}/${altLocale}/before-after/${item.slug}`;
+					languageAlternates[altLocale] =
+						`${BASE_URL}/${altLocale}/before-after/${item.slug}`;
 				}
 
 				return {
@@ -124,4 +126,3 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
 	return [...staticEntries, ...blogEntries, ...caseEntries];
 }
-

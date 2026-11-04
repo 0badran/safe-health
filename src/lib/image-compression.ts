@@ -64,4 +64,3 @@ export async function compressImage(
 }
 
 export default compressImage;
-

@@ -12,8 +12,7 @@
 		"beforeAfter": "Avant & Après",
 		"forPartners": "Partenaires",
 		"contact": "Contact",
-		"articles": "Articles",
-		"blogs": "Articles",
+		"blogs": "Blogs",
 		"getConsultation": "Consultation Gratuite"
 	},
 	"hero": {
@@ -187,22 +186,6 @@
 		"filterButton": "Filtrer",
 		"resetButton": "Réinitialiser"
 	},
-	"articles": {
-		"title": "Articles",
-		"heroAlt": "Articles médicaux et recherches certifiées sur la plateforme Safe Health",
-		"knowledgeLibrary": "Bibliothèque de connaissances",
-		"latestArticles": "Derniers articles et recommandations médicales",
-		"readMore": "Lire la suite",
-		"readArticle": "Lire l'article",
-		"loading": "Chargement des articles...",
-		"errorLoading": "Une erreur est survenue lors du chargement des articles. Veuillez réessayer plus tard.",
-		"emptyArticles": "Aucun article publié disponible pour le moment.",
-		"backToAll": "Retour à tous les articles",
-		"backToArticles": "Retour aux articles",
-		"notFoundTitle": "Article introuvable",
-		"notFoundDesc": "Nous n'avons pas pu trouver l'article demandé ou une erreur est survenue lors du chargement.",
-		"error": "Erreur"
-	},
 	"pagination": {
 		"previous": "Précédent",
 		"next": "Suivant"
@@ -265,7 +248,7 @@
 		"ourApproach": "Notre approche",
 		"ourTeam": "Notre équipe",
 		"beforeAfter": "Avant & Après",
-		"journal": "Journal",
+		"blogs": "Blogs",
 		"bookConsultation": "Réserver une consultation",
 		"contactTeam": "Contacter notre équipe",
 		"privacyNotice": "Politique de confidentialité",

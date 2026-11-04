@@ -64,4 +64,3 @@ export interface PatientJourneyPageData {
 }
 
 export type PatientJourneyPageResponse = ApiResponse<PatientJourneyPageData>;
-

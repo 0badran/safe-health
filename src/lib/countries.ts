@@ -106,9 +106,7 @@ export function formatCountryMultiLang(country: Country): string {
 /**
  * Filters and sorts countries based on search query and current locale.
  */
-export function searchCountries(
-	query: string,
-): Country[] {
+export function searchCountries(query: string): Country[] {
 	const normalizedQuery = normalizeText(query);
 
 	const filtered = COUNTRIES.filter((country) => {
@@ -129,13 +127,10 @@ export function searchCountries(
 		const aliases = COUNTRY_ALIASES[country.code];
 		return (
 			aliases !== undefined &&
-			aliases.some((alias) =>
-				normalizeText(alias).includes(normalizedQuery),
-			)
+			aliases.some((alias) => normalizeText(alias).includes(normalizedQuery))
 		);
 	});
 
 	// Sort alphabetically by English name
 	return filtered.sort((a, b) => a.name_en.localeCompare(b.name_en, "en"));
 }
-

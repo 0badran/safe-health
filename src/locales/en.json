@@ -12,8 +12,7 @@
 		"beforeAfter": "Before & After",
 		"forPartners": "For Partners",
 		"contact": "Contact",
-		"articles": "Articles",
-		"blogs": "Articles",
+		"blogs": "Blogs",
 		"getConsultation": "Get a Free Consultation"
 	},
 	"hero": {
@@ -165,11 +164,9 @@
 	},
 	"blogs": {
 		"title": "Articles",
-		"heroAlt": "Certified medical articles and research on Safe Health platform",
-		"knowledgeLibrary": "Knowledge Library",
-		"latestBlogs": "Latest Articles & Medical Guidelines",
 		"viewAll": "View all articles",
 		"readArticle": "Read article",
+		"latestBlogs": "Latest Articles & Medical Guidelines",
 		"loading": "Loading articles...",
 		"errorLoading": "An error occurred while loading articles. Please try again later.",
 		"emptyBlogs": "No published articles available at this time.",
@@ -178,6 +175,8 @@
 		"notFoundTitle": "Article Not Found",
 		"notFoundDesc": "We could not find the requested article or an error occurred during loading.",
 		"error": "Error",
+		"heroAlt": "Certified medical articles and research on Safe Health platform",
+		"knowledgeLibrary": "Knowledge Library",
 		"searchPlaceholder": "Search article title...",
 		"sortLabel": "Sort by",
 		"sortLatest": "Latest",
@@ -186,22 +185,6 @@
 		"publishedBefore": "Published before",
 		"filterButton": "Filter",
 		"resetButton": "Reset"
-	},
-	"articles": {
-		"title": "Articles",
-		"heroAlt": "Certified medical articles and research on Safe Health platform",
-		"knowledgeLibrary": "Knowledge Library",
-		"latestArticles": "Latest Articles & Medical Guidelines",
-		"readMore": "Read more",
-		"readArticle": "Read article",
-		"loading": "Loading articles...",
-		"errorLoading": "An error occurred while loading articles. Please try again later.",
-		"emptyArticles": "No published articles available at this time.",
-		"backToAll": "Back to all articles",
-		"backToArticles": "Back to articles",
-		"notFoundTitle": "Article Not Found",
-		"notFoundDesc": "We could not find the requested article or an error occurred during loading.",
-		"error": "Error"
 	},
 	"pagination": {
 		"previous": "Previous",
@@ -265,7 +248,7 @@
 		"ourApproach": "Our approach",
 		"ourTeam": "Our team",
 		"beforeAfter": "Before & After",
-		"journal": "Journal",
+		"blogs": "Blogs",
 		"bookConsultation": "Book consultation",
 		"contactTeam": "Contact our team",
 		"privacyNotice": "Privacy notice",

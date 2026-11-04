@@ -105,7 +105,10 @@ export function HeroVideoCard({
 	const togglePlay = useCallback(() => {
 		if (!videoRef.current) return;
 		if (videoRef.current.paused || videoRef.current.ended) {
-			videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+			videoRef.current
+				.play()
+				.then(() => setIsPlaying(true))
+				.catch(() => {});
 		} else {
 			videoRef.current.pause();
 			setIsPlaying(false);
@@ -160,7 +163,13 @@ export function HeroVideoCard({
 	// Skip +/- 10 seconds
 	const skipTime = useCallback((amount: number) => {
 		if (!videoRef.current) return;
-		const target = Math.max(0, Math.min(videoRef.current.duration || 0, videoRef.current.currentTime + amount));
+		const target = Math.max(
+			0,
+			Math.min(
+				videoRef.current.duration || 0,
+				videoRef.current.currentTime + amount,
+			),
+		);
 		videoRef.current.currentTime = target;
 		setCurrentTime(target);
 	}, []);
@@ -169,9 +178,15 @@ export function HeroVideoCard({
 	const toggleFullscreen = useCallback(() => {
 		if (!playerContainerRef.current) return;
 		if (!document.fullscreenElement) {
-			playerContainerRef.current.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => {});
+			playerContainerRef.current
+				.requestFullscreen()
+				.then(() => setIsFullscreen(true))
+				.catch(() => {});
 		} else {
-			document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
+			document
+				.exitFullscreen()
+				.then(() => setIsFullscreen(false))
+				.catch(() => {});
 		}
 	}, []);
 
@@ -199,7 +214,9 @@ export function HeroVideoCard({
 		if (videoRef.current) {
 			setCurrentTime(videoRef.current.currentTime);
 			if (videoRef.current.buffered.length > 0) {
-				const bufferedEnd = videoRef.current.buffered.end(videoRef.current.buffered.length - 1);
+				const bufferedEnd = videoRef.current.buffered.end(
+					videoRef.current.buffered.length - 1,
+				);
 				setBuffered((bufferedEnd / videoRef.current.duration) * 100);
 			}
 		}
@@ -239,7 +256,10 @@ export function HeroVideoCard({
 								videoRef.current.muted = true;
 								setIsMuted(true);
 								setShowUnmutePrompt(true);
-								videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+								videoRef.current
+									.play()
+									.then(() => setIsPlaying(true))
+									.catch(() => {});
 							}
 						});
 				}
@@ -322,7 +342,6 @@ export function HeroVideoCard({
 
 				{/* Interactive Illuminated Border Highlight (Follows cursor position) */}
 
-
 				{/* Center Play Button with Continuous Glowing Pulse Animation */}
 				<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 					<div className="relative flex items-center justify-center">
@@ -341,8 +360,6 @@ export function HeroVideoCard({
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 
 			{/* Luxury Interactive Video Player Modal */}
@@ -355,212 +372,222 @@ export function HeroVideoCard({
 						aria-label={modalTitle}
 						className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 animate-in fade-in duration-300"
 					>
-					{/* Darkened Frosted-Glass Backdrop (Deep Blur) with Ambient Glow */}
-					<div
-						onClick={handleClose}
-						className="fixed inset-0 bg-black/85 backdrop-blur-2xl transition-opacity cursor-pointer"
-					/>
-
-					{/* Subtle Ambient Purple / Primary Glow behind the player matching section */}
-					<div className="pointer-events-none fixed inset-0 flex items-center justify-center overflow-hidden">
-						<div className="size-137.5 sm:size-187.5 rounded-full bg-primary/25 blur-[140px] animate-pulse" />
-					</div>
-
-					{/* Modal Card Container: Morphing / expanding transition into an immersive lightbox */}
-					<div
-						ref={playerContainerRef}
-						onMouseMove={handlePlayerMouseMove}
-						className={cn(
-							"relative z-10 w-full max-w-4xl lg:max-w-5xl rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-hidden",
-							"animate-in zoom-in-95 duration-400 ease-out",
-						)}
-					>
-						{/* Clean Close Button with Smooth 90deg Hover Rotation */}
-						<button
-							type="button"
-							onClick={handleClose}
-							aria-label="Close video player"
-							className="group/close absolute top-4 end-4 z-40 flex size-10 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer"
-						>
-							<X className="size-5 transition-transform duration-300 group-hover/close:rotate-90" />
-						</button>
-
-						{/* Quick Unmute Prompt Button (if autoplay was muted by browser policy) */}
-						{showUnmutePrompt && isMuted && (
-							<button
-								type="button"
-								onClick={handleUnmute}
-								className="absolute top-4 start-4 z-40 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white small hover:bg-black/80 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer animate-pulse"
-							>
-								<VolumeX className="size-4 text-secondary shrink-0" />
-								<span>Tap to unmute sound</span>
-							</button>
-						)}
-
-						{/* HTML5 Video Element */}
+						{/* Darkened Frosted-Glass Backdrop (Deep Blur) with Ambient Glow */}
 						<div
-							className="relative aspect-video w-full bg-black flex items-center justify-center cursor-pointer"
-							onClick={togglePlay}
-						>
-							<video
-								ref={videoRef}
-								src={videoSrc}
-								poster={poster}
-								playsInline
-								onLoadedMetadata={handleLoadedMetadata}
-								onTimeUpdate={handleTimeUpdate}
-								onEnded={() => setIsPlaying(false)}
-								className="size-full object-cover"
-							/>
+							onClick={handleClose}
+							className="fixed inset-0 bg-black/85 backdrop-blur-2xl transition-opacity cursor-pointer"
+						/>
 
-							{/* Center Play overlay indicator when paused */}
-							{!isPlaying && (
-								<div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] transition-opacity">
-									<div className="flex size-16 sm:size-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-xl border border-white/40 text-white shadow-2xl transition-transform hover:scale-110">
-										<Play className="size-7 sm:size-8 fill-white text-white translate-x-0.5" />
-									</div>
-								</div>
-							)}
+						{/* Subtle Ambient Purple / Primary Glow behind the player matching section */}
+						<div className="pointer-events-none fixed inset-0 flex items-center justify-center overflow-hidden">
+							<div className="size-137.5 sm:size-187.5 rounded-full bg-primary/25 blur-[140px] animate-pulse" />
 						</div>
 
-						{/* Custom Sleek Glassmorphic Media Controls (Auto-hides on inactivity, reveals on hover) */}
+						{/* Modal Card Container: Morphing / expanding transition into an immersive lightbox */}
 						<div
+							ref={playerContainerRef}
+							onMouseMove={handlePlayerMouseMove}
 							className={cn(
-								"absolute inset-x-0 bottom-0 z-30 p-3 sm:p-5 bg-linear-to-t from-black/85 via-black/40 to-transparent transition-opacity duration-300",
-								showControls || !isPlaying ? "opacity-100" : "opacity-0 pointer-events-none",
+								"relative z-10 w-full max-w-4xl lg:max-w-5xl rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-hidden",
+								"animate-in zoom-in-95 duration-400 ease-out",
 							)}
-							onClick={(e) => e.stopPropagation()}
 						>
-							<div className="flex flex-col gap-2 rounded-2xl bg-black/45 backdrop-blur-xl border border-white/15 p-2.5 sm:p-3 shadow-2xl">
-								{/* Interactive Timeline Scrubber with Hover Thumb & Buffer Bar */}
-								<div
-									role="slider"
-									tabIndex={0}
-									aria-label="Video scrubber"
-									aria-valuemin={0}
-									aria-valuemax={duration || 100}
-									aria-valuenow={currentTime}
-									onClick={handleSeek}
-									onMouseDown={() => setIsScrubbing(true)}
-									onMouseUp={() => setIsScrubbing(false)}
-									className="group/scrubber relative flex h-2 sm:h-2.5 w-full items-center cursor-pointer rounded-full bg-white/20"
+							{/* Clean Close Button with Smooth 90deg Hover Rotation */}
+							<button
+								type="button"
+								onClick={handleClose}
+								aria-label="Close video player"
+								className="group/close absolute top-4 end-4 z-40 flex size-10 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer"
+							>
+								<X className="size-5 transition-transform duration-300 group-hover/close:rotate-90" />
+							</button>
+
+							{/* Quick Unmute Prompt Button (if autoplay was muted by browser policy) */}
+							{showUnmutePrompt && isMuted && (
+								<button
+									type="button"
+									onClick={handleUnmute}
+									className="absolute top-4 start-4 z-40 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white small hover:bg-black/80 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer animate-pulse"
 								>
-									{/* Buffered Track Indicator */}
-									<div
-										className="absolute h-full rounded-full bg-white/30 transition-all duration-150"
-										style={{ width: `${buffered}%` }}
-									/>
-									{/* Played Progress Bar with Brand Gradient */}
-									<div
-										className="relative h-full rounded-full bg-linear-to-r from-primary to-secondary transition-all"
-										style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
-									>
-										{/* Scrubber Playhead Handle */}
-										<div className="absolute end-0 top-1/2 -translate-y-1/2 size-3.5 sm:size-4 rounded-full bg-white shadow-md transition-transform scale-75 group-hover/scrubber:scale-110" />
+									<VolumeX className="size-4 text-secondary shrink-0" />
+									<span>Tap to unmute sound</span>
+								</button>
+							)}
+
+							{/* HTML5 Video Element */}
+							<div
+								className="relative aspect-video w-full bg-black flex items-center justify-center cursor-pointer"
+								onClick={togglePlay}
+							>
+								<video
+									ref={videoRef}
+									src={videoSrc}
+									poster={poster}
+									playsInline
+									onLoadedMetadata={handleLoadedMetadata}
+									onTimeUpdate={handleTimeUpdate}
+									onEnded={() => setIsPlaying(false)}
+									className="size-full object-cover"
+								/>
+
+								{/* Center Play overlay indicator when paused */}
+								{!isPlaying && (
+									<div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[2px] transition-opacity">
+										<div className="flex size-16 sm:size-20 items-center justify-center rounded-full bg-white/20 backdrop-blur-xl border border-white/40 text-white shadow-2xl transition-transform hover:scale-110">
+											<Play className="size-7 sm:size-8 fill-white text-white translate-x-0.5" />
+										</div>
 									</div>
-								</div>
+								)}
+							</div>
 
-								{/* Media Controls Bottom Row */}
-								<div className="flex items-center justify-between gap-3 pt-1 text-white">
-									{/* Left Controls: Play/Pause, Rewind, Fast Forward, Time Display */}
-									<div className="flex items-center gap-2 sm:gap-3">
-										{/* Play / Pause Button */}
-										<button
-											type="button"
-											onClick={togglePlay}
-											aria-label={isPlaying ? "Pause video" : "Play video"}
-											className="flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white"
+							{/* Custom Sleek Glassmorphic Media Controls (Auto-hides on inactivity, reveals on hover) */}
+							<div
+								className={cn(
+									"absolute inset-x-0 bottom-0 z-30 p-3 sm:p-5 bg-linear-to-t from-black/85 via-black/40 to-transparent transition-opacity duration-300",
+									showControls || !isPlaying
+										? "opacity-100"
+										: "opacity-0 pointer-events-none",
+								)}
+								onClick={(e) => e.stopPropagation()}
+							>
+								<div className="flex flex-col gap-2 rounded-2xl bg-black/45 backdrop-blur-xl border border-white/15 p-2.5 sm:p-3 shadow-2xl">
+									{/* Interactive Timeline Scrubber with Hover Thumb & Buffer Bar */}
+									<div
+										role="slider"
+										tabIndex={0}
+										aria-label="Video scrubber"
+										aria-valuemin={0}
+										aria-valuemax={duration || 100}
+										aria-valuenow={currentTime}
+										onClick={handleSeek}
+										onMouseDown={() => setIsScrubbing(true)}
+										onMouseUp={() => setIsScrubbing(false)}
+										className="group/scrubber relative flex h-2 sm:h-2.5 w-full items-center cursor-pointer rounded-full bg-white/20"
+									>
+										{/* Buffered Track Indicator */}
+										<div
+											className="absolute h-full rounded-full bg-white/30 transition-all duration-150"
+											style={{ width: `${buffered}%` }}
+										/>
+										{/* Played Progress Bar with Brand Gradient */}
+										<div
+											className="relative h-full rounded-full bg-linear-to-r from-primary to-secondary transition-all"
+											style={{
+												width: `${duration ? (currentTime / duration) * 100 : 0}%`,
+											}}
 										>
-											{isPlaying ? (
-												<Pause className="size-5 fill-white text-white" />
-											) : (
-												<Play className="size-5 fill-white text-white translate-x-0.5" />
-											)}
-										</button>
-
-										{/* Skip -10s */}
-										<button
-											type="button"
-											onClick={() => skipTime(-10)}
-											aria-label="Skip backward 10 seconds"
-											className="hidden xs:flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
-										>
-											<RotateCcw className="size-4" />
-										</button>
-
-										{/* Skip +10s */}
-										<button
-											type="button"
-											onClick={() => skipTime(10)}
-											aria-label="Skip forward 10 seconds"
-											className="hidden xs:flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
-										>
-											<RotateCw className="size-4" />
-										</button>
-
-										{/* Time Indicator */}
-										<div className="small font-mono text-white/90 select-none ps-1">
-											<span>{formatTime(currentTime)}</span>
-											<span className="opacity-40 px-1">/</span>
-											<span className="opacity-70">{formatTime(duration)}</span>
+											{/* Scrubber Playhead Handle */}
+											<div className="absolute end-0 top-1/2 -translate-y-1/2 size-3.5 sm:size-4 rounded-full bg-white shadow-md transition-transform scale-75 group-hover/scrubber:scale-110" />
 										</div>
 									</div>
 
-									{/* Center Title Badge */}
-									<div className="hidden md:flex items-center gap-1.5 truncate text-white/80 small">
-										<Sparkles className="size-3 text-secondary shrink-0" />
-										<span className="truncate max-w-64 font-medium">{modalTitle}</span>
-									</div>
-
-									{/* Right Controls: Volume Slider, Fullscreen */}
-									<div className="flex items-center gap-2 sm:gap-3">
-										{/* Volume Controls */}
-										<div className="group/vol flex items-center gap-1.5">
+									{/* Media Controls Bottom Row */}
+									<div className="flex items-center justify-between gap-3 pt-1 text-white">
+										{/* Left Controls: Play/Pause, Rewind, Fast Forward, Time Display */}
+										<div className="flex items-center gap-2 sm:gap-3">
+											{/* Play / Pause Button */}
 											<button
 												type="button"
-												onClick={toggleMute}
-												aria-label={isMuted ? "Unmute" : "Mute"}
+												onClick={togglePlay}
+												aria-label={isPlaying ? "Pause video" : "Play video"}
 												className="flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white"
 											>
-												{isMuted || volume === 0 ? (
-													<VolumeX className="size-4.5 text-secondary" />
+												{isPlaying ? (
+													<Pause className="size-5 fill-white text-white" />
 												) : (
-													<Volume2 className="size-4.5" />
+													<Play className="size-5 fill-white text-white translate-x-0.5" />
 												)}
 											</button>
-											<input
-												type="range"
-												min={0}
-												max={1}
-												step={0.05}
-												value={isMuted ? 0 : volume}
-												onChange={handleVolumeChange}
-												aria-label="Volume slider"
-												className="hidden sm:block h-1.5 w-16 cursor-pointer accent-white bg-white/20 rounded-full outline-none"
-											/>
+
+											{/* Skip -10s */}
+											<button
+												type="button"
+												onClick={() => skipTime(-10)}
+												aria-label="Skip backward 10 seconds"
+												className="hidden xs:flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
+											>
+												<RotateCcw className="size-4" />
+											</button>
+
+											{/* Skip +10s */}
+											<button
+												type="button"
+												onClick={() => skipTime(10)}
+												aria-label="Skip forward 10 seconds"
+												className="hidden xs:flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
+											>
+												<RotateCw className="size-4" />
+											</button>
+
+											{/* Time Indicator */}
+											<div className="small font-mono text-white/90 select-none ps-1">
+												<span>{formatTime(currentTime)}</span>
+												<span className="opacity-40 px-1">/</span>
+												<span className="opacity-70">
+													{formatTime(duration)}
+												</span>
+											</div>
 										</div>
 
-										{/* Fullscreen Button */}
-										<button
-											type="button"
-											onClick={toggleFullscreen}
-											aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-											className="flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
-										>
-											{isFullscreen ? (
-												<Minimize className="size-4.5" />
-											) : (
-												<Maximize className="size-4.5" />
-											)}
-										</button>
+										{/* Center Title Badge */}
+										<div className="hidden md:flex items-center gap-1.5 truncate text-white/80 small">
+											<Sparkles className="size-3 text-secondary shrink-0" />
+											<span className="truncate max-w-64 font-medium">
+												{modalTitle}
+											</span>
+										</div>
+
+										{/* Right Controls: Volume Slider, Fullscreen */}
+										<div className="flex items-center gap-2 sm:gap-3">
+											{/* Volume Controls */}
+											<div className="group/vol flex items-center gap-1.5">
+												<button
+													type="button"
+													onClick={toggleMute}
+													aria-label={isMuted ? "Unmute" : "Mute"}
+													className="flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white"
+												>
+													{isMuted || volume === 0 ? (
+														<VolumeX className="size-4.5 text-secondary" />
+													) : (
+														<Volume2 className="size-4.5" />
+													)}
+												</button>
+												<input
+													type="range"
+													min={0}
+													max={1}
+													step={0.05}
+													value={isMuted ? 0 : volume}
+													onChange={handleVolumeChange}
+													aria-label="Volume slider"
+													className="hidden sm:block h-1.5 w-16 cursor-pointer accent-white bg-white/20 rounded-full outline-none"
+												/>
+											</div>
+
+											{/* Fullscreen Button */}
+											<button
+												type="button"
+												onClick={toggleFullscreen}
+												aria-label={
+													isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+												}
+												className="flex size-8 items-center justify-center rounded-lg hover:bg-white/15 transition-colors cursor-pointer text-white/80 hover:text-white"
+											>
+												{isFullscreen ? (
+													<Minimize className="size-4.5" />
+												) : (
+													<Maximize className="size-4.5" />
+												)}
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>,
-				document.body,
-			)}
+					</div>,
+					document.body,
+				)}
 		</>
 	);
 }

@@ -42,8 +42,7 @@ export function AboutIntro({ data }: AboutIntroProps = {}) {
 							src={data.feature_image}
 							fallbackSrc="/images/why-choose/aesthetic-care.jpg"
 							alt={
-								data.headline ||
-								"Advanced aesthetic treatment at SafeHealthMe"
+								data.headline || "Advanced aesthetic treatment at SafeHealthMe"
 							}
 							fill
 							priority

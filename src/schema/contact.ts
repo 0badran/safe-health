@@ -7,7 +7,7 @@ export function useContactSchema() {
 	return z.object({
 		name: z.string().trim().min(1, t("contact.form.validation.nameRequired")),
 		email: z
-		.email(t("contact.form.validation.emailInvalid"))
+			.email(t("contact.form.validation.emailInvalid"))
 			.trim()
 			.min(1, t("contact.form.validation.emailRequired")),
 		phone: z
@@ -39,4 +39,3 @@ export function useContactSchema() {
 }
 
 export type ContactFormValues = z.infer<ReturnType<typeof useContactSchema>>;
-

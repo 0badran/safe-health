@@ -58,9 +58,7 @@ export function BlogsList() {
 			{/* Empty State */}
 			{!isLoading && !isError && blogs.length === 0 && (
 				<div className="text-center py-16 space-y-3">
-					<p className="text-muted-foreground small">
-						{t("blogs.emptyBlogs")}
-					</p>
+					<p className="text-muted-foreground small">{t("blogs.emptyBlogs")}</p>
 				</div>
 			)}
 
@@ -74,9 +72,7 @@ export function BlogsList() {
 			)}
 
 			{/* Pagination Control */}
-			{!isLoading && !isError && (
-				<AppPagination last_page={last_page} />
-			)}
+			{!isLoading && !isError && <AppPagination last_page={last_page} />}
 		</div>
 	);
 }

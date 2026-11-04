@@ -16,4 +16,3 @@ export interface LegalPageResponse {
 	message: string;
 	data: LegalPageData;
 }
-

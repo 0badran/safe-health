@@ -25,9 +25,7 @@ export function PageHeader({
 
 	const displayBadge = badgeKey ? t(badgeKey) : badge;
 	const displayTitle = titleKey ? t(titleKey) : title;
-	const displayDescription = descriptionKey
-		? t(descriptionKey)
-		: description;
+	const displayDescription = descriptionKey ? t(descriptionKey) : description;
 
 	return (
 		<section className="relative overflow-hidden pt-24 lg:pt-32 pb-10 lg:pb-20">

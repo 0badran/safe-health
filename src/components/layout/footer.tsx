@@ -1,14 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { Link } from "@/i18n/navigation";
-import useSettings from "@/hooks/use-settings";
-import { useTranslation } from "@/lib/language-context";
 import {
-	BootstrapWhatsappIcon,
 	BootstrapFacebookIcon,
 	BootstrapInstagramIcon,
+	BootstrapWhatsappIcon,
 } from "@/components/icons";
+import useSettings from "@/hooks/use-settings";
+import { Link } from "@/i18n/navigation";
+import { useTranslation } from "@/lib/language-context";
+import Image from "next/image";
 
 export function Footer() {
 	const { settings } = useSettings();
@@ -19,7 +19,7 @@ export function Footer() {
 		{ label: t("footer.ourApproach"), href: "/about-us" },
 		{ label: t("footer.ourTeam"), href: "/our-doctors" },
 		{ label: t("footer.beforeAfter"), href: "/before-after" },
-		{ label: t("footer.journal"), href: "/blogs" },
+		{ label: t("footer.blogs"), href: "/blogs" },
 	];
 
 	const yourVisitLinks = [
@@ -84,15 +84,15 @@ export function Footer() {
 										</a>
 									)}
 									{settings.address && (
-										<p className="block">
-											{settings.address}
-										</p>
+										<p className="block">{settings.address}</p>
 									)}
 								</div>
 							)}
 
 							{/* Social Media Links (Render only what exists) */}
-							{(settings?.facebook_url || settings?.instagram_url || settings?.whatsapp_url) && (
+							{(settings?.facebook_url ||
+								settings?.instagram_url ||
+								settings?.whatsapp_url) && (
 								<div className="mt-5 flex items-center gap-3">
 									{settings.whatsapp_url && (
 										<a

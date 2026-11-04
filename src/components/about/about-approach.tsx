@@ -27,13 +27,7 @@ function renderStepIcon(
 	if (icon && typeof icon === "string" && icon.trim().length > 0) {
 		return (
 			<div className={`relative ${className} shrink-0`}>
-				<Image
-					src={icon}
-					alt=""
-					fill
-					sizes="48px"
-					className="object-contain"
-				/>
+				<Image src={icon} alt="" fill sizes="48px" className="object-contain" />
 			</div>
 		);
 	}

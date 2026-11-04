@@ -8,4 +8,3 @@ export interface ConsultationPageData {
 }
 
 export type ConsultationPageResponse = ApiResponse<ConsultationPageData>;
-

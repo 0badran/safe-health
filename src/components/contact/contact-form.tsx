@@ -191,7 +191,10 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 													placeholder={t("contact.form.phonePlaceholder")}
 													autoComplete="tel"
 													onChange={(e) => {
-														const val = e.target.value.replace(/[^0-9+\s\-()]/g, "");
+														const val = e.target.value.replace(
+															/[^0-9+\s\-()]/g,
+															"",
+														);
 														field.onChange(val);
 													}}
 												/>

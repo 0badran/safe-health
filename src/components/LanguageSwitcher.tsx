@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useLanguage } from "@/lib/language-context"
-import { CheckIcon, GlobeIcon } from "lucide-react"
-import { Button } from "./ui/button"
+} from "@/components/ui/dropdown-menu";
+import { useLanguage } from "@/lib/language-context";
+import { CheckIcon, GlobeIcon } from "lucide-react";
+import { Button } from "./ui/button";
 
 export function LanguageSwitcher() {
-	const { language, setLanguage, isRtl, availableLanguages } = useLanguage()
+	const { language, setLanguage, isRtl, availableLanguages } = useLanguage();
 
 	return (
 		<DropdownMenu modal={false}>
@@ -46,5 +46,5 @@ export function LanguageSwitcher() {
 				))}
 			</DropdownMenuContent>
 		</DropdownMenu>
-	)
+	);
 }

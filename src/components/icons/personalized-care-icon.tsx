@@ -23,13 +23,7 @@ export function PersonalizedCareIcon(props: React.ComponentProps<"svg">) {
 				strokeLinecap="round"
 				strokeLinejoin="round"
 			/>
-			<circle
-				cx="23"
-				cy="15"
-				r="4"
-				stroke="currentColor"
-				strokeWidth="1.5"
-			/>
+			<circle cx="23" cy="15" r="4" stroke="currentColor" strokeWidth="1.5" />
 			<path
 				d="M16 23C16 19.5 19 18 23 18C27 18 30 19.5 30 23"
 				stroke="currentColor"

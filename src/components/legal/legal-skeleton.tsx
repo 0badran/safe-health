@@ -36,4 +36,3 @@ export function LegalSkeleton() {
 }
 
 export default LegalSkeleton;
-

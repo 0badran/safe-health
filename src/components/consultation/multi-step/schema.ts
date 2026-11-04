@@ -10,9 +10,7 @@ export function useMultiStepConsultationSchema() {
 			.union([z.number(), z.string()])
 			.refine(
 				(val) =>
-					val !== undefined &&
-					val !== null &&
-					String(val).trim().length > 0,
+					val !== undefined && val !== null && String(val).trim().length > 0,
 				{
 					message: t("consultation.serviceRequired"),
 				},
@@ -58,12 +56,9 @@ export function useMultiStepConsultationSchema() {
 		images: z
 			.array(z.custom<File>())
 			.max(3, t("consultation.imagesMaxError"))
-			.refine(
-				(files) => files.every((f) => f.size <= 1024 * 1024),
-				{
-					message: t("consultation.imageSizeError"),
-				},
-			),
+			.refine((files) => files.every((f) => f.size <= 1024 * 1024), {
+				message: t("consultation.imageSizeError"),
+			}),
 	});
 }
 

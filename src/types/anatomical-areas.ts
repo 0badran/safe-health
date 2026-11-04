@@ -6,4 +6,3 @@ export interface AnatomicalArea {
 }
 
 export type AnatomicalAreasResponse = ApiResponse<AnatomicalArea[]>;
-

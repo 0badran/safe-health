@@ -5,8 +5,6 @@ import React, { type ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
 import SectionHeader from "../shared/section-header";
 
-
-
 const BLOB_A =
 	"M361.9 3.07C430.64 13.59 480.98 67.09 533.02 113.21C579.79 154.66 624.19 197.95 647.27 256.02C671.55 317.11 689 385.97 665.87 447.51C643.12 508.02 580.29 539.39 527.01 576C475.29 611.52 424.63 655.3 361.9 656.33C298.72 657.38 246.99 613.98 192.79 581.51C132.47 545.37 61.3 519.37 29.02 456.9C-5.76 389.62 -7.38 308.37 14.09 235.73C35.92 161.85 83.95 97.16 147.99 54.32C210.46 12.53 287.6 -8.29 361.9 3.07Z";
 const BLOB_B =
@@ -87,13 +85,7 @@ function renderStepIcon(
 	if (typeof icon === "string" && icon.trim().length > 0) {
 		return (
 			<div className="relative size-7 shrink-0">
-				<Image
-					src={icon}
-					alt=""
-					fill
-					sizes="28px"
-					className="object-contain"
-				/>
+				<Image src={icon} alt="" fill sizes="28px" className="object-contain" />
 			</div>
 		);
 	}
@@ -269,7 +261,6 @@ function Step({
 			)}
 		>
 			<div className="flex ">
-
 				<div className="relative h-50.75 w-52.25 shrink-0">
 					<svg
 						viewBox="0 0 676.72 656.35"
@@ -298,9 +289,9 @@ function Step({
 						{renderStepIcon(icon, Icon)}
 					</span>
 				</div>
-					<span className="font-heading block lg:hidden text-3xl leading-9 tracking-tight text-primary">
-						{stepNumber}
-					</span>
+				<span className="font-heading block lg:hidden text-3xl leading-9 tracking-tight text-primary">
+					{stepNumber}
+				</span>
 			</div>
 
 			{/* Connecting wave line starting with small circle dot and ending with fade */}
@@ -355,7 +346,11 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 			className="relative isolate w-full overflow-hidden p-4 lg:p-6 rounded-3xl scroll-mt-28"
 			id="patient-journey"
 		>
-			<span id="steps" className="sr-only -top-28 relative block" aria-hidden="true" />
+			<span
+				id="steps"
+				className="sr-only -top-28 relative block"
+				aria-hidden="true"
+			/>
 
 			{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
 			<div

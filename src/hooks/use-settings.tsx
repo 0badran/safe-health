@@ -43,4 +43,3 @@ export function useSettings(): SettingsContextType {
 }
 
 export default useSettings;
-

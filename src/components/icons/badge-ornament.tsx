@@ -17,11 +17,7 @@ export function BadgeOrnament({
 			viewBox="0 0 25 9"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			className={cn(
-				"shrink-0 text-[#7b61ff]",
-				flip && "rotate-180",
-				className,
-			)}
+			className={cn("shrink-0 text-[#7b61ff]", flip && "rotate-180", className)}
 			aria-hidden="true"
 			{...props}
 		>

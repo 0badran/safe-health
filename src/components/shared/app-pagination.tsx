@@ -21,9 +21,25 @@ function get_pages(current_page: number, last_page: number) {
 		return [1, 2, 3, 4, 5, -1, last_page];
 	}
 	if (current_page >= last_page - 3) {
-		return [1, -1, last_page - 4, last_page - 3, last_page - 2, last_page - 1, last_page];
+		return [
+			1,
+			-1,
+			last_page - 4,
+			last_page - 3,
+			last_page - 2,
+			last_page - 1,
+			last_page,
+		];
 	}
-	return [1, -1, current_page - 1, current_page, current_page + 1, -1, last_page];
+	return [
+		1,
+		-1,
+		current_page - 1,
+		current_page,
+		current_page + 1,
+		-1,
+		last_page,
+	];
 }
 
 export default function AppPagination({ last_page }: { last_page: number }) {
@@ -62,7 +78,11 @@ export default function AppPagination({ last_page }: { last_page: number }) {
 							if (current_page > 1) go_to_page(current_page - 1);
 						}}
 						aria-disabled={current_page <= 1}
-						className={current_page <= 1 ? "pointer-events-none opacity-40 cursor-not-allowed" : ""}
+						className={
+							current_page <= 1
+								? "pointer-events-none opacity-40 cursor-not-allowed"
+								: ""
+						}
 					/>
 				</PaginationItem>
 
@@ -100,11 +120,14 @@ export default function AppPagination({ last_page }: { last_page: number }) {
 							if (current_page < last_page) go_to_page(current_page + 1);
 						}}
 						aria-disabled={current_page >= last_page}
-						className={current_page >= last_page ? "pointer-events-none opacity-40 cursor-not-allowed" : ""}
+						className={
+							current_page >= last_page
+								? "pointer-events-none opacity-40 cursor-not-allowed"
+								: ""
+						}
 					/>
 				</PaginationItem>
 			</PaginationContent>
 		</PaginationRoot>
 	);
 }
-

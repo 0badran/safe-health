@@ -49,4 +49,3 @@ export default async function TermsAndConditionsPage({ params }: PageProps) {
 		</Suspense>
 	);
 }
-
