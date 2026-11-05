@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackFbEvent, generateEventId } from "@/components/shared/meta-pixel";
 import { trackGAEvent } from "@/components/shared/google-analytics";
 import useMutateData from "@/hooks/use-mutate-data";
 import { getCountryByCode } from "@/lib/countries";
@@ -42,6 +42,7 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 	const { t } = useTranslation();
 	const contactSchema = useContactSchema();
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
+	const [eventId, setEventId] = React.useState<string>(() => generateEventId());
 
 	const form = useForm<ContactFormValues>({
 		resolver: zodResolver(contactSchema),
@@ -55,12 +56,12 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 		isError,
 		error,
 		reset: resetMutation,
-	} = useMutateData<unknown, ContactFormValues>({
+	} = useMutateData<unknown, ContactFormValues & { event_id?: string }>({
 		route: "/contact",
 		onSuccess: () => {
 			setIsSubmitted(true);
-			trackFbEvent("Contact");
-			trackGAEvent("contact");
+			trackFbEvent("Contact", undefined, { eventID: eventId });
+			trackGAEvent("contact", { event_id: eventId });
 		},
 	});
 
@@ -71,10 +72,12 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 		await mutateAsync({
 			...values,
 			country: formattedCountry,
+			event_id: eventId,
 		});
 	};
 
 	const handleReset = () => {
+		setEventId(generateEventId());
 		form.reset(DEFAULT_VALUES);
 		resetMutation();
 		setIsSubmitted(false);

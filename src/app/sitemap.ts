@@ -5,7 +5,7 @@ import type { BlogsApiResponse } from "@/types/blogs";
 import type { CasesApiResponse } from "@/types/before-after";
 
 const BASE_URL =
-	process.env.NEXT_PUBLIC_SITE_URL || "https://safehealthme.cloud";
+	process.env.NEXT_PUBLIC_SITE_URL || "https://safehealthme.com";
 
 const STATIC_ROUTES = [
 	{ path: "", priority: 1.0, changeFrequency: "daily" as const },

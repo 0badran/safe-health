@@ -60,7 +60,7 @@ export async function generateMetadata({
 
 	return {
 		metadataBase: new URL(
-			process.env.NEXT_PUBLIC_SITE_URL || "https://safehealthme.cloud",
+			process.env.NEXT_PUBLIC_SITE_URL || "https://safehealthme.com",
 		),
 		title: settings?.brand_name || undefined,
 		description: settings?.footer_description || undefined,

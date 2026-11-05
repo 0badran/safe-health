@@ -14,6 +14,16 @@ declare global {
 }
 
 /**
+ * Generates a unique UUID for Meta Conversions API (CAPI) & GA event deduplication
+ */
+export function generateEventId(): string {
+	if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+		return crypto.randomUUID();
+	}
+	return "evt_" + Date.now() + "_" + Math.random().toString(36).substring(2, 11);
+}
+
+/**
  * Helper to track standard or custom Meta Pixel events
  */
 export function trackFbEvent(

@@ -6,7 +6,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { useLocale } from "next-intl";
-import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackFbEvent, generateEventId } from "@/components/shared/meta-pixel";
 import { trackGAEvent } from "@/components/shared/google-analytics";
 import { useSearchParams } from "next/navigation";
 
@@ -97,7 +97,9 @@ export function MultiStepConsultationForm({
 	const utmCampaign = getUtmValue("utm_campaign", propUtmCampaign);
 	const utmTerm = getUtmValue("utm_term", propUtmTerm);
 	const utmContent = getUtmValue("utm_content", propUtmContent);
-	const eventId = getUtmValue("event_id", propEventId);
+	const [eventId, setEventId] = React.useState<string>(
+		() => propEventId || generateEventId(),
+	);
 
 	const resolvedDoctorId =
 		initialDoctorId ?? (searchParams?.get("doctor_id") || undefined);
@@ -213,6 +215,7 @@ export function MultiStepConsultationForm({
 	};
 
 	const handleReset = () => {
+		setEventId(propEventId || generateEventId());
 		form.reset({
 			...DEFAULT_MULTI_STEP_VALUES,
 			doctor_id: resolvedDoctorId,
