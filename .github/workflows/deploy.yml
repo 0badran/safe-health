@@ -27,30 +27,27 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            echo "🚀 Navigating to project directory..."
+            echo "Navigating to project directory..."
             cd ${{ secrets.VPS_TARGET_DIR || '/var/www/safe-health' }}
 
-            echo "📥 Fetching and syncing latest changes from main..."
-            git fetch origin main
-            git reset --hard origin/main
+            echo "Pulling latest changes from main..."
+            git pull origin main
 
-            echo "🧹 Removing old build artifacts..."
+            echo "Removing old build artifacts..."
             rm -rf .next
 
-            echo "📦 Installing dependencies..."
+            echo "Installing dependencies..."
             npm ci
 
-            echo "🏗️ Building Next.js application..."
+            echo "Building Next.js application..."
             npm run build
 
-            echo "🔄 Reloading application with PM2..."
+            echo "Reloading application with PM2..."
             if pm2 describe safehealth-web > /dev/null 2>&1; then
               pm2 reload safehealth-web --update-env
-            elif pm2 describe safe-health > /dev/null 2>&1; then
-              pm2 reload safe-health --update-env
             else
               pm2 start npm --name "safehealth-web" -- start
             fi
             pm2 save
 
-            echo "✅ Deployment completed successfully!"
+            echo "Deployment completed successfully!"
