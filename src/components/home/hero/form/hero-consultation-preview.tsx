@@ -5,11 +5,15 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2Icon, SparklesIcon } from "lucide-react";
 import { useLocale } from "next-intl";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 import { ServiceInfiniteSelect } from "@/components/consultation/multi-step/service-infinite-select";
 import { CountrySelect } from "@/components/shared/country-select";
+import { trackGAEvent } from "@/components/shared/google-analytics";
+import { generateEventId, getUtmValue, trackFbEvent } from "@/components/shared/meta-pixel";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "@/i18n/navigation";
 import {
 	Form,
 	FormControl,
@@ -32,17 +36,22 @@ import { ConsultationSuccess } from "./consultation-success";
 
 export interface HeroConsultationPreviewProps {
 	className?: string;
+	eventId?: string;
 	onSuccess?: () => void;
 	onSubmit?: (data: HeroConsultationFormValues) => void | Promise<void>;
 }
 
 export function HeroConsultationPreview({
 	className,
+	eventId: propEventId,
 	onSuccess,
 	onSubmit,
 }: HeroConsultationPreviewProps) {
 	const { t } = useTranslation();
 	const locale = useLocale();
+	const [eventId, setEventId] = React.useState<string>(
+		() => propEventId || generateEventId(),
+	);
 	const [isSubmitted, setIsSubmitted] = React.useState(false);
 	const heroConsultationSchema = useHeroConsultationSchema();
 
@@ -51,6 +60,8 @@ export function HeroConsultationPreview({
 		defaultValues: DEFAULT_HERO_CONSULTATION_VALUES,
 		mode: "onTouched",
 	});
+
+	const treatment = useWatch({ name: "treatment", control: form.control });
 
 	const {
 		mutateAsync,
@@ -62,24 +73,42 @@ export function HeroConsultationPreview({
 		onSuccess: () => {
 			setIsSubmitted(true);
 			onSuccess?.();
+			trackFbEvent(
+				"Lead",
+				undefined,
+				eventId ? { eventID: eventId } : undefined,
+			);
+			trackGAEvent("generate_lead", {
+				event_id: eventId,
+			});
 		},
 	});
 
 	const handleSubmit = async (data: HeroConsultationFormValues) => {
+		const countryObj = data.country ? getCountryByCode(data.country) : null;
+
+		const values: Record<string, string | undefined | null> = {
+			name: data.name,
+			phone: data.phone,
+			service_id: String(data.service_id),
+			treatment: data.treatment || String(data.service_id),
+			country: countryObj ? countryObj.name_en : data.country,
+			privacy_policy_accepted: data.privacy_policy_accepted ? "1" : "0",
+			language: locale || "en",
+			utm_source: getUtmValue("utm_source"),
+			utm_medium: getUtmValue("utm_medium"),
+			utm_campaign: getUtmValue("utm_campaign"),
+			utm_term: getUtmValue("utm_term"),
+			utm_content: getUtmValue("utm_content"),
+			event_id: eventId,
+		};
+
 		const formData = new FormData();
-		formData.append("name", data.name);
-		formData.append("phone", data.phone);
-		formData.append("service_id", String(data.service_id));
-		formData.append("treatment", data.treatment || String(data.service_id));
-
-		if (data.country) {
-			const countryObj = getCountryByCode(data.country);
-			const formattedCountry = countryObj ? countryObj.name_en : data.country;
-			formData.append("country", formattedCountry);
-		}
-
-		formData.append("privacy_policy_accepted", "1");
-		formData.append("language", locale || "en");
+		Object.entries(values).forEach(([key, value]) => {
+			if (value !== undefined && value !== null && value !== "") {
+				formData.append(key, value);
+			}
+		});
 
 		await mutateAsync(formData);
 		if (onSubmit) {
@@ -88,6 +117,7 @@ export function HeroConsultationPreview({
 	};
 
 	const handleReset = () => {
+		setEventId(propEventId || generateEventId());
 		form.reset(DEFAULT_HERO_CONSULTATION_VALUES);
 		resetMutation();
 		setIsSubmitted(false);
@@ -146,7 +176,7 @@ export function HeroConsultationPreview({
 										<FormControl>
 											<ServiceInfiniteSelect
 												value={field.value}
-												selectedTitle={form.watch("treatment")}
+												selectedTitle={treatment}
 												onChange={(serviceId, service) => {
 													field.onChange(serviceId ?? "");
 													if (service) {
@@ -242,6 +272,40 @@ export function HeroConsultationPreview({
 											/>
 										</FormControl>
 										<FormMessage className="small text-destructive " />
+									</FormItem>
+								)}
+							/>
+
+							{/* Privacy Policy Checkbox */}
+							<FormField
+								control={form.control}
+								name="privacy_policy_accepted"
+								render={({ field }) => (
+									<FormItem className="pt-1">
+										<label className="inline-flex items-start gap-2.5 py-1 cursor-pointer select-none">
+											<FormControl>
+												<Checkbox
+													checked={field.value}
+													onCheckedChange={field.onChange}
+													disabled={isSubmitting}
+													className="mt-0.5"
+												/>
+											</FormControl>
+											<span className="small leading-normal text-foreground">
+												<span>{t("consultation.privacyAgreementBefore")}</span>
+												<Link
+													href="/privacy-policy"
+													target="_blank"
+													rel="noopener noreferrer"
+													onClick={(e) => e.stopPropagation()}
+													className="text-primary hover:text-primary/80 transition-colors font-medium"
+												>
+													{t("consultation.privacyAgreementLink")}
+												</Link>
+												<span>{t("consultation.privacyAgreementAfter")}</span>
+											</span>
+										</label>
+										<FormMessage className="small text-destructive ps-7 animate-in fade-in" />
 									</FormItem>
 								)}
 							/>

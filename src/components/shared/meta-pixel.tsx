@@ -40,6 +40,30 @@ export function trackFbEvent(
 	}
 }
 
+/**
+ * Helper to extract UTM parameters from prop fallback, URL query params, or sessionStorage cache
+ */
+export function getUtmValue(
+	key: string,
+	fallbackVal?: string,
+	searchParams?: URLSearchParams | null,
+): string | undefined {
+	if (fallbackVal) return fallbackVal;
+	if (typeof window === "undefined") return undefined;
+	try {
+		const fromUrl = searchParams
+			? searchParams.get(key)
+			: new URLSearchParams(window.location.search).get(key);
+		if (fromUrl) {
+			sessionStorage.setItem(key, fromUrl);
+			return fromUrl;
+		}
+		return sessionStorage.getItem(key) || undefined;
+	} catch {
+		return undefined;
+	}
+}
+
 function MetaPixelTracking() {
 	const pathname = usePathname();
 	const searchParams = useSearchParams();

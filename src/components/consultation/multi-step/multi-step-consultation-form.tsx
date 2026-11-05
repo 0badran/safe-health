@@ -6,9 +6,14 @@ import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeftIcon, ArrowRightIcon, Loader2Icon } from "lucide-react";
 import { useLocale } from "next-intl";
-import { trackFbEvent, generateEventId } from "@/components/shared/meta-pixel";
+import {
+	trackFbEvent,
+	generateEventId,
+	getUtmValue,
+} from "@/components/shared/meta-pixel";
 import { trackGAEvent } from "@/components/shared/google-analytics";
 import { useSearchParams } from "next/navigation";
+import { Link } from "@/i18n/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -71,32 +76,15 @@ export function MultiStepConsultationForm({
 	const locale = useLocale();
 	const searchParams = useSearchParams();
 
-	// Helper to extract UTM parameters from props, URL query params, or sessionStorage cache
-	const getUtmValue = React.useCallback(
-		(key: string, propVal?: string) => {
-			if (propVal) return propVal;
-			if (!searchParams) return undefined;
-			const fromUrl = searchParams.get(key);
-			if (fromUrl) {
-				try {
-					sessionStorage.setItem(key, fromUrl);
-				} catch {}
-				return fromUrl;
-			}
-			try {
-				return sessionStorage.getItem(key) || undefined;
-			} catch {
-				return undefined;
-			}
-		},
-		[searchParams],
+	const utmSource = getUtmValue("utm_source", propUtmSource, searchParams);
+	const utmMedium = getUtmValue("utm_medium", propUtmMedium, searchParams);
+	const utmCampaign = getUtmValue(
+		"utm_campaign",
+		propUtmCampaign,
+		searchParams,
 	);
-
-	const utmSource = getUtmValue("utm_source", propUtmSource);
-	const utmMedium = getUtmValue("utm_medium", propUtmMedium);
-	const utmCampaign = getUtmValue("utm_campaign", propUtmCampaign);
-	const utmTerm = getUtmValue("utm_term", propUtmTerm);
-	const utmContent = getUtmValue("utm_content", propUtmContent);
+	const utmTerm = getUtmValue("utm_term", propUtmTerm, searchParams);
+	const utmContent = getUtmValue("utm_content", propUtmContent, searchParams);
 	const [eventId, setEventId] = React.useState<string>(
 		() => propEventId || generateEventId(),
 	);
@@ -163,47 +151,33 @@ export function MultiStepConsultationForm({
 	};
 
 	const handleSubmit = async (data: MultiStepFormValues) => {
+		const countryObj = data.country ? getCountryByCode(data.country) : null;
+
+		const values: Record<string, string | undefined | null> = {
+			name: data.name,
+			phone: data.phone,
+			email: data.email,
+			service_id: String(data.service_id),
+			treatment: data.treatment || String(data.service_id),
+			doctor_id: data.doctor_id ? String(data.doctor_id) : undefined,
+			country: countryObj ? countryObj.name_en : data.country,
+			message: data.message,
+			privacy_policy_accepted: data.privacy_policy_accepted ? "1" : "0",
+			language: locale || "en",
+			utm_source: utmSource,
+			utm_medium: utmMedium,
+			utm_campaign: utmCampaign,
+			utm_term: utmTerm,
+			utm_content: utmContent,
+			event_id: eventId,
+		};
+
 		const formData = new FormData();
-		formData.append("name", data.name);
-		formData.append("phone", data.phone);
-
-		if (data.email) {
-			formData.append("email", data.email);
-		}
-
-		// Exact key requested by user: service_id
-		formData.append("service_id", String(data.service_id));
-		// Required backend validator key: treatment (use service title if available, fallback to service_id)
-		formData.append("treatment", data.treatment || String(data.service_id));
-
-		if (
-			data.doctor_id !== undefined &&
-			data.doctor_id !== null &&
-			data.doctor_id !== ""
-		) {
-			formData.append("doctor_id", String(data.doctor_id));
-		}
-
-		if (data.country) {
-			const countryObj = getCountryByCode(data.country);
-			const formattedCountry = countryObj ? countryObj.name_en : data.country;
-			formData.append("country", formattedCountry);
-		}
-
-		if (data.message) {
-			formData.append("message", data.message);
-		}
-
-		formData.append("privacy_policy_accepted", "1");
-		formData.append("language", locale || "en");
-
-		// Marketing attribution query parameters (UTM & Event ID)
-		if (utmSource) formData.append("utm_source", utmSource);
-		if (utmMedium) formData.append("utm_medium", utmMedium);
-		if (utmCampaign) formData.append("utm_campaign", utmCampaign);
-		if (utmTerm) formData.append("utm_term", utmTerm);
-		if (utmContent) formData.append("utm_content", utmContent);
-		if (eventId) formData.append("event_id", eventId);
+		Object.entries(values).forEach(([key, value]) => {
+			if (value !== undefined && value !== null && value !== "") {
+				formData.append(key, value);
+			}
+		});
 
 		if (data.images && data.images.length > 0) {
 			data.images.forEach((file) => {
@@ -489,11 +463,23 @@ export function MultiStepConsultationForm({
 														className="mt-0.5"
 													/>
 												</FormControl>
-												<span className="small leading-normal text-foreground ">
-													{t("consultation.agreement")}
+												<span className="small leading-normal text-foreground">
+													<span>
+														{t("consultation.privacyAgreementBefore")}
+													</span>
+													<Link
+														href="/privacy-policy"
+														target="_blank"
+														rel="noopener noreferrer"
+														onClick={(e) => e.stopPropagation()}
+														className="text-primary hover:text-primary/80 transition-colors font-medium"
+													>
+														{t("consultation.privacyAgreementLink")}
+													</Link>
+													<span>{t("consultation.privacyAgreementAfter")}</span>
 												</span>
 											</label>
-											<FormMessage className="small text-destructive  ps-7 animate-in fade-in" />
+											<FormMessage className="small text-destructive ps-7 animate-in fade-in" />
 										</FormItem>
 									)}
 								/>

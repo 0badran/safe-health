@@ -37,6 +37,9 @@ export function useHeroConsultationSchema() {
 			.string()
 			.trim()
 			.min(1, t("contact.form.validation.countryRequired")),
+		privacy_policy_accepted: z.boolean().refine((val) => val === true, {
+			message: t("consultation.agreeRequired"),
+		}),
 	});
 }
 
@@ -50,4 +53,5 @@ export const DEFAULT_HERO_CONSULTATION_VALUES: HeroConsultationFormValues = {
 	name: "",
 	phone: "",
 	country: "",
+	privacy_policy_accepted: false,
 };
