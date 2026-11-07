@@ -113,7 +113,7 @@ export default async function LocaleLayout({
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
 				<NextTopLoader
-					color="oklch(0.633 0.105 204.8)"
+					color="var(--primary)"
 					initialPosition={0.08}
 					crawlSpeed={200}
 					height={3}
@@ -121,7 +121,7 @@ export default async function LocaleLayout({
 					showSpinner={false}
 					easing="ease"
 					speed={200}
-					shadow="0 0 10px oklch(0.633 0.105 204.8),0 0 5px oklch(0.633 0.105 204.8)"
+					shadow="0 0 10px var(--border),0 0 5px var(--border)"
 				/>
 				<GoogleAnalytics />
 				<MetaPixel />

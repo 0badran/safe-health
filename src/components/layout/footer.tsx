@@ -8,6 +8,8 @@ import {
 import useSettings from "@/hooks/use-settings";
 import { Link } from "@/i18n/navigation";
 import { useTranslation } from "@/lib/language-context";
+import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackGAEvent } from "@/components/shared/google-analytics";
 import Image from "next/image";
 
 export function Footer() {
@@ -70,7 +72,10 @@ export function Footer() {
 										<a
 											href={`tel:${settings.phone.replace(/\s+/g, "")}`}
 											className="block hover:text-secondary transition-colors"
-											dir="ltr"
+											onClick={() => {
+												trackFbEvent("Contact", { content_name: "Phone Call", channel: "Phone" });
+												trackGAEvent("contact_click", { method: "phone" });
+											}}
 										>
 											{settings.phone}
 										</a>
@@ -79,6 +84,10 @@ export function Footer() {
 										<a
 											href={`mailto:${settings.email}`}
 											className="block hover:text-secondary transition-colors"
+											onClick={() => {
+												trackFbEvent("Contact", { content_name: "Email", channel: "Email" });
+												trackGAEvent("contact_click", { method: "email" });
+											}}
 										>
 											{settings.email}
 										</a>
@@ -101,6 +110,10 @@ export function Footer() {
 											rel="noopener noreferrer"
 											className="size-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white"
 											aria-label="WhatsApp"
+											onClick={() => {
+												trackFbEvent("Contact", { content_name: "WhatsApp", channel: "WhatsApp" });
+												trackGAEvent("contact_click", { method: "whatsapp" });
+											}}
 										>
 											<BootstrapWhatsappIcon className="size-4" />
 										</a>

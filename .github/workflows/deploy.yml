@@ -23,9 +23,6 @@ jobs:
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
             set -e
-            export PATH="/usr/local/bin:$PATH"
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
             echo "Navigating to project directory..."
             cd ${{ secrets.VPS_TARGET_DIR || '/var/www/safe-health' }}

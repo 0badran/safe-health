@@ -6,6 +6,8 @@ import { BootstrapWhatsappIcon } from "@/components/icons";
 import { Card, CardContent } from "@/components/ui/card";
 import { useTranslation } from "@/lib/language-context";
 import useSettings from "@/hooks/use-settings";
+import { trackFbEvent } from "@/components/shared/meta-pixel";
+import { trackGAEvent } from "@/components/shared/google-analytics";
 import type { SettingsData } from "@/types/settings";
 
 interface ContactCardsProps {
@@ -29,6 +31,8 @@ export function ContactCards({
 		href?: string;
 		icon: React.ComponentType<{ className?: string }>;
 		colorClass: string;
+		isExternal?: boolean;
+		onClick?: () => void;
 	}> = [];
 
 	if (settings?.phone) {
@@ -38,6 +42,10 @@ export function ContactCards({
 			href: `tel:${settings.phone.replace(/\s+/g, "")}`,
 			icon: PhoneCallIcon,
 			colorClass: "bg-primary/10 text-primary",
+			onClick: () => {
+				trackFbEvent("Contact", { content_name: "Phone Call", channel: "Phone" });
+				trackGAEvent("contact_click", { method: "phone" });
+			},
 		});
 	}
 
@@ -48,6 +56,11 @@ export function ContactCards({
 			href: settings.whatsapp_url,
 			icon: BootstrapWhatsappIcon,
 			colorClass: "bg-primary/10 text-primary",
+			isExternal: true,
+			onClick: () => {
+				trackFbEvent("Contact", { content_name: "WhatsApp", channel: "WhatsApp" });
+				trackGAEvent("contact_click", { method: "whatsapp" });
+			},
 		});
 	}
 
@@ -58,6 +71,10 @@ export function ContactCards({
 			href: `mailto:${settings.email}`,
 			icon: MailIcon,
 			colorClass: "bg-secondary/15 text-secondary",
+			onClick: () => {
+				trackFbEvent("Contact", { content_name: "Email", channel: "Email" });
+				trackGAEvent("contact_click", { method: "email" });
+			},
 		});
 	}
 
@@ -68,6 +85,7 @@ export function ContactCards({
 			href: settings.google_maps_url || undefined,
 			icon: MapPinIcon,
 			colorClass: "bg-primary/10 text-primary",
+			isExternal: true,
 		});
 	}
 
@@ -83,7 +101,14 @@ export function ContactCards({
 					{contactItems.map((item) => {
 						const IconComponent = item.icon;
 						return (
-							<Link key={item.title} href={item.href || "#"} className="block">
+							<Link
+								key={item.title}
+								href={item.href || "#"}
+								target={item.isExternal ? "_blank" : undefined}
+								rel={item.isExternal ? "noopener noreferrer" : undefined}
+								onClick={item.onClick}
+								className="block"
+							>
 								<Card className="transition-all duration-300 hover:-translate-y-0.5 group py-0">
 									<CardContent className="p-6 flex flex-col items-center text-center space-y-3">
 										<div

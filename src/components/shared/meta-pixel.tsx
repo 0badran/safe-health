@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { Suspense, useEffect } from "react";
 
-export const FB_PIXEL_ID = "1680089583758690";
+export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
 declare global {
 	interface Window {
@@ -17,10 +17,15 @@ declare global {
  * Generates a unique UUID for Meta Conversions API (CAPI) & GA event deduplication
  */
 export function generateEventId(): string {
-	if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
 		return crypto.randomUUID();
 	}
-	return "evt_" + Date.now() + "_" + Math.random().toString(36).substring(2, 11);
+	return (
+		"evt_" + Date.now() + "_" + Math.random().toString(36).substring(2, 11)
+	);
 }
 
 /**
@@ -95,7 +100,6 @@ export function MetaPixel() {
 						s.parentNode.insertBefore(t,s)}(window, document,'script',
 						'https://connect.facebook.net/en_US/fbevents.js');
 						fbq('init', '${FB_PIXEL_ID}');
-						fbq('track', 'PageView');
 					`,
 				}}
 			/>
