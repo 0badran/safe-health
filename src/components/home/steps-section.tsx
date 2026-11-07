@@ -368,11 +368,11 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 
 			<div className="relative z-10 w-full">
 				<header className="grid grid-cols-1 max-lg:text-center  lg:grid-cols-12 gap-1 lg:gap-8 items-end mb-4  lg:mb-5">
-					<div className="lg:col-span-7 ">
+					<div className="lg:col-span-6 ">
 						<h2 className="text-heading lg:max-w-[70%]">{headline}</h2>
 					</div>
 					{description && (
-						<div className="lg:col-span-5 flex lg:justify-end me-4">
+						<div className="lg:col-span-5 flex lg:justify-end lg:me-4">
 							<p className="text-paragraph  h5 leading-relaxed w-full lg:max-w-lg">
 								{description}
 							</p>

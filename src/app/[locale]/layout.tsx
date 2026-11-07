@@ -11,6 +11,7 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import NextTopLoader from "nextjs-toploader";
 
 export const instant = false;
 
@@ -111,6 +112,17 @@ export default async function LocaleLayout({
 			)}
 		>
 			<body className="min-h-full flex flex-col h6 bg-background text-foreground">
+				<NextTopLoader
+					color="oklch(0.633 0.105 204.8)"
+					initialPosition={0.08}
+					crawlSpeed={200}
+					height={3}
+					crawl={true}
+					showSpinner={false}
+					easing="ease"
+					speed={200}
+					shadow="0 0 10px oklch(0.633 0.105 204.8),0 0 5px oklch(0.633 0.105 204.8)"
+				/>
 				<GoogleAnalytics />
 				<MetaPixel />
 				<NextIntlClientProvider locale={locale} messages={messages}>

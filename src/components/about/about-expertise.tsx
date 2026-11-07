@@ -18,23 +18,23 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 
 	return (
 		<section className="relative w-full">
-			<div className="hidden md:block">
+			<div className="hidden lg:block">
 				{/* Background: card shape + continent silhouettes */}
 				<ExpertiseBackground />
 			</div>
 
 			{/* Section Content */}
-			<div className="relative z-10 py-5 px-6 max-md:bg-wallpaper rounded-2xl">
+			<div className="relative z-10 py-5 px-6 max-lg:bg-wallpaper rounded-2xl">
 				{/* Top Header Row: Title & Subtitle */}
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-8 mb-5">
-					<div className="lg:col-span-6">
+					<div className="lg:col-span-6 max-lg:text-center   lg:w-[97%]">
 						{data.headline && (
 							<motion.h2
 								initial={{ opacity: 0, y: 24 }}
 								whileInView={{ opacity: 1, y: 0 }}
 								viewport={{ once: true, margin: "-40px" }}
 								transition={{ duration: 0.55, ease: EASE }}
-								className="text-heading font-normal leading-tight whitespace-pre-line"
+								className="text-heading font-normal   leading-tight whitespace-pre-line"
 							>
 								{data.headline}
 							</motion.h2>
