@@ -44,7 +44,6 @@ jobs:
               pm2 reload safehealth-web --update-env
             else
               pm2 start npm --name "safehealth-web" -- start
+              pm2 save
             fi
-            pm2 save
-
             echo "Deployment completed successfully!"
