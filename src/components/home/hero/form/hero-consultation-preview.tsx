@@ -142,11 +142,7 @@ export function HeroConsultationPreview({
 			<div className="relative p-6 sm:p-8 flex flex-col gap-4 box-border">
 				{/* Header */}
 				<header className="space-y-1.5 text-start">
-					<div className="flex items-center gap-1.5 text-primary small font-semibold tracking-wide uppercase">
-						<SparklesIcon className="size-3.5" />
-						<span>{t("navbar.getConsultation")}</span>
-					</div>
-					<h2 className="m-0 h3 leading-tight font-normal text-primary capitalize font-heading">
+					<h2 className="m-0 h4 leading-tight font-normal text-primary capitalize font-heading">
 						{t("consultation.previewCardTitle")}
 					</h2>
 					<p className="mt-1 small md:leading-5.5 text-foreground/80 ">
@@ -161,14 +157,14 @@ export function HeroConsultationPreview({
 						<form
 							onSubmit={form.handleSubmit(handleSubmit)}
 							noValidate
-							className="flex flex-col gap-3"
+							className="flex flex-col lg:gap-3"
 						>
 							{/* Service Field */}
 							<FormField
 								control={form.control}
 								name="service_id"
 								render={({ field }) => (
-									<FormItem className="space-y-1 text-start min-w-0">
+									<FormItem className="gap-0 lg:gap-2 text-start min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.service")}</span>
 											<span className="text-primary font-bold">*</span>
@@ -188,18 +184,18 @@ export function HeroConsultationPreview({
 												disabled={isSubmitting}
 											/>
 										</FormControl>
-										<FormMessage className="small text-destructive " />
+										<FormMessage className="small text-destructive  " />
 									</FormItem>
 								)}
 							/>
 
 							{/* Name + Phone Grid */}
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+							<div className="grid grid-cols-1 sm:grid-cols-2 items-start lg:gap-3">
 								<FormField
 									control={form.control}
 									name="name"
 									render={({ field }) => (
-										<FormItem className="space-y-1 text-start min-w-0">
+										<FormItem className="gap-0 lg:gap-2 text-start min-w-0">
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.fullName")}</span>
 												<span className="text-primary font-bold">*</span>
@@ -212,7 +208,8 @@ export function HeroConsultationPreview({
 													disabled={isSubmitting}
 													placeholder={t("consultation.fullNamePlaceholder")}
 													autoComplete="name"
-													className="small"
+													className="small bg-input/30"
+
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive " />
@@ -224,7 +221,7 @@ export function HeroConsultationPreview({
 									control={form.control}
 									name="phone"
 									render={({ field }) => (
-										<FormItem className="space-y-1 text-start min-w-0">
+										<FormItem className=" text-start min-w-0 gap-0 lg:gap-2 ">
 											<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 												<span>{t("consultation.phone")}</span>
 												<span className="text-primary font-bold">*</span>
@@ -244,7 +241,7 @@ export function HeroConsultationPreview({
 														);
 														field.onChange(val);
 													}}
-													className="small"
+													className="small bg-input/30"
 												/>
 											</FormControl>
 											<FormMessage className="small text-destructive " />
@@ -258,7 +255,7 @@ export function HeroConsultationPreview({
 								control={form.control}
 								name="country"
 								render={({ field }) => (
-									<FormItem className="space-y-1 text-start min-w-0">
+									<FormItem className="gap-0 lg:gap-2 text-start min-w-0">
 										<FormLabel className="small leading-5 font-medium text-foreground  flex items-center gap-1 select-none">
 											<span>{t("consultation.country")}</span>
 											<span className="text-primary font-bold">*</span>

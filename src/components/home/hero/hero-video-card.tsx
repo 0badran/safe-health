@@ -28,8 +28,8 @@ export interface HeroVideoCardProps {
 
 export function HeroVideoCard({
 	modalTitle = "SafeHealth Aesthetic Care Experience",
-	videoSrc = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
-	poster = "/images/hero-treatment-video.png",
+	videoSrc = "",
+	poster = "",
 	className,
 }: HeroVideoCardProps) {
 	// Modal state
@@ -332,7 +332,7 @@ export function HeroVideoCard({
 					src={poster}
 					alt={modalTitle}
 					fill
-					priority
+					preload
 					sizes="(max-width: 768px) 100vw, 560px"
 					className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
 				/>
@@ -356,7 +356,7 @@ export function HeroVideoCard({
 
 						{/* Glassmorphic Play Disc */}
 						<div className="relative flex size-14 sm:size-16 items-center justify-center rounded-full bg-white/25 backdrop-blur-xl border border-white/50 text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-300 group-hover:scale-110 group-hover:bg-white/40 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.45)]">
-							<Play className="size-6 sm:size-7 fill-white text-white translate-x-0.5" />
+							<Play className="size-6 sm:size-7 fill-white text-white " />
 						</div>
 					</div>
 				</div>
@@ -370,7 +370,7 @@ export function HeroVideoCard({
 						role="dialog"
 						aria-modal="true"
 						aria-label={modalTitle}
-						className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 md:p-10 animate-in fade-in duration-300"
+						className="fixed inset-0 z-100 flex items-center justify-center p-3 sm:p-6 md:p-10 animate-in fade-in duration-300"
 					>
 						{/* Darkened Frosted-Glass Backdrop (Deep Blur) with Ambient Glow */}
 						<div
@@ -388,7 +388,7 @@ export function HeroVideoCard({
 							ref={playerContainerRef}
 							onMouseMove={handlePlayerMouseMove}
 							className={cn(
-								"relative z-10 w-full max-w-4xl lg:max-w-5xl rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-hidden",
+								"relative z-10 flex flex-col w-full max-w-4xl lg:max-w-5xl max-h-[90vh] rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)] overflow-hidden",
 								"animate-in zoom-in-95 duration-400 ease-out",
 							)}
 						>
@@ -397,7 +397,7 @@ export function HeroVideoCard({
 								type="button"
 								onClick={handleClose}
 								aria-label="Close video player"
-								className="group/close absolute top-4 end-4 z-40 flex size-10 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer"
+								className="group/close absolute top-3 end-3 sm:top-4 sm:end-4 z-40 flex size-9 sm:size-10 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white/80 hover:text-white hover:bg-black/75 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer"
 							>
 								<X className="size-5 transition-transform duration-300 group-hover/close:rotate-90" />
 							</button>
@@ -407,7 +407,7 @@ export function HeroVideoCard({
 								<button
 									type="button"
 									onClick={handleUnmute}
-									className="absolute top-4 start-4 z-40 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white small hover:bg-black/80 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer animate-pulse"
+									className="absolute top-3 start-3 sm:top-4 sm:start-4 z-40 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white small hover:bg-black/80 hover:border-white/40 shadow-xl transition-all duration-200 cursor-pointer animate-pulse"
 								>
 									<VolumeX className="size-4 text-secondary shrink-0" />
 									<span>Tap to unmute sound</span>
@@ -416,7 +416,7 @@ export function HeroVideoCard({
 
 							{/* HTML5 Video Element */}
 							<div
-								className="relative aspect-video w-full bg-black flex items-center justify-center cursor-pointer"
+								className="relative w-full bg-black flex items-center justify-center cursor-pointer overflow-hidden"
 								onClick={togglePlay}
 							>
 								<video
@@ -427,7 +427,7 @@ export function HeroVideoCard({
 									onLoadedMetadata={handleLoadedMetadata}
 									onTimeUpdate={handleTimeUpdate}
 									onEnded={() => setIsPlaying(false)}
-									className="size-full object-cover"
+									className="w-full h-auto max-h-[72vh] object-contain block"
 								/>
 
 								{/* Center Play overlay indicator when paused */}
@@ -440,17 +440,12 @@ export function HeroVideoCard({
 								)}
 							</div>
 
-							{/* Custom Sleek Glassmorphic Media Controls (Auto-hides on inactivity, reveals on hover) */}
+							{/* Custom Sleek Glassmorphic Media Controls (Placed below video so it never covers video content) */}
 							<div
-								className={cn(
-									"absolute inset-x-0 bottom-0 z-30 p-3 sm:p-5 bg-linear-to-t from-black/85 via-black/40 to-transparent transition-opacity duration-300",
-									showControls || !isPlaying
-										? "opacity-100"
-										: "opacity-0 pointer-events-none",
-								)}
+								className="relative z-30 w-full p-2.5 sm:p-3.5 bg-black/95 border-t border-white/10"
 								onClick={(e) => e.stopPropagation()}
 							>
-								<div className="flex flex-col gap-2 rounded-2xl bg-black/45 backdrop-blur-xl border border-white/15 p-2.5 sm:p-3 shadow-2xl">
+								<div className="flex flex-col gap-2 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/15 p-2.5 sm:p-3 shadow-2xl">
 									{/* Interactive Timeline Scrubber with Hover Thumb & Buffer Bar */}
 									<div
 										role="slider"

@@ -41,12 +41,12 @@ export default async function HomePage() {
 			<HeroSection data={sections?.["home-hero"]} />
 
 			<div className="container relative z-10 lg:-mt-28">
-				<FadeIn delay={0.15} className="w-fit max-lg:mx-auto lg:w-1/2">
+				<div className="w-fit max-lg:mx-auto lg:w-1/2">
 					<HeroStatsBanner
 						title={sections?.["home-hero"]?.headline}
 						stats={sections?.["stats-section"]?.stat_card}
 					/>
-				</FadeIn>
+				</div>
 			</div>
 
 			<div className="container space-y-14 sm:space-y-18 lg:space-y-25">
@@ -72,9 +72,7 @@ export default async function HomePage() {
 					/>
 				</FadeIn>
 
-				<FadeIn>
-					<StepsSection data={sections?.["patient-journey"]} />
-				</FadeIn>
+				<StepsSection data={sections?.["patient-journey"]} />
 
 				<FadeIn>
 					<FaqSection data={sections?.["faq-section"]} />

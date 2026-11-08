@@ -194,6 +194,15 @@
 		"previous": "Précédent",
 		"next": "Suivant"
 	},
+	"faqs": {
+		"badge": "QUESTIONS FRÉQUENTES",
+		"title": "Tout Ce Que Vous Devez Savoir",
+		"description": "Trouvez des réponses claires aux questions fréquentes sur nos traitements médicaux, la coordination de voyage et le suivi.",
+		"viewMore": "Plus de FAQ",
+		"loading": "Chargement des FAQ...",
+		"errorLoading": "Une erreur est survenue lors du chargement des FAQ. Veuillez réessayer plus tard.",
+		"emptyFaqs": "Aucune FAQ disponible pour le moment."
+	},
 	"doctors": {
 		"loading": "Chargement...",
 		"searchPlaceholder": "Rechercher un médecin par son nom...",

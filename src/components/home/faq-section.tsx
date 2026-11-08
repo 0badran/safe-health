@@ -1,9 +1,14 @@
+"use client";
+
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { useTranslation } from "@/lib/language-context";
 import Image from "next/image";
 
 import type { HomeFaqSection } from "@/types/home";
@@ -21,6 +26,7 @@ export interface FaqSectionProps {
 }
 
 export function FaqSection({ data }: FaqSectionProps = {}) {
+	const { t } = useTranslation();
 	const activeFaqs: FaqItem[] = data?.faq_card ?? [];
 	const illustrationSrc = data?.section_image || "/images/faq-illustration.png";
 
@@ -31,17 +37,16 @@ export function FaqSection({ data }: FaqSectionProps = {}) {
 	return (
 		<section
 			id="faq"
-			className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+			className="-mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
 		>
 			{/* Left Column: Shadcn Accordion in cards variant */}
 			<div className="lg:col-span-7 order-2 lg:order-1">
 				<Accordion type="single" collapsible defaultValue="01" variant="cards">
-					{activeFaqs.map((faq) => (
+					{activeFaqs?.slice(0,4)?.map((faq) => (
 						<AccordionItem
 							key={faq.number}
 							value={faq.number}
 							variant="card"
-							className="border-none shadow-[0_1px_12px_0] shadow-primary/8"
 						>
 							<AccordionTrigger variant="card" iconVariant="plus">
 								<span className="flex items-center gap-4 sm:gap-6">
@@ -59,6 +64,14 @@ export function FaqSection({ data }: FaqSectionProps = {}) {
 						</AccordionItem>
 					))}
 				</Accordion>
+
+				<div className="mt-6 sm:mt-8 flex justify-center lg:justify-start">
+					<Link href="/faqs">
+						<Button variant="outline" withArrow>
+							{t("faqs.viewMore")}
+						</Button>
+					</Link>
+				</div>
 			</div>
 
 			{/* Right Column: FAQ Illustration */}

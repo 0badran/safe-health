@@ -16,13 +16,12 @@ const HERO_MASK_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(
 
 export function HeroSection({ data, className }: HeroSectionProps) {
 	const description = data?.description;
-	const bgImage = data?.background_image || "/images/hero.jpg";
+	const bgImage = "/images/hero.jpg";
 	const videoUrl = data?.hero_video || undefined;
-	const title = data?.headline;
-
+	const thumbUrl = data?.background_image || undefined;
 	return (
 		<section
-			className={cn("relative w-full lg:min-h-175 text-background", className)}
+			className={cn("relative z-20 w-full lg:min-h-175 text-background", className)}
 		>
 			{/* Instant Primary Masked Background & Texture Overlay */}
 			<div
@@ -51,52 +50,33 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 			</div>
 
 			{/* Interactive Grid Layer - masked with the same instant SVG mask */}
-			<InteractiveGridBackground
-				maskImage={HERO_MASK_SVG}
-				style={{
-					maskSize: "100% 100%",
-					WebkitMaskSize: "100% 100%",
-					maskPosition: "bottom center",
-					WebkitMaskPosition: "bottom center",
-				}}
-			/>
+			<div className="hidden md:block">
+
+				<InteractiveGridBackground
+					maskImage={HERO_MASK_SVG}
+					style={{
+						maskSize: "100% 100%",
+						WebkitMaskSize: "100% 100%",
+						maskPosition: "bottom center",
+						WebkitMaskPosition: "bottom center",
+					}}
+				/>
+			</div>
 
 			{/* Main Content Container */}
-			<div className="relative z-10 container pt-20 md:pt-28 pb-8 lg:pb-36 pointer-events-none">
-				<div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+			<div className="relative z-10 container pt-18 md:pt-28 pb-8 lg:pb-36 pointer-events-none">
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-2 lg:gap-4 items-start">
 					{/* Left Column: Tagline, Video Preview, CTA Buttons */}
 					<div className="lg:col-span-7 flex  max-lg:items-center flex-col justify-between min-h-full">
-						<div className="space-y-4">
-							{/* Heading on Mobile/Tablet */}
-							<div className="relative inline-block lg:hidden text-center w-full lg:w-auto">
-								<h2 className="relative w-fit mx-auto leading-[1.12] tracking-tight">
-									{title ? (
-										title.includes(",") ? (
-											<>
-												<span className="block h1 font-heading text-secondary!">
-													{title.split(",")[0]},
-												</span>
-												<span className="block h1 font-heading text-secondary!">
-													{title.split(",").slice(1).join(",").trim()}
-												</span>
-											</>
-										) : (
-											<span className="block h1 font-heading text-secondary!">
-												{title}
-											</span>
-										)
-									) : null}
-								</h2>
-							</div>
-
+						<div className="space-y-2 lg:space-y-4">
 							{/* Tagline */}
-							<h1 className="text-white/60 h4 max-lg:text-center font-normal leading-relaxed max-w-xl  tracking-wide">
+							<h1 className="text-white uppercase text-heading h4 max-lg:text-center font-normal leading-relaxed max-w-xl pb-0 tracking-wide">
 								{description}
 							</h1>
 
 							{/* Video Card Preview */}
 							<div className="pointer-events-auto">
-								<HeroVideoCard videoSrc={videoUrl} />
+								<HeroVideoCard videoSrc={videoUrl} poster={thumbUrl} />
 							</div>
 
 							{/* CTA Action Buttons */}
@@ -110,7 +90,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 					<div className="lg:col-span-5 flex justify-center lg:justify-end pb-4 lg:pb-0 relative pointer-events-auto">
 						<div
 							id="consultation"
-							className="w-full lg:absolute max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
+							className="w-full lg:absolute z-50 max-w-137.5 mx-auto bg-white rounded-2xl overflow-hidden lg:shadow-[0_8px_30px_rgba(57,37,121,0.16)] border border-primary/10 inset-s-0"
 						>
 							<HeroConsultationPreview />
 						</div>

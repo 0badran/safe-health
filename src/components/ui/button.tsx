@@ -10,7 +10,7 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"border-primary bg-primary text-primary-foreground shadow-xs active:scale-[0.99] before:pointer-events-none before:content-[''] before:absolute before:-z-10 before:top-1/2 before:left-0 before:-translate-y-1/2 before:-translate-x-1/2 before:aspect-square before:w-[300%] before:rounded-full before:bg-background before:scale-0 before:transition-transform before:duration-700 before:ease-out hover:before:scale-100 hover:text-primary transition-colors duration-700",
+					"border-primary bg-primary text-primary-foreground shadow-xs active:scale-[0.99] before:pointer-events-none before:content-[''] before:absolute before:-z-10 before:top-1/2 before:left-0 before:-translate-y-1/2 before:-translate-x-1/2 before:aspect-square before:w-[300%] before:rounded-full before:bg-secondary before:scale-0 before:transition-transform before:duration-700 before:ease-out hover:before:scale-100 hover:text-white transition-colors duration-700",
 				secondary:
 					"bg-background border border-primary text-primary hover:opacity-80 shadow-xs active:scale-[0.99] border border-primary",
 				outline:

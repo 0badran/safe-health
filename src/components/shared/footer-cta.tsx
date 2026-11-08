@@ -29,7 +29,7 @@ export function FooterCta({ data }: FooterCtaProps = {}) {
 				fill
 				preload
 				sizes="100vw"
-				className="object-cover object-[0_38%] pointer-events-none select-none"
+				className="object-cover object-[0_38%] max-sm:blur-sm pointer-events-none select-none"
 			/>
 
 			{/* Tailwind Gradient Layer */}
@@ -39,7 +39,7 @@ export function FooterCta({ data }: FooterCtaProps = {}) {
 			/>
 
 			{/* Content */}
-			<div className="relative z-10 flex flex-col justify-center items-start px-3 lg:px-6 flex-1">
+			<div className="relative z-10  flex flex-col justify-center items-start px-3 lg:px-6 flex-1">
 				<h2 className="font-heading italic text-primary h3 leading-tight tracking-tight">
 					{headline}
 				</h2>
