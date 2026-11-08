@@ -211,7 +211,7 @@ export function HeroStatsBanner({
 			)}
 		>
 			{/* Heading with Anchored Flight Lines */}
-			<div className="relative max-lg:hidden inline-block text-center w-full sm:w-auto">
+			<div className="relative max-lg:hidيden inline-block text-center w-full sm:w-auto">
 				{/* Main Headline with fluid typography */}
 				<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
 					{/* Left Decorative Line:

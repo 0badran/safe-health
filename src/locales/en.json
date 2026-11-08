@@ -194,6 +194,15 @@
 		"previous": "Previous",
 		"next": "Next"
 	},
+	"faqs": {
+		"badge": "FREQUENTLY ASKED QUESTIONS",
+		"title": "Everything You Need to Know",
+		"description": "Find clear answers to common questions about our medical treatments, travel coordination, specialists, and aftercare.",
+		"viewMore": "More FAQs",
+		"loading": "Loading FAQs...",
+		"errorLoading": "An error occurred while loading FAQs. Please try again later.",
+		"emptyFaqs": "No FAQs available at this time."
+	},
 	"doctors": {
 		"loading": "Loading...",
 		"searchPlaceholder": "Search doctor by name...",

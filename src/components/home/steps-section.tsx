@@ -1,9 +1,18 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/language-context";
 import type { HomePatientJourneySection } from "@/types/home";
+import {
+	motion,
+	useScroll,
+	useSpring,
+	useTransform,
+	type MotionValue,
+} from "framer-motion";
 import Image from "next/image";
-import React, { type ReactNode } from "react";
+import React, { useEffect, useRef, useState, type ReactNode } from "react";
 import { ExpertiseBackground } from "../about/expertise-background";
-import SectionHeader from "../shared/section-header";
 
 const BLOB_A =
 	"M361.9 3.07C430.64 13.59 480.98 67.09 533.02 113.21C579.79 154.66 624.19 197.95 647.27 256.02C671.55 317.11 689 385.97 665.87 447.51C643.12 508.02 580.29 539.39 527.01 576C475.29 611.52 424.63 655.3 361.9 656.33C298.72 657.38 246.99 613.98 192.79 581.51C132.47 545.37 61.3 519.37 29.02 456.9C-5.76 389.62 -7.38 308.37 14.09 235.73C35.92 161.85 83.95 97.16 147.99 54.32C210.46 12.53 287.6 -8.29 361.9 3.07Z";
@@ -58,12 +67,12 @@ const HeartPlusIcon = icon(
 const STEP_CONFIG = [
 	{
 		Icon: ChatIcon,
-		offset: "lg:mt-12",
+		offset: "lg:mt-10",
 		defaultImg: "/images/steps/img1.png",
 	},
 	{
 		Icon: DocIcon,
-		offset: "lg:mt-24",
+		offset: "lg:mt-20",
 		defaultImg: "/images/steps/img2.png",
 	},
 	{
@@ -73,7 +82,7 @@ const STEP_CONFIG = [
 	},
 	{
 		Icon: HeartPlusIcon,
-		offset: "lg:mt-14",
+		offset: "lg:mt-12",
 		defaultImg: "/images/steps/img4.png",
 	},
 ];
@@ -92,13 +101,42 @@ function renderStepIcon(
 	return <FallbackIcon />;
 }
 
-/* ---------- connecting lines between steps ---------- */
-function StepConnector({ stepIndex }: { stepIndex: number }) {
+/* ---------- animated connecting lines between steps ---------- */
+function StepConnector({
+	stepIndex,
+	totalSteps,
+	progress,
+}: {
+	stepIndex: number;
+	totalSteps: number;
+	progress: MotionValue<number>;
+}) {
+	// Connectors finish drawing during the horizontal scroll phase (0 -> 0.74)
+	const segmentCount = Math.max(totalSteps - 1, 1);
+	const phaseEnd = 0.72;
+	const segStart = Math.max(0, ((stepIndex - 1) / segmentCount) * phaseEnd - 0.04);
+	const segEnd = Math.min(phaseEnd, (stepIndex / segmentCount) * phaseEnd);
+
+	const pathLength = useTransform(progress, [segStart, segEnd], [0, 1]);
+	const pathOpacity = useTransform(
+		progress,
+		[segStart, segStart + 0.05],
+		[0, 1],
+	);
+	const dotScale = useTransform(
+		progress,
+		[segStart, segStart + 0.07],
+		[0, 1.15],
+	);
+
 	if (stepIndex === 1) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
 				{/* Small starting dot */}
-				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				<motion.span
+					style={{ scale: dotScale, opacity: pathOpacity }}
+					className="absolute -left-1 -top-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+				/>
 				{/* Connecting wave line ending with fade */}
 				<svg
 					viewBox="0 0 100 40"
@@ -108,22 +146,39 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 				>
 					<defs>
 						<linearGradient id="step-fade-1" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
 							<stop
 								offset="65%"
-								stopColor="var(--primary)"
-								stopOpacity="0.35"
+								stopColor="var(--secondary)"
+								stopOpacity="0.65"
 							/>
-							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+							<stop
+								offset="100%"
+								stopColor="var(--secondary)"
+								stopOpacity="0.15"
+							/>
 						</linearGradient>
 					</defs>
+					{/* Faint background track */}
 					<path
 						d="M 0 0 C 35 5, 55 25, 75 32 C 88 36, 95 34, 100 32"
 						fill="none"
-						stroke="url(#step-fade-1)"
-						strokeWidth="2.2"
+						stroke="var(--primary)"
+						strokeOpacity="0.14"
+						strokeWidth="2"
+						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
+					/>
+					{/* Animated drawing path */}
+					<motion.path
+						d="M 0 0 C 35 5, 55 25, 75 32 C 88 36, 95 34, 100 32"
+						fill="none"
+						stroke="url(#step-fade-1)"
+						strokeWidth="3"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+						style={{ pathLength, opacity: pathOpacity }}
 					/>
 				</svg>
 			</div>
@@ -132,9 +187,12 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 2) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 hidden h-[120px] w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 hidden h-[120px] w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
 				{/* Small starting dot */}
-				<span className="absolute -left-1 bottom-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				<motion.span
+					style={{ scale: dotScale, opacity: pathOpacity }}
+					className="absolute -left-1 bottom-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+				/>
 				{/* Connecting wave line surging up to step 3 ending with fade */}
 				<svg
 					viewBox="0 0 100 80"
@@ -150,22 +208,37 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 							x2="100%"
 							y2="0%"
 						>
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
 							<stop
 								offset="65%"
-								stopColor="var(--primary)"
-								stopOpacity="0.35"
+								stopColor="var(--secondary)"
+								stopOpacity="0.65"
 							/>
-							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+							<stop
+								offset="100%"
+								stopColor="var(--secondary)"
+								stopOpacity="0.15"
+							/>
 						</linearGradient>
 					</defs>
 					<path
 						d="M 0 70 C 25 72, 45 40, 70 18 C 82 7, 92 2, 100 0"
 						fill="none"
-						stroke="url(#step-fade-2)"
-						strokeWidth="2.2"
+						stroke="var(--primary)"
+						strokeOpacity="0.14"
+						strokeWidth="2"
+						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
+					/>
+					<motion.path
+						d="M 0 70 C 25 72, 45 40, 70 18 C 82 7, 92 2, 100 0"
+						fill="none"
+						stroke="url(#step-fade-2)"
+						strokeWidth="3"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+						style={{ pathLength, opacity: pathOpacity }}
 					/>
 				</svg>
 			</div>
@@ -174,9 +247,12 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 
 	if (stepIndex === 3) {
 		return (
-			<div className="pointer-events-none absolute left-41.25 top-18.75 z-20 hidden w-[calc(100%-125px)] overflow-visible lg:block">
+			<div className="pointer-events-none absolute left-41.25 top-18.75 z-20 hidden w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-41.25">
 				{/* Small starting dot */}
-				<span className="absolute -left-1 -top-1 size-2 rounded-full bg-primary ring-4 ring-primary/20" />
+				<motion.span
+					style={{ scale: dotScale, opacity: pathOpacity }}
+					className="absolute -left-1 -top-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+				/>
 				{/* Connecting wave line diving gently to step 4 */}
 				<svg
 					viewBox="0 0 100 45"
@@ -186,52 +262,152 @@ function StepConnector({ stepIndex }: { stepIndex: number }) {
 				>
 					<defs>
 						<linearGradient id="step-fade-3" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
+							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
 							<stop
 								offset="65%"
-								stopColor="var(--primary)"
-								stopOpacity="0.35"
+								stopColor="var(--secondary)"
+								stopOpacity="0.65"
 							/>
-							<stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+							<stop
+								offset="100%"
+								stopColor="var(--secondary)"
+								stopOpacity="0.15"
+							/>
 						</linearGradient>
 					</defs>
 					<path
 						d="M 0 0 C 30 8, 55 30, 80 38 C 90 42, 96 40, 100 38"
 						fill="none"
-						stroke="url(#step-fade-3)"
-						strokeWidth="2.2"
+						stroke="var(--primary)"
+						strokeOpacity="0.14"
+						strokeWidth="2"
+						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
+					/>
+					<motion.path
+						d="M 0 0 C 30 8, 55 30, 80 38 C 90 42, 96 40, 100 38"
+						fill="none"
+						stroke="url(#step-fade-3)"
+						strokeWidth="3"
+						vectorEffect="non-scaling-stroke"
+						strokeLinecap="round"
+						style={{ pathLength, opacity: pathOpacity }}
 					/>
 				</svg>
 			</div>
 		);
 	}
 
-	if (stepIndex === 4) {
-		return (
-			<div className="pointer-events-none absolute -right-2 top-[163px] z-20 hidden overflow-visible lg:block">
-				{/* Small landing airplane at the finish */}
-				<svg
-					width="22"
-					height="23"
-					viewBox="0 0 22 23"
-					fill="none"
-					className="rotate-45"
-					aria-hidden="true"
+	return null;
+}
+
+/* ---------- post-steps takeoff airplane animation ---------- */
+function TravelTakeoffAnimation({
+	progress,
+	isRtl,
+}: {
+	progress: MotionValue<number>;
+	isRtl: boolean;
+}) {
+	// Starts right after all cards have finished scrolling into view (0.72 -> 1.0)
+	const trailLength = useTransform(progress, [0.72, 0.96], [0, 1]);
+	const trailOpacity = useTransform(
+		progress,
+		[0.71, 0.77, 0.96, 1],
+		[0, 1, 1, 0.85],
+	);
+
+	// Airplane emerges from underneath the cards, grows larger, and flies upward & across
+	const planeOpacity = useTransform(
+		progress,
+		[0.72, 0.78, 0.96, 1],
+		[0, 1, 1, 0.9],
+	);
+	const planeScale = useTransform(
+		progress,
+		[0.72, 0.82, 0.93, 1],
+		[0.35, 1.15, 1.85, 2.35],
+	);
+	const planeY = useTransform(
+		progress,
+		[0.72, 0.82, 0.92, 1],
+		[190, 45, -95, -230],
+	);
+	const planeX = useTransform(
+		progress,
+		[0.72, 0.82, 0.92, 1],
+		isRtl ? [180, 40, -140, -340] : [-180, -40, 140, 340],
+	);
+	const planeRotate = useTransform(
+		progress,
+		[0.72, 0.85, 1],
+		isRtl ? [-18, -32, -42] : [18, 32, 42],
+	);
+	const glowScale = useTransform(progress, [0.74, 0.96], [0.5, 1.6]);
+
+	return (
+		<div
+			className="pointer-events-none absolute inset-0 z-30 overflow-hidden"
+			aria-hidden="true"
+		>
+		
+			{/* Flying Airplane ascending from underneath the cards */}
+			<div className="absolute inset-x-0 bottom-6 flex justify-center">
+				<motion.div
+					style={{
+						x: planeX,
+						y: planeY,
+						scale: planeScale,
+						opacity: planeOpacity,
+						rotate: planeRotate,
+					}}
+					className="relative flex items-center justify-center will-change-transform"
 				>
-					<g opacity="0.85">
+					{/* Soft ambient aura behind the plane */}
+					<motion.div
+						style={{ scale: glowScale }}
+						className="absolute size-24 rounded-full bg-secondary/20 blur-xl"
+					/>
+					<div className="absolute size-14 rounded-full bg-primary/15 blur-md" />
+
+					{/* Jet contrail lines behind the tail */}
+					<div
+						className={cn(
+							"absolute top-[85%] flex gap-2 opacity-75",
+							isRtl ? "rotate-12" : "-rotate-12",
+						)}
+					>
+						<span className="h-10 w-0.5 rounded-full bg-gradient-to-b from-secondary to-transparent" />
+						<span className="mt-2 h-14 w-1 rounded-full bg-gradient-to-b from-primary to-transparent" />
+						<span className="h-10 w-0.5 rounded-full bg-gradient-to-b from-secondary to-transparent" />
+					</div>
+
+					{/* Detailed Travel Airplane SVG */}
+					<svg
+						width="56"
+						height="56"
+						viewBox="0 0 24 24"
+						fill="none"
+						className={cn(
+							"relative z-10 drop-shadow-md",
+							isRtl ? "-scale-x-100" : "",
+						)}
+					>
 						<path
-							d="M22 16V14L12.5 8V1.5C12.5 0.7 11.8 0 11 0C10.2 0 9.5 0.7 9.5 1.5V8L0 14V16L9.5 13V19.5L7 21.5V23L11 22L15 23V21.5L12.5 19.5V13L22 16Z"
+							d="M21 16V14L13 9V3.5C13 2.67 12.33 2 11.5 2C10.67 2 10 2.67 10 3.5V9L2 14V16L10 13.5V19L8 20.5V22L11.5 21L15 22V20.5L13 19V13.5L21 16Z"
 							fill="var(--primary)"
 						/>
-					</g>
-				</svg>
+						<path
+							d="M11.5 2C12.05 2 12.5 2.45 12.5 3.5V9L20.5 14V15.2L12.5 12.8V19L14.5 20.5V21.3L11.5 20.4V2Z"
+							fill="var(--secondary)"
+							fillOpacity="0.45"
+						/>
+					</svg>
+				</motion.div>
 			</div>
-		);
-	}
-
-	return null;
+		</div>
+	);
 }
 
 function Step({
@@ -243,6 +419,8 @@ function Step({
 	offset,
 	imgSrc,
 	n,
+	totalSteps,
+	progress,
 }: {
 	stepNumber: string;
 	title: string;
@@ -252,32 +430,78 @@ function Step({
 	offset: string;
 	imgSrc: string;
 	n: number;
+	totalSteps: number;
+	progress: MotionValue<number>;
 }) {
+	const phaseEnd = 0.72;
+	const stepStart = Math.max(
+		0,
+		((n - 1.45) / Math.max(totalSteps, 1)) * phaseEnd,
+	);
+	const stepPeak = Math.min(
+		phaseEnd,
+		((n - 0.45) / Math.max(totalSteps, 1)) * phaseEnd,
+	);
+
+	const cardOpacity = useTransform(
+		progress,
+		[stepStart, stepPeak],
+		n === 1 ? [1, 1] : [0.35, 1],
+	);
+	const cardY = useTransform(
+		progress,
+		[stepStart, stepPeak],
+		n === 1 ? [0, 0] : [28, 0],
+	);
+	const cardScale = useTransform(
+		progress,
+		[stepStart, stepPeak, 0.75, 1],
+		n === 1 ? [1, 1, 1, 0.96] : [0.92, 1, 1, 0.96],
+	);
+	const badgeScale = useTransform(
+		progress,
+		[stepStart, stepPeak],
+		n === 1 ? [1, 1] : [0.55, 1],
+	);
+	const badgeRotate = useTransform(
+		progress,
+		[stepStart, stepPeak],
+		n === 1 ? [0, 0] : [-18, 0],
+	);
+	const blobRotate = useTransform(
+		progress,
+		[0, 1],
+		n % 2 === 0 ? [-6, 8] : [6, -8],
+	);
+
 	return (
-		<li
+		<motion.li
+			style={{ opacity: cardOpacity, y: cardY, scale: cardScale }}
 			className={cn(
-				"relative flex flex-col gap-2 max-sm:max-w-70 max-sm:mx-auto",
+				"relative flex flex-col gap-3 w-72 sm:w-82 lg:w-92 shrink-0 select-none will-change-transform",
 				offset,
 			)}
 		>
-			<div className="flex ">
+			<div className="flex items-start gap-3">
 				<div className="relative h-50.75 w-52.25 shrink-0">
-					<svg
+					<motion.svg
+						style={{ rotate: blobRotate }}
 						viewBox="0 0 676.72 656.35"
 						preserveAspectRatio="none"
 						aria-hidden="true"
 						className="absolute inset-0 size-full text-secondary/15"
 					>
 						<path d={BLOB_A} fill="currentColor" />
-					</svg>
-					<svg
+					</motion.svg>
+					<motion.svg
+						style={{ rotate: blobRotate }}
 						viewBox="0 0 248 241"
 						preserveAspectRatio="none"
 						aria-hidden="true"
 						className="absolute left-0.75 -top-1.25 h-48 w-47 text-secondary/15"
 					>
 						<path d={BLOB_B} fill="currentColor" />
-					</svg>
+					</motion.svg>
 					<Image
 						src={imgSrc}
 						alt={title}
@@ -285,17 +509,24 @@ function Step({
 						height={200}
 						className="relative z-10"
 					/>
-					<span className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-[#EAF5F4] text-secondary shadow-xs">
+					<motion.span
+						style={{ scale: badgeScale, rotate: badgeRotate }}
+						className="absolute -bottom-1 left-2 z-11 grid size-15.75 place-items-center rounded-full bg-secondary/15 text-secondary shadow-xs backdrop-blur-xs"
+					>
 						{renderStepIcon(icon, Icon)}
-					</span>
+					</motion.span>
 				</div>
 				<span className="font-heading block lg:hidden text-3xl leading-9 tracking-tight text-primary">
 					{stepNumber}
 				</span>
 			</div>
 
-			{/* Connecting wave line starting with small circle dot and ending with fade */}
-			<StepConnector stepIndex={n} />
+			{/* Animated connecting wave line */}
+			<StepConnector
+				stepIndex={n}
+				totalSteps={totalSteps}
+				progress={progress}
+			/>
 
 			<div className="flex flex-col gap-1">
 				<span className="font-heading hidden lg:block text-3xl leading-9 tracking-tight text-primary">
@@ -304,11 +535,11 @@ function Step({
 				<h3 className="font-heading text-xl font-bold leading-7 text-foreground">
 					{title}
 				</h3>
-				<p className="max-w-67.5 py-0.75 text-paragraph small leading-relaxed">
+				<p className="max-w-72 py-0.75 text-paragraph small leading-relaxed">
 					{text}
 				</p>
 			</div>
-		</li>
+		</motion.li>
 	);
 }
 
@@ -318,7 +549,52 @@ export interface StepsSectionProps {
 }
 
 export default function StepsSection({ data }: StepsSectionProps = {}) {
+	const { isRtl } = useLanguage();
+	const scrollTrackRef = useRef<HTMLDivElement>(null);
+	const viewportRef = useRef<HTMLDivElement>(null);
+	const listRef = useRef<HTMLOListElement>(null);
+	const [maxScroll, setMaxScroll] = useState(0);
+
+	const { scrollYProgress } = useScroll({
+		target: scrollTrackRef,
+		offset: ["start start", "end end"],
+	});
+
+	const smoothProgress = useSpring(scrollYProgress, {
+		stiffness: 90,
+		damping: 26,
+		mass: 0.35,
+	});
+
 	const stepCards = data?.step_card;
+
+	useEffect(() => {
+		const updateScrollBounds = () => {
+			if (!viewportRef.current || !listRef.current) return;
+			const viewportWidth = viewportRef.current.clientWidth;
+			const listWidth = listRef.current.scrollWidth;
+			const overflow = Math.max(0, listWidth - viewportWidth + 32);
+			setMaxScroll(overflow);
+		};
+
+		updateScrollBounds();
+
+		const resizeObserver = new ResizeObserver(updateScrollBounds);
+		if (viewportRef.current) resizeObserver.observe(viewportRef.current);
+		if (listRef.current) resizeObserver.observe(listRef.current);
+
+		window.addEventListener("resize", updateScrollBounds);
+		return () => {
+			resizeObserver.disconnect();
+			window.removeEventListener("resize", updateScrollBounds);
+		};
+	}, [stepCards?.length, isRtl]);
+
+	const x = useTransform(
+		smoothProgress,
+		[0, 0.72],
+		[0, isRtl ? maxScroll : -maxScroll],
+	);
 
 	if (!data || !data.headline || !stepCards || stepCards.length === 0) {
 		return null;
@@ -342,9 +618,9 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 	});
 
 	return (
-		<section
-			className="relative isolate w-full overflow-hidden p-4 lg:p-6 rounded-3xl scroll-mt-28"
-			id="patient-journey"
+		<div
+			ref={scrollTrackRef}
+			className="relative h-[180vh] lg:h-[310vh] "
 		>
 			<span
 				id="steps"
@@ -352,42 +628,60 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 				aria-hidden="true"
 			/>
 
-			{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
-			<div
-				className="hidden lg:block absolute inset-0 size-full pointer-events-none z-0"
-				aria-hidden="true"
-			>
-				<ExpertiseBackground />
-			</div>
-
-			{/* Mobile & Tablet: Fluid rounded background card */}
-			<div
-				className="block lg:hidden absolute inset-0 size-full bg-wallpaper rounded-3xl z-0 pointer-events-none"
-				aria-hidden="true"
-			/>
-
-			<div className="relative z-10 w-full">
-				<header className="grid grid-cols-1 max-lg:text-center  lg:grid-cols-12 gap-1 lg:gap-8 items-end mb-4  lg:mb-5">
-					<div className="lg:col-span-6 ">
-						<h2 className="text-heading lg:max-w-[70%]">{headline}</h2>
-					</div>
-					{description && (
-						<div className="lg:col-span-5 flex lg:justify-end lg:me-4">
-							<p className="text-paragraph  h5 leading-relaxed w-full lg:max-w-lg">
-								{description}
-							</p>
-						</div>
-					)}
-				</header>
-
-				<div className="relative mt-6 sm:mt-8 lg:mt-0 lg:p-8">
-					<ol className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4 lg:items-start">
-						{activeSteps.map((s) => (
-							<Step key={`${s.title}-${s.stepNumber}`} {...s} />
-						))}
-					</ol>
+			<section className="sticky top-20 max-sm:p-4  isolate w-full overflow-hidden rounded-3xl">
+				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
+				<div
+					className="hidden lg:block absolute inset-0 size-full pointer-events-none z-0"
+					aria-hidden="true"
+				>
+					<ExpertiseBackground />
 				</div>
-			</div>
-		</section>
+
+				{/* Mobile & Tablet: Fluid rounded background card */}
+				<div
+					className="block lg:hidden absolute inset-0 size-full bg-wallpaper rounded-3xl z-0 pointer-events-none"
+					aria-hidden="true"
+				/>
+
+					{/* Takeoff Airplane Finale emerging from underneath the cards */}
+				{/* <TravelTakeoffAnimation progress={smoothProgress} isRtl={isRtl} /> */}
+
+				<div className="relative z-10 w-full">
+					<header className="grid grid-cols-1 max-lg:text-center lg:grid-cols-12 gap-1 lg:gap-8 items-end mb-4 lg:mb-5">
+						<div className="lg:col-span-6">
+							<h2 className="text-heading lg:max-w-[70%]">{headline}</h2>
+						</div>
+						{description && (
+							<div className="lg:col-span-5 flex lg:justify-end lg:me-4">
+								<p className="text-paragraph h5 leading-relaxed w-full lg:max-w-lg">
+									{description}
+								</p>
+							</div>
+						)}
+					</header>
+
+					{/* Horizontal Scroll Viewport */}
+					<div
+						ref={viewportRef}
+						className="relative mt-6 sm:mt-8 lg:mt-2 lg:p-6 overflow-hidden"
+					>
+						<motion.ol
+							ref={listRef}
+							style={{ x }}
+							className="flex flex-nowrap items-start gap-12 sm:gap-16 lg:gap-24 w-max pe-8 will-change-transform"
+						>
+							{activeSteps.map((s) => (
+								<Step
+									key={`${s.title}-${s.stepNumber}`}
+									{...s}
+									totalSteps={activeSteps.length}
+									progress={smoothProgress}
+								/>
+							))}
+						</motion.ol>
+					</div>
+				</div>
+			</section>
+		</div>
 	);
 }
