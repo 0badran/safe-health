@@ -324,7 +324,6 @@ export function HeroStatsBanner({
 			{/* Dynamic SVG Overlay connecting Title left/right edges to Stats Card left/right edges */}
 			{geometry && (
 				<svg
-					dir="ltr"
 					aria-hidden="true"
 					className="pointer-events-none absolute inset-0 block size-full overflow-visible z-10 select-none"
 				>
