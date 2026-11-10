@@ -29,7 +29,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
 	const page = await getPrivacyPolicyPage(locale);
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/privacy-policy",
+	});
 }
 
 export default async function PrivacyPolicyPage({ params }: PageProps) {

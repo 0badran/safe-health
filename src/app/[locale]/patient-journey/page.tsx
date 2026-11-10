@@ -31,7 +31,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
 	const page = await getPatientJourneyPage(locale);
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/patient-journey",
+	});
 }
 
 export default async function PatientJourneyPage({ params }: PageProps) {

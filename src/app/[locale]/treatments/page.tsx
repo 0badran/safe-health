@@ -69,7 +69,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
 	const page = await getTreatmentsPage(locale);
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/treatments",
+	});
 }
 
 export default async function TreatmentsPage({

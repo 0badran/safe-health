@@ -19,9 +19,14 @@ async function getBlogsPage() {
 	}
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+	const { locale } = await params;
 	const page = await getBlogsPage();
-	return getSeoMetadata(page?.seo);
+	return getSeoMetadata(page?.seo, undefined, { locale, path: "/blogs" });
 }
 
 export default async function BlogsPage() {

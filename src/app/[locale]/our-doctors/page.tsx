@@ -20,9 +20,17 @@ async function getDoctorsPage() {
 	}
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+	const { locale } = await params;
 	const page = await getDoctorsPage();
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/our-doctors",
+	});
 }
 
 export default async function DoctorsPage() {

@@ -9,7 +9,12 @@ export type {
 	SeoData,
 } from "@/types/api";
 
-export { getSeoMetadata, fetchPageSeo } from "@/lib/seo";
+export {
+	buildAlternates,
+	getSeoMetadata,
+	fetchPageSeo,
+	type SeoRouteOptions,
+} from "@/lib/seo";
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 

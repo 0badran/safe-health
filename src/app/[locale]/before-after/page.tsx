@@ -30,7 +30,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
 	const page = await getBeforeAfterPage(locale);
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/before-after",
+	});
 }
 
 export default async function BeforeAfterPage({ params }: PageProps) {

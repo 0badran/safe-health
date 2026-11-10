@@ -29,7 +29,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
 	const { locale } = await params;
 	const page = await getTermsPage(locale);
-	return getSeoMetadata(page?.seo, page?.title);
+	return getSeoMetadata(page?.seo, page?.title, {
+		locale,
+		path: "/terms-and-conditions",
+	});
 }
 
 export default async function TermsAndConditionsPage({ params }: PageProps) {

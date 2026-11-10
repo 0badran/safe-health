@@ -29,7 +29,10 @@ export async function generateMetadata({
 	const { slug, locale } = await params;
 	const blog = await getBlog(slug, locale);
 
-	return getSeoMetadata(blog?.seo, blog?.title);
+	return getSeoMetadata(blog?.seo, blog?.title, {
+		locale,
+		path: `/blogs/${slug}`,
+	});
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
