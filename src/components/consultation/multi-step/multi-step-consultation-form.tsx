@@ -10,6 +10,7 @@ import {
 	trackFbEvent,
 	generateEventId,
 	getUtmValue,
+	useTrackFormStart,
 } from "@/components/shared/meta-pixel";
 import { trackGAEvent } from "@/components/shared/google-analytics";
 import { useSearchParams } from "next/navigation";
@@ -108,6 +109,8 @@ export function MultiStepConsultationForm({
 		},
 		mode: "onTouched",
 	});
+
+	useTrackFormStart("multi_step_consultation", form.formState);
 	const treatment = useWatch({ name: "treatment", control: form.control });
 	const serviceId = useWatch({ name: "service_id", control: form.control });
 	// API mutation to /leads

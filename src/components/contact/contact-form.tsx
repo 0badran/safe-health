@@ -18,7 +18,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { trackFbEvent, generateEventId } from "@/components/shared/meta-pixel";
+import {
+	trackFbEvent,
+	generateEventId,
+	useTrackFormStart,
+} from "@/components/shared/meta-pixel";
 import { trackGAEvent } from "@/components/shared/google-analytics";
 import useMutateData from "@/hooks/use-mutate-data";
 import { getCountryByCode } from "@/lib/countries";
@@ -49,6 +53,8 @@ export function ContactForm({ sectionData }: ContactFormProps = {}) {
 		defaultValues: DEFAULT_VALUES,
 		mode: "onTouched",
 	});
+
+	useTrackFormStart("contact_form", form.formState);
 
 	const {
 		mutateAsync,

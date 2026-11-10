@@ -1,19 +1,23 @@
 "use client";
 
-import * as React from "react";
-import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, Loader2Icon, SparklesIcon } from "lucide-react";
+import { CalendarIcon, Loader2Icon } from "lucide-react";
 import { useLocale } from "next-intl";
+import Image from "next/image";
+import * as React from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 import { ServiceInfiniteSelect } from "@/components/consultation/multi-step/service-infinite-select";
 import { CountrySelect } from "@/components/shared/country-select";
 import { trackGAEvent } from "@/components/shared/google-analytics";
-import { generateEventId, getUtmValue, trackFbEvent } from "@/components/shared/meta-pixel";
+import {
+	generateEventId,
+	getUtmValue,
+	trackFbEvent,
+	useTrackFormStart,
+} from "@/components/shared/meta-pixel";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "@/i18n/navigation";
 import {
 	Form,
 	FormControl,
@@ -24,6 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useMutateData from "@/hooks/use-mutate-data";
+import { Link } from "@/i18n/navigation";
 import { getCountryByCode } from "@/lib/countries";
 import { useTranslation } from "@/lib/language-context";
 import { cn } from "@/lib/utils";
@@ -60,6 +65,8 @@ export function HeroConsultationPreview({
 		defaultValues: DEFAULT_HERO_CONSULTATION_VALUES,
 		mode: "onTouched",
 	});
+
+	useTrackFormStart("hero_consultation", form.formState);
 
 	const treatment = useWatch({ name: "treatment", control: form.control });
 

@@ -74,7 +74,7 @@ export async function generateMetadata({
 				]
 			: undefined,
 		verification: {
-			google: "tqnvojer9jAdbZoE_DIwiFvj5wv3N_7lfm0oZoMGk68",
+			google: "_yyepvM5lHOaLO740VxNvunVKynirhouBbSEPoJtAzU",
 		},
 	};
 }
