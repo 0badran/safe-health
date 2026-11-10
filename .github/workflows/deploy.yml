@@ -24,17 +24,22 @@ jobs:
           script: |
             set -e
 
+            export PATH=$PATH:/usr/bin:/usr/local/bin
+            if [ -f ~/.nvm/nvm.sh ]; then
+              . ~/.nvm/nvm.sh
+            fi
+
             echo "Navigating to project directory..."
             cd ${{ secrets.VPS_TARGET_DIR || '/var/www/safe-health' }}
 
             echo "Pulling latest changes from main..."
             git pull origin main
 
-            echo "Removing old build artifacts..."
-            rm -rf .next
+            echo "Cleaning old build and modules artifacts to ensure 100% clean build..."
+            rm -rf .next node_modules
 
             echo "Installing dependencies..."
-            npm ci
+            npm install
 
             echo "Building Next.js application..."
             npm run build
