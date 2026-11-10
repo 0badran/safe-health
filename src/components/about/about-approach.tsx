@@ -103,7 +103,7 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 				{/* Central Vertical Dashed Line (SVG) */}
 				{lineGeometry && (
 					<svg
-						className="absolute left-1/2 -translate-x-1/2 w-0.5 pointer-events-none hidden md:block"
+						className="absolute start-1/2 -translate-x-1/2 w-0.5 pointer-events-none hidden md:block"
 						style={{
 							top: `${lineGeometry.top}px`,
 							height: `${lineGeometry.height}px`,
@@ -145,14 +145,14 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 							>
 								{/* Left Column */}
 								{isLeftFirst ? (
-									<div className="flex flex-col items-end text-end space-y-3 max-w-md ml-auto">
+									<div className="flex flex-col items-end text-end space-y-3 max-w-md ms-auto">
 										<StepBadge number={step.step_number} />
 										<p className="text-paragraph small sm:text-base leading-relaxed">
 											{step.description}
 										</p>
 									</div>
 								) : (
-									<div className="flex flex-col items-end text-end space-y-2 max-w-md ml-auto">
+									<div className="flex flex-col items-end text-end space-y-2 max-w-md ms-auto">
 										{renderStepIcon(step.icon, "size-12")}
 										<h3 className="font-heading h4 sm:h3 text-primary font-normal">
 											{step.title}
@@ -170,14 +170,14 @@ export function AboutApproach({ data }: AboutApproachProps = {}) {
 
 								{/* Right Column */}
 								{isLeftFirst ? (
-									<div className="flex flex-col items-start text-start space-y-2 max-w-md mr-auto">
+									<div className="flex flex-col items-start text-start space-y-2 max-w-md me-auto">
 										{renderStepIcon(step.icon, "size-12")}
 										<h3 className="font-heading h4 sm:h3 text-primary font-normal">
 											{step.title}
 										</h3>
 									</div>
 								) : (
-									<div className="flex flex-col items-start text-start space-y-3 max-w-md mr-auto">
+									<div className="flex flex-col items-start text-start space-y-3 max-w-md me-auto">
 										<StepBadge number={step.step_number} />
 										<p className="text-paragraph small sm:text-base leading-relaxed">
 											{step.description}

@@ -107,6 +107,7 @@ export function AboutPhilosophy({ data }: AboutPhilosophyProps = {}) {
 			{/* Scroll Track for Pinning & Expanding Image to Full Screen */}
 			<div
 				ref={containerRef}
+				dir="ltr"
 				className="relative h-[220vh] -mt-40 w-screen left-1/2 -translate-x-1/2 rtl:left-auto rtl:right-1/2 rtl:translate-x-1/2"
 			>
 				<div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">

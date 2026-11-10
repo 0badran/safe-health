@@ -18,8 +18,10 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 
 	return (
 		<section className="relative w-full">
-			<div className="hidden lg:block">
-				{/* Background: card shape + continent silhouettes */}
+			<div
+				className="hidden rtl:rotate-y-180  lg:block absolute inset-0 size-full pointer-events-none z-0"
+				aria-hidden="true"
+			>
 				<ExpertiseBackground />
 			</div>
 
@@ -63,7 +65,7 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 						whileInView={{ opacity: 1, y: 0, scale: 1 }}
 						viewport={{ once: true, margin: "-40px" }}
 						transition={{ duration: 0.65, ease: EASE }}
-						className="lg:col-span-6 relative w-full min-h-80 sm:min-h-100 lg:min-h-120 rounded-3xl overflow-hidden"
+						className="lg:col-span-5 relative w-full aspect-square ltr:max-h-[95%] rtl:max-h-[90%] rounded-3xl overflow-hidden"
 					>
 						<FallbackImage
 							src={data.feature_image}
@@ -78,7 +80,7 @@ export function AboutExpertise({ data }: AboutExpertiseProps = {}) {
 
 					{/* Right: Feature Cards Stack */}
 					{points.length > 0 && (
-						<div className="lg:col-span-6 flex flex-col justify-between gap-3 sm:gap-3.5">
+						<div className="lg:col-span-7 flex flex-col justify-between gap-3 sm:gap-3.5">
 							{points.map((point, index) => (
 								<motion.div
 									key={point.number || index}

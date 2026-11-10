@@ -134,6 +134,11 @@
 		@apply border-border outline-ring/50;
 	}
 
+	[dir="rtl"], [dir="rtl"] *, .rtl, .rtl *,
+	.rtl {
+		--font-heading: var(--font-arabic);
+	}
+
 	button:not(:disabled),
 	[role="button"]:not(:disabled) {
 		cursor: pointer;
@@ -189,24 +194,11 @@
 	line-height: 110.00000000000001%;
 	font-weight: 500;
 	padding-bottom: 10px;
-}
 
-@utility text-header {
-	background-image: linear-gradient(
-		90deg,
-		var(--primary) 0%,
-		var(--secondary) 62.5%
-	);
-	-webkit-background-clip: text;
-	color: transparent;
-	background-clip: text;
-	font-size: clamp(24px, 3.8889vw, 48px);
-	letter-spacing: -2px;
-	font-family: var(--font-heading);
-	vertical-align: middle;
-	line-height: 110.00000000000001%;
-	font-weight: 500;
-	padding-bottom: 10px;
+	&:where([dir="rtl"], [dir="rtl"] *, .rtl, .rtl *) {
+		font-family: var(--font-arabic);
+		letter-spacing: 0;
+	}
 }
 
 @utility global-shadow {

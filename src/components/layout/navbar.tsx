@@ -141,10 +141,10 @@ export function Navbar() {
 				>
 					<div
 						className={cn(
-							"relative flex shrink-0 items-center justify-center rounded-xl overflow-hidden p-1 mx-2 transition-all duration-300",
+							"relative flex shrink-0 items-center justify-center rounded-xl overflow-hidden transition-all duration-300 h-full aspect-52/41 mx-2",
 							!isMobile && isScrolled
-								? "size-10 lg:size-11"
-								: "size-11 lg:size-14",
+								? "h-10 lg:h-11"
+								: "h-11 lg:h-14",
 						)}
 					>
 						<Image
@@ -152,7 +152,7 @@ export function Navbar() {
 							alt={settings?.brand_name || ""}
 							fill
 							sizes="48px"
-							className="object-contain p-1 size-full"
+							className="object-contain size-full"
 							preload
 						/>
 					</div>

@@ -98,7 +98,7 @@ export function RhinoplastySection({ data }: RhinoplastySectionProps = {}) {
 						<div className="flex items-start gap-4">
 							{renderFeatureIcon(feature.icon, index, feature.title)}
 							<div className="flex flex-col gap-1">
-								<h3 className="font-heading h3 text-primary">
+								<h3 className="ltr:font-heading h3 text-primary">
 									{feature.title}
 								</h3>
 								<p className="text-paragraph small leading-relaxed">
