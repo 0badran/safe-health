@@ -15,9 +15,7 @@ export interface HeroStatsBannerProps {
 	stats?: StatItem[];
 }
 
-import { useEffect, useRef } from "react";
-import EndLine from "./stats-banner/endline-svg";
-import { StartLine } from "./stats-banner/startline-svg";
+import { useEffect, useId, useRef, useState } from "react";
 
 export function AirplanePath() {
 	return (
@@ -28,6 +26,16 @@ export function AirplanePath() {
 			/>
 		</g>
 	);
+}
+
+interface FlightGeometry {
+	startPath: string;
+	endPath: string;
+	leftDot: { x: number; y: number };
+	rightTopDot: { x: number; y: number };
+	rightBottomDot: { x: number; y: number };
+	leftGrad: { x1: number; y1: number; x2: number; y2: number };
+	rightGrad: { x1: number; y1: number; x2: number; y2: number };
 }
 
 // =========================================================================
@@ -99,12 +107,107 @@ export function HeroStatsBanner({
 	stats,
 	title,
 }: HeroStatsBannerProps) {
+	const uid = useId().replace(/:/g, "");
+	const containerRef = useRef<HTMLDivElement | null>(null);
+	const titleRef = useRef<HTMLHeadingElement | null>(null);
+	const cardRef = useRef<HTMLDivElement | null>(null);
 	const startGuideRef = useRef<SVGPathElement | null>(null);
 	const startPlaneRef = useRef<SVGGElement | null>(null);
 	const endGuideRef = useRef<SVGPathElement | null>(null);
 	const endPlaneRef = useRef<SVGGElement | null>(null);
 
+	const [geometry, setGeometry] = useState<FlightGeometry | null>(null);
+
+	// Dynamically measure Title (h2) and Stats Card (div) to keep both SVGs anchored
 	useEffect(() => {
+		const container = containerRef.current;
+		const titleEl = titleRef.current;
+		const cardEl = cardRef.current;
+		if (!container || !titleEl || !cardEl) return;
+
+		const updateGeometry = () => {
+			const cRect = container.getBoundingClientRect();
+			const tRect = titleEl.getBoundingClientRect();
+			const sRect = cardEl.getBoundingClientRect();
+
+			if (cRect.width === 0 || sRect.width === 0 || tRect.width === 0) return;
+
+			const titleLeft = tRect.left - cRect.left;
+			const titleRight = tRect.right - cRect.left;
+			const titleTop = tRect.top - cRect.top;
+			const titleHeight = tRect.height;
+
+			const cardLeft = sRect.left - cRect.left;
+			const cardRight = sRect.right - cRect.left;
+			const cardTop = sRect.top - cRect.top;
+			const cardHeight = sRect.height;
+
+			// Left line anchors: from bottom-left of stats card -> left edge of title
+			const cxLeft = cardLeft - 2;
+			const cyLeft = cardTop + cardHeight * 0.68;
+			const txLeft = titleLeft - 6;
+			const tyLeft = titleTop + titleHeight * 0.55;
+
+			const dyL = Math.max(40, cyLeft - tyLeft);
+			const outerLeft = Math.min(cxLeft, txLeft) - 24;
+			const mxL = outerLeft + Math.max(24, txLeft - outerLeft) * 0.55;
+			const myL = tyLeft + dyL * 0.22;
+
+			const startPath = [
+				`M ${cxLeft.toFixed(1)} ${cyLeft.toFixed(1)}`,
+				`C ${(outerLeft - 6).toFixed(1)} ${(cyLeft - dyL * 0.22).toFixed(1)}, ${(outerLeft - 4).toFixed(1)} ${(myL - 4).toFixed(1)}, ${mxL.toFixed(1)} ${myL.toFixed(1)}`,
+				`C ${(mxL + (txLeft - mxL) * 0.45).toFixed(1)} ${(myL + 7).toFixed(1)}, ${(txLeft - 6).toFixed(1)} ${(tyLeft + 12).toFixed(1)}, ${txLeft.toFixed(1)} ${tyLeft.toFixed(1)}`,
+			].join(" ");
+
+			// Right line anchors: from right edge of title -> bottom-right of stats card
+			const txRight = titleRight + 6;
+			const tyRight = titleTop + titleHeight * 0.58;
+			const cxRight = cardRight + 2;
+			const cyRight = cardTop + cardHeight * 0.65;
+
+			const dyR = Math.max(40, cyRight - tyRight);
+			const outerRight = Math.max(cxRight, txRight) + 26;
+			const mxR = txRight + Math.max(24, outerRight - txRight) * 0.45;
+			const myR = tyRight + dyR * 0.22;
+
+			const endPath = [
+				`M ${txRight.toFixed(1)} ${tyRight.toFixed(1)}`,
+				`C ${(txRight + (mxR - txRight) * 0.35).toFixed(1)} ${(tyRight + 16).toFixed(1)}, ${(mxR - (mxR - txRight) * 0.3).toFixed(1)} ${(myR + 6).toFixed(1)}, ${mxR.toFixed(1)} ${myR.toFixed(1)}`,
+				`C ${(outerRight + 4).toFixed(1)} ${(myR - 8).toFixed(1)}, ${(outerRight + 8).toFixed(1)} ${(cyRight - dyR * 0.22).toFixed(1)}, ${cxRight.toFixed(1)} ${cyRight.toFixed(1)}`,
+			].join(" ");
+
+			setGeometry({
+				startPath,
+				endPath,
+				leftDot: { x: cxLeft, y: cyLeft },
+				rightTopDot: { x: txRight, y: tyRight },
+				rightBottomDot: { x: cxRight, y: cyRight },
+				leftGrad: { x1: outerLeft, y1: cyLeft, x2: txLeft, y2: tyLeft },
+				rightGrad: { x1: outerRight, y1: cyRight, x2: txRight, y2: tyRight },
+			});
+		};
+
+		updateGeometry();
+
+		const resizeObserver = new ResizeObserver(updateGeometry);
+		resizeObserver.observe(container);
+		resizeObserver.observe(titleEl);
+		resizeObserver.observe(cardEl);
+
+		window.addEventListener("resize", updateGeometry);
+		if (typeof document !== "undefined" && document.fonts?.ready) {
+			document.fonts.ready.then(updateGeometry).catch(() => {});
+		}
+
+		return () => {
+			resizeObserver.disconnect();
+			window.removeEventListener("resize", updateGeometry);
+		};
+	}, [title, stats?.length]);
+
+	useEffect(() => {
+		if (!geometry) return;
+
 		const startGuide = startGuideRef.current;
 		const startPlane = startPlaneRef.current;
 		const endGuide = endGuideRef.current;
@@ -118,13 +221,10 @@ export function HeroStatsBanner({
 		).matches;
 
 		if (prefersReducedMotion) {
-			endPlane.style.transform = `translate(127px, 84px) rotate(42deg) scale(${PLANE_CONFIG.normalScale})`;
+			endPlane.style.transform = `translate(${geometry.rightBottomDot.x}px, ${geometry.rightBottomDot.y}px) rotate(42deg) scale(${PLANE_CONFIG.normalScale})`;
 			endPlane.style.opacity = "1";
 			return;
 		}
-
-		const lenStart = startGuide.getTotalLength();
-		const lenEnd = endGuide.getTotalLength();
 
 		const { flyStart, pauseMid, flyEnd, pauseEnd } = PLANE_CONFIG.timings;
 		const T_CYCLE = flyStart + pauseMid + flyEnd + pauseEnd;
@@ -140,60 +240,65 @@ export function HeroStatsBanner({
 			if (!startTime) startTime = now;
 			const elapsed = (now - startTime) % T_CYCLE;
 
-			if (elapsed < flyStart) {
-				// --- Phase 1: Left Line (StartLine) Flight ---
-				const rawProgress = elapsed / flyStart;
-				const progress = ease(rawProgress);
+			const lenStart = startGuide.getTotalLength();
+			const lenEnd = endGuide.getTotalLength();
 
-				const dist = progress * lenStart;
-				const p = startGuide.getPointAtLength(dist);
-				const pNext = startGuide.getPointAtLength(
-					Math.min(lenStart, dist + 1.5),
-				);
+			if (lenStart > 0 && lenEnd > 0) {
+				if (elapsed < flyStart) {
+					// --- Phase 1: Left Line (StartLine) Flight ---
+					const rawProgress = elapsed / flyStart;
+					const progress = ease(rawProgress);
 
-				const angle =
-					Math.atan2(pNext.y - p.y, pNext.x - p.x) * (180 / Math.PI);
-				const rot = angle + 90; // Align forward nose vector with tangent
+					const dist = progress * lenStart;
+					const p = startGuide.getPointAtLength(dist);
+					const pNext = startGuide.getPointAtLength(
+						Math.min(lenStart, dist + 1.5),
+					);
 
-				// حساب الحجم والشفافية (تظهر كبيرة وتصغر، ثم تختفي بحجم صغير قبل نهاية الخط)
-				const { opacity, scale } = getFlightState(
-					rawProgress,
-					PLANE_CONFIG.startLine,
-				);
+					const angle =
+						Math.atan2(pNext.y - p.y, pNext.x - p.x) * (180 / Math.PI);
+					const rot = angle + 90;
 
-				startPlane.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${rot}deg) scale(${scale})`;
-				startPlane.style.opacity = `${opacity}`;
-				endPlane.style.opacity = "0";
-			} else if (elapsed < flyStart + pauseMid) {
-				// --- Phase 2: Crossing Title Gap ---
-				startPlane.style.opacity = "0";
-				endPlane.style.opacity = "0";
-			} else if (elapsed < flyStart + pauseMid + flyEnd) {
-				// --- Phase 3: Right Line (EndLine) Flight ---
-				const rawProgress = (elapsed - flyStart - pauseMid) / flyEnd;
-				const progress = ease(rawProgress);
+					const { opacity, scale } = getFlightState(
+						rawProgress,
+						PLANE_CONFIG.startLine,
+					);
 
-				const dist = progress * lenEnd;
-				const p = endGuide.getPointAtLength(dist);
-				const pNext = endGuide.getPointAtLength(Math.min(lenEnd, dist + 1.5));
+					startPlane.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${rot}deg) scale(${scale})`;
+					startPlane.style.opacity = `${opacity}`;
+					endPlane.style.opacity = "0";
+				} else if (elapsed < flyStart + pauseMid) {
+					// --- Phase 2: Crossing Title Gap ---
+					startPlane.style.opacity = "0";
+					endPlane.style.opacity = "0";
+				} else if (elapsed < flyStart + pauseMid + flyEnd) {
+					// --- Phase 3: Right Line (EndLine) Flight ---
+					const rawProgress = (elapsed - flyStart - pauseMid) / flyEnd;
+					const progress = ease(rawProgress);
 
-				const angle =
-					Math.atan2(pNext.y - p.y, pNext.x - p.x) * (180 / Math.PI);
-				const rot = angle + 90;
+					const dist = progress * lenEnd;
+					const p = endGuide.getPointAtLength(dist);
+					const pNext = endGuide.getPointAtLength(
+						Math.min(lenEnd, dist + 1.5),
+					);
 
-				// حساب الحجم والشفافية للخط الثاني
-				const { opacity, scale } = getFlightState(
-					rawProgress,
-					PLANE_CONFIG.endLine,
-				);
+					const angle =
+						Math.atan2(pNext.y - p.y, pNext.x - p.x) * (180 / Math.PI);
+					const rot = angle + 90;
 
-				endPlane.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${rot}deg) scale(${scale})`;
-				endPlane.style.opacity = `${opacity}`;
-				startPlane.style.opacity = "0";
-			} else {
-				// --- Phase 4: Final Touchdown Pause & Reset ---
-				startPlane.style.opacity = "0";
-				endPlane.style.opacity = "0";
+					const { opacity, scale } = getFlightState(
+						rawProgress,
+						PLANE_CONFIG.endLine,
+					);
+
+					endPlane.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${rot}deg) scale(${scale})`;
+					endPlane.style.opacity = `${opacity}`;
+					startPlane.style.opacity = "0";
+				} else {
+					// --- Phase 4: Final Touchdown Pause & Reset ---
+					startPlane.style.opacity = "0";
+					endPlane.style.opacity = "0";
+				}
 			}
 
 			animId = requestAnimationFrame(frame);
@@ -201,40 +306,129 @@ export function HeroStatsBanner({
 
 		animId = requestAnimationFrame(frame);
 		return () => cancelAnimationFrame(animId);
-	}, []);
+	}, [geometry]);
+
 	if (!stats || stats.length === 0) return null;
+
+	const startGradId = `start-line-grad-${uid}`;
+	const endGradId = `end-line-grad-${uid}`;
+
 	return (
 		<div
+			ref={containerRef}
 			className={cn(
-				"relative flex flex-col lg:justify-center    w-full select-none",
+				"relative flex flex-col lg:justify-center w-full select-none",
 				className,
 			)}
 		>
-			{/* Heading with Anchored Flight Lines */}
-			<div className="relative max-lg:hidيden inline-block text-center w-full sm:w-auto">
-				{/* Main Headline with fluid typography */}
-				<h2 className="relative w-fit  mx-auto leading-[1.12] tracking-tight">
-					{/* Left Decorative Line:
-				    - Tip connects near 'Y'
-				    - Dot lands cleanly near the top-left of the stats card
-				*/}
-					<div
-						aria-hidden="true"
-						className="absolute max-lg:hidden right-[calc(100%-8px)] top-8 lg:top-9 xl:top-11 pointer-events-none block z-10"
-					>
-						<StartLine guideRef={startGuideRef} planeRef={startPlaneRef} />
-					</div>
+			{/* Dynamic SVG Overlay connecting Title left/right edges to Stats Card left/right edges */}
+			{geometry && (
+				<svg
+					dir="ltr"
+					aria-hidden="true"
+					className="pointer-events-none absolute inset-0 block size-full overflow-visible z-10 select-none"
+				>
+					<defs>
+						<linearGradient
+							id={startGradId}
+							x1={geometry.leftGrad.x1}
+							y1={geometry.leftGrad.y1}
+							x2={geometry.leftGrad.x2}
+							y2={geometry.leftGrad.y2}
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop stopColor="var(--primary)" stopOpacity="0.35" />
+							<stop offset="1" stopColor="var(--primary)" />
+						</linearGradient>
+						<linearGradient
+							id={endGradId}
+							x1={geometry.rightGrad.x1}
+							y1={geometry.rightGrad.y1}
+							x2={geometry.rightGrad.x2}
+							y2={geometry.rightGrad.y2}
+							gradientUnits="userSpaceOnUse"
+						>
+							<stop stopColor="var(--primary)" />
+							<stop offset="1" stopColor="var(--secondary)" />
+						</linearGradient>
+					</defs>
 
-					{/* Right Decorative Line:
-				    - Arcs out from 'Care' / 'Journey,'
-				    - Airplane lands cleanly near top-right of the stats card
-				*/}
-					<div
-						aria-hidden="true"
-						className="absolute max-lg:hidden right-0 lg:left-[calc(100%-20px)] top-11 lg:top-13 xl:top-15 pointer-events-none block z-10"
+					{/* Left Dashed Line + Bottom Card Dot */}
+					<path
+						d={geometry.startPath}
+						fill="none"
+						stroke={`url(#${startGradId})`}
+						strokeWidth="1.5"
+						strokeDasharray="4 4"
+						strokeLinecap="round"
+					/>
+					<circle
+						cx={geometry.leftDot.x}
+						cy={geometry.leftDot.y}
+						r="2.7"
+						fill="var(--primary)"
+						fillOpacity="0.65"
+					/>
+					<path
+						ref={startGuideRef}
+						d={geometry.startPath}
+						fill="none"
+						stroke="none"
+						className="opacity-0 pointer-events-none"
+					/>
+					<g
+						ref={startPlaneRef}
+						className="pointer-events-none"
+						style={{ opacity: 0 }}
 					>
-						<EndLine guideRef={endGuideRef} planeRef={endPlaneRef} />
-					</div>
+						<AirplanePath />
+					</g>
+
+					{/* Right Dashed Line + Title Dot + Bottom Card Dot */}
+					<path
+						d={geometry.endPath}
+						fill="none"
+						stroke={`url(#${endGradId})`}
+						strokeWidth="1.5"
+						strokeDasharray="4 4"
+						strokeLinecap="round"
+					/>
+					<circle
+						cx={geometry.rightTopDot.x}
+						cy={geometry.rightTopDot.y}
+						r="2.7"
+						fill="var(--secondary)"
+					/>
+					<circle
+						cx={geometry.rightBottomDot.x}
+						cy={geometry.rightBottomDot.y}
+						r="2.7"
+						fill="var(--primary)"
+					/>
+					<path
+						ref={endGuideRef}
+						d={geometry.endPath}
+						fill="none"
+						stroke="none"
+						className="opacity-0 pointer-events-none"
+					/>
+					<g
+						ref={endPlaneRef}
+						className="pointer-events-none"
+						style={{ opacity: 0 }}
+					>
+						<AirplanePath />
+					</g>
+				</svg>
+			)}
+
+			{/* Heading */}
+			<div className="relative inline-block text-center w-full sm:w-auto">
+				{/* Main Headline with fluid typography */}
+				<h2
+					ref={titleRef}
+					className="relative w-fit mx-auto leading-[1.12] tracking-tight"
+				>
 					{title ? (
 						title.includes(",") ? (
 							<>
@@ -252,10 +446,11 @@ export function HeroStatsBanner({
 				</h2>
 			</div>
 
-			{/* Stats Card:
-			    - Responsive 2x2 grid on mobile, locks to -ml-[62px] & w-[calc(100%+186px)] row on sm+
-			*/}
-			<div className="relative lg:mt-4 w-full text-center bg-purple-tint/50 backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5 ">
+			{/* Stats Card */}
+			<div
+				ref={cardRef}
+				className="relative lg:mt-4 w-full text-center bg-purple-tint/50 backdrop-blur-xs rounded-2xl p-3 grid grid-cols-2 sm:grid-cols-4 justify-items-around gap-y-3 border border-primary/5"
+			>
 				{stats.map((item, index) => {
 					const rawCount = item.count ?? item.number ?? "";
 					const suffix =

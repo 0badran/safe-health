@@ -631,7 +631,7 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 			<section className="sticky top-20 max-sm:p-4  isolate w-full overflow-hidden rounded-3xl">
 				{/* Desktop: Pixel-perfect SVG matching Figma curve cut-out */}
 				<div
-					className="hidden lg:block absolute inset-0 size-full pointer-events-none z-0"
+					className="hidden rtl:rotate-y-180 lg:block absolute inset-0 size-full pointer-events-none z-0"
 					aria-hidden="true"
 				>
 					<ExpertiseBackground />

@@ -26,7 +26,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 			{/* Instant Primary Masked Background & Texture Overlay */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden rtl:scale-x-[-1]"
+				className="pointer-events-none absolute bg-primary inset-0 z-0 select-none overflow-hidden rtl:scale-x-[-1] max-lg:[mask-image:none]! max-lg:[-webkit-mask-image:none]!"
 				style={{
 					maskImage: `url("${HERO_MASK_SVG}")`,
 					WebkitMaskImage: `url("${HERO_MASK_SVG}")`,
@@ -51,7 +51,6 @@ export function HeroSection({ data, className }: HeroSectionProps) {
 
 			{/* Interactive Grid Layer - masked with the same instant SVG mask */}
 			<div className="hidden md:block">
-
 				<InteractiveGridBackground
 					maskImage={HERO_MASK_SVG}
 					style={{

@@ -29,7 +29,7 @@ export function FooterCta({ data }: FooterCtaProps = {}) {
 				fill
 				preload
 				sizes="100vw"
-				className="object-cover object-[0_38%] max-sm:blur-sm pointer-events-none select-none"
+				className="object-cover rtl:scale-x-[-1] object-[0_38%] max-sm:blur-sm pointer-events-none select-none"
 			/>
 
 			{/* Tailwind Gradient Layer */}

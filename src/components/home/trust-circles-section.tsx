@@ -195,7 +195,7 @@ export function TrustCirclesSection({
 	}
 
 	return (
-		<section className="w-full grid grid-cols-2 xl:w-[90%] max-sm:gap-2 sm:flex justify-items-center items-center sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-4 sm:rtl:space-x-4">
+		<section className="w-full grid grid-cols-2 xl:w-[90%] max-sm:gap-2 sm:flex justify-items-center items-center sm:justify-center sm:lg:min-w-0 mx-auto sm:-space-x-4 ">
 			{features.map((item, index) => (
 				<motion.div
 					key={item.id ?? item.title ?? index}
