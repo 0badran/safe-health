@@ -191,13 +191,13 @@ export function DoctorCard({
 				viewport={{ once: true }}
 				transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
 				className={cn(
-					"flex justify-center items-end relative pt-8 sm:pt-12",
+					"flex justify-center  items-end relative pt-8 sm:pt-12",
 					"order-1 md:col-span-5",
 					flip ? "md:order-1" : "md:order-2",
 				)}
 			>
 				{/* Architectural Arch Background */}
-				<div className="relative">
+				<div className="relative size-full">
 					{/* Floating Experience Badge with Spring Entrance */}
 					{displayExperience && (
 						<motion.div
@@ -222,12 +222,12 @@ export function DoctorCard({
 					{/* Doctor Cut-out Image with Fallback */}
 					<FallbackImage
 						src={doctor.image}
-						fallbackSrc="/images/avatar.svg"
+						fallbackSrc="/images/doctor-placeholder.png"
 						alt={doctor.name}
 						width={420}
 						height={480}
 						preload
-						className="relative z-0 max-h-105 sm:max-h-115 w-auto object-contain object-bottom drop-shadow-sm select-none pointer-events-none"
+						className="relative size-full! z-0 max-h-105 sm:max-h-115 w-auto object-contain object-bottom drop-shadow-sm select-none pointer-events-none"
 					/>
 				</div>
 			</motion.div>

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { ChevronDown } from "lucide-react";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { cn } from "@/lib/utils";
 
 export interface TeamCardProps {
@@ -22,8 +22,6 @@ export default function TeamCard({
 }: TeamCardProps) {
 	const [showAllSpecialties, setShowAllSpecialties] = useState(false);
 
-	const safeImg = imgSrc || "/images/hero-doctor.jpg";
-
 	const firstSpecialty = specialties[0];
 	const remainingSpecialties = specialties.slice(1);
 	const remainingCount = remainingSpecialties.length;
@@ -37,12 +35,13 @@ export default function TeamCard({
 			)}
 		>
 			{/* Doctor Portrait Image */}
-			<Image
-				src={safeImg}
+			<FallbackImage
+				src={imgSrc}
+				fallbackSrc="/images/doctor-placeholder.png"
 				alt={name}
 				fill
 				sizes="(max-width: 640px) 100vw, 350px"
-				className="object-cover object-[79%_0%] transition-transform duration-500 group-hover:scale-105"
+				className={`object-cover object-top transition-transform duration-500 group-hover:scale-105 ${!imgSrc && "object-center "}`}
 			/>
 
 			{/* Subtle gradient overlay at bottom for contrast */}

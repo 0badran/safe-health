@@ -27,13 +27,6 @@ export interface TreatmentsContentProps {
 	initialAreas?: AnatomicalArea[] | null;
 }
 
-const DEFAULT_SERVICE_IMAGES = [
-	"/images/treatments-plastic-surgery.jpg",
-	"/images/why-choose/aesthetic-care.jpg",
-	"/images/rhinoplasty.png",
-	"/images/why-choose/patient-focus.png",
-];
-
 export function TreatmentsContent({
 	exploreSection,
 	initialData,
@@ -279,8 +272,6 @@ export function TreatmentsContent({
 							const formattedNumber = String(
 								(page - 1) * 15 + index + 1,
 							).padStart(2, "0");
-							const fallbackImage =
-								DEFAULT_SERVICE_IMAGES[index % DEFAULT_SERVICE_IMAGES.length];
 
 							return (
 								<div
@@ -376,7 +367,7 @@ export function TreatmentsContent({
 													<div className="relative w-full aspect-4/3 rounded-2xl overflow-hidden shadow-xs border border-border/40 bg-muted">
 														<FallbackImage
 															src={service.image_url}
-															fallbackSrc={fallbackImage}
+															fallbackSrc="/images/service-placeholder.jpg"
 															alt={service.title}
 															fill
 															sizes="(max-width: 1024px) 100vw, 40vw"
