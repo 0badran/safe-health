@@ -111,71 +111,52 @@ function StepConnector({
 	totalSteps: number;
 	progress: MotionValue<number>;
 }) {
-	// Connectors finish drawing during the horizontal scroll phase (0 -> 0.74)
 	const segmentCount = Math.max(totalSteps - 1, 1);
-	const phaseEnd = 0.72;
-	const segStart = Math.max(0, ((stepIndex - 1) / segmentCount) * phaseEnd - 0.04);
-	const segEnd = Math.min(phaseEnd, (stepIndex / segmentCount) * phaseEnd);
+	const segStart = Math.max(0, (stepIndex - 1) / segmentCount - 0.04);
+	const segEnd = Math.min(0.96, stepIndex / segmentCount);
 
 	const pathLength = useTransform(progress, [segStart, segEnd], [0, 1]);
 	const pathOpacity = useTransform(
 		progress,
-		[segStart, segStart + 0.05],
+		[segStart, segStart + 0.06],
 		[0, 1],
 	);
 	const dotScale = useTransform(
 		progress,
-		[segStart, segStart + 0.07],
-		[0, 1.15],
+		[segStart, segStart + 0.08],
+		[0, 1],
 	);
 
 	if (stepIndex === 1) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 hidden w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
-				{/* Small starting dot */}
+			<div className="pointer-events-none absolute left-[165px] top-[163px] z-20 block w-[calc(100%-60px)] overflow-visible rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
+				{/* Starting dot */}
 				<motion.span
 					style={{ scale: dotScale, opacity: pathOpacity }}
-					className="absolute -left-1 -top-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+					className="absolute -left-1.5 -top-1.5 size-3 rounded-full bg-primary ring-4 ring-primary/15"
 				/>
-				{/* Connecting wave line ending with fade */}
+				{/* Static dashed dark track + Single-color animated line */}
 				<svg
 					viewBox="0 0 100 40"
 					preserveAspectRatio="none"
 					className="h-10 w-full overflow-visible"
 					aria-hidden="true"
 				>
-					<defs>
-						<linearGradient id="step-fade-1" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
-							<stop
-								offset="65%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.65"
-							/>
-							<stop
-								offset="100%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.15"
-							/>
-						</linearGradient>
-					</defs>
-					{/* Faint background track */}
 					<path
-						d="M 0 0 C 35 5, 55 25, 75 32 C 88 36, 95 34, 100 32"
+						d="M 0 0 C 32 4, 54 26, 76 33 C 88 37, 95 35, 100 32"
 						fill="none"
-						stroke="var(--primary)"
-						strokeOpacity="0.14"
+						stroke="var(--foreground)"
+						strokeOpacity="0.25"
 						strokeWidth="2"
 						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
 					/>
-					{/* Animated drawing path */}
 					<motion.path
-						d="M 0 0 C 35 5, 55 25, 75 32 C 88 36, 95 34, 100 32"
+						d="M 0 0 C 32 4, 54 26, 76 33 C 88 37, 95 35, 100 32"
 						fill="none"
-						stroke="url(#step-fade-1)"
-						strokeWidth="3"
+						stroke="var(--primary)"
+						strokeWidth="2.5"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
 						style={{ pathLength, opacity: pathOpacity }}
@@ -187,55 +168,34 @@ function StepConnector({
 
 	if (stepIndex === 2) {
 		return (
-			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 hidden h-[120px] w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
-				{/* Small starting dot */}
+			<div className="pointer-events-none absolute left-[165px] top-[55px] z-20 block h-[120px] w-[calc(100%-60px)] overflow-visible rtl:scale-x-[-1] rtl:left-auto rtl:right-[165px]">
+				{/* Starting dot */}
 				<motion.span
 					style={{ scale: dotScale, opacity: pathOpacity }}
-					className="absolute -left-1 bottom-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+					className="absolute -left-1.5 bottom-0.5 size-3 rounded-full bg-primary ring-4 ring-primary/15"
 				/>
-				{/* Connecting wave line surging up to step 3 ending with fade */}
+				{/* Static dashed dark track + Single-color animated line */}
 				<svg
 					viewBox="0 0 100 80"
 					preserveAspectRatio="none"
 					className="size-full overflow-visible"
 					aria-hidden="true"
 				>
-					<defs>
-						<linearGradient
-							id="step-fade-2"
-							x1="0%"
-							y1="100%"
-							x2="100%"
-							y2="0%"
-						>
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
-							<stop
-								offset="65%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.65"
-							/>
-							<stop
-								offset="100%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.15"
-							/>
-						</linearGradient>
-					</defs>
 					<path
-						d="M 0 70 C 25 72, 45 40, 70 18 C 82 7, 92 2, 100 0"
+						d="M 0 70 C 26 72, 46 38, 72 16 C 84 6, 93 2, 100 0"
 						fill="none"
-						stroke="var(--primary)"
-						strokeOpacity="0.14"
+						stroke="var(--foreground)"
+						strokeOpacity="0.25"
 						strokeWidth="2"
 						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
 					/>
 					<motion.path
-						d="M 0 70 C 25 72, 45 40, 70 18 C 82 7, 92 2, 100 0"
+						d="M 0 70 C 26 72, 46 38, 72 16 C 84 6, 93 2, 100 0"
 						fill="none"
-						stroke="url(#step-fade-2)"
-						strokeWidth="3"
+						stroke="var(--primary)"
+						strokeWidth="2.5"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
 						style={{ pathLength, opacity: pathOpacity }}
@@ -247,39 +207,24 @@ function StepConnector({
 
 	if (stepIndex === 3) {
 		return (
-			<div className="pointer-events-none absolute left-41.25 top-18.75 z-20 hidden w-[calc(100%-60px)] overflow-visible sm:block rtl:scale-x-[-1] rtl:left-auto rtl:right-41.25">
-				{/* Small starting dot */}
+			<div className="pointer-events-none absolute left-41.25 top-18.75 z-20 block w-[calc(100%-60px)] overflow-visible rtl:scale-x-[-1] rtl:left-auto rtl:right-41.25">
+				{/* Starting dot */}
 				<motion.span
 					style={{ scale: dotScale, opacity: pathOpacity }}
-					className="absolute -left-1 -top-1 size-2.5 rounded-full bg-primary ring-4 ring-primary/20"
+					className="absolute -left-1.5 -top-1.5 size-3 rounded-full bg-primary ring-4 ring-primary/15"
 				/>
-				{/* Connecting wave line diving gently to step 4 */}
+				{/* Static dashed dark track + Single-color animated line */}
 				<svg
 					viewBox="0 0 100 45"
 					preserveAspectRatio="none"
 					className="h-11 w-full overflow-visible"
 					aria-hidden="true"
 				>
-					<defs>
-						<linearGradient id="step-fade-3" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="var(--primary)" stopOpacity="0.9" />
-							<stop
-								offset="65%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.65"
-							/>
-							<stop
-								offset="100%"
-								stopColor="var(--secondary)"
-								stopOpacity="0.15"
-							/>
-						</linearGradient>
-					</defs>
 					<path
 						d="M 0 0 C 30 8, 55 30, 80 38 C 90 42, 96 40, 100 38"
 						fill="none"
-						stroke="var(--primary)"
-						strokeOpacity="0.14"
+						stroke="var(--foreground)"
+						strokeOpacity="0.25"
 						strokeWidth="2"
 						strokeDasharray="4 4"
 						vectorEffect="non-scaling-stroke"
@@ -288,8 +233,8 @@ function StepConnector({
 					<motion.path
 						d="M 0 0 C 30 8, 55 30, 80 38 C 90 42, 96 40, 100 38"
 						fill="none"
-						stroke="url(#step-fade-3)"
-						strokeWidth="3"
+						stroke="var(--primary)"
+						strokeWidth="2.5"
 						vectorEffect="non-scaling-stroke"
 						strokeLinecap="round"
 						style={{ pathLength, opacity: pathOpacity }}
@@ -433,7 +378,7 @@ function Step({
 	totalSteps: number;
 	progress: MotionValue<number>;
 }) {
-	const phaseEnd = 0.72;
+	const phaseEnd = 0.96;
 	const stepStart = Math.max(
 		0,
 		((n - 1.45) / Math.max(totalSteps, 1)) * phaseEnd,
@@ -455,8 +400,8 @@ function Step({
 	);
 	const cardScale = useTransform(
 		progress,
-		[stepStart, stepPeak, 0.75, 1],
-		n === 1 ? [1, 1, 1, 0.96] : [0.92, 1, 1, 0.96],
+		[stepStart, stepPeak],
+		n === 1 ? [1, 1] : [0.92, 1],
 	);
 	const badgeScale = useTransform(
 		progress,
@@ -561,9 +506,9 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 	});
 
 	const smoothProgress = useSpring(scrollYProgress, {
-		stiffness: 90,
-		damping: 26,
-		mass: 0.35,
+		stiffness: 65,
+		damping: 24,
+		mass: 0.45,
 	});
 
 	const stepCards = data?.step_card;
@@ -592,7 +537,7 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 
 	const x = useTransform(
 		smoothProgress,
-		[0, 0.72],
+		[0.04, 0.96],
 		[0, isRtl ? maxScroll : -maxScroll],
 	);
 
@@ -620,7 +565,7 @@ export default function StepsSection({ data }: StepsSectionProps = {}) {
 	return (
 		<div
 			ref={scrollTrackRef}
-			className="relative h-[180vh] lg:h-[310vh] "
+			className="relative h-[350vh] sm:h-[320vh] lg:h-[290vh]"
 		>
 			<span
 				id="steps"

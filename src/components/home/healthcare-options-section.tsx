@@ -1,11 +1,11 @@
 "use client";
 
 import { DragonWatermark } from "@/components/icons/dragon-watermark";
+import { FallbackImage } from "@/components/shared/fallback-image";
 import { Button } from "@/components/ui/button";
 import { SectionCarousel } from "@/components/shared/section-carousel";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useState } from "react";
 import useFetchData from "@/hooks/use-fetch-data";
@@ -107,7 +107,7 @@ export function HealthcareOptionsSection({
 			</div>
 
 			{/* 3. Cards Carousel */}
-			<div className="relative z-10 px-4 py-4 lg:px-7 w-ful">
+			<div className="relative z-10 ps-4 py-4 lg:ps-7 w-ful">
 				<SectionCarousel
 					items={activeServices}
 					keyExtractor={(card) => String(card.id)}
@@ -141,7 +141,7 @@ export function HealthcareOptionsSection({
 
 									{/* Top Content: Title & Description */}
 									<div className="relative z-10 flex flex-col gap-2.5">
-										<h3 className="font-heading h3 leading-snug tracking-tight line-clamp-1">
+										<h3 className="font-heading h4 leading-snug tracking-tight line-clamp-1">
 											{card.title}
 										</h3>
 										<p
@@ -156,11 +156,9 @@ export function HealthcareOptionsSection({
 
 									{/* Bottom Image with Circular Arrow Action */}
 									<div className="relative z-10 w-full aspect-4/3 rounded-2xl overflow-hidden mt-6 bg-muted">
-										<Image
-											src={
-												card.image_url ||
-												"/images/why-choose/aesthetic-care.jpg"
-											}
+										<FallbackImage
+											src={card.image_url}
+											fallbackSrc="/images/service.jpg"
 											alt={card.title}
 											fill
 											sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
